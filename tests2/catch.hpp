@@ -8,6 +8,9 @@
  *  Distributed under the Boost Software License, Version 1.0. (See accompanying
  *  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  */
+
+// NOTE: added backport of fix for macOS on ARM, as per https://github.com/catchorg/Catch2/commit/bb6d08323f23a39eb65dd86671e68f4f5d3f2d6c
+
 #ifndef TWOBLUECUBES_SINGLE_INCLUDE_CATCH_HPP_INCLUDED
 #define TWOBLUECUBES_SINGLE_INCLUDE_CATCH_HPP_INCLUDED
 
@@ -2129,6 +2132,9 @@ namespace Catch{
         #define CATCH_TRAP() \
                 __asm__("li r0, 20\nsc\nnop\nli r0, 37\nli r4, 2\nsc\nnop\n" \
                 : : : "memory","r0","r3","r4" ) /* NOLINT */
+    #elif defined(__aarch64__)
+        // Backport of https://github.com/catchorg/Catch2/commit/a25c1a24af8bffd35727a888a307ff0280cf9387
+        #define CATCH_TRAP() __asm__(".inst 0xd4200000")
     #else
         #define CATCH_TRAP() __asm__("int $3\n" : : /* NOLINT */ )
     #endif
