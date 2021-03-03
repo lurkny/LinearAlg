@@ -3867,7 +3867,7 @@ auxlib::svd_econ(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V
     arma_ignore(U);
     arma_ignore(S);
     arma_ignore(V);
-    arma_ignore(X);
+    arma_ignore(A);
     arma_ignore(mode);
     arma_stop_logic_error("svd(): use of LAPACK must be enabled");
     return false;
@@ -4308,7 +4308,7 @@ auxlib::svd_dc_econ(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
     arma_ignore(U);
     arma_ignore(S);
     arma_ignore(V);
-    arma_ignore(X);
+    arma_ignore(A);
     arma_stop_logic_error("svd(): use of LAPACK must be enabled");
     return false;
     }
@@ -4393,7 +4393,7 @@ auxlib::svd_dc_econ(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >
     arma_ignore(U);
     arma_ignore(S);
     arma_ignore(V);
-    arma_ignore(X);
+    arma_ignore(A);
     arma_stop_logic_error("svd(): use of LAPACK must be enabled");
     return false;
     }
