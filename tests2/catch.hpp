@@ -11,6 +11,8 @@
 
 // NOTE: added backport of fix for macOS on ARM, as per https://github.com/catchorg/Catch2/commit/bb6d08323f23a39eb65dd86671e68f4f5d3f2d6c
 
+// NOTE: SIGSTKSZ is no longer a constant in glibc 2.34; see https://github.com/catchorg/Catch2/issues/2178
+
 #ifndef TWOBLUECUBES_SINGLE_INCLUDE_CATCH_HPP_INCLUDED
 #define TWOBLUECUBES_SINGLE_INCLUDE_CATCH_HPP_INCLUDED
 
