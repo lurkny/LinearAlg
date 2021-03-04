@@ -44,7 +44,7 @@ sylvester
   const Mat<eT>& B = tmp_B.M;
   const Mat<eT>& C = tmp_C.M;
   
-  const bool status = auxlib::syl(out, A, B, C);
+  const bool status = auxlib::sylvester(out, A, B, C);
   
   if(status == false)
     {
@@ -102,7 +102,7 @@ sylvester
   
   Mat<eT> out;
   
-  const bool status = auxlib::syl(out, A, B, C);
+  const bool status = auxlib::sylvester(out, A, B, C);
   
   if(status == false)
     {
