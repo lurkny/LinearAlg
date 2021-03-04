@@ -22,7 +22,7 @@
 template<typename T1, typename T2, typename T3>
 inline
 bool
-syl
+sylvester
   (
         Mat <typename T1::elem_type>   & out,
   const Base<typename T1::elem_type,T1>& in_A,
@@ -49,10 +49,28 @@ syl
   if(status == false)
     {
     out.soft_reset();
-    arma_debug_warn("syl(): solution not found");
+    arma_debug_warn("sylvester(): solution not found");
     }
   
   return status;
+  }
+
+
+
+// TODO: deprecate this function
+template<typename T1, typename T2, typename T3>
+inline
+bool
+syl
+  (
+        Mat <typename T1::elem_type>   & out,
+  const Base<typename T1::elem_type,T1>& in_A,
+  const Base<typename T1::elem_type,T2>& in_B,
+  const Base<typename T1::elem_type,T3>& in_C,
+  const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr
+  )
+  {
+  return sylvester(out, in_A, in_B, in_C);
   }
 
 
@@ -61,7 +79,7 @@ template<typename T1, typename T2, typename T3>
 arma_warn_unused
 inline
 Mat<typename T1::elem_type>
-syl
+sylvester
   (
   const Base<typename T1::elem_type,T1>& in_A,
   const Base<typename T1::elem_type,T2>& in_B,
@@ -89,12 +107,29 @@ syl
   if(status == false)
     {
     out.soft_reset();
-    arma_stop_runtime_error("syl(): solution not found");
+    arma_stop_runtime_error("sylvester(): solution not found");
     }
   
   return out;
   }
 
+
+
+// TODO: deprecate this function
+template<typename T1, typename T2, typename T3>
+arma_warn_unused
+inline
+Mat<typename T1::elem_type>
+syl
+  (
+  const Base<typename T1::elem_type,T1>& in_A,
+  const Base<typename T1::elem_type,T2>& in_B,
+  const Base<typename T1::elem_type,T3>& in_C,
+  const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr
+  )
+  {
+  return sylvester(in_A, in_B, in_C);
+  }
 
 
 //! @}
