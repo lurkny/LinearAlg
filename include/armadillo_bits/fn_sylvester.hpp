@@ -22,7 +22,7 @@
 template<typename T1, typename T2, typename T3>
 inline
 bool
-sylvester
+syl
   (
         Mat <typename T1::elem_type>   & out,
   const Base<typename T1::elem_type,T1>& in_A,
@@ -44,12 +44,12 @@ sylvester
   const Mat<eT>& B = tmp_B.M;
   const Mat<eT>& C = tmp_C.M;
   
-  const bool status = auxlib::sylvester(out, A, B, C);
+  const bool status = auxlib::syl(out, A, B, C);
   
   if(status == false)
     {
     out.soft_reset();
-    arma_debug_warn("sylvester(): solution not found");
+    arma_debug_warn("syl(): solution not found");
     }
   
   return status;
@@ -57,11 +57,10 @@ sylvester
 
 
 
-// TODO: deprecate this function
 template<typename T1, typename T2, typename T3>
 inline
 bool
-syl
+sylvester
   (
         Mat <typename T1::elem_type>   & out,
   const Base<typename T1::elem_type,T1>& in_A,
@@ -70,7 +69,7 @@ syl
   const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
-  return sylvester(out, in_A, in_B, in_C);
+  return syl(out, in_A, in_B, in_C);
   }
 
 
@@ -79,7 +78,7 @@ template<typename T1, typename T2, typename T3>
 arma_warn_unused
 inline
 Mat<typename T1::elem_type>
-sylvester
+syl
   (
   const Base<typename T1::elem_type,T1>& in_A,
   const Base<typename T1::elem_type,T2>& in_B,
@@ -102,12 +101,12 @@ sylvester
   
   Mat<eT> out;
   
-  const bool status = auxlib::sylvester(out, A, B, C);
+  const bool status = auxlib::syl(out, A, B, C);
   
   if(status == false)
     {
     out.soft_reset();
-    arma_stop_runtime_error("sylvester(): solution not found");
+    arma_stop_runtime_error("syl(): solution not found");
     }
   
   return out;
@@ -115,12 +114,11 @@ sylvester
 
 
 
-// TODO: deprecate this function
 template<typename T1, typename T2, typename T3>
 arma_warn_unused
 inline
 Mat<typename T1::elem_type>
-syl
+sylvester
   (
   const Base<typename T1::elem_type,T1>& in_A,
   const Base<typename T1::elem_type,T2>& in_B,
@@ -128,7 +126,7 @@ syl
   const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
-  return sylvester(in_A, in_B, in_C);
+  return syl(in_A, in_B, in_C);
   }
 
 

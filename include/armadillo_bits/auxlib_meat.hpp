@@ -6491,15 +6491,15 @@ auxlib::schur(Mat< std::complex<T> >& U, Mat< std::complex<T> >& S, const bool c
 template<typename eT>
 inline
 bool
-auxlib::sylvester(Mat<eT>& X, const Mat<eT>& A, const Mat<eT>& B, const Mat<eT>& C)
+auxlib::syl(Mat<eT>& X, const Mat<eT>& A, const Mat<eT>& B, const Mat<eT>& C)
   {
   arma_extra_debug_sigprint();
   
   #if defined(ARMA_USE_LAPACK)
     {
-    arma_debug_check( (A.is_square() == false) || (B.is_square() == false), "sylvester(): given matrices must be square sized" );
+    arma_debug_check( (A.is_square() == false) || (B.is_square() == false), "syl(): given matrices must be square sized" );
       
-    arma_debug_check( (C.n_rows != A.n_rows) || (C.n_cols != B.n_cols), "sylvester(): matrices are not conformant" );
+    arma_debug_check( (C.n_rows != A.n_rows) || (C.n_cols != B.n_cols), "syl(): matrices are not conformant" );
     
     if(A.is_empty() || B.is_empty() || C.is_empty())
       {
@@ -6546,7 +6546,7 @@ auxlib::sylvester(Mat<eT>& X, const Mat<eT>& A, const Mat<eT>& B, const Mat<eT>&
     arma_ignore(A);
     arma_ignore(B);
     arma_ignore(C);
-    arma_stop_logic_error("sylvester(): use of LAPACK must be enabled");
+    arma_stop_logic_error("syl(): use of LAPACK must be enabled");
     return false;
     }
   #endif

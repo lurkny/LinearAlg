@@ -385,7 +385,7 @@ class auxlib
   // solve the Sylvester equation AX + XB = C
   
   template<typename eT>
-  inline static bool sylvester(Mat<eT>& X, const Mat<eT>& A, const Mat<eT>& B, const Mat<eT>& C);
+  inline static bool syl(Mat<eT>& X, const Mat<eT>& A, const Mat<eT>& B, const Mat<eT>& C);
   
   
   //
