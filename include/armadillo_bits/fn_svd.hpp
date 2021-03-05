@@ -98,6 +98,8 @@ svd
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
+  typedef typename T1::elem_type eT;
+  
   arma_debug_check
     (
     ( ((void*)(&U) == (void*)(&S)) || (&U == &V) || ((void*)(&S) == (void*)(&V)) ),
@@ -108,8 +110,9 @@ svd
   
   arma_debug_check( ((sig != 's') && (sig != 'd')), "svd(): unknown method specified" );
   
-  // auxlib::svd() makes an internal copy of X
-  const bool status = (sig == 'd') ? auxlib::svd_dc(U, S, V, X) : auxlib::svd(U, S, V, X);
+  Mat<eT> A(X.get_ref());
+  
+  const bool status = (sig == 'd') ? auxlib::svd_dc(U, S, V, A) : auxlib::svd(U, S, V, A);
   
   if(status == false)
     {

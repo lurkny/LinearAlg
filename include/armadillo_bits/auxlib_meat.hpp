@@ -3430,17 +3430,15 @@ auxlib::svd(Col<T>& S, Mat< std::complex<T> >& A)
 
 
 
-template<typename eT, typename T1>
+template<typename eT>
 inline
 bool
-auxlib::svd(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, const Base<eT,T1>& X)
+auxlib::svd(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
   {
   arma_extra_debug_sigprint();
   
   #if defined(ARMA_USE_LAPACK)
     {
-    Mat<eT> A(X.get_ref());
-    
     if(A.is_empty())
       {
       U.eye(A.n_rows, A.n_rows);
@@ -3502,7 +3500,7 @@ auxlib::svd(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, const Base<eT,T1>& X)
     arma_ignore(U);
     arma_ignore(S);
     arma_ignore(V);
-    arma_ignore(X);
+    arma_ignore(A);
     arma_stop_logic_error("svd(): use of LAPACK must be enabled");
     return false;
     }
@@ -3511,18 +3509,16 @@ auxlib::svd(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, const Base<eT,T1>& X)
 
 
 
-template<typename T, typename T1>
+template<typename T>
 inline
 bool
-auxlib::svd(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, const Base< std::complex<T>, T1>& X)
+auxlib::svd(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, Mat< std::complex<T> >& A)
   {
   arma_extra_debug_sigprint();
   
   #if defined(ARMA_USE_LAPACK)
     {
     typedef std::complex<T> eT;
-    
-    Mat<eT> A(X.get_ref());
     
     if(A.is_empty())
       {
@@ -3586,7 +3582,7 @@ auxlib::svd(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, con
     arma_ignore(U);
     arma_ignore(S);
     arma_ignore(V);
-    arma_ignore(X);
+    arma_ignore(A);
     arma_stop_logic_error("svd(): use of LAPACK must be enabled");
     return false;
     }
@@ -3967,17 +3963,15 @@ auxlib::svd_dc(Col<T>& S, Mat< std::complex<T> >& A)
 
 
 
-template<typename eT, typename T1>
+template<typename eT>
 inline
 bool
-auxlib::svd_dc(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, const Base<eT,T1>& X)
+auxlib::svd_dc(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
   {
   arma_extra_debug_sigprint();
   
   #if defined(ARMA_USE_LAPACK)
     {
-    Mat<eT> A(X.get_ref());
-    
     if(A.is_empty())
       {
       U.eye(A.n_rows, A.n_rows);
@@ -4042,7 +4036,7 @@ auxlib::svd_dc(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, const Base<eT,T1>& X)
     arma_ignore(U);
     arma_ignore(S);
     arma_ignore(V);
-    arma_ignore(X);
+    arma_ignore(A);
     arma_stop_logic_error("svd(): use of LAPACK must be enabled");
     return false;
     }
@@ -4051,18 +4045,16 @@ auxlib::svd_dc(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, const Base<eT,T1>& X)
 
 
 
-template<typename T, typename T1>
+template<typename T>
 inline
 bool
-auxlib::svd_dc(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, const Base< std::complex<T>, T1>& X)
+auxlib::svd_dc(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, Mat< std::complex<T> >& A)
   {
   arma_extra_debug_sigprint();
   
   #if defined(ARMA_USE_LAPACK)
     {
     typedef std::complex<T> eT;
-    
-    Mat<eT> A(X.get_ref());
     
     if(A.is_empty())
       {
@@ -4128,7 +4120,7 @@ auxlib::svd_dc(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, 
     arma_ignore(U);
     arma_ignore(S);
     arma_ignore(V);
-    arma_ignore(X);
+    arma_ignore(A);
     arma_stop_logic_error("svd(): use of LAPACK must be enabled");
     return false;
     }
