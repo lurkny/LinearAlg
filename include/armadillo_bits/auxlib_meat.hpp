@@ -3313,12 +3313,12 @@ auxlib::svd(Col<eT>& S, Mat<eT>& A)
     char jobu  = 'N';
     char jobvt = 'N';
     
-    blas_int m          = A.n_rows;
-    blas_int n          = A.n_cols;
+    blas_int m          = blas_int(A.n_rows);
+    blas_int n          = blas_int(A.n_cols);
     blas_int min_mn     = (std::min)(m,n);
-    blas_int lda        = A.n_rows;
-    blas_int ldu        = U.n_rows;
-    blas_int ldvt       = V.n_rows;
+    blas_int lda        = blas_int(A.n_rows);
+    blas_int ldu        = blas_int(U.n_rows);
+    blas_int ldvt       = blas_int(V.n_rows);
     blas_int lwork_min  = (std::max)( blas_int(1), (std::max)( (3*min_mn + (std::max)(m,n)), 5*min_mn ) );
     blas_int info   = 0;
     
@@ -3381,12 +3381,12 @@ auxlib::svd(Col<T>& S, Mat< std::complex<T> >& A)
     char jobu  = 'N';
     char jobvt = 'N';
     
-    blas_int  m         = A.n_rows;
-    blas_int  n         = A.n_cols;
+    blas_int  m         = blas_int(A.n_rows);
+    blas_int  n         = blas_int(A.n_cols);
     blas_int  min_mn    = (std::min)(m,n);
-    blas_int  lda       = A.n_rows;
-    blas_int  ldu       = U.n_rows;
-    blas_int  ldvt      = V.n_rows;
+    blas_int  lda       = blas_int(A.n_rows);
+    blas_int  ldu       = blas_int(U.n_rows);
+    blas_int  ldvt      = blas_int(V.n_rows);
     blas_int  lwork_min = (std::max)( blas_int(1), 2*min_mn+(std::max)(m,n) );
     blas_int  info      = 0;
     
