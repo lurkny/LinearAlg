@@ -69,7 +69,7 @@ svd
   
   Mat<eT> A(X.get_ref());
   
-  const bool status = auxlib::svd_dc(out, X);
+  const bool status = auxlib::svd_dc(out, A);
   
   if(status == false)
     {
