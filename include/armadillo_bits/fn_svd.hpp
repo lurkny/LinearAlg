@@ -32,9 +32,11 @@ svd
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  // it doesn't matter if X is an alias of S, as auxlib::svd() makes a copy of X
+  typedef typename T1::elem_type eT;
   
-  const bool status = auxlib::svd_dc(S, X);
+  Mat<eT> A(X.get_ref());
+  
+  const bool status = auxlib::svd_dc(S, A);
   
   if(status == false)
     {
@@ -60,7 +62,12 @@ svd
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  Col<typename T1::pod_type> out;
+  typedef typename T1::elem_type eT;
+  typedef typename T1::pod_type   T;
+  
+  Col<T> out;
+  
+  Mat<eT> A(X.get_ref());
   
   const bool status = auxlib::svd_dc(out, X);
   

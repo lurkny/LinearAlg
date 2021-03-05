@@ -218,17 +218,12 @@ class auxlib
   //
   // svd
   
-  template<typename eT, typename T1>
-  inline static bool svd(Col<eT>& S, const Base<eT,T1>& X, uword& n_rows, uword& n_cols);
+  template<typename eT>
+  inline static bool svd(Col<eT>& S, Mat<eT>& A);
   
-  template<typename T, typename T1>
-  inline static bool svd(Col<T>& S, const Base<std::complex<T>, T1>& X, uword& n_rows, uword& n_cols);
+  template<typename T>
+  inline static bool svd(Col<T>& S, Mat< std::complex<T> >& A);
   
-  template<typename eT, typename T1>
-  inline static bool svd(Col<eT>& S, const Base<eT,T1>& X);
-  
-  template<typename T, typename T1>
-  inline static bool svd(Col<T>& S, const Base<std::complex<T>, T1>& X);
   
   template<typename eT, typename T1>
   inline static bool svd(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, const Base<eT,T1>& X);
@@ -243,17 +238,11 @@ class auxlib
   inline static bool svd_econ(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, Mat< std::complex<T> >& A, const char mode);
   
   
-  template<typename eT, typename T1>
-  inline static bool svd_dc(Col<eT>& S, const Base<eT,T1>& X, uword& n_rows, uword& n_cols);
+  template<typename eT>
+  inline static bool svd_dc(Col<eT>& S, Mat<eT>& A);
   
-  template<typename T, typename T1>
-  inline static bool svd_dc(Col<T>& S, const Base<std::complex<T>, T1>& X, uword& n_rows, uword& n_cols);
-  
-  template<typename eT, typename T1>
-  inline static bool svd_dc(Col<eT>& S, const Base<eT,T1>& X);
-  
-  template<typename T, typename T1>
-  inline static bool svd_dc(Col<T>& S, const Base<std::complex<T>, T1>& X);
+  template<typename T>
+  inline static bool svd_dc(Col<T>& S, Mat< std::complex<T> >& A);
   
   
   template<typename eT, typename T1>

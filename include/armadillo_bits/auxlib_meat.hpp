@@ -3294,25 +3294,16 @@ auxlib::qr_pivot(Mat< std::complex<T> >& Q, Mat< std::complex<T> >& R, Mat<uword
 
 
 
-template<typename eT, typename T1>
+template<typename eT>
 inline
 bool
-auxlib::svd(Col<eT>& S, const Base<eT,T1>& X, uword& X_n_rows, uword& X_n_cols)
+auxlib::svd(Col<eT>& S, Mat<eT>& A)
   {
   arma_extra_debug_sigprint();
   
   #if defined(ARMA_USE_LAPACK)
     {
-    Mat<eT> A(X.get_ref());
-    
-    X_n_rows = A.n_rows;
-    X_n_cols = A.n_cols;
-    
-    if(A.is_empty())
-      {
-      S.reset();
-      return true;
-      }
+    if(A.is_empty())  { S.reset(); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -3360,9 +3351,7 @@ auxlib::svd(Col<eT>& S, const Base<eT,T1>& X, uword& X_n_rows, uword& X_n_cols)
   #else
     {
     arma_ignore(S);
-    arma_ignore(X);
-    arma_ignore(X_n_rows);
-    arma_ignore(X_n_cols);
+    arma_ignore(A);
     arma_stop_logic_error("svd(): use of LAPACK must be enabled");
     return false;
     }
@@ -3371,10 +3360,10 @@ auxlib::svd(Col<eT>& S, const Base<eT,T1>& X, uword& X_n_rows, uword& X_n_cols)
 
 
 
-template<typename T, typename T1>
+template<typename T>
 inline
 bool
-auxlib::svd(Col<T>& S, const Base<std::complex<T>, T1>& X, uword& X_n_rows, uword& X_n_cols)
+auxlib::svd(Col<T>& S, Mat< std::complex<T> >& A)
   {
   arma_extra_debug_sigprint();
   
@@ -3382,16 +3371,7 @@ auxlib::svd(Col<T>& S, const Base<std::complex<T>, T1>& X, uword& X_n_rows, uwor
     {
     typedef std::complex<T> eT;
     
-    Mat<eT> A(X.get_ref());
-    
-    X_n_rows = A.n_rows;
-    X_n_cols = A.n_cols;
-    
-    if(A.is_empty())
-      {
-      S.reset();
-      return true;
-      }
+    if(A.is_empty())  { S.reset(); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -3441,40 +3421,11 @@ auxlib::svd(Col<T>& S, const Base<std::complex<T>, T1>& X, uword& X_n_rows, uwor
   #else
     {
     arma_ignore(S);
-    arma_ignore(X);
-    arma_ignore(X_n_rows);
-    arma_ignore(X_n_cols);
-
+    arma_ignore(A);
     arma_stop_logic_error("svd(): use of LAPACK must be enabled");
     return false;
     }
   #endif
-  }
-
-
-
-template<typename eT, typename T1>
-inline
-bool
-auxlib::svd(Col<eT>& S, const Base<eT,T1>& X)
-  {
-  arma_extra_debug_sigprint();
-  
-  uword junk;
-  return auxlib::svd(S, X, junk, junk);
-  }
-
-
-
-template<typename T, typename T1>
-inline
-bool
-auxlib::svd(Col<T>& S, const Base<std::complex<T>, T1>& X)
-  {
-  arma_extra_debug_sigprint();
-  
-  uword junk;
-  return auxlib::svd(S, X, junk, junk);
   }
 
 
@@ -3877,25 +3828,16 @@ auxlib::svd_econ(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V
 
 
 
-template<typename eT, typename T1>
+template<typename eT>
 inline
 bool
-auxlib::svd_dc(Col<eT>& S, const Base<eT,T1>& X, uword& X_n_rows, uword& X_n_cols)
+auxlib::svd_dc(Col<eT>& S, Mat<eT>& A)
   {
   arma_extra_debug_sigprint();
   
   #if defined(ARMA_USE_LAPACK)
     {
-    Mat<eT> A(X.get_ref());
-    
-    X_n_rows = A.n_rows;
-    X_n_cols = A.n_cols;
-    
-    if(A.is_empty())
-      {
-      S.reset();
-      return true;
-      }
+    if(A.is_empty())  { S.reset(); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -3945,9 +3887,7 @@ auxlib::svd_dc(Col<eT>& S, const Base<eT,T1>& X, uword& X_n_rows, uword& X_n_col
   #else
     {
     arma_ignore(S);
-    arma_ignore(X);
-    arma_ignore(X_n_rows);
-    arma_ignore(X_n_cols);
+    arma_ignore(A);
     arma_stop_logic_error("svd(): use of LAPACK must be enabled");
     return false;
     }
@@ -3956,10 +3896,10 @@ auxlib::svd_dc(Col<eT>& S, const Base<eT,T1>& X, uword& X_n_rows, uword& X_n_col
 
 
 
-template<typename T, typename T1>
+template<typename T>
 inline
 bool
-auxlib::svd_dc(Col<T>& S, const Base<std::complex<T>, T1>& X, uword& X_n_rows, uword& X_n_cols)
+auxlib::svd_dc(Col<T>& S, Mat< std::complex<T> >& A)
   {
   arma_extra_debug_sigprint();
   
@@ -3967,16 +3907,7 @@ auxlib::svd_dc(Col<T>& S, const Base<std::complex<T>, T1>& X, uword& X_n_rows, u
     {
     typedef std::complex<T> eT;
     
-    Mat<eT> A(X.get_ref());
-    
-    X_n_rows = A.n_rows;
-    X_n_cols = A.n_cols;
-    
-    if(A.is_empty())
-      {
-      S.reset();
-      return true;
-      }
+    if(A.is_empty())  { S.reset(); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -4027,39 +3958,11 @@ auxlib::svd_dc(Col<T>& S, const Base<std::complex<T>, T1>& X, uword& X_n_rows, u
   #else
     {
     arma_ignore(S);
-    arma_ignore(X);
-    arma_ignore(X_n_rows);
-    arma_ignore(X_n_cols);
+    arma_ignore(A);
     arma_stop_logic_error("svd(): use of LAPACK must be enabled");
     return false;
     }
   #endif
-  }
-
-
-
-template<typename eT, typename T1>
-inline
-bool
-auxlib::svd_dc(Col<eT>& S, const Base<eT,T1>& X)
-  {
-  arma_extra_debug_sigprint();
-  
-  uword junk;
-  return auxlib::svd_dc(S, X, junk, junk);
-  }
-
-
-
-template<typename T, typename T1>
-inline
-bool
-auxlib::svd_dc(Col<T>& S, const Base<std::complex<T>, T1>& X)
-  {
-  arma_extra_debug_sigprint();
-  
-  uword junk;
-  return auxlib::svd_dc(S, X, junk, junk);
   }
 
 
