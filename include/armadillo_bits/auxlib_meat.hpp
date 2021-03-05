@@ -4360,8 +4360,6 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
   {
   arma_extra_debug_sigprint();
   
-  typedef typename T1::elem_type eT;
-  
   const uword A_n_rows = A.n_rows;
   
   if(A_n_rows <= 4)
@@ -4386,6 +4384,8 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
   
   #if defined(ARMA_USE_ATLAS)
     {
+    typedef typename T1::elem_type eT;
+    
     arma_debug_assert_atlas_size(A);
     
     podarray<int> ipiv(A_n_rows + 2);  // +2 for paranoia: old versions of Atlas might be trashing memory
@@ -4397,6 +4397,8 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
     }
   #elif defined(ARMA_USE_LAPACK)
     {
+    typedef typename T1::elem_type eT;
+    
     arma_debug_assert_blas_size(A);
     
     blas_int n    = blas_int(A_n_rows);  // assuming A is square
