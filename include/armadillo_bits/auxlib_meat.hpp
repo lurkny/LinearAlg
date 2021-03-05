@@ -6398,21 +6398,14 @@ auxlib::syl(Mat<eT>& X, const Mat<eT>& A, const Mat<eT>& B, const Mat<eT>& C)
       
     arma_debug_check( (C.n_rows != A.n_rows) || (C.n_cols != B.n_cols), "syl(): matrices are not conformant" );
     
-    if(A.is_empty() || B.is_empty() || C.is_empty())
-      {
-      X.reset();
-      return true;
-      }
-  
+    if(A.is_empty() || B.is_empty() || C.is_empty())  { X.reset(); return true; }
+    
     Mat<eT> Z1, Z2, T1, T2;
     
     const bool status_sd1 = auxlib::schur(Z1, T1, A);
     const bool status_sd2 = auxlib::schur(Z2, T2, B);
     
-    if( (status_sd1 == false) || (status_sd2 == false) )
-      {
-      return false;
-      }
+    if( (status_sd1 == false) || (status_sd2 == false) )  { return false; }
     
     char     trana = 'N';
     char     tranb = 'N';
