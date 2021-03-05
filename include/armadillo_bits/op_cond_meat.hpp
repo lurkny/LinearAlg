@@ -26,7 +26,8 @@ op_cond::cond(const Base<typename T1::elem_type, T1>& X)
   {
   arma_extra_debug_sigprint();
   
-  typedef typename T1::pod_type T;
+  typedef typename T1::elem_type eT;
+  typedef typename T1::pod_type   T;
   
   Mat<eT> A(X.get_ref());
   
