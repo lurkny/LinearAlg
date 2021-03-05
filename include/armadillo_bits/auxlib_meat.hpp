@@ -306,7 +306,7 @@ auxlib::inv_sympd(Mat<eT>& out, const Base<eT,T1>& X)
     
     const bool status = auxlib::inv_sympd_tiny(tmp, out);
     
-    if(status == true)  { out = tmp; return true; }
+    if(status)  { out = tmp; return true; }
     }
   
   #if defined(ARMA_USE_ATLAS)
@@ -4366,7 +4366,7 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
     {
     const bool status = auxlib::solve_square_tiny(out, A, B_expr.get_ref());
     
-    if(status == true)  { return true; }
+    if(status)  { return true; }
     }
   
   out = B_expr.get_ref();
@@ -4738,7 +4738,7 @@ auxlib::solve_sympd_fast_common(Mat<typename T1::elem_type>& out, Mat<typename T
     {
     const bool status = auxlib::solve_square_tiny(out, A, B_expr.get_ref());
     
-    if(status == true)  { return true; }
+    if(status)  { return true; }
     }
   
   out = B_expr.get_ref();
