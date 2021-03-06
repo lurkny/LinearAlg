@@ -717,7 +717,7 @@ Constructors:
 </li>
 <br>
 <li>
-When using the <i>mat(n_rows, n_cols)</i> or <i>mat(size(X))</i> constructors, by default the elements are uninitialised (ie. may contain garbage values, including NaN);
+When using the <i>mat(n_rows, n_cols)</i> or <i>mat(size(X))</i> constructors, by default the elements are not initialised (ie. may contain garbage values, including NaN);
 the elements can be explicitly initialised by specifying the <i>fill_type</i>,
 which is one of:
 <i>fill::zeros</i>,
@@ -1082,7 +1082,7 @@ Constructors:
 </li>
 <br>
 <li>
-When using the <i>vec(n_elem)</i> or <i>vec(size(X))</i> constructors, by default the elements are uninitialised (ie. may contain garbage values, including NaN);
+When using the <i>vec(n_elem)</i> or <i>vec(size(X))</i> constructors, by default the elements are not initialised (ie. may contain garbage values, including NaN);
 the elements can be explicitly initialised by specifying the <i>fill_type</i>,
 as per the <a href="#Mat">Mat class</a>
 </li>
@@ -1337,7 +1337,7 @@ Constructors:
 </li>
 <br>
 <li>
-When using the <i>rowvec(n_elem)</i> or <i>rowvec(size(X))</i> constructors, by default the elements are uninitialised (ie. may contain garbage values, including NaN);
+When using the <i>rowvec(n_elem)</i> or <i>rowvec(size(X))</i> constructors, by default the elements are not initialised (ie. may contain garbage values, including NaN);
 the elements can be explicitly initialised by specifying the <i>fill_type</i>,
 as per the <a href="#Mat">Mat class</a>
 </li>
@@ -1598,7 +1598,7 @@ Constructors:
 </li>
 <br>
 <li>
-When using the <i>cube(n_rows, n_cols, n_slices)</i> or <i>cube(size(X))</i> constructors, by default the elements are uninitialised (ie. may contain garbage values, including NaN);
+When using the <i>cube(n_rows, n_cols, n_slices)</i> or <i>cube(size(X))</i> constructors, by default the elements are not initialised (ie. may contain garbage values, including NaN);
 the elements can be explicitly initialised by specifying the <i>fill_type</i>,
 as per the <a href="#Mat">Mat class</a> (except for <i>fill::eye</i>)
 </li>
