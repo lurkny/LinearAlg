@@ -74,9 +74,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     
     out = A;
     
-    const T rcond_threshold = T(1000) * std::numeric_limits<T>::epsilon();
-    // rcond_threshold was empirically determined to ensure that pinv(cov(randu(N,N)) + k*eye(N,N))
-    // obtained very similar results with and without the sympd optimisation for various values of N and k
+    const T rcond_threshold = T((std::max)(uword(100), uword(A.n_rows))) * std::numeric_limits<T>::epsilon();
     
     const bool status = auxlib::inv_sympd_rcond(out, rcond_threshold);
     
