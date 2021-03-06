@@ -413,6 +413,10 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, const eT rcond_threshold)
     
     const T rcond = auxlib::lu_rcond_sympd<T>(A, norm_val);
     
+    // cout << "*** norm_val:            " << norm_val << endl;
+    // cout << "*** estimated threshold: " << (A.n_rows * norm_val * datum::eps) << endl;
+    // cout << "*** estimated rcond:     " << rcond << endl;
+    
     if(rcond < rcond_threshold)  { return false; }
     
     arma_extra_debug_print("lapack::potri()");
