@@ -14,9 +14,15 @@ main(int argc, char** argv)
   {
   cout << "Armadillo version: " << arma_version::as_string() << endl;
   
-  mat A(2,3);  // directly specify the matrix size (elements are uninitialised)
+  // directly specify the matrix size (by default, elements are not initialised)
+  mat A(2,3); 
   
-  cout << "A.n_rows: " << A.n_rows << endl;  // .n_rows and .n_cols are read only
+  // explicit element initialisation during initialisation via one of:
+  // fill::zeros, fill::ones, fill::eye, fill::randu,  fill::randn
+  A = mat(2,3,fill::zeros);
+  
+  // .n_rows and .n_cols are read only
+  cout << "A.n_rows: " << A.n_rows << endl;
   cout << "A.n_cols: " << A.n_cols << endl;
   
   A(1,2) = 456.0;  // directly access an element (indexing starts at 0)
@@ -27,7 +33,7 @@ main(int argc, char** argv)
   
   A.set_size(4,5); // change the size (data is not preserved)
   
-  A.fill(5.0);     // set all elements to a particular value
+  A.fill(5.0);     // set all elements to a specific value
   A.print("A:");
   
   A = { { 0.165300, 0.454037, 0.995795, 0.124098, 0.047084 },
