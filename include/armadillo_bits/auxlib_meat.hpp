@@ -413,9 +413,6 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, const eT rcond_threshold)
     
     const T rcond = auxlib::lu_rcond_sympd<T>(A, norm_val);
     
-    // cout << "*** rcond: " << rcond << endl;
-    // cout << "*** rcond_threshold: " << rcond_threshold << endl;
-    
     if(rcond < rcond_threshold)  { return false; }
     
     arma_extra_debug_print("lapack::potri()");
@@ -475,9 +472,6 @@ auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, const T rcond_threshold)
     if(info != 0)  { return false; }
     
     const T rcond = auxlib::lu_rcond_sympd<T>(A, norm_val);
-    
-    // cout << "*** rcond: " << rcond << endl;
-    // cout << "*** rcond_threshold: " << rcond_threshold << endl;
     
     if(rcond < rcond_threshold)  { return false; }
     
