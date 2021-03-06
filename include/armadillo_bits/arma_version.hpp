@@ -21,8 +21,8 @@
 
 #define ARMA_VERSION_MAJOR 10
 #define ARMA_VERSION_MINOR 2
-#define ARMA_VERSION_PATCH 900
-#define ARMA_VERSION_NAME  "unstable - not for production use"
+#define ARMA_VERSION_PATCH 91
+#define ARMA_VERSION_NAME  "10.3 RC1"
 
 
 
