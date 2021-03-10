@@ -17,7 +17,7 @@ main(int argc, char** argv)
   // directly specify the matrix size (by default, elements are not initialised)
   mat A(2,3); 
   
-  // explicit element initialisation during initialisation via one of:
+  // explicit element initialisation during construction via one of:
   // fill::zeros, fill::ones, fill::eye, fill::randu,  fill::randn
   A = mat(2,3,fill::zeros);
   
