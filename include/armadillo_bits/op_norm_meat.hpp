@@ -882,8 +882,14 @@ op_norm::mat_norm_1(const Proxy<T1>& P)
   {
   arma_extra_debug_sigprint();
   
+  typedef typename T1::pod_type T;
+  
   // TODO: this can be sped up with a dedicated implementation
-  return as_scalar( max( sum(abs(P.Q), 0), 1) );
+  const T outval = as_scalar( max( sum(abs(P.Q), 0), 1) );
+  
+  if(arma_isfinite(outval) == false)  { arma_debug_warn("norm(): given matrix may have non-finite values"); }
+  
+  return outval;
   }
 
 
@@ -895,12 +901,18 @@ op_norm::mat_norm_2(const Proxy<T1>& P)
   {
   arma_extra_debug_sigprint();
   
-  typedef typename T1::pod_type   T;
+  typedef typename T1::pod_type T;
   
   Col<T> S;
-  svd(S, P.Q);
+  const bool status = svd(S, P.Q);
   
-  return (S.n_elem > 0) ? S[0] : T(0);
+  if(status == false)  { arma_debug_warn("norm(): svd failed"); }
+  
+  const T outval = (S.n_elem > 0) ? S[0] : T(0);
+  
+  if(arma_isfinite(outval) == false)  { arma_debug_warn("norm(): given matrix may have non-finite values"); }
+  
+  return outval;
   }
 
 
@@ -912,8 +924,14 @@ op_norm::mat_norm_inf(const Proxy<T1>& P)
   {
   arma_extra_debug_sigprint();
   
+  typedef typename T1::pod_type T;
+  
   // TODO: this can be sped up with a dedicated implementation
-  return as_scalar( max( sum(abs(P.Q), 1), 0) );
+  const T outval = as_scalar( max( sum(abs(P.Q), 1), 0) );
+  
+  if(arma_isfinite(outval) == false)  { arma_debug_warn("norm(): given matrix may have non-finite values"); }
+  
+  return outval;
   }
 
 
