@@ -887,7 +887,7 @@ op_norm::mat_norm_1(const Proxy<T1>& P)
   // TODO: this can be sped up with a dedicated implementation
   const T outval = as_scalar( max( sum(abs(P.Q), 0), 1) );
   
-  if(arma_isfinite(outval) == false)  { arma_debug_warn("norm(): given matrix may have non-finite values"); }
+  if(arma_isfinite(outval) == false)  { arma_debug_warn("norm(): given matrix may have non-finite elements"); }
   
   return outval;
   }
@@ -910,7 +910,7 @@ op_norm::mat_norm_2(const Proxy<T1>& P)
   
   const T outval = (S.n_elem > 0) ? S[0] : T(0);
   
-  if(arma_isfinite(outval) == false)  { arma_debug_warn("norm(): given matrix may have non-finite values"); }
+  if(arma_isfinite(outval) == false)  { arma_debug_warn("norm(): given matrix may have non-finite elements"); }
   
   return outval;
   }
@@ -929,7 +929,7 @@ op_norm::mat_norm_inf(const Proxy<T1>& P)
   // TODO: this can be sped up with a dedicated implementation
   const T outval = as_scalar( max( sum(abs(P.Q), 1), 0) );
   
-  if(arma_isfinite(outval) == false)  { arma_debug_warn("norm(): given matrix may have non-finite values"); }
+  if(arma_isfinite(outval) == false)  { arma_debug_warn("norm(): given matrix may have non-finite elements"); }
   
   return outval;
   }
