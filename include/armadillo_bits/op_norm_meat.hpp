@@ -908,7 +908,9 @@ op_norm::mat_norm_2(const Proxy<T1>& P)
   Col<T> S;
   const bool status = svd(S, P.Q);
   
-  if(status == false)  { arma_debug_warn("norm(): svd failed"); }
+  #if defined(ARMA_EXTRA_WARN)
+    if(status == false)  { arma_debug_warn("norm(): svd failed"); }
+  #endif
   
   const T outval = (S.n_elem > 0) ? S[0] : T(0);
   
