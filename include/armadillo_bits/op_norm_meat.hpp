@@ -906,11 +906,7 @@ op_norm::mat_norm_2(const Proxy<T1>& P)
   typedef typename T1::pod_type T;
   
   Col<T> S;
-  const bool status = svd(S, P.Q);
-  
-  #if defined(ARMA_EXTRA_WARN)
-    if(status == false)  { arma_debug_warn("norm(): svd failed"); }
-  #endif
+  svd(S, P.Q);
   
   const T outval = (S.n_elem > 0) ? S[0] : T(0);
   
