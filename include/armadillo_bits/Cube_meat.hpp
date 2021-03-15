@@ -4306,9 +4306,7 @@ Cube<eT>::save(const std::string name, const file_type type) const
   
   if(save_okay == false)
     {
-    #if defined(ARMA_EXTRA_WARNINGS)
-      arma_debug_warn("Cube::save(): couldn't write; file: ", name);
-    #endif
+    arma_extra_warn("Cube::save(): couldn't write; file: ", name);
     }
   
   return save_okay;
@@ -4360,18 +4358,14 @@ Cube<eT>::save(const hdf5_name& spec, const file_type type) const
   
   if(save_okay == false)
     {
-    #if defined(ARMA_EXTRA_WARNINGS)
+    if(err_msg.length() > 0)
       {
-      if(err_msg.length() > 0)
-        {
-        arma_debug_warn("Cube::save(): ", err_msg, "; file: ", spec.filename);
-        }
-      else
-        {
-        arma_debug_warn("Cube::save(): couldn't write; file: ", spec.filename);
-        }
+      arma_extra_warn("Cube::save(): ", err_msg, "; file: ", spec.filename);
       }
-    #endif
+    else
+      {
+      arma_extra_warn("Cube::save(): couldn't write; file: ", spec.filename);
+      }
     }
   
   return save_okay;
@@ -4419,9 +4413,7 @@ Cube<eT>::save(std::ostream& os, const file_type type) const
   
   if(save_okay == false)
     {
-    #if defined(ARMA_EXTRA_WARNINGS)
-      arma_debug_warn("Cube::save(): couldn't write to given stream");
-    #endif
+    arma_extra_warn("Cube::save(): couldn't write to given stream");
     }
   
   return save_okay;
@@ -4484,18 +4476,14 @@ Cube<eT>::load(const std::string name, const file_type type)
     {
     (*this).soft_reset();
     
-    #if defined(ARMA_EXTRA_WARNINGS)
+    if(err_msg.length() > 0)
       {
-      if(err_msg.length() > 0)
-        {
-        arma_debug_warn("Cube::load(): ", err_msg, "; file: ", name);
-        }
-      else
-        {
-        arma_debug_warn("Cube::load(): couldn't read; file: ", name);
-        }
+      arma_extra_warn("Cube::load(): ", err_msg, "; file: ", name);
       }
-    #endif
+    else
+      {
+      arma_extra_warn("Cube::load(): couldn't read; file: ", name);
+      }
     }
   
   return load_okay;
@@ -4541,18 +4529,14 @@ Cube<eT>::load(const hdf5_name& spec, const file_type type)
     {
     (*this).soft_reset();
     
-    #if defined(ARMA_EXTRA_WARNINGS)
+    if(err_msg.length() > 0)
       {
-      if(err_msg.length() > 0)
-        {
-        arma_debug_warn("Cube::load(): ", err_msg, "; file: ", spec.filename);
-        }
-      else
-        {
-        arma_debug_warn("Cube::load(): couldn't read; file: ", spec.filename);
-        }
+      arma_extra_warn("Cube::load(): ", err_msg, "; file: ", spec.filename);
       }
-    #endif
+    else
+      {
+      arma_extra_warn("Cube::load(): couldn't read; file: ", spec.filename);
+      }
     }
   
   return load_okay;
@@ -4607,18 +4591,14 @@ Cube<eT>::load(std::istream& is, const file_type type)
     {
     (*this).soft_reset();
     
-    #if defined(ARMA_EXTRA_WARNINGS)
+    if(err_msg.length() > 0)
       {
-      if(err_msg.length() > 0)
-        {
-        arma_debug_warn("Cube::load(): ", err_msg);
-        }
-      else
-        {
-        arma_debug_warn("Cube::load(): couldn't load from the given stream");
-        }
+      arma_extra_warn("Cube::load(): ", err_msg);
       }
-    #endif
+    else
+      {
+      arma_extra_warn("Cube::load(): couldn't load from the given stream");
+      }
     }
   
   return load_okay;
