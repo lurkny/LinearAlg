@@ -4304,10 +4304,7 @@ Cube<eT>::save(const std::string name, const file_type type) const
       save_okay = false;
     }
   
-  if(save_okay == false)
-    {
-    arma_extra_warn("Cube::save(): couldn't write; file: ", name);
-    }
+  if(save_okay == false)  { arma_extra_warn("Cube::save(): couldn't write; file: ", name); }
   
   return save_okay;
   }
@@ -4411,10 +4408,7 @@ Cube<eT>::save(std::ostream& os, const file_type type) const
       save_okay = false;
     }
   
-  if(save_okay == false)
-    {
-    arma_extra_warn("Cube::save(): couldn't write to given stream");
-    }
+  if(save_okay == false)  { arma_extra_warn("Cube::save(): couldn't write to given stream"); }
   
   return save_okay;
   }
