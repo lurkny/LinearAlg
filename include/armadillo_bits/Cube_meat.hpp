@@ -4263,11 +4263,9 @@ template<typename eT>
 inline
 arma_cold
 bool
-Cube<eT>::save(const std::string name, const file_type type, const bool print_status) const
+Cube<eT>::save(const std::string name, const file_type type) const
   {
   arma_extra_debug_sigprint();
-  
-  // TODO: copy this function without the print_status arg; create deprecated wrapper function with print_status arg; ditto for other functions with print_status arg
   
   bool save_okay = false;
   
@@ -4322,7 +4320,7 @@ template<typename eT>
 inline
 arma_cold
 bool
-Cube<eT>::save(const hdf5_name& spec, const file_type type, const bool print_status) const
+Cube<eT>::save(const hdf5_name& spec, const file_type type) const
   {
   arma_extra_debug_sigprint();
   
@@ -4386,7 +4384,7 @@ template<typename eT>
 inline
 arma_cold
 bool
-Cube<eT>::save(std::ostream& os, const file_type type, const bool print_status) const
+Cube<eT>::save(std::ostream& os, const file_type type) const
   {
   arma_extra_debug_sigprint();
   
@@ -4436,7 +4434,7 @@ template<typename eT>
 inline
 arma_cold
 bool
-Cube<eT>::load(const std::string name, const file_type type, const bool print_status)
+Cube<eT>::load(const std::string name, const file_type type)
   {
   arma_extra_debug_sigprint();
   
@@ -4509,7 +4507,7 @@ template<typename eT>
 inline
 arma_cold
 bool
-Cube<eT>::load(const hdf5_name& spec, const file_type type, const bool print_status)
+Cube<eT>::load(const hdf5_name& spec, const file_type type)
   {
   arma_extra_debug_sigprint();
   
@@ -4567,7 +4565,7 @@ template<typename eT>
 inline
 arma_cold
 bool
-Cube<eT>::load(std::istream& is, const file_type type, const bool print_status)
+Cube<eT>::load(std::istream& is, const file_type type)
   {
   arma_extra_debug_sigprint();
   
@@ -4628,7 +4626,6 @@ Cube<eT>::load(std::istream& is, const file_type type, const bool print_status)
 
 
 
-//! TODO: deprecate this function
 template<typename eT>
 inline
 arma_cold
@@ -4637,12 +4634,11 @@ Cube<eT>::quiet_save(const std::string name, const file_type type) const
   {
   arma_extra_debug_sigprint();
   
-  return (*this).save(name, type, false);
+  return (*this).save(name, type);
   }
 
 
 
-//! TODO: deprecate this function
 template<typename eT>
 inline
 arma_cold
@@ -4651,12 +4647,11 @@ Cube<eT>::quiet_save(const hdf5_name& spec, const file_type type) const
   {
   arma_extra_debug_sigprint();
   
-  return (*this).save(spec, type, false);
+  return (*this).save(spec, type);
   }
 
 
 
-//! TODO: deprecate this function
 template<typename eT>
 inline
 arma_cold
@@ -4665,12 +4660,11 @@ Cube<eT>::quiet_save(std::ostream& os, const file_type type) const
   {
   arma_extra_debug_sigprint();
   
-  return (*this).save(os, type, false);
+  return (*this).save(os, type);
   }
 
 
 
-//! TODO: deprecate this function
 template<typename eT>
 inline
 arma_cold
@@ -4679,12 +4673,11 @@ Cube<eT>::quiet_load(const std::string name, const file_type type)
   {
   arma_extra_debug_sigprint();
   
-  return (*this).load(name, type, false);
+  return (*this).load(name, type);
   }
 
 
 
-//! TODO: deprecate this function
 template<typename eT>
 inline
 arma_cold
@@ -4693,12 +4686,11 @@ Cube<eT>::quiet_load(const hdf5_name& spec, const file_type type)
   {
   arma_extra_debug_sigprint();
   
-  return (*this).load(spec, type, false);
+  return (*this).load(spec, type);
   }
 
 
 
-//! TODO: deprecate this function
 template<typename eT>
 inline
 arma_cold
@@ -4707,7 +4699,7 @@ Cube<eT>::quiet_load(std::istream& is, const file_type type)
   {
   arma_extra_debug_sigprint();
   
-  return (*this).load(is, type, false);
+  return (*this).load(is, type);
   }
 
 
