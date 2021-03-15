@@ -22,7 +22,7 @@
 //! log determinant of mat
 template<typename T1>
 inline
-void
+bool
 log_det
   (
         typename T1::elem_type&          out_val,
@@ -37,22 +37,26 @@ log_det
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  const bool status = auxlib::log_det(out_val, out_sign, X);
+  const bool status = auxlib::log_det(out_val, out_sign, X.get_ref());
   
   if(status == false)
     {
     out_val  = eT(Datum<T>::nan);
     out_sign = T(0);
     
-    arma_warn("log_det(): failed to find determinant");
+    #if defined(ARMA_EXTRA_WARNINGS)
+      arma_debug_warn("log_det(): failed to find determinant");
+    #endif
     }
+  
+  return status;
   }
 
 
 
 template<typename T1>
 inline
-void
+bool
 log_det
   (
         typename T1::elem_type& out_val,
@@ -78,7 +82,7 @@ log_det
     out_val  = eT(0);
     out_sign =  T(1);
     
-    return;
+    return true;
     }
   
   eT x = A[0];
@@ -96,6 +100,8 @@ log_det
   
   out_val  = val;
   out_sign = sign;
+  
+  return true;  // TODO: detect failure
   }
 
 
@@ -119,7 +125,15 @@ log_det
   eT out_val  = eT(0);
    T out_sign =  T(0);
   
-  log_det(out_val, out_sign, X.get_ref());
+  const bool status = auxlib::log_det(out_val, out_sign, X.get_ref());
+  
+  if(status == false)
+    {
+    out_val  = eT(Datum<T>::nan);
+    out_sign = T(0);
+    
+    arma_stop_runtime_error("log_det(): failed to find determinant");
+    }
   
   return (out_sign >= T(1)) ? std::complex<T>(out_val) : (out_val + std::complex<T>(T(0),Datum<T>::pi));
   }
