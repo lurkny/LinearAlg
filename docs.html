@@ -150,7 +150,7 @@ hr.greyline
 <a class="noprint" style="display:scroll; position:fixed; bottom:5px; right:5px;" href="#top"><font size=-1>[top]</font></a>
 
 <a name="top"></a>
-<big><b>API Documentation for Armadillo 10.3</b></big>
+<big><b>API Documentation for Armadillo 10.9</b></big>
 <br>
 <br>
 <br>
@@ -9827,7 +9827,7 @@ if matrix <i>A</i> is real and the determinant is negative:
 <br>
 <li>If the log determinant cannot be found:
 <ul>
-<li><i>log_det(val, sign, A)</i> sets <i>val</i> to NaN and returns a bool set to <i>false</i> (exception is not thrown)</li>
+<li><i>log_det(val, sign, A)</i> returns a bool set to <i>false</i> (exception is not thrown)</li>
 <li><i>result = log_det(A)</i> throws a <i>std::runtime_error</i> exception</li>
 </ul>
 </li>
