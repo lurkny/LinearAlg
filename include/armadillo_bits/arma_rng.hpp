@@ -245,9 +245,9 @@ struct arma_rng::randi
       std::mt19937_64                    local_engine;
       std::uniform_int_distribution<int> local_i_distr(a, b);
       
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
-      local_engine.seed( seed_type(mt19937_64_instance()) );
+      local_engine.seed( local_seed_type(mt19937_64_instance()) );
       
       for(uword i=0; i<N; ++i)  { mem[i] = eT(local_i_distr(local_engine)); }
       }
@@ -255,12 +255,12 @@ struct arma_rng::randi
       {
       if(N == uword(1))  { arma_rng_cxx98::randi_fill(mem, uword(1), a, b); return; }
       
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       std::mt19937_64                    local_engine;
       std::uniform_int_distribution<int> local_i_distr(a, b);
       
-      local_engine.seed( seed_type(std::rand()) );
+      local_engine.seed( local_seed_type(std::rand()) );
       
       for(uword i=0; i<N; ++i)  { mem[i] = eT(local_i_distr(local_engine)); }
       }
@@ -311,12 +311,12 @@ struct arma_rng::randu
       {
       if(N == uword(1))  { mem[0] = eT( arma_rng::randu<eT>() ); return; }
       
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       std::mt19937_64                        local_engine;
       std::uniform_real_distribution<double> local_u_distr;
       
-      local_engine.seed( seed_type(mt19937_64_instance()) );
+      local_engine.seed( local_seed_type(mt19937_64_instance()) );
       
       for(uword i=0; i < N; ++i)  { mem[i] = eT( local_u_distr(local_engine) ); }
       }
@@ -324,12 +324,12 @@ struct arma_rng::randu
       {
       if(N == uword(1))  { mem[0] = eT( arma_rng_cxx98::randu_val() ); return; }
       
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       std::mt19937_64                        local_engine;
       std::uniform_real_distribution<double> local_u_distr;
       
-      local_engine.seed( seed_type(std::rand()) );
+      local_engine.seed( local_seed_type(std::rand()) );
       
       for(uword i=0; i < N; ++i)  { mem[i] = eT( local_u_distr(local_engine) ); }
       }
@@ -379,12 +379,12 @@ struct arma_rng::randu< std::complex<T> >
         return;
         }
       
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       std::mt19937_64                        local_engine;
       std::uniform_real_distribution<double> local_u_distr;
       
-      local_engine.seed( seed_type(mt19937_64_instance()) );
+      local_engine.seed( local_seed_type(mt19937_64_instance()) );
       
       for(uword i=0; i < N; ++i)
         {
@@ -406,12 +406,12 @@ struct arma_rng::randu< std::complex<T> >
         return;
         }
       
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       std::mt19937_64                        local_engine;
       std::uniform_real_distribution<double> local_u_distr;
       
-      local_engine.seed( seed_type(std::rand()) );
+      local_engine.seed( local_seed_type(std::rand()) );
       
       for(uword i=0; i < N; ++i)
         {
@@ -490,12 +490,12 @@ struct arma_rng::randn
       }
     #elif defined(ARMA_USE_EXTERN_RNG)
       {
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       std::mt19937_64                  local_engine;
       std::normal_distribution<double> local_n_distr;
       
-      local_engine.seed( seed_type(mt19937_64_instance()) );
+      local_engine.seed( local_seed_type(mt19937_64_instance()) );
       
       for(uword i=0; i < N; ++i)  { mem[i] = eT( local_n_distr(local_engine) ); }
       }
@@ -503,12 +503,12 @@ struct arma_rng::randn
       {
       if(N == uword(1))  { mem[0] = eT( arma_rng_cxx98::randn_val() ); return; }
       
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       std::mt19937_64                  local_engine;
       std::normal_distribution<double> local_n_distr;
       
-      local_engine.seed( seed_type(std::rand()) );
+      local_engine.seed( local_seed_type(std::rand()) );
       
       for(uword i=0; i < N; ++i)  { mem[i] = eT( local_n_distr(local_engine) ); }
       }
@@ -525,7 +525,7 @@ struct arma_rng::randn
       {
       if((N < 1024) || omp_in_parallel())  { arma_rng::randn<eT>::fill_simple(mem, N); return; }
       
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       const uword n_threads = uword( mp_thread_limit::get() );
       
@@ -623,12 +623,12 @@ struct arma_rng::randn< std::complex<T> >
       }
     #elif defined(ARMA_USE_EXTERN_RNG)
       {
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       std::mt19937_64                  local_engine;
       std::normal_distribution<double> local_n_distr;
       
-      local_engine.seed( seed_type(mt19937_64_instance()) );
+      local_engine.seed( local_seed_type(mt19937_64_instance()) );
       
       for(uword i=0; i < N; ++i)
         {
@@ -652,12 +652,12 @@ struct arma_rng::randn< std::complex<T> >
         return;
         }
       
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       std::mt19937_64                  local_engine;
       std::normal_distribution<double> local_n_distr;
       
-      local_engine.seed( seed_type(std::rand()) );
+      local_engine.seed( local_seed_type(std::rand()) );
       
       for(uword i=0; i < N; ++i)
         {
@@ -680,7 +680,7 @@ struct arma_rng::randn< std::complex<T> >
       {
       if((N < 512) || omp_in_parallel())  { arma_rng::randn< std::complex<T> >::fill_simple(mem, N); return; }
       
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       const uword n_threads = uword( mp_thread_limit::get() );
       
@@ -758,23 +758,23 @@ struct arma_rng::randg
         return;
         }
       
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       std::mt19937_64                 local_engine;
       std::gamma_distribution<double> local_g_distr(a,b);
       
-      local_engine.seed( seed_type(mt19937_64_instance()) );
+      local_engine.seed( local_seed_type(mt19937_64_instance()) );
       
       for(uword i=0; i<N; ++i)  { mem[i] = eT(local_g_distr(local_engine)); }
       }
     #else
       {
-      typedef typename std::mt19937_64::result_type seed_type;
+      typedef typename std::mt19937_64::result_type local_seed_type;
       
       std::mt19937_64                 local_engine;
       std::gamma_distribution<double> local_g_distr(a,b);
       
-      local_engine.seed( seed_type(std::rand()) );
+      local_engine.seed( local_seed_type(std::rand()) );
       
       for(uword i=0; i<N; ++i)  { mem[i] = eT(local_g_distr(local_engine)); }
       }
