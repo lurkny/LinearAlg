@@ -41,6 +41,14 @@
     thread_local arma_rng_cxx11 arma_rng_cxx11_instance;   
     
     thread_local std::mt19937_64 mt19937_64_instance;
+    
+    namespace junk
+      {
+      struct mt19937_64_instance_init { inline mt19937_64_instance_init() { mt19937_64_instance.seed(1); } };
+      
+      mt19937_64_instance_init mt19937_64_instance_init_run;
+      }
+    
     }
 #endif
 
