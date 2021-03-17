@@ -34,8 +34,13 @@
   
   namespace arma
     {
+    // NOTE: arma_rng_cxx11_instance is kept only for compatibility with earlier versions of armadillo
+    // TODO: remove arma_rng_cxx11_instance when the major version is bumped
+    
     #include "armadillo_bits/arma_rng_cxx11.hpp"
-    thread_local arma_rng_cxx11 arma_rng_cxx11_instance;
+    thread_local arma_rng_cxx11 arma_rng_cxx11_instance;   
+    
+    thread_local std::mt19937_64 mt19937_64_instance;
     }
 #endif
 
