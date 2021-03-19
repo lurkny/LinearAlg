@@ -46,6 +46,8 @@ inv
   {
   arma_extra_debug_sigprint();
   
+  // TODO: add handling of op_trimat to op_inv and remove this function
+  
   return Op<T1, op_inv_tr>(X.m, X.aux_uword_a, 0);
   }
 
