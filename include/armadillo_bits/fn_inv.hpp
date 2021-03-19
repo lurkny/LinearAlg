@@ -36,24 +36,6 @@ inv
 
 
 template<typename T1>
-arma_warn_unused
-arma_inline
-typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, const Op<T1, op_inv_tr> >::result
-inv
-  (
-  const Op<T1, op_trimat>& X
-  )
-  {
-  arma_extra_debug_sigprint();
-  
-  // TODO: add handling of op_trimat to op_inv and remove this function
-  
-  return Op<T1, op_inv_tr>(X.m, X.aux_uword_a, 0);
-  }
-
-
-
-template<typename T1>
 inline
 typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, bool >::result
 inv
@@ -64,18 +46,15 @@ inv
   {
   arma_extra_debug_sigprint();
   
-  // TODO: refactor to remove "try catch"
+  const bool status = op_inv::apply_direct(out, X.get_ref());
   
-  try
+  if(status == false)
     {
-    out = inv(X);
-    }
-  catch(std::runtime_error&)
-    {
-    return false;
+    out.soft_reset();
+    arma_extra_warn("inv(): matrix seems singular");
     }
   
-  return true;
+  return status;
   }
 
 
@@ -107,18 +86,15 @@ inv_sympd
   {
   arma_extra_debug_sigprint();
   
-  // TODO: refactor to remove "try catch"
+  const bool status = op_inv_sympd::apply_direct(out, X.get_ref());
   
-  try
+  if(status == false)
     {
-    out = inv_sympd(X);
-    }
-  catch(std::runtime_error&)
-    {
-    return false;
+    out.soft_reset();
+    arma_extra_warn("inv_sympd(): matrix is singular or not positive definite");
     }
   
-  return true;
+  return status;
   }
 
 

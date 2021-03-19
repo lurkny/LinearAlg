@@ -19,7 +19,6 @@
 
 
 
-//! 'invert matrix' operation (general matrices)
 class op_inv
   : public traits_op_default
   {
@@ -27,6 +26,9 @@ class op_inv
   
   template<typename T1>
   inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv>& in);
+  
+  template<typename T1>
+  inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr);
   
   template<typename eT>
   inline static bool apply_noalias(Mat<eT>& out, const Mat<eT>& A);
@@ -37,19 +39,6 @@ class op_inv
 
 
 
-//! 'invert matrix' operation (triangular matrices)
-class op_inv_tr
-  : public traits_op_default
-  {
-  public:
-  
-  template<typename T1>
-  inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_tr>& in);
-  };
-
-
-
-//! 'invert matrix' operation (symmetric positive definite matrices)
 class op_inv_sympd
   : public traits_op_default
   {
@@ -57,6 +46,9 @@ class op_inv_sympd
   
   template<typename T1>
   inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_sympd>& in);
+  
+  template<typename T1>
+  inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr);
   };
 
 

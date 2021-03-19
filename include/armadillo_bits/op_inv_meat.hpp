@@ -26,39 +26,50 @@ op_inv::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv>& X)
   {
   arma_extra_debug_sigprint();
   
-  typedef typename T1::elem_type eT;
-  
-  const strip_diagmat<T1> strip(X.m);
-  
-  bool status = false;
-  
-  if(strip.do_diagmat)
-    {
-    status = op_inv::apply_diagmat(out, strip.M);
-    }
-  else
-    {
-    const quasi_unwrap<T1> U(X.m);
-    
-    if(U.is_alias(out))
-      {
-      Mat<eT> tmp;
-      
-      status = op_inv::apply_noalias(tmp, U.M);
-      
-      out.steal_mem(tmp);
-      }
-    else
-      {
-      status = op_inv::apply_noalias(out, U.M);
-      }
-    }
+  const bool status = op_inv::apply_direct(out, X.m);
   
   if(status == false)
     {
     out.soft_reset();
     arma_stop_runtime_error("inv(): matrix seems singular");
     }
+  }
+
+
+
+template<typename T1>
+inline
+bool
+op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename T1::elem_type eT;
+  
+  const strip_diagmat<T1> strip1(expr.get_ref());
+  const strip_trimat<T1>  strip2(expr.get_ref());
+  
+  if(strip1.do_diagmat)  { return op_inv::apply_diagmat(out, strip1.M); }
+  if(strip2.do_trimat)   { return auxlib::inv_tr(out, strip2.M, (strip2.do_triu ? uword(0) : uword(1))); }
+  
+  bool status = false;
+    
+  const quasi_unwrap<T1> U(expr.get_ref());
+  
+  if(U.is_alias(out))
+    {
+    Mat<eT> tmp;
+    
+    status = op_inv::apply_noalias(tmp, U.M);
+    
+    out.steal_mem(tmp);
+    }
+  else
+    {
+    status = op_inv::apply_noalias(out, U.M);
+    }
+  
+  return status;
   }
 
 
@@ -180,16 +191,16 @@ op_inv::apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X)
 template<typename T1>
 inline
 void
-op_inv_tr::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_tr>& X)
+op_inv_sympd::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_sympd>& X)
   {
   arma_extra_debug_sigprint();
   
-  const bool status = auxlib::inv_tr(out, X.m, X.aux_uword_a);
+  const bool status = op_inv_sympd::apply_direct(out, X.m);
   
   if(status == false)
     {
     out.soft_reset();
-    arma_stop_runtime_error("inv(): matrix seems singular");
+    arma_stop_runtime_error("inv_sympd(): matrix is singular or not positive definite");
     }
   }
 
@@ -197,18 +208,12 @@ op_inv_tr::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_tr>& X)
 
 template<typename T1>
 inline
-void
-op_inv_sympd::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_sympd>& X)
+bool
+op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr)
   {
   arma_extra_debug_sigprint();
   
-  const bool status = auxlib::inv_sympd(out, X.m);
-  
-  if(status == false)
-    {
-    out.soft_reset();
-    arma_stop_runtime_error("inv_sympd(): matrix is singular or not positive definite");
-    }
+  return auxlib::inv_sympd(out, expr.get_ref());
   }
 
 
