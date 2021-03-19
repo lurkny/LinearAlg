@@ -536,7 +536,7 @@ struct arma_rng::randn
         {
         std::mt19937_64& t_engine = engine[t];
         
-        t_engine.seed( seed_type(t) + seed_type(arma_rng::randi<seed_type>()) );
+        t_engine.seed( local_seed_type(t) + local_seed_type(arma_rng::randi<local_seed_type>()) );
         }
       
       const uword chunk_size = N / n_threads;
@@ -691,7 +691,7 @@ struct arma_rng::randn< std::complex<T> >
         {
         std::mt19937_64& t_engine = engine[t];
         
-        t_engine.seed( seed_type(t) + seed_type(arma_rng::randi<seed_type>()) );
+        t_engine.seed( local_seed_type(t) + local_seed_type(arma_rng::randi<local_seed_type>()) );
         }
       
       const uword chunk_size = N / n_threads;
