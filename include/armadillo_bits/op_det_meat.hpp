@@ -172,31 +172,63 @@ op_det::apply_tiny(const Mat<eT>& X)
   
   if(N == 4)
     {
+    const eT val_03_12 = Xm[pos<0,3>::n4] * Xm[pos<1,2>::n4];
+    const eT val_02_13 = Xm[pos<0,2>::n4] * Xm[pos<1,3>::n4];
+    const eT val_03_11 = Xm[pos<0,3>::n4] * Xm[pos<1,1>::n4];
+    
+    const eT val_01_13 = Xm[pos<0,1>::n4] * Xm[pos<1,3>::n4];
+    const eT val_02_11 = Xm[pos<0,2>::n4] * Xm[pos<1,1>::n4];
+    const eT val_01_12 = Xm[pos<0,1>::n4] * Xm[pos<1,2>::n4];
+    
+    const eT val_03_10 = Xm[pos<0,3>::n4] * Xm[pos<1,0>::n4];
+    const eT val_00_13 = Xm[pos<0,0>::n4] * Xm[pos<1,3>::n4];
+    const eT val_02_10 = Xm[pos<0,2>::n4] * Xm[pos<1,0>::n4];
+    const eT val_00_12 = Xm[pos<0,0>::n4] * Xm[pos<1,2>::n4];
+    
+    const eT val_01_10 = Xm[pos<0,1>::n4] * Xm[pos<1,0>::n4];
+    const eT val_00_11 = Xm[pos<0,0>::n4] * Xm[pos<1,1>::n4];
+    
+    const eT val_21_30 = Xm[pos<2,1>::n4] * Xm[pos<3,0>::n4];
+    const eT val_22_30 = Xm[pos<2,2>::n4] * Xm[pos<3,0>::n4];
+    const eT val_23_30 = Xm[pos<2,3>::n4] * Xm[pos<3,0>::n4];
+    
+    const eT val_20_31 = Xm[pos<2,0>::n4] * Xm[pos<3,1>::n4];
+    const eT val_22_31 = Xm[pos<2,2>::n4] * Xm[pos<3,1>::n4];
+    const eT val_23_31 = Xm[pos<2,3>::n4] * Xm[pos<3,1>::n4];
+    
+    const eT val_20_32 = Xm[pos<2,0>::n4] * Xm[pos<3,2>::n4];
+    const eT val_21_32 = Xm[pos<2,1>::n4] * Xm[pos<3,2>::n4];
+    const eT val_23_32 = Xm[pos<2,3>::n4] * Xm[pos<3,2>::n4];
+    
+    const eT val_20_33 = Xm[pos<2,0>::n4] * Xm[pos<3,3>::n4];
+    const eT val_21_33 = Xm[pos<2,1>::n4] * Xm[pos<3,3>::n4];
+    const eT val_22_33 = Xm[pos<2,2>::n4] * Xm[pos<3,3>::n4];
+    
     const eT val = \
-        Xm[pos<0,3>::n4] * Xm[pos<1,2>::n4] * Xm[pos<2,1>::n4] * Xm[pos<3,0>::n4] \
-      - Xm[pos<0,2>::n4] * Xm[pos<1,3>::n4] * Xm[pos<2,1>::n4] * Xm[pos<3,0>::n4] \
-      - Xm[pos<0,3>::n4] * Xm[pos<1,1>::n4] * Xm[pos<2,2>::n4] * Xm[pos<3,0>::n4] \
-      + Xm[pos<0,1>::n4] * Xm[pos<1,3>::n4] * Xm[pos<2,2>::n4] * Xm[pos<3,0>::n4] \
-      + Xm[pos<0,2>::n4] * Xm[pos<1,1>::n4] * Xm[pos<2,3>::n4] * Xm[pos<3,0>::n4] \
-      - Xm[pos<0,1>::n4] * Xm[pos<1,2>::n4] * Xm[pos<2,3>::n4] * Xm[pos<3,0>::n4] \
-      - Xm[pos<0,3>::n4] * Xm[pos<1,2>::n4] * Xm[pos<2,0>::n4] * Xm[pos<3,1>::n4] \
-      + Xm[pos<0,2>::n4] * Xm[pos<1,3>::n4] * Xm[pos<2,0>::n4] * Xm[pos<3,1>::n4] \
-      + Xm[pos<0,3>::n4] * Xm[pos<1,0>::n4] * Xm[pos<2,2>::n4] * Xm[pos<3,1>::n4] \
-      - Xm[pos<0,0>::n4] * Xm[pos<1,3>::n4] * Xm[pos<2,2>::n4] * Xm[pos<3,1>::n4] \
-      - Xm[pos<0,2>::n4] * Xm[pos<1,0>::n4] * Xm[pos<2,3>::n4] * Xm[pos<3,1>::n4] \
-      + Xm[pos<0,0>::n4] * Xm[pos<1,2>::n4] * Xm[pos<2,3>::n4] * Xm[pos<3,1>::n4] \
-      + Xm[pos<0,3>::n4] * Xm[pos<1,1>::n4] * Xm[pos<2,0>::n4] * Xm[pos<3,2>::n4] \
-      - Xm[pos<0,1>::n4] * Xm[pos<1,3>::n4] * Xm[pos<2,0>::n4] * Xm[pos<3,2>::n4] \
-      - Xm[pos<0,3>::n4] * Xm[pos<1,0>::n4] * Xm[pos<2,1>::n4] * Xm[pos<3,2>::n4] \
-      + Xm[pos<0,0>::n4] * Xm[pos<1,3>::n4] * Xm[pos<2,1>::n4] * Xm[pos<3,2>::n4] \
-      + Xm[pos<0,1>::n4] * Xm[pos<1,0>::n4] * Xm[pos<2,3>::n4] * Xm[pos<3,2>::n4] \
-      - Xm[pos<0,0>::n4] * Xm[pos<1,1>::n4] * Xm[pos<2,3>::n4] * Xm[pos<3,2>::n4] \
-      - Xm[pos<0,2>::n4] * Xm[pos<1,1>::n4] * Xm[pos<2,0>::n4] * Xm[pos<3,3>::n4] \
-      + Xm[pos<0,1>::n4] * Xm[pos<1,2>::n4] * Xm[pos<2,0>::n4] * Xm[pos<3,3>::n4] \
-      + Xm[pos<0,2>::n4] * Xm[pos<1,0>::n4] * Xm[pos<2,1>::n4] * Xm[pos<3,3>::n4] \
-      - Xm[pos<0,0>::n4] * Xm[pos<1,2>::n4] * Xm[pos<2,1>::n4] * Xm[pos<3,3>::n4] \
-      - Xm[pos<0,1>::n4] * Xm[pos<1,0>::n4] * Xm[pos<2,2>::n4] * Xm[pos<3,3>::n4] \
-      + Xm[pos<0,0>::n4] * Xm[pos<1,1>::n4] * Xm[pos<2,2>::n4] * Xm[pos<3,3>::n4] \
+        val_03_12 * val_21_30 \
+      - val_02_13 * val_21_30 \
+      - val_03_11 * val_22_30 \
+      + val_01_13 * val_22_30 \
+      + val_02_11 * val_23_30 \
+      - val_01_12 * val_23_30 \
+      - val_03_12 * val_20_31 \
+      + val_02_13 * val_20_31 \
+      + val_03_10 * val_22_31 \
+      - val_00_13 * val_22_31 \
+      - val_02_10 * val_23_31 \
+      + val_00_12 * val_23_31 \
+      + val_03_11 * val_20_32 \
+      - val_01_13 * val_20_32 \
+      - val_03_10 * val_21_32 \
+      + val_00_13 * val_21_32 \
+      + val_01_10 * val_23_32 \
+      - val_00_11 * val_23_32 \
+      - val_02_11 * val_20_33 \
+      + val_01_12 * val_20_33 \
+      + val_02_10 * val_21_33 \
+      - val_00_12 * val_21_33 \
+      - val_01_10 * val_22_33 \
+      + val_00_11 * val_22_33 \
       ;
     
     return val;
