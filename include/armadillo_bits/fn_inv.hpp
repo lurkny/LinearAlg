@@ -62,6 +62,8 @@ inv
   {
   arma_extra_debug_sigprint();
   
+  // TODO: refactor to remove "try catch"
+  
   try
     {
     out = inv(X);
@@ -102,6 +104,8 @@ inv_sympd
   )
   {
   arma_extra_debug_sigprint();
+  
+  // TODO: refactor to remove "try catch"
   
   try
     {
