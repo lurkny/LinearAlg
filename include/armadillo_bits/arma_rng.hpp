@@ -807,7 +807,7 @@ struct arma_rng::randg
         motor_type& g_motor_t = g_motor[t];
         distr_type& g_distr_t = g_distr[t];
         
-        g_motor_t.seed( ovum_type(t) + ovum_type((*this).randi_val()) );
+        g_motor_t.seed( ovum_type(t) + ovum_type(arma_rng::randi<ovum_type>()) );
         
         g_distr_t.param( g_distr_base.param() );
         }
