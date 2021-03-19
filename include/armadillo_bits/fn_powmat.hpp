@@ -61,6 +61,8 @@ powmat
   {
   arma_extra_debug_sigprint();
   
+  // TODO: refactor to avoid "try catch"
+  
   try
     {
     out = powmat(X,y);
@@ -86,6 +88,8 @@ powmat
   )
   {
   arma_extra_debug_sigprint();
+  
+  // TODO: refactor to avoid "try catch"
   
   try
     {
