@@ -2021,6 +2021,14 @@ The following subset of operations &amp; functions is available for sparse matri
 </li>
 <br>
 <li>
+<b>Caveats:</b>
+<ul>
+<li>the sparse matrix class is not intended for small matrices (eg. &leq; 100x100), due to the overhead of the compressed storage format</li>
+<li>for small matrices, use the <a href="#Mat">dense matrix</a> class, even if the vast majority of elements are zero</li>
+</ul>
+</li>
+<br>
+<li>
 Examples:
 <ul>
 <pre>
