@@ -219,15 +219,14 @@ op_inv::apply_noalias_tiny(Mat<eT>& out, const Mat<eT>& X)
     
     const eT det_val = (a*d - b*c);
     
-    if(std::abs(det_val) >= det_min)
-      {
-      outm[pos<0,0>::n2] =  d / det_val;
-      outm[pos<0,1>::n2] = -b / det_val;
-      outm[pos<1,0>::n2] = -c / det_val;
-      outm[pos<1,1>::n2] =  a / det_val;
-      
-      return true;
-      }
+    if(std::abs(det_val) < det_min)  { return false; }
+    
+    outm[pos<0,0>::n2] =  d / det_val;
+    outm[pos<0,1>::n2] = -b / det_val;
+    outm[pos<1,0>::n2] = -c / det_val;
+    outm[pos<1,1>::n2] =  a / det_val;
+    
+    return true;
     }
   
   if(N == 3)
@@ -252,7 +251,9 @@ op_inv::apply_noalias_tiny(Mat<eT>& out, const Mat<eT>& X)
     
     const  T max_diff  = (is_float<T>::value) ? T(1e-4) : T(1e-10);  // empirically determined; may need tuning
     
-    if(std::abs(T(1) - check_val) < max_diff)  { return true; }
+    if(std::abs(T(1) - check_val) >= max_diff)  { return false; }
+    
+    return true;
     }
   
   if(N == 4)
@@ -285,7 +286,9 @@ op_inv::apply_noalias_tiny(Mat<eT>& out, const Mat<eT>& X)
     
     const  T max_diff  = (is_float<T>::value) ? T(1e-4) : T(1e-10);  // empirically determined; may need tuning
     
-    if(std::abs(T(1) - check_val) < max_diff)  { return true; }
+    if(std::abs(T(1) - check_val) >= max_diff)  { return false; }
+    
+    return true;
     }
   
   return false;
