@@ -85,7 +85,7 @@ op_inv::apply_noalias(Mat<eT>& out, const Mat<eT>& A)
   
   bool status = false;
   
-  if(A.n_rows <= 4)
+  if((A.n_rows <= 4) && is_cx<eT>::no)
     {
     status = op_inv::apply_noalias_tiny(out, A);
     }
