@@ -50,65 +50,48 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
   const strip_trimat<T1>  strip2(expr.get_ref());
   
   if(strip1.do_diagmat)  { return op_inv::apply_diagmat(out, strip1.M); }
-  if(strip2.do_trimat)   { return auxlib::inv_tr(out, strip2.M, (strip2.do_triu ? uword(0) : uword(1))); }
   
-  bool status = false;
-    
-  const quasi_unwrap<T1> U(expr.get_ref());
-  
-  if(U.is_alias(out))
+  if(strip2.do_trimat)
     {
-    Mat<eT> tmp;
+    out = strip2.M;
     
-    status = op_inv::apply_noalias(tmp, U.M);
+    arma_debug_check( (out.is_square() == false), "inv(): given matrix must be square sized" );
     
-    out.steal_mem(tmp);
-    }
-  else
-    {
-    status = op_inv::apply_noalias(out, U.M);
+    return auxlib::inv_tr(out, (strip2.do_triu ? uword(0) : uword(1)));
     }
   
-  return status;
-  }
-
-
-
-template<typename eT>
-inline
-bool
-op_inv::apply_noalias(Mat<eT>& out, const Mat<eT>& A)
-  {
-  arma_extra_debug_sigprint();
+  out = expr.get_ref();
   
-  arma_debug_check( (A.n_rows != A.n_cols), "inv(): given matrix must be square sized" );
+  arma_debug_check( (out.is_square() == false), "inv(): given matrix must be square sized" );
   
   bool status = false;
   
-  if((A.n_rows <= 4) && is_cx<eT>::no)
+  if((out.n_rows <= 4) && is_cx<eT>::no)
     {
-    status = op_inv::apply_noalias_tiny(out, A);
+    const Mat<eT> tmp = out;
+    
+    status = op_inv::apply_tiny_noalias(out, tmp);
     }
   else
-  if(A.is_diagmat())
+  if(out.is_diagmat())
     {
-    return op_inv::apply_diagmat(out, A);
+    return op_inv::apply_diagmat(out, out);
     }
   else
     {
-    const bool is_triu =                     trimat_helper::is_triu(A);
-    const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(A);
+    const bool is_triu =                     trimat_helper::is_triu(out);
+    const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(out);
     
     if(is_triu || is_tril)
       {
       const uword layout = (is_triu) ? uword(0) : uword(1);
       
-      return auxlib::inv_tr(out, A, layout);
+      return auxlib::inv_tr(out, layout);
       }
     else
       {
       #if defined(ARMA_OPTIMISE_SYMPD)
-        const bool try_sympd = sympd_helper::guess_sympd_anysize(A);
+        const bool try_sympd = sympd_helper::guess_sympd_anysize(out);
       #else
         const bool try_sympd = false;
       #endif
@@ -117,7 +100,7 @@ op_inv::apply_noalias(Mat<eT>& out, const Mat<eT>& A)
         {
         arma_extra_debug_print("op_inv: attempting sympd optimisation");
         
-        status = auxlib::inv_sympd(out, A);
+        status = auxlib::inv_sympd(out);
         
         if(status)  { return true; }
         
@@ -127,7 +110,7 @@ op_inv::apply_noalias(Mat<eT>& out, const Mat<eT>& A)
       }
     }
   
-  if(status == false)  { status = auxlib::inv(out, A); }
+  if(status == false)  { status = auxlib::inv(out); }
   
   return status;
   }
@@ -189,7 +172,7 @@ template<typename eT>
 arma_cold
 inline
 bool
-op_inv::apply_noalias_tiny(Mat<eT>& out, const Mat<eT>& X)
+op_inv::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
   {
   arma_extra_debug_sigprint();
   
@@ -320,6 +303,27 @@ bool
 op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr)
   {
   arma_extra_debug_sigprint();
+  
+  typedef typename T1::elem_type eT;
+  
+  out = expr.get_ref();
+  
+  arma_debug_check( (out.is_square() == false), "inv_sympd(): given matrix must be square sized" );
+  
+  if((arma_config::debug) && (auxlib::rudimentary_sym_check(out) == false))
+    {
+    if(is_cx<eT>::no )  { arma_debug_warn("inv_sympd(): given matrix is not symmetric"); }
+    if(is_cx<eT>::yes)  { arma_debug_warn("inv_sympd(): given matrix is not hermitian"); }
+    }
+  
+  if((out.n_rows <= 4) && is_cx<eT>::no)
+    {
+    const Mat<eT> tmp = out;
+    
+    const bool status = op_inv::apply_tiny_noalias(out, tmp);
+    
+    if(status)  { return true; }
+    }
   
   return auxlib::inv_sympd(out, expr.get_ref());
   }

@@ -22,49 +22,48 @@
 template<typename eT>
 inline
 bool
-auxlib::inv(Mat<eT>& out, const Mat<eT>& A)
+auxlib::inv(Mat<eT>& A)
   {
   arma_extra_debug_sigprint();
   
-  out = A;
-  
-  if(out.is_empty())  { return true; }
+  if(A.is_empty())  { return true; }
   
   #if defined(ARMA_USE_ATLAS)
     {
-    arma_debug_assert_atlas_size(out);
+    arma_debug_assert_atlas_size(A);
     
-    podarray<int> ipiv(out.n_rows);
+    podarray<int> ipiv(A.n_rows);
     
     int info = 0;
     
     arma_extra_debug_print("atlas::clapack_getrf()");
-    info = atlas::clapack_getrf(atlas::CblasColMajor, out.n_rows, out.n_cols, out.memptr(), out.n_rows, ipiv.memptr());
+    info = atlas::clapack_getrf(atlas::CblasColMajor, A.n_rows, A.n_cols, A.memptr(), A.n_rows, ipiv.memptr());
     
     if(info != 0)  { return false; }
     
     arma_extra_debug_print("atlas::clapack_getri()");
-    info = atlas::clapack_getri(atlas::CblasColMajor, out.n_rows, out.memptr(), out.n_rows, ipiv.memptr());
+    info = atlas::clapack_getri(atlas::CblasColMajor, A.n_rows, A.memptr(), A.n_rows, ipiv.memptr());
     
     return (info == 0);
     }
   #elif defined(ARMA_USE_LAPACK)
     {
-    arma_debug_assert_blas_size(out);
+    arma_debug_assert_blas_size(A);
     
-    blas_int n_rows = blas_int(out.n_rows);
-    blas_int lwork  = (std::max)(blas_int(podarray_prealloc_n_elem::val), n_rows);
-    blas_int info   = 0;
+    blas_int n     = blas_int(A.n_rows);
+    blas_int lda   = blas_int(A.n_rows);
+    blas_int lwork = (std::max)(blas_int(podarray_prealloc_n_elem::val), n);
+    blas_int info  = 0;
     
-    podarray<blas_int> ipiv(out.n_rows);
+    podarray<blas_int> ipiv(A.n_rows);
     
-    if(n_rows > 16)
+    if(n > 16)
       {
       eT        work_query[2];
       blas_int lwork_query = -1;
       
       arma_extra_debug_print("lapack::getri()");
-      lapack::getri(&n_rows, out.memptr(), &n_rows, ipiv.memptr(), &work_query[0], &lwork_query, &info);
+      lapack::getri(&n, A.memptr(), &lda, ipiv.memptr(), &work_query[0], &lwork_query, &info);
       
       if(info != 0)  { return false; }
       
@@ -76,18 +75,18 @@ auxlib::inv(Mat<eT>& out, const Mat<eT>& A)
     podarray<eT> work( static_cast<uword>(lwork) );
     
     arma_extra_debug_print("lapack::getrf()");
-    lapack::getrf(&n_rows, &n_rows, out.memptr(), &n_rows, ipiv.memptr(), &info);
+    lapack::getrf(&n, &n, A.memptr(), &lda, ipiv.memptr(), &info);
     
     if(info != 0)  { return false; }
     
     arma_extra_debug_print("lapack::getri()");
-    lapack::getri(&n_rows, out.memptr(), &n_rows, ipiv.memptr(), work.memptr(), &lwork, &info);
+    lapack::getri(&n, A.memptr(), &lda, ipiv.memptr(), work.memptr(), &lwork, &info);
     
     return (info == 0);
     }
   #else
     {
-    out.soft_reset();
+    arma_ignore(A);
     arma_stop_logic_error("inv(): use of ATLAS or LAPACK must be enabled");
     return false;
     }
@@ -96,48 +95,43 @@ auxlib::inv(Mat<eT>& out, const Mat<eT>& A)
 
 
 
-template<typename eT, typename T1>
+template<typename eT>
 inline
 bool
-auxlib::inv_tr(Mat<eT>& out, const Base<eT,T1>& X, const uword layout)
+auxlib::inv_tr(Mat<eT>& A, const uword layout)
   {
   arma_extra_debug_sigprint();
   
   #if defined(ARMA_USE_LAPACK)
     {
-    out = X.get_ref();
-    
-    arma_debug_check( (out.is_square() == false), "inv(): given matrix must be square sized" );
-    
-    if(out.is_empty())  { return true; }
+    if(A.is_empty())  { return true; }
   
-    arma_debug_assert_blas_size(out);
+    arma_debug_assert_blas_size(A);
     
     char     uplo = (layout == 0) ? 'U' : 'L';
     char     diag = 'N';
-    blas_int n    = blas_int(out.n_rows);
+    blas_int n    = blas_int(A.n_rows);
     blas_int info = 0;
     
     arma_extra_debug_print("lapack::trtri()");
-    lapack::trtri(&uplo, &diag, &n, out.memptr(), &n, &info);
+    lapack::trtri(&uplo, &diag, &n, A.memptr(), &n, &info);
     
     if(info != 0)  { return false; }
     
     if(layout == 0)
       {
-      out = trimatu(out);  // upper triangular
+      A = trimatu(A);  // upper triangular
       }
     else
       {
-      out = trimatl(out);  // lower triangular
+      A = trimatl(A);  // lower triangular
       }
     
     return true;
     }
   #else
     {
-    arma_ignore(out);
-    arma_ignore(X);
+    arma_ignore(A);
     arma_ignore(layout);
     arma_stop_logic_error("inv(): use of LAPACK must be enabled");
     return false;
@@ -147,80 +141,62 @@ auxlib::inv_tr(Mat<eT>& out, const Base<eT,T1>& X, const uword layout)
 
 
 
-template<typename eT, typename T1>
+template<typename eT>
 inline
 bool
-auxlib::inv_sympd(Mat<eT>& out, const Base<eT,T1>& X)
+auxlib::inv_sympd(Mat<eT>& A)
   {
   arma_extra_debug_sigprint();
   
-  out = X.get_ref();
-  
-  arma_debug_check( (out.is_square() == false), "inv_sympd(): given matrix must be square sized" );
-  
-  if(out.is_empty())  { return true; }
-  
-  // if(auxlib::rudimentary_sym_check(out) == false)
-  //   {
-  //   if(is_cx<eT>::no )  { arma_debug_warn("inv_sympd(): given matrix is not symmetric"); }
-  //   if(is_cx<eT>::yes)  { arma_debug_warn("inv_sympd(): given matrix is not hermitian"); }
-  //   return false;
-  //   }
-  
-  if((arma_config::debug) && (auxlib::rudimentary_sym_check(out) == false))
-    {
-    if(is_cx<eT>::no )  { arma_debug_warn("inv_sympd(): given matrix is not symmetric"); }
-    if(is_cx<eT>::yes)  { arma_debug_warn("inv_sympd(): given matrix is not hermitian"); }
-    }
+  if(A.is_empty())  { return true; }
   
   #if defined(ARMA_USE_ATLAS)
     {
-    arma_debug_assert_atlas_size(out);
+    arma_debug_assert_atlas_size(A);
     
     int info = 0;
     
     arma_extra_debug_print("atlas::clapack_potrf()");
-    info = atlas::clapack_potrf(atlas::CblasColMajor, atlas::CblasLower, out.n_rows, out.memptr(), out.n_rows);
+    info = atlas::clapack_potrf(atlas::CblasColMajor, atlas::CblasLower, A.n_rows, A.memptr(), A.n_rows);
     
     if(info != 0)  { return false; }
     
     arma_extra_debug_print("atlas::clapack_potri()");
-    info = atlas::clapack_potri(atlas::CblasColMajor, atlas::CblasLower, out.n_rows, out.memptr(), out.n_rows);
+    info = atlas::clapack_potri(atlas::CblasColMajor, atlas::CblasLower, A.n_rows, A.memptr(), A.n_rows);
     
     if(info != 0)  { return false; }
     
-    out = symmatl(out);
+    A = symmatl(A);
     
     return true;
     }
   #elif defined(ARMA_USE_LAPACK)
     {
-    arma_debug_assert_blas_size(out);
+    arma_debug_assert_blas_size(A);
     
     char     uplo = 'L';
-    blas_int n    = blas_int(out.n_rows);
+    blas_int n    = blas_int(A.n_rows);
     blas_int info = 0;
     
     // NOTE: for complex matrices, zpotrf() assumes the matrix is hermitian (not simply symmetric)
     
     arma_extra_debug_print("lapack::potrf()");
-    lapack::potrf(&uplo, &n, out.memptr(), &n, &info);
+    lapack::potrf(&uplo, &n, A.memptr(), &n, &info);
     
     if(info != 0)  { return false; }
     
     arma_extra_debug_print("lapack::potri()");
-    lapack::potri(&uplo, &n, out.memptr(), &n, &info);
+    lapack::potri(&uplo, &n, A.memptr(), &n, &info);
     
     if(info != 0)  { return false; }
     
-    out = symmatl(out);
+    A = symmatl(A);
     
     return true;
     }
   #else
     {
-    arma_ignore(out);
-    arma_ignore(X);
+    arma_ignore(A);
     arma_stop_logic_error("inv_sympd(): use of ATLAS or LAPACK must be enabled");
     return false;
     }
@@ -4037,7 +4013,7 @@ auxlib::solve_square_tiny(Mat<typename T1::elem_type>& out, const Mat<typename T
   {
   arma_extra_debug_sigprint();
   
-  // NOTE: assuming A has a size <= 4x4
+  // NOTE: assuming A has size <= 4x4
   
   typedef typename T1::elem_type eT;
   
@@ -4045,7 +4021,7 @@ auxlib::solve_square_tiny(Mat<typename T1::elem_type>& out, const Mat<typename T
   
   Mat<eT> A_inv(A_n_rows, A_n_rows);
   
-  const bool status = op_inv::apply_noalias_tiny(A_inv, A);
+  const bool status = op_inv::apply_tiny_noalias(A_inv, A);
   
   if(status == false)  { return false; }
   

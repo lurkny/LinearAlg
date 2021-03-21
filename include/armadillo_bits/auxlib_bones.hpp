@@ -27,13 +27,13 @@ class auxlib
   // inv
   
   template<typename eT>
-  inline static bool inv(Mat<eT>& out, const Mat<eT>& A);
+  inline static bool inv(Mat<eT>& A);
   
-  template<typename eT, typename T1>
-  inline static bool inv_tr(Mat<eT>& out, const Base<eT,T1>& X, const uword layout);
+  template<typename eT>
+  inline static bool inv_tr(Mat<eT>& A, const uword layout);
   
-  template<typename eT, typename T1>
-  inline static bool inv_sympd(Mat<eT>& out, const Base<eT,T1>& X);
+  template<typename eT>
+  inline static bool inv_sympd(Mat<eT>& A);
   
   template<typename eT>
   inline static bool inv_sympd_rcond(Mat<eT>& A, const eT rcond_threshold);
