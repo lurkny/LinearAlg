@@ -106,6 +106,8 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
         
         arma_extra_debug_print("op_inv: sympd optimisation failed");
         // auxlib::inv_sympd() will fail if A isn't really positive definite
+        
+        out = expr.get_ref();  // restore
         }
       }
     }
