@@ -41,7 +41,7 @@ op_det::apply(const Base<typename T1::elem_type,T1>& expr)
   
   arma_debug_check( (X.is_square() == false), "det(): given matrix must be square sized" );
   
-  if(X.n_rows <= 4)
+  if((X.n_rows <= 4) && is_cx<eT>::no)
     {
     const eT det_val = op_det::apply_tiny(X);
     
