@@ -76,22 +76,11 @@ op_det::apply_diagmat(const Base<typename T1::elem_type,T1>& expr)
   
   const uword N = (std::min)(A.n_rows, A.n_cols);
   
-  eT val1 = eT(1);
-  eT val2 = eT(1);
+  eT val = eT(1);
   
-  uword i,j;
-  for(i=0, j=1; j<N; i+=2, j+=2)
-    {
-    val1 *= A[i];
-    val2 *= A[j];
-    }
+  for(uword i=0; i<N; ++i)  { val *= A[i]; }
   
-  if(i < N)
-    {
-    val1 *= A[i];
-    }
-  
-  return val1 * val2;
+  return val;
   }
 
 
@@ -111,22 +100,11 @@ op_det::apply_trimat(const Base<typename T1::elem_type,T1>& expr)
   
   arma_debug_check( (N != P.get_n_cols()), "det(): given matrix must be square sized" );
   
-  eT val1 = eT(1);
-  eT val2 = eT(1);
+  eT val = eT(1);
   
-  uword i,j;
-  for(i=0, j=1; j<N; i+=2, j+=2)
-    {
-    val1 *= P.at(i,i);
-    val2 *= P.at(j,j);
-    }
+  for(uword i=0; i<N; ++i)  { val *= P.at(i,i); }
   
-  if(i < N)
-    {
-    val1 *= P.at(i,i);
-    }
-  
-  return val1 * val2;
+  return val;
   }
 
 
