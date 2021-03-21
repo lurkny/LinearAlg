@@ -37,7 +37,11 @@ log_det
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  const bool status = auxlib::log_det(out_val, out_sign, X.get_ref());
+  Mat<eT> A(X.get_ref());
+  
+  arma_debug_check( (A.is_square() == false), "log_det(): given matrix must be square sized" );
+  
+  const bool status = auxlib::log_det(out_val, out_sign, A);
   
   if(status == false)
     {
@@ -123,7 +127,11 @@ log_det
   eT out_val  = eT(0);
    T out_sign =  T(0);
   
-  const bool status = auxlib::log_det(out_val, out_sign, X.get_ref());
+  Mat<eT> A(X.get_ref());
+  
+  arma_debug_check( (A.is_square() == false), "log_det(): given matrix must be square sized" );
+  
+  const bool status = auxlib::log_det(out_val, out_sign, A);
   
   if(status == false)
     {

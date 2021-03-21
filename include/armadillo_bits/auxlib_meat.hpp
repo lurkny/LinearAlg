@@ -325,33 +325,31 @@ auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, const T rcond_threshold)
 template<typename eT>
 inline
 eT
-auxlib::det(const Mat<eT>& X)
+auxlib::det(Mat<eT>& A)
   {
   arma_extra_debug_sigprint();
   
-  Mat<eT> tmp = X;
-  
-  if(tmp.is_empty())  { return eT(1); }
+  if(A.is_empty())  { return eT(1); }
   
   #if defined(ARMA_USE_ATLAS)
     {
-    arma_debug_assert_atlas_size(tmp);
+    arma_debug_assert_atlas_size(A);
     
-    podarray<int> ipiv(tmp.n_rows);
+    podarray<int> ipiv(A.n_rows);
     
     arma_extra_debug_print("atlas::clapack_getrf()");
     //const int info =
-    atlas::clapack_getrf(atlas::CblasColMajor, tmp.n_rows, tmp.n_cols, tmp.memptr(), tmp.n_rows, ipiv.memptr());
+    atlas::clapack_getrf(atlas::CblasColMajor, A.n_rows, A.n_cols, A.memptr(), A.n_rows, ipiv.memptr());
     
-    // on output tmp appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
-    eT val = tmp.at(0,0);
-    for(uword i=1; i < tmp.n_rows; ++i)
+    // on output A appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
+    eT val = A.at(0,0);
+    for(uword i=1; i < A.n_rows; ++i)
       {
-      val *= tmp.at(i,i);
+      val *= A.at(i,i);
       }
     
     int sign = +1;
-    for(uword i=0; i < tmp.n_rows; ++i)
+    for(uword i=0; i < A.n_rows; ++i)
       {
       if( int(i) != ipiv.mem[i] )  // NOTE: no adjustment required, as the clapack version of getrf() assumes counting from 0
         {
@@ -363,26 +361,26 @@ auxlib::det(const Mat<eT>& X)
     }
   #elif defined(ARMA_USE_LAPACK)
     {
-    arma_debug_assert_blas_size(tmp);
+    arma_debug_assert_blas_size(A);
     
-    podarray<blas_int> ipiv(tmp.n_rows);
+    podarray<blas_int> ipiv(A.n_rows);
     
     blas_int info   = 0;
-    blas_int n_rows = blas_int(tmp.n_rows);
-    blas_int n_cols = blas_int(tmp.n_cols);
+    blas_int n_rows = blas_int(A.n_rows);
+    blas_int n_cols = blas_int(A.n_cols);
     
     arma_extra_debug_print("lapack::getrf()");
-    lapack::getrf(&n_rows, &n_cols, tmp.memptr(), &n_rows, ipiv.memptr(), &info);
+    lapack::getrf(&n_rows, &n_cols, A.memptr(), &n_rows, ipiv.memptr(), &info);
     
-    // on output tmp appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
-    eT val = tmp.at(0,0);
-    for(uword i=1; i < tmp.n_rows; ++i)
+    // on output A appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
+    eT val = A.at(0,0);
+    for(uword i=1; i < A.n_rows; ++i)
       {
-      val *= tmp.at(i,i);
+      val *= A.at(i,i);
       }
     
     blas_int sign = +1;
-    for(uword i=0; i < tmp.n_rows; ++i)
+    for(uword i=0; i < A.n_rows; ++i)
       {
       if( blas_int(i) != (ipiv.mem[i] - 1) )  // NOTE: adjustment of -1 is required as Fortran counts from 1
         {
@@ -403,10 +401,10 @@ auxlib::det(const Mat<eT>& X)
 
 
 //! log determinant of a matrix
-template<typename eT, typename T1>
+template<typename eT>
 inline
 bool
-auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, const Base<eT,T1>& X)
+auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, Mat<eT>& A)
   {
   arma_extra_debug_sigprint();
   
@@ -414,39 +412,36 @@ auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, const 
   
   #if defined(ARMA_USE_ATLAS)
     {
-    Mat<eT> tmp(X.get_ref());
-    arma_debug_check( (tmp.is_square() == false), "log_det(): given matrix must be square sized" );
-    
-    if(tmp.is_empty())
+    if(A.is_empty())
       {
       out_val  = eT(0);
       out_sign =  T(1);
       return true;
       }
     
-    arma_debug_assert_atlas_size(tmp);
+    arma_debug_assert_atlas_size(A);
     
-    podarray<int> ipiv(tmp.n_rows);
+    podarray<int> ipiv(A.n_rows);
     
     arma_extra_debug_print("atlas::clapack_getrf()");
-    const int info = atlas::clapack_getrf(atlas::CblasColMajor, tmp.n_rows, tmp.n_cols, tmp.memptr(), tmp.n_rows, ipiv.memptr());
+    const int info = atlas::clapack_getrf(atlas::CblasColMajor, A.n_rows, A.n_cols, A.memptr(), A.n_rows, ipiv.memptr());
     
     if(info < 0)  { return false; }
     
-    // on output tmp appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
+    // on output A appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
     
-    sword sign = (is_cx<eT>::no) ? ( (access::tmp_real( tmp.at(0,0) ) < T(0)) ? -1 : +1 ) : +1;
-    eT    val  = (is_cx<eT>::no) ? std::log( (access::tmp_real( tmp.at(0,0) ) < T(0)) ? tmp.at(0,0)*T(-1) : tmp.at(0,0) ) : std::log( tmp.at(0,0) );
+    sword sign = (is_cx<eT>::no) ? ( (access::tmp_real( A.at(0,0) ) < T(0)) ? -1 : +1 ) : +1;
+    eT    val  = (is_cx<eT>::no) ? std::log( (access::tmp_real( A.at(0,0) ) < T(0)) ? A.at(0,0)*T(-1) : A.at(0,0) ) : std::log( A.at(0,0) );
     
-    for(uword i=1; i < tmp.n_rows; ++i)
+    for(uword i=1; i < A.n_rows; ++i)
       {
-      const eT x = tmp.at(i,i);
+      const eT x = A.at(i,i);
       
       sign *= (is_cx<eT>::no) ? ( (access::tmp_real(x) < T(0)) ? -1 : +1 ) : +1;
       val  += (is_cx<eT>::no) ? std::log( (access::tmp_real(x) < T(0)) ? x*T(-1) : x ) : std::log(x);
       }
     
-    for(uword i=0; i < tmp.n_rows; ++i)
+    for(uword i=0; i < A.n_rows; ++i)
       {
       if( int(i) != ipiv.mem[i] )  // NOTE: no adjustment required, as the clapack version of getrf() assumes counting from 0
         {
@@ -461,43 +456,40 @@ auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, const 
     }
   #elif defined(ARMA_USE_LAPACK)
     {
-    Mat<eT> tmp(X.get_ref());
-    arma_debug_check( (tmp.is_square() == false), "log_det(): given matrix must be square sized" );
-    
-    if(tmp.is_empty())
+    if(A.is_empty())
       {
       out_val  = eT(0);
       out_sign =  T(1);
       return true;
       }
     
-    arma_debug_assert_blas_size(tmp);
+    arma_debug_assert_blas_size(A);
     
-    podarray<blas_int> ipiv(tmp.n_rows);
+    podarray<blas_int> ipiv(A.n_rows);
     
     blas_int info   = 0;
-    blas_int n_rows = blas_int(tmp.n_rows);
-    blas_int n_cols = blas_int(tmp.n_cols);
+    blas_int n_rows = blas_int(A.n_rows);
+    blas_int n_cols = blas_int(A.n_cols);
     
     arma_extra_debug_print("lapack::getrf()");
-    lapack::getrf(&n_rows, &n_cols, tmp.memptr(), &n_rows, ipiv.memptr(), &info);
+    lapack::getrf(&n_rows, &n_cols, A.memptr(), &n_rows, ipiv.memptr(), &info);
     
     if(info < 0)  { return false; }
     
-    // on output tmp appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
+    // on output A appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
     
-    sword sign = (is_cx<eT>::no) ? ( (access::tmp_real( tmp.at(0,0) ) < T(0)) ? -1 : +1 ) : +1;
-    eT    val  = (is_cx<eT>::no) ? std::log( (access::tmp_real( tmp.at(0,0) ) < T(0)) ? tmp.at(0,0)*T(-1) : tmp.at(0,0) ) : std::log( tmp.at(0,0) );
+    sword sign = (is_cx<eT>::no) ? ( (access::tmp_real( A.at(0,0) ) < T(0)) ? -1 : +1 ) : +1;
+    eT    val  = (is_cx<eT>::no) ? std::log( (access::tmp_real( A.at(0,0) ) < T(0)) ? A.at(0,0)*T(-1) : A.at(0,0) ) : std::log( A.at(0,0) );
     
-    for(uword i=1; i < tmp.n_rows; ++i)
+    for(uword i=1; i < A.n_rows; ++i)
       {
-      const eT x = tmp.at(i,i);
+      const eT x = A.at(i,i);
       
       sign *= (is_cx<eT>::no) ? ( (access::tmp_real(x) < T(0)) ? -1 : +1 ) : +1;
       val  += (is_cx<eT>::no) ? std::log( (access::tmp_real(x) < T(0)) ? x*T(-1) : x ) : std::log(x);
       }
     
-    for(uword i=0; i < tmp.n_rows; ++i)
+    for(uword i=0; i < A.n_rows; ++i)
       {
       if( blas_int(i) != (ipiv.mem[i] - 1) )  // NOTE: adjustment of -1 is required as Fortran counts from 1
         {
@@ -512,7 +504,7 @@ auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, const 
     }
   #else
     {
-    arma_ignore(X);
+    arma_ignore(A);
     
     out_val  = eT(0);
     out_sign =  T(0);

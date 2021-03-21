@@ -35,15 +35,13 @@ op_det::apply(const Base<typename T1::elem_type,T1>& expr)
   if(strip1.do_diagmat)  { return op_det::apply_diagmat(strip1.M); }
   if(strip2.do_trimat)   { return op_det::apply_trimat(strip2.M);  }
   
-  const quasi_unwrap<T1> U(expr.get_ref());
+  Mat<eT> A(expr.get_ref());
   
-  const Mat<eT>& X = U.M;
+  arma_debug_check( (A.is_square() == false), "det(): given matrix must be square sized" );
   
-  arma_debug_check( (X.is_square() == false), "det(): given matrix must be square sized" );
-  
-  if((X.n_rows <= 4) && is_cx<eT>::no)
+  if((A.n_rows <= 4) && is_cx<eT>::no)
     {
-    const eT det_val = op_det::apply_tiny(X);
+    const eT det_val = op_det::apply_tiny(A);
     
     const T det_min = std::numeric_limits<T>::epsilon();
     
@@ -52,11 +50,11 @@ op_det::apply(const Base<typename T1::elem_type,T1>& expr)
     // fallthrough if det_val is suspect
     }
   
-  if(X.is_diagmat())  { return op_det::apply_diagmat(X); }
+  if(A.is_diagmat())  { return op_det::apply_diagmat(A); }
   
   // TODO: optimised handling of triangular matrices
   
-  return auxlib::det(X);
+  return auxlib::det(A);
   }
 
 
