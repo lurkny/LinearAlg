@@ -98,6 +98,20 @@ auxlib::inv(Mat<eT>& A)
 template<typename eT>
 inline
 bool
+auxlib::inv(Mat<eT>& out, const Mat<eT>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  out = X;
+  
+  return auxlib::inv(out);
+  }
+
+
+
+template<typename eT>
+inline
+bool
 auxlib::inv_tr(Mat<eT>& A, const uword layout)
   {
   arma_extra_debug_sigprint();
@@ -201,6 +215,20 @@ auxlib::inv_sympd(Mat<eT>& A)
     return false;
     }
   #endif
+  }
+
+
+
+template<typename eT>
+inline
+bool
+auxlib::inv_sympd(Mat<eT>& out, const Mat<eT>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  out = X;
+  
+  return auxlib::inv_sympd(out);
   }
 
 
