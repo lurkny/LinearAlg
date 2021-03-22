@@ -102,7 +102,7 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
         
         Mat<eT> tmp = out;
         
-        status = auxlib::inv_sympd(tmp);
+        const bool status = auxlib::inv_sympd(tmp);
         
         if(status)  { out.steal_mem(tmp); return true; }
         
