@@ -49,11 +49,13 @@ op_det::apply(const Base<typename T1::elem_type,T1>& expr)
   
   if((A.n_rows <= 4) && is_cx<eT>::no)
     {
-    const eT det_val = op_det::apply_tiny(A);
+    constexpr T det_min = std::numeric_limits<T>::epsilon();
+    constexpr T det_max = T(1) / std::numeric_limits<T>::epsilon();
     
-    const T det_min = std::numeric_limits<T>::epsilon();
+    const eT     det_val = op_det::apply_tiny(A);
+    const  T abs_det_val = std::abs(det_val);
     
-    if(std::abs(det_val) >= det_min)  { return det_val; }
+    if((abs_det_val > det_min) && (abs_det_val < det_max))  { return det_val; }
     
     // fallthrough if det_val is suspect
     }

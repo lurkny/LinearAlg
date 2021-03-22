@@ -188,7 +188,8 @@ op_inv::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
   
   out.set_size(N,N);
   
-  const T det_min = std::numeric_limits<T>::epsilon();
+  constexpr T det_min = std::numeric_limits<T>::epsilon();
+  constexpr T det_max = T(1) / std::numeric_limits<T>::epsilon();
   
   const eT* Xm   =   X.memptr();
         eT* outm = out.memptr();
@@ -204,9 +205,10 @@ op_inv::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
     const eT c = Xm[pos<1,0>::n2];
     const eT d = Xm[pos<1,1>::n2];
     
-    const eT det_val = (a*d - b*c);
+    const eT     det_val = (a*d - b*c);
+    const  T abs_det_val = std::abs(det_val);
     
-    if(std::abs(det_val) < det_min)  { return false; }
+    if((abs_det_val < det_min) || (abs_det_val > det_max))  { return false; }
     
     outm[pos<0,0>::n2] =  d / det_val;
     outm[pos<0,1>::n2] = -b / det_val;
@@ -218,9 +220,10 @@ op_inv::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
   
   if(N == 3)
     {
-    const eT det_val = op_det::apply_tiny(X);
+    const eT     det_val = op_det::apply_tiny(X);
+    const  T abs_det_val = std::abs(det_val);
     
-    if(std::abs(det_val) < det_min)  { return false; }
+    if((abs_det_val < det_min) || (abs_det_val > det_max))  { return false; }
     
     outm[pos<0,0>::n3] =  (Xm[pos<2,2>::n3]*Xm[pos<1,1>::n3] - Xm[pos<2,1>::n3]*Xm[pos<1,2>::n3]) / det_val;
     outm[pos<1,0>::n3] = -(Xm[pos<2,2>::n3]*Xm[pos<1,0>::n3] - Xm[pos<2,0>::n3]*Xm[pos<1,2>::n3]) / det_val;
@@ -245,9 +248,10 @@ op_inv::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
   
   if(N == 4)
     {
-    const eT det_val = op_det::apply_tiny(X);
+    const eT     det_val = op_det::apply_tiny(X);
+    const  T abs_det_val = std::abs(det_val);
     
-    if(std::abs(det_val) < det_min)  { return false; }
+    if((abs_det_val < det_min) || (abs_det_val > det_max))  { return false; }
     
     outm[pos<0,0>::n4] = ( Xm[pos<1,2>::n4]*Xm[pos<2,3>::n4]*Xm[pos<3,1>::n4] - Xm[pos<1,3>::n4]*Xm[pos<2,2>::n4]*Xm[pos<3,1>::n4] + Xm[pos<1,3>::n4]*Xm[pos<2,1>::n4]*Xm[pos<3,2>::n4] - Xm[pos<1,1>::n4]*Xm[pos<2,3>::n4]*Xm[pos<3,2>::n4] - Xm[pos<1,2>::n4]*Xm[pos<2,1>::n4]*Xm[pos<3,3>::n4] + Xm[pos<1,1>::n4]*Xm[pos<2,2>::n4]*Xm[pos<3,3>::n4] ) / det_val;
     outm[pos<1,0>::n4] = ( Xm[pos<1,3>::n4]*Xm[pos<2,2>::n4]*Xm[pos<3,0>::n4] - Xm[pos<1,2>::n4]*Xm[pos<2,3>::n4]*Xm[pos<3,0>::n4] - Xm[pos<1,3>::n4]*Xm[pos<2,0>::n4]*Xm[pos<3,2>::n4] + Xm[pos<1,0>::n4]*Xm[pos<2,3>::n4]*Xm[pos<3,2>::n4] + Xm[pos<1,2>::n4]*Xm[pos<2,0>::n4]*Xm[pos<3,3>::n4] - Xm[pos<1,0>::n4]*Xm[pos<2,2>::n4]*Xm[pos<3,3>::n4] ) / det_val;
