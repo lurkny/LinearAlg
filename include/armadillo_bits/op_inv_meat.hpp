@@ -64,13 +64,13 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
   
   arma_debug_check( (out.is_square() == false), "inv(): given matrix must be square sized" );
   
-  bool status = false;
-  
   if((out.n_rows <= 4) && is_cx<eT>::no)
     {
-    const Mat<eT> tmp = out;
+    Mat<eT> tmp(out.n_rows, out.n_rows);
     
-    status = op_inv::apply_tiny_noalias(out, tmp);
+    const bool status = op_inv::apply_tiny_noalias(tmp, out);
+    
+    if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
     }
   else
   if(out.is_diagmat())
@@ -320,14 +320,14 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
   
   if((out.n_rows <= 4) && is_cx<eT>::no)
     {
-    const Mat<eT> tmp = out;
+    Mat<eT> tmp(out.n_rows, out.n_rows);
     
-    const bool status = op_inv::apply_tiny_noalias(out, tmp);
+    const bool status = op_inv::apply_tiny_noalias(tmp, out);
     
-    if(status)  { return true; }
+    if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
     }
   
-  return auxlib::inv_sympd(out, expr.get_ref());
+  return auxlib::inv_sympd(out);
   }
 
 
