@@ -112,9 +112,7 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
       }
     }
   
-  if(status == false)  { status = auxlib::inv(out); }
-  
-  return status;
+  return auxlib::inv(out);
   }
 
 
