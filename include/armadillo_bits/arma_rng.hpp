@@ -90,7 +90,7 @@ arma_rng::set_seed(const arma_rng::seed_type val)
     {
     extern_rng_seed = val;
     
-    mt19937_64_instance.seed(val);
+    // mt19937_64_instance.seed(val);
     }
   #else
     {
