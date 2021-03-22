@@ -26,8 +26,8 @@
 // NOTE: mt19937_64_instance_warmup is used as a workaround
 // NOTE: for thread_local issue on macOS 11 and/or AppleClang 12.0
 // NOTE: see https://gitlab.com/conradsnicta/armadillo-code/-/issues/173
-// NOTE: if this workaround causes problems, please report this and 
-// NOTE: disable this workaround by uncommenting the code block below:
+// NOTE: if this workaround causes problems, please report it and 
+// NOTE: disable the workaround by uncommenting the code block below:
 
 // #if defined(__APPLE__) || defined(__apple_build_version__)
 //   #if !defined(ARMA_DONT_DISABLE_EXTERN_RNG)
