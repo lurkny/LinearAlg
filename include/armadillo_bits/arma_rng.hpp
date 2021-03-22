@@ -23,11 +23,12 @@
 #endif
 
 
-// // workaround for issue on macOS 11 and/or AppleClang 12.0
-// // see https://gitlab.com/conradsnicta/armadillo-code/-/issues/173
-// // the workaround is here instead of CMakeLists.txt
-// // to ensure that the armadillo runtime library has arma_rng_cxx11_instance
-// // for already compiled programs running on earlier versions of macOS
+// NOTE: mt19937_64_instance_warmup is used as a workaround
+// NOTE: for thread_local issue on macOS 11 and/or AppleClang 12.0
+// NOTE: see https://gitlab.com/conradsnicta/armadillo-code/-/issues/173
+// NOTE: if this workaround causes problems, please report this and 
+// NOTE: disable this workaround by uncommenting the code block below:
+
 // #if defined(__APPLE__) || defined(__apple_build_version__)
 //   #if !defined(ARMA_DONT_DISABLE_EXTERN_RNG)
 //     #undef ARMA_USE_EXTERN_RNG
@@ -35,26 +36,25 @@
 // #endif
 
 
+
 #if defined(ARMA_USE_EXTERN_RNG)
   extern thread_local std::mt19937_64 mt19937_64_instance;
   
-  // extern thread_local unsigned long long extern_rng_seed;
-  // namespace { thread_local std::mt19937_64 mt19937_64_instance; }
-  
-  namespace 
-    {
-    struct mt19937_64_instance_warmup
-     {
-     inline
-     mt19937_64_instance_warmup()
+  #if defined(__APPLE__) || defined(__apple_build_version__)
+    namespace
+      {
+      struct mt19937_64_instance_warmup
        {
-       typename std::mt19937_64::result_type junk = mt19937_64_instance();
-       arma_ignore(junk);
-       }
-     };
-    
-    static mt19937_64_instance_warmup mt19937_64_instance_warmup_run;
-    }
+       inline mt19937_64_instance_warmup()
+         {
+         typename std::mt19937_64::result_type junk = mt19937_64_instance();
+         arma_ignore(junk);
+         }
+       };
+      
+      static mt19937_64_instance_warmup mt19937_64_instance_warmup_run;
+      }
+  #endif
 #endif
 
 
@@ -82,8 +82,6 @@ class arma_rng
   inline static void set_seed(const seed_type val);
   inline static void set_seed_random();
   
-  // inline static seed_type get_extern_rng_seed();
-  
   template<typename eT> struct randi;
   template<typename eT> struct randu;
   template<typename eT> struct randn;
@@ -102,8 +100,6 @@ arma_rng::set_seed(const arma_rng::seed_type val)
     }
   #elif defined(ARMA_USE_EXTERN_RNG)
     {
-    // extern_rng_seed = val;
-    
     mt19937_64_instance.seed(val);
     }
   #else
@@ -196,29 +192,6 @@ arma_rng::set_seed_random()
 
 
 
-// inline
-// arma_rng::seed_type
-// arma_rng::get_extern_rng_seed()
-//   {
-//   // cout << "arma_rng::get_extern_rng_seed()" << endl;
-//   
-//   #if defined(ARMA_USE_EXTERN_RNG)
-//     {
-//     typedef unsigned long long extern_rng_seed_type;
-//     
-//     const extern_rng_seed_type seed_val = extern_rng_seed;
-//     
-//     extern_rng_seed = (seed_val < std::numeric_limits<extern_rng_seed_type>::max()) ? (seed_val + extern_rng_seed_type(1)) : extern_rng_seed_type(1);
-//     
-//     return seed_type(seed_val);
-//     }
-//   #endif
-//   
-//   return seed_type(0);
-//   }
-
-
-
 //
 
 
@@ -236,8 +209,6 @@ struct arma_rng::randi
     #elif defined(ARMA_USE_EXTERN_RNG)
       {
       constexpr double scale = double(std::numeric_limits<int>::max()) / double(std::mt19937_64::max());
-      
-      // // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       return eT( double(mt19937_64_instance()) * scale );
       }
@@ -283,8 +254,6 @@ struct arma_rng::randi
       {
       std::uniform_int_distribution<int> local_i_distr(a, b);
       
-      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
-      
       for(uword i=0; i<N; ++i)  { mem[i] = eT(local_i_distr(mt19937_64_instance)); }
       }
     #else
@@ -324,8 +293,6 @@ struct arma_rng::randu
       {
       constexpr double scale = double(1.0) / double(std::mt19937_64::max());
       
-      // // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
-      
       return eT( double(mt19937_64_instance()) * scale );
       }
     #else
@@ -348,8 +315,6 @@ struct arma_rng::randu
     #elif defined(ARMA_USE_EXTERN_RNG)
       {
       std::uniform_real_distribution<double> local_u_distr;
-      
-      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       for(uword i=0; i < N; ++i)  { mem[i] = eT( local_u_distr(mt19937_64_instance) ); }
       }
@@ -389,8 +354,6 @@ struct arma_rng::randu< std::complex<T> >
       {
       std::uniform_real_distribution<double> local_u_distr;
       
-      // // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
-      
       const T a = T( local_u_distr(mt19937_64_instance) );
       const T b = T( local_u_distr(mt19937_64_instance) );
       
@@ -425,8 +388,6 @@ struct arma_rng::randu< std::complex<T> >
     #elif defined(ARMA_USE_EXTERN_RNG)
       {
       std::uniform_real_distribution<double> local_u_distr;
-      
-      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       for(uword i=0; i < N; ++i)
         {
@@ -487,8 +448,6 @@ struct arma_rng::randn
       {
       std::normal_distribution<double> local_n_distr;
       
-      // // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
-      
       return eT( local_n_distr(mt19937_64_instance) );
       }
     #else
@@ -511,8 +470,6 @@ struct arma_rng::randn
     #elif defined(ARMA_USE_EXTERN_RNG)
       {
       std::normal_distribution<double> local_n_distr;
-      
-      // // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       out1 = eT( local_n_distr(mt19937_64_instance) );
       out2 = eT( local_n_distr(mt19937_64_instance) );
@@ -537,8 +494,6 @@ struct arma_rng::randn
     #elif defined(ARMA_USE_EXTERN_RNG)
       {
       std::normal_distribution<double> local_n_distr;
-      
-      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       for(uword i=0; i < N; ++i)  { mem[i] = eT( local_n_distr(mt19937_64_instance) ); }
       }
@@ -668,8 +623,6 @@ struct arma_rng::randn< std::complex<T> >
       {
       std::normal_distribution<double> local_n_distr;
       
-      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
-      
       for(uword i=0; i < N; ++i)
         {
         const T a = T( local_n_distr(mt19937_64_instance) );
@@ -790,8 +743,6 @@ struct arma_rng::randg
     #if defined(ARMA_USE_EXTERN_RNG)
       {
       std::gamma_distribution<double> local_g_distr(a,b);
-      
-      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       for(uword i=0; i<N; ++i)  { mem[i] = eT(local_g_distr(mt19937_64_instance)); }
       }
