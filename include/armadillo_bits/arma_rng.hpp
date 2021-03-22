@@ -44,13 +44,13 @@
     namespace
       {
       struct mt19937_64_instance_warmup
-       {
-       inline mt19937_64_instance_warmup()
-         {
-         typename std::mt19937_64::result_type junk = mt19937_64_instance();
-         arma_ignore(junk);
-         }
-       };
+        {
+        inline mt19937_64_instance_warmup()
+          {
+          typename std::mt19937_64::result_type junk = mt19937_64_instance();
+          arma_ignore(junk);
+          }
+        };
       
       static mt19937_64_instance_warmup mt19937_64_instance_warmup_run;
       }
