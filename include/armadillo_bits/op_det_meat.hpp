@@ -29,11 +29,19 @@ op_det::apply(const Base<typename T1::elem_type,T1>& expr)
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  const strip_diagmat<T1> strip1(expr.get_ref());
-  const strip_trimat<T1>  strip2(expr.get_ref());
+  if(strip_diagmat<T1>::do_diagmat)
+    {
+    const strip_diagmat<T1> strip(expr.get_ref());
+    
+    return op_det::apply_diagmat(strip.M);
+    }
   
-  if(strip1.do_diagmat)  { return op_det::apply_diagmat(strip1.M); }
-  if(strip2.do_trimat)   { return op_det::apply_trimat(strip2.M);  }
+  if(strip_trimat<T1>::do_trimat)
+    {
+    const strip_trimat<T1> strip(expr.get_ref());
+    
+    return op_det::apply_trimat(strip.M);
+    }
   
   Mat<eT> A(expr.get_ref());
   
