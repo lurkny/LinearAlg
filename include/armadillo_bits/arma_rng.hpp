@@ -36,12 +36,26 @@
 
 
 #if defined(ARMA_USE_EXTERN_RNG)
-  //extern thread_local std::mt19937_64 mt19937_64_instance;
-  extern thread_local unsigned long long extern_rng_seed;
-  namespace { thread_local std::mt19937_64 mt19937_64_instance; }
+  extern thread_local std::mt19937_64 mt19937_64_instance;
+  
+  // extern thread_local unsigned long long extern_rng_seed;
+  // namespace { thread_local std::mt19937_64 mt19937_64_instance; }
+  
+  namespace 
+    {
+    struct mt19937_64_instance_warmup
+     {
+     inline
+     mt19937_64_instance_warmup()
+       {
+       typename std::mt19937_64::result_type junk = mt19937_64_instance();
+       arma_ignore(junk);
+       }
+     };
+    
+    static mt19937_64_instance_warmup mt19937_64_instance_warmup_run;
+    }
 #endif
-
-
 
 
 
@@ -68,7 +82,7 @@ class arma_rng
   inline static void set_seed(const seed_type val);
   inline static void set_seed_random();
   
-  inline static seed_type get_extern_rng_seed();
+  // inline static seed_type get_extern_rng_seed();
   
   template<typename eT> struct randi;
   template<typename eT> struct randu;
@@ -88,9 +102,9 @@ arma_rng::set_seed(const arma_rng::seed_type val)
     }
   #elif defined(ARMA_USE_EXTERN_RNG)
     {
-    extern_rng_seed = val;
+    // extern_rng_seed = val;
     
-    // mt19937_64_instance.seed(val);
+    mt19937_64_instance.seed(val);
     }
   #else
     {
@@ -182,24 +196,26 @@ arma_rng::set_seed_random()
 
 
 
-inline
-arma_rng::seed_type
-arma_rng::get_extern_rng_seed()
-  {
-  #if defined(ARMA_USE_EXTERN_RNG)
-    {
-    typedef unsigned long long extern_rng_seed_type;
-    
-    const extern_rng_seed_type seed_val = extern_rng_seed;
-    
-    extern_rng_seed = (seed_val < std::numeric_limits<extern_rng_seed_type>::max()) ? (seed_val + extern_rng_seed_type(1)) : extern_rng_seed_type(1);
-    
-    return seed_type(seed_val);
-    }
-  #endif
-  
-  return seed_type(0);
-  }
+// inline
+// arma_rng::seed_type
+// arma_rng::get_extern_rng_seed()
+//   {
+//   // cout << "arma_rng::get_extern_rng_seed()" << endl;
+//   
+//   #if defined(ARMA_USE_EXTERN_RNG)
+//     {
+//     typedef unsigned long long extern_rng_seed_type;
+//     
+//     const extern_rng_seed_type seed_val = extern_rng_seed;
+//     
+//     extern_rng_seed = (seed_val < std::numeric_limits<extern_rng_seed_type>::max()) ? (seed_val + extern_rng_seed_type(1)) : extern_rng_seed_type(1);
+//     
+//     return seed_type(seed_val);
+//     }
+//   #endif
+//   
+//   return seed_type(0);
+//   }
 
 
 
@@ -221,7 +237,7 @@ struct arma_rng::randi
       {
       constexpr double scale = double(std::numeric_limits<int>::max()) / double(std::mt19937_64::max());
       
-      mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
+      // // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       return eT( double(mt19937_64_instance()) * scale );
       }
@@ -267,7 +283,7 @@ struct arma_rng::randi
       {
       std::uniform_int_distribution<int> local_i_distr(a, b);
       
-      mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
+      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       for(uword i=0; i<N; ++i)  { mem[i] = eT(local_i_distr(mt19937_64_instance)); }
       }
@@ -308,7 +324,7 @@ struct arma_rng::randu
       {
       constexpr double scale = double(1.0) / double(std::mt19937_64::max());
       
-      mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
+      // // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       return eT( double(mt19937_64_instance()) * scale );
       }
@@ -333,7 +349,7 @@ struct arma_rng::randu
       {
       std::uniform_real_distribution<double> local_u_distr;
       
-      mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
+      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       for(uword i=0; i < N; ++i)  { mem[i] = eT( local_u_distr(mt19937_64_instance) ); }
       }
@@ -373,7 +389,7 @@ struct arma_rng::randu< std::complex<T> >
       {
       std::uniform_real_distribution<double> local_u_distr;
       
-      mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
+      // // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       const T a = T( local_u_distr(mt19937_64_instance) );
       const T b = T( local_u_distr(mt19937_64_instance) );
@@ -410,7 +426,7 @@ struct arma_rng::randu< std::complex<T> >
       {
       std::uniform_real_distribution<double> local_u_distr;
       
-      mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
+      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       for(uword i=0; i < N; ++i)
         {
@@ -471,7 +487,7 @@ struct arma_rng::randn
       {
       std::normal_distribution<double> local_n_distr;
       
-      mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
+      // // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       return eT( local_n_distr(mt19937_64_instance) );
       }
@@ -496,7 +512,7 @@ struct arma_rng::randn
       {
       std::normal_distribution<double> local_n_distr;
       
-      mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
+      // // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       out1 = eT( local_n_distr(mt19937_64_instance) );
       out2 = eT( local_n_distr(mt19937_64_instance) );
@@ -522,7 +538,7 @@ struct arma_rng::randn
       {
       std::normal_distribution<double> local_n_distr;
       
-      mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
+      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       for(uword i=0; i < N; ++i)  { mem[i] = eT( local_n_distr(mt19937_64_instance) ); }
       }
@@ -652,7 +668,7 @@ struct arma_rng::randn< std::complex<T> >
       {
       std::normal_distribution<double> local_n_distr;
       
-      mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
+      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       for(uword i=0; i < N; ++i)
         {
@@ -775,7 +791,7 @@ struct arma_rng::randg
       {
       std::gamma_distribution<double> local_g_distr(a,b);
       
-      mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
+      // mt19937_64_instance.seed(arma_rng::get_extern_rng_seed());
       
       for(uword i=0; i<N; ++i)  { mem[i] = eT(local_g_distr(mt19937_64_instance)); }
       }
