@@ -46,18 +46,22 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
   
   typedef typename T1::elem_type eT;
   
-  const strip_diagmat<T1> strip1(expr.get_ref());
-  const strip_trimat<T1>  strip2(expr.get_ref());
-  
-  if(strip1.do_diagmat)  { return op_inv::apply_diagmat(out, strip1.M); }
-  
-  if(strip2.do_trimat)
+  if(strip_diagmat<T1>::do_diagmat)
     {
-    out = strip2.M;
+    const strip_diagmat<T1> strip(expr.get_ref());
+    
+    return op_inv::apply_diagmat(out, strip.M);
+    }
+  
+  if(strip_trimat<T1>::do_trimat)
+    {
+    const strip_trimat<T1> strip(expr.get_ref());
+    
+    out = strip.M;
     
     arma_debug_check( (out.is_square() == false), "inv(): given matrix must be square sized" );
     
-    return auxlib::inv_tr(out, (strip2.do_triu ? uword(0) : uword(1)));
+    return auxlib::inv_tr(out, (strip.do_triu ? uword(0) : uword(1)));
     }
   
   out = expr.get_ref();
