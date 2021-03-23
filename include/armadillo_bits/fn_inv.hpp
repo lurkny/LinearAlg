@@ -46,7 +46,7 @@ inv
   {
   arma_extra_debug_sigprint();
   
-  const bool status = op_inv::apply_direct(out, X.get_ref());
+  const bool status = op_inv::apply_direct(out, X.get_ref(), "inv()");
   
   if(status == false)
     {

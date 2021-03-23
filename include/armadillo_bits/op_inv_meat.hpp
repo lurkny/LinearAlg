@@ -26,7 +26,7 @@ op_inv::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv>& X)
   {
   arma_extra_debug_sigprint();
   
-  const bool status = op_inv::apply_direct(out, X.m);
+  const bool status = op_inv::apply_direct(out, X.m, "inv()");
   
   if(status == false)
     {
@@ -40,7 +40,7 @@ op_inv::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv>& X)
 template<typename T1>
 inline
 bool
-op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr)
+op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig)
   {
   arma_extra_debug_sigprint();
   
@@ -50,7 +50,7 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
     {
     const strip_diagmat<T1> strip(expr.get_ref());
     
-    return op_inv::apply_diagmat(out, strip.M);
+    return op_inv::apply_diagmat(out, strip.M, caller_sig);
     }
   
   if(strip_trimat<T1>::do_trimat)
@@ -59,14 +59,14 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
     
     out = strip.M;
     
-    arma_debug_check( (out.is_square() == false), "inv(): given matrix must be square sized" );
+    arma_debug_check( (out.is_square() == false), caller_sig, ": given matrix must be square sized" );
     
     return auxlib::inv_tr(out, (strip.do_triu ? uword(0) : uword(1)));
     }
   
   out = expr.get_ref();
   
-  arma_debug_check( (out.is_square() == false), "inv(): given matrix must be square sized" );
+  arma_debug_check( (out.is_square() == false), caller_sig, ": given matrix must be square sized" );
   
   if((out.n_rows <= 4) && is_cx<eT>::no)
     {
@@ -79,7 +79,7 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
   else
   if(out.is_diagmat())
     {
-    return op_inv::apply_diagmat(out, out);
+    return op_inv::apply_diagmat(out, out, caller_sig);
     }
   else
     {
@@ -124,7 +124,7 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
 template<typename T1>
 inline
 bool
-op_inv::apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X)
+op_inv::apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X, const char* caller_sig)
   {
   arma_extra_debug_sigprint();
   
@@ -132,7 +132,7 @@ op_inv::apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X)
   
   const diagmat_proxy<T1> A(X);
   
-  arma_debug_check( (A.n_rows != A.n_cols), "inv(): given matrix must be square sized" );
+  arma_debug_check( (A.n_rows != A.n_cols), caller_sig, ": given matrix must be square sized" );
   
   const uword N = (std::min)(A.n_rows, A.n_cols);
   

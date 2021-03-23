@@ -146,6 +146,17 @@ arma_stop_logic_error(const T1& x)
 
 
 
+arma_cold
+arma_noinline
+static
+void
+arma_stop_logic_error(const char* x, const char* y)
+  {
+  arma_stop_logic_error( std::string(x) + std::string(y) );
+  }
+
+
+
 //! print a message to get_cerr_stream() and throw logic_error exception
 template<typename T1>
 arma_cold
@@ -424,13 +435,12 @@ arma_check(const bool state, const T1& x)
   }
 
 
-template<typename T1, typename T2>
 arma_hot
 inline
 void
-arma_check(const bool state, const T1& x, const T2& y)
+arma_check(const bool state, const char* x, const char* y)
   {
-  if(state)  { arma_stop_logic_error( std::string(x) + std::string(y) ); }
+  if(state)  { arma_stop_logic_error(x,y); }
   }
 
 

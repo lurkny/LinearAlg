@@ -36,10 +36,10 @@ class op_inv
   inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv>& in);
   
   template<typename T1>
-  inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr);
+  inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig);
   
   template<typename T1>
-  inline static bool apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X);
+  inline static bool apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X, const char* caller_sig);
   
   template<typename eT>
   arma_cold inline static bool apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X);
