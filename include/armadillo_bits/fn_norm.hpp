@@ -128,7 +128,7 @@ arma_warn_unused
 typename enable_if2< is_arma_sparse_type<T1>::value, typename T1::pod_type >::result
 norm
   (
-  const T1&   X,
+  const T1&   expr,
   const uword k = uword(2),
   const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr
   )
@@ -139,19 +139,17 @@ norm
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  const SpProxy<T1> P(X);
+  const unwrap_spmat<T1> U(expr);
+  const SpMat<eT>& X   = U.M;
   
-  if(P.get_n_nonzero() == 0)  { return T(0); }
+  if(X.n_nonzero == 0)  { return T(0); }
   
-  const bool is_vec = (T1::is_xvec) || (T1::is_row) || (T1::is_col) || (P.get_n_rows() == 1) || (P.get_n_cols() == 1);
+  const bool is_vec = (T1::is_xvec) || (T1::is_row) || (T1::is_col) || (X.n_rows == 1) || (X.n_cols == 1);
   
   if(is_vec)
     {
-    const unwrap_spmat<typename SpProxy<T1>::stored_type> tmp(P.Q);
-    const SpMat<eT>& A = tmp.M;
-    
     // create a fake dense vector to allow reuse of code for dense vectors
-    Col<eT> fake_vector( access::rwp(A.values), A.n_nonzero, false );
+    Col<eT> fake_vector( access::rwp(X.values), X.n_nonzero, false );
     
     const Proxy< Col<eT> > P_fake_vector(fake_vector);
     
@@ -164,8 +162,8 @@ norm
     }
   else
     {
-    if(k == uword(1))  { return spop_norm::mat_norm_1(P); }
-    if(k == uword(2))  { return spop_norm::mat_norm_2(P); }
+    if(k == uword(1))  { return spop_norm::mat_norm_1(X); }
+    if(k == uword(2))  { return spop_norm::mat_norm_2(X); }
     
     arma_stop_logic_error("norm(): unsupported or unimplemented norm type for sparse matrices");
     }
@@ -181,7 +179,7 @@ arma_warn_unused
 typename enable_if2< is_arma_sparse_type<T1>::value, typename T1::pod_type >::result
 norm
   (
-  const T1&   X,
+  const T1&   expr,
   const char* method,
   const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr
   )
@@ -192,22 +190,19 @@ norm
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  const SpProxy<T1> P(X);
+  const unwrap_spmat<T1> U(expr);
+  const SpMat<eT>& X   = U.M;
   
-  if(P.get_n_nonzero() == 0)  { return T(0); }
-  
-  
-  const unwrap_spmat<typename SpProxy<T1>::stored_type> tmp(P.Q);
-  const SpMat<eT>& A = tmp.M;
+  if(X.n_nonzero == 0)  { return T(0); }
   
   // create a fake dense vector to allow reuse of code for dense vectors
-  Col<eT> fake_vector( access::rwp(A.values), A.n_nonzero, false );
+  Col<eT> fake_vector( access::rwp(X.values), X.n_nonzero, false );
   
   const Proxy< Col<eT> > P_fake_vector(fake_vector);
   
   
   const char sig    = (method != nullptr) ? method[0] : char(0);
-  const bool is_vec = (T1::is_xvec) || (T1::is_row) || (T1::is_col) || (P.get_n_rows() == 1) || (P.get_n_cols() == 1);
+  const bool is_vec = (T1::is_xvec) || (T1::is_row) || (T1::is_col) || (X.n_rows == 1) || (X.n_cols == 1);
   
   if(is_vec)
     {
@@ -220,7 +215,7 @@ norm
       {
       const T val = op_norm::vec_norm_min(P_fake_vector);
       
-      return (P.get_n_nonzero() < P.get_n_elem()) ? T((std::min)(T(0), val)) : T(val);
+      return (X.n_nonzero < X.n_elem) ? T((std::min)(T(0), val)) : T(val);
       }
     else
     if( (sig == 'f') || (sig == 'F') )
@@ -234,7 +229,7 @@ norm
     {
     if( (sig == 'i') || (sig == 'I') || (sig == '+') )   // inf norm
       {
-      return spop_norm::mat_norm_inf(P);
+      return spop_norm::mat_norm_inf(X);
       }
     else
     if( (sig == 'f') || (sig == 'F') )

@@ -23,14 +23,13 @@ class spop_norm
   {
   public:
   
-  template<typename T1> inline static typename T1::pod_type mat_norm_1(const SpProxy<T1>& P);
+  template<typename eT> inline static typename get_pod_type<eT>::result mat_norm_1(const SpMat<eT>& X);
 
-  template<typename T1> inline static typename T1::pod_type mat_norm_2(const SpProxy<T1>& P, const typename arma_real_only<typename T1::elem_type>::result* junk = nullptr);
-  template<typename T1> inline static typename T1::pod_type mat_norm_2(const SpProxy<T1>& P, const typename   arma_cx_only<typename T1::elem_type>::result* junk = nullptr);
+  template<typename eT> inline static typename get_pod_type<eT>::result mat_norm_2(const SpMat<eT>& X, const typename arma_real_only<eT>::result* junk = nullptr);
+  template<typename eT> inline static typename get_pod_type<eT>::result mat_norm_2(const SpMat<eT>& X, const typename   arma_cx_only<eT>::result* junk = nullptr);
 
-  template<typename T1> inline static typename T1::pod_type mat_norm_inf(const SpProxy<T1>& P);
+  template<typename eT> inline static typename get_pod_type<eT>::result mat_norm_inf(const SpMat<eT>& X);
   };
-
 
 
 //! @}

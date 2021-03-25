@@ -19,23 +19,23 @@
 
 
 
-template<typename T1>
+template<typename eT>
 inline
-typename T1::pod_type
-spop_norm::mat_norm_1(const SpProxy<T1>& P)
+typename get_pod_type<eT>::result
+spop_norm::mat_norm_1(const SpMat<eT>& X)
   {
   arma_extra_debug_sigprint();
   
   // TODO: this can be sped up with a dedicated implementation
-  return as_scalar( max( sum(abs(P.Q), 0), 1) );
+  return as_scalar( max( sum(abs(X), 0), 1) );
   }
 
 
 
-template<typename T1>
+template<typename eT>
 inline
-typename T1::pod_type
-spop_norm::mat_norm_2(const SpProxy<T1>& P, const typename arma_real_only<typename T1::elem_type>::result* junk)
+typename get_pod_type<eT>::result
+spop_norm::mat_norm_2(const SpMat<eT>& X, const typename arma_real_only<eT>::result* junk)
   {
   arma_extra_debug_sigprint();
   arma_ignore(junk);
@@ -43,12 +43,9 @@ spop_norm::mat_norm_2(const SpProxy<T1>& P, const typename arma_real_only<typena
   // norm = sqrt( largest eigenvalue of (A^H)*A ), where ^H is the conjugate transpose
   // http://math.stackexchange.com/questions/4368/computing-the-largest-eigenvalue-of-a-very-large-sparse-matrix
   
-  typedef typename T1::elem_type eT;
-  typedef typename T1::pod_type   T;
+  typedef typename get_pod_type<eT>::result T;
   
-  const unwrap_spmat<typename SpProxy<T1>::stored_type> tmp(P.Q);
-  
-  const SpMat<eT>& A = tmp.M;
+  const SpMat<eT>& A = X;
   const SpMat<eT>  B = trans(A);
   
   const SpMat<eT>  C = (A.n_rows <= A.n_cols) ? (A*B) : (B*A);
@@ -56,21 +53,20 @@ spop_norm::mat_norm_2(const SpProxy<T1>& P, const typename arma_real_only<typena
   Col<T> eigval;
   eigs_sym(eigval, C, 1);
   
-  return (eigval.n_elem > 0) ? std::sqrt(eigval[0]) : T(0);
+  return (eigval.n_elem > 0) ? T(std::sqrt(eigval[0])) : T(0);
   }
 
 
 
-template<typename T1>
+template<typename eT>
 inline
-typename T1::pod_type
-spop_norm::mat_norm_2(const SpProxy<T1>& P, const typename arma_cx_only<typename T1::elem_type>::result* junk)
+typename get_pod_type<eT>::result
+spop_norm::mat_norm_2(const SpMat<eT>& X, const typename arma_cx_only<eT>::result* junk)
   {
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  typedef typename T1::elem_type eT;
-  typedef typename T1::pod_type   T;
+  typedef typename get_pod_type<eT>::result T;
   
   // we're calling eigs_gen(), which currently requires ARPACK
   #if !defined(ARMA_USE_ARPACK)
@@ -80,9 +76,7 @@ spop_norm::mat_norm_2(const SpProxy<T1>& P, const typename arma_cx_only<typename
     }
   #endif
   
-  const unwrap_spmat<typename SpProxy<T1>::stored_type> tmp(P.Q);
-  
-  const SpMat<eT>& A = tmp.M;
+  const SpMat<eT>& A = X;
   const SpMat<eT>  B = trans(A);
   
   const SpMat<eT>  C = (A.n_rows <= A.n_cols) ? (A*B) : (B*A);
@@ -90,20 +84,20 @@ spop_norm::mat_norm_2(const SpProxy<T1>& P, const typename arma_cx_only<typename
   Col<eT> eigval;
   eigs_gen(eigval, C, 1);
   
-  return (eigval.n_elem > 0) ? std::sqrt(std::real(eigval[0])) : T(0);
+  return (eigval.n_elem > 0) ? T(std::sqrt(std::real(eigval[0]))) : T(0);
   }
 
 
 
-template<typename T1>
+template<typename eT>
 inline
-typename T1::pod_type
-spop_norm::mat_norm_inf(const SpProxy<T1>& P)
+typename get_pod_type<eT>::result
+spop_norm::mat_norm_inf(const SpMat<eT>& X)
   {
   arma_extra_debug_sigprint();
   
   // TODO: this can be sped up with a dedicated implementation
-  return as_scalar( max( sum(abs(P.Q), 1), 0) );
+  return as_scalar( max( sum(abs(X), 1), 0) );
   }
 
 
