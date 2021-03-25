@@ -2228,7 +2228,7 @@ sp_auxlib::run_aupd_shiftinvert
     
     if(slu_info != 0)
       {
-      arma_warn("matrix is singular to working precision");
+      arma_debug_warn("matrix is singular to working precision");
       info = blas_int(-1);
       return;
       }
@@ -2238,7 +2238,7 @@ sp_auxlib::run_aupd_shiftinvert
     
     if( (x_rcond < std::numeric_limits<eT>::epsilon()) || arma_isnan(x_rcond) )
       {
-      arma_warn("matrix is singular to working precision (rcond: ", x_rcond, ")");
+      arma_debug_warn("matrix is singular to working precision (rcond: ", x_rcond, ")");
       info = blas_int(-1);
       return;
       }
