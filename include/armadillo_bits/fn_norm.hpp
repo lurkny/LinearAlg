@@ -164,8 +164,8 @@ norm
     }
   else
     {
-    if(k == uword(1))  { return op_norm::mat_norm_1(P); }
-    if(k == uword(2))  { return op_norm::mat_norm_2(P); }
+    if(k == uword(1))  { return spop_norm::mat_norm_1(P); }
+    if(k == uword(2))  { return spop_norm::mat_norm_2(P); }
     
     arma_stop_logic_error("norm(): unsupported or unimplemented norm type for sparse matrices");
     }
@@ -234,7 +234,7 @@ norm
     {
     if( (sig == 'i') || (sig == 'I') || (sig == '+') )   // inf norm
       {
-      return op_norm::mat_norm_inf(P);
+      return spop_norm::mat_norm_inf(P);
       }
     else
     if( (sig == 'f') || (sig == 'F') )
