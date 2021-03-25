@@ -80,7 +80,8 @@ pinv
   
   if(status == false)
     {
-    arma_debug_warn("pinv(): svd failed");
+    out.soft_reset();
+    arma_extra_warn("pinv(): svd failed");
     }
   
   return status;

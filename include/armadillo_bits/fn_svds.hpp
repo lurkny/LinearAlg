@@ -282,7 +282,7 @@ svds
   
   const bool status = svds_helper(U, S, V, X.get_ref(), k, tol, true);
   
-  if(status == false)  { arma_debug_warn("svds(): decomposition failed"); }
+  if(status == false)  { arma_extra_warn("svds(): decomposition failed"); }
 
   return status;
   }
@@ -310,7 +310,7 @@ svds
   
   const bool status = svds_helper(U, S, V, X.get_ref(), k, tol, false);
   
-  if(status == false)  { arma_debug_warn("svds(): decomposition failed"); }
+  if(status == false)  { arma_extra_warn("svds(): decomposition failed"); }
   
   return status;
   }

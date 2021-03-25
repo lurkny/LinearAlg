@@ -83,7 +83,7 @@ eig_gen
   if(status == false)
     {
     eigvals.soft_reset();
-    arma_debug_warn("eig_gen(): decomposition failed");
+    arma_extra_warn("eig_gen(): decomposition failed");
     }
   
   return status;
@@ -118,7 +118,7 @@ eig_gen
     {
     eigvals.soft_reset();
     eigvecs.soft_reset();
-    arma_debug_warn("eig_gen(): decomposition failed");
+    arma_extra_warn("eig_gen(): decomposition failed");
     }
   
   return status;
@@ -157,7 +157,7 @@ eig_gen
      eigvals.soft_reset();
     leigvecs.soft_reset();
     reigvecs.soft_reset();
-    arma_debug_warn("eig_gen(): decomposition failed");
+    arma_extra_warn("eig_gen(): decomposition failed");
     }
   
   return status;

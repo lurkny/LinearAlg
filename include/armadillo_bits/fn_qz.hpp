@@ -53,7 +53,7 @@ qz
     BB.soft_reset();
     Q.soft_reset();
     Z.soft_reset();
-    arma_debug_warn("qz(): decomposition failed");
+    arma_extra_warn("qz(): decomposition failed");
     }
   
   return status;

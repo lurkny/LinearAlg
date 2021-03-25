@@ -36,6 +36,7 @@ op_pinv::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_pinv>& in)
   
   if(status == false)
     {
+    out.soft_reset();
     arma_stop_runtime_error("pinv(): svd failed");
     }
   }
@@ -96,7 +97,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
   
   const bool status = (method_id == uword(2)) ? auxlib::svd_dc_econ(U, s, V, A) : auxlib::svd_econ(U, s, V, A, 'b');
   
-  if(status == false)  { out.soft_reset(); return false; }
+  if(status == false)  { return false; }
   
   const uword s_n_elem = s.n_elem;
   const T*    s_mem    = s.memptr();
