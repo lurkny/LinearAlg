@@ -703,15 +703,7 @@ op_norm::vec_norm_k(const Proxy<T1>& P, const int k)
     
     const uword N = P.get_n_elem();
     
-    uword i,j;
-    
-    for(i=0, j=1; j<N; i+=2, j+=2)
-      {
-      acc += std::pow(std::abs(A[i]), k);
-      acc += std::pow(std::abs(A[j]), k);
-      }
-    
-    if(i < N)
+    for(uword i=0; i<N; ++i)
       {
       acc += std::pow(std::abs(A[i]), k);
       }
