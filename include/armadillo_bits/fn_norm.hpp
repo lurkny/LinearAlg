@@ -43,42 +43,24 @@ norm
   
   if(is_vec)
     {
-    switch(k)
-      {
-      case 1:
-        return op_norm::vec_norm_1(P);
-        break;
-      
-      case 2:
-        return op_norm::vec_norm_2(P);
-        break;
-      
-      default:
-        {
-        arma_debug_check( (k == 0), "norm(): k must be greater than zero" );
-        return op_norm::vec_norm_k(P, int(k));
-        }
-      }
+    if(k == uword(1))  { return op_norm::vec_norm_1(P); }
+    if(k == uword(2))  { return op_norm::vec_norm_2(P); }
+    
+    arma_debug_check( (k == 0), "norm(): k must be greater than zero" );
+    
+    return op_norm::vec_norm_k(P, int(k));
     }
   else
     {
-    switch(k)
-      {
-      case 1:
-        return op_norm::mat_norm_1(P);
-        break;
+    const quasi_unwrap<typename Proxy<T1>::stored_type> U(P.Q);
+    
+    if(k == uword(1))  { return op_norm::mat_norm_1(U.M); }
+    if(k == uword(2))  { return op_norm::mat_norm_2(U.M); }
       
-      case 2:
-        return op_norm::mat_norm_2(P);
-        break;
-      
-      default:
-        arma_stop_logic_error("norm(): unsupported matrix norm type");
-        return T(0);
-      }
+    arma_stop_logic_error("norm(): unsupported matrix norm type");
     }
   
-  return T(0);  // prevent erroneous compiler warnings
+  return T(0);
   }
 
 
@@ -108,45 +90,30 @@ norm
   
   if(is_vec)
     {
-    if( (sig == 'i') || (sig == 'I') || (sig == '+') )   // max norm
-      {
-      return op_norm::vec_norm_max(P);
-      }
-    else
-    if(sig == '-')   // min norm
-      {
-      return op_norm::vec_norm_min(P);
-      }
-    else
-    if( (sig == 'f') || (sig == 'F') )
-      {
-      return op_norm::vec_norm_2(P);
-      }
-    else
-      {
-      arma_stop_logic_error("norm(): unsupported vector norm type");
-      return T(0);
-      }
+    if( (sig == 'i') || (sig == 'I') || (sig == '+') )  { return op_norm::vec_norm_max(P); }
+    if( (sig == '-')                                 )  { return op_norm::vec_norm_min(P); }
+    if( (sig == 'f') || (sig == 'F')                 )  { return op_norm::vec_norm_2(P);   }
+    
+    arma_stop_logic_error("norm(): unsupported vector norm type");
     }
   else
     {
     if( (sig == 'i') || (sig == 'I') || (sig == '+') )   // inf norm
       {
-      return op_norm::mat_norm_inf(P);
+      const quasi_unwrap<typename Proxy<T1>::stored_type> U(P.Q);
+      
+      return op_norm::mat_norm_inf(U.M);
       }
     else
     if( (sig == 'f') || (sig == 'F') )
       {
       return op_norm::vec_norm_2(P);
       }
-    else
-      {
-      arma_stop_logic_error("norm(): unsupported matrix norm type");
-      return T(0);
-      }
+    
+    arma_stop_logic_error("norm(): unsupported matrix norm type");
     }
   
-  return T(0);  // prevent erroneous compiler warnings
+  return T(0);
   }
 
 
@@ -188,42 +155,22 @@ norm
     
     const Proxy< Col<eT> > P_fake_vector(fake_vector);
     
-    switch(k)
-      {
-      case 1:
-        return op_norm::vec_norm_1(P_fake_vector);
-        break;
-      
-      case 2:
-        return op_norm::vec_norm_2(P_fake_vector);
-        break;
-      
-      default:
-        {
-        arma_debug_check( (k == 0), "norm(): k must be greater than zero" );
-        return op_norm::vec_norm_k(P_fake_vector, int(k));
-        }
-      }
+    if(k == uword(1))  { return op_norm::vec_norm_1(P_fake_vector); }
+    if(k == uword(2))  { return op_norm::vec_norm_2(P_fake_vector); }
+    
+    arma_debug_check( (k == 0), "norm(): k must be greater than zero" );
+    
+    return op_norm::vec_norm_k(P_fake_vector, int(k));
     }
   else
     {
-    switch(k)
-      {
-      case 1:
-        return op_norm::mat_norm_1(P);
-        break;
-      
-      case 2:
-        return op_norm::mat_norm_2(P);
-        break;
-      
-      default:
-        arma_stop_logic_error("norm(): unsupported or unimplemented norm type for sparse matrices");
-        return T(0);
-      }
+    if(k == uword(1))  { return op_norm::mat_norm_1(P); }
+    if(k == uword(2))  { return op_norm::mat_norm_2(P); }
+    
+    arma_stop_logic_error("norm(): unsupported or unimplemented norm type for sparse matrices");
     }
   
-  return T(0);  // prevent erroneous compiler warnings
+  return T(0);
   }
 
 
@@ -273,25 +220,15 @@ norm
       {
       const T val = op_norm::vec_norm_min(P_fake_vector);
       
-      if( P.get_n_nonzero() < P.get_n_elem() )
-        {
-        return (std::min)(T(0), val);
-        }
-      else
-        {
-        return val;
-        }
+      return (P.get_n_nonzero() < P.get_n_elem()) ? T((std::min)(T(0), val)) : T(val);
       }
     else
     if( (sig == 'f') || (sig == 'F') )
       {
       return op_norm::vec_norm_2(P_fake_vector);
       }
-    else
-      {
-      arma_stop_logic_error("norm(): unsupported vector norm type");
-      return T(0);
-      }
+    
+    arma_stop_logic_error("norm(): unsupported vector norm type");
     }
   else
     {
@@ -304,14 +241,11 @@ norm
       {
       return op_norm::vec_norm_2(P_fake_vector);
       }
-    else
-      {
-      arma_stop_logic_error("norm(): unsupported matrix norm type");
-      return T(0);
-      }
+    
+    arma_stop_logic_error("norm(): unsupported matrix norm type");
     }
   
-  return T(0);  // prevent erroneous compiler warnings
+  return T(0);
   }
 
 

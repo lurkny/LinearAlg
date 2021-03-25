@@ -867,49 +867,47 @@ op_norm::vec_norm_min(const Proxy<T1>& P)
 
 
 
-template<typename T1>
+template<typename eT>
 inline
-typename T1::pod_type
-op_norm::mat_norm_1(const Proxy<T1>& P)
+typename get_pod_type<eT>::result
+op_norm::mat_norm_1(const Mat<eT>& X)
   {
   arma_extra_debug_sigprint();
   
   // TODO: this can be sped up with a dedicated implementation
-  return as_scalar( max( sum(abs(P.Q), 0), 1) );
+  return as_scalar( max( sum(abs(X), 0), 1) );
   }
 
 
 
-template<typename T1>
+template<typename eT>
 inline
-typename T1::pod_type
-op_norm::mat_norm_2(const Proxy<T1>& P)
+typename get_pod_type<eT>::result
+op_norm::mat_norm_2(const Mat<eT>& X)
   {
   arma_extra_debug_sigprint();
   
-  typedef typename T1::pod_type T;
+  typedef typename get_pod_type<eT>::result T;
   
-  const quasi_unwrap<typename Proxy<T1>::stored_type> U(P.Q);
-  
-  if(U.M.is_finite() == false)  { arma_debug_warn("norm(): given matrix has non-finite elements"); }
+  if(X.is_finite() == false)  { arma_debug_warn("norm(): given matrix has non-finite elements"); }
   
   Col<T> S;
-  svd(S, U.M);
+  svd(S, X);
   
   return (S.n_elem > 0) ? S[0] : T(0);
   }
 
 
 
-template<typename T1>
+template<typename eT>
 inline
-typename T1::pod_type
-op_norm::mat_norm_inf(const Proxy<T1>& P)
+typename get_pod_type<eT>::result
+op_norm::mat_norm_inf(const Mat<eT>& X)
   {
   arma_extra_debug_sigprint();
   
   // TODO: this can be sped up with a dedicated implementation
-  return as_scalar( max( sum(abs(P.Q), 1), 0) );
+  return as_scalar( max( sum(abs(X), 1), 0) );
   }
 
 
