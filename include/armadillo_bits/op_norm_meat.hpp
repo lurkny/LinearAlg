@@ -879,8 +879,6 @@ op_norm::mat_norm_1(const Proxy<T1>& P)
   // TODO: this can be sped up with a dedicated implementation
   const T outval = as_scalar( max( sum(abs(P.Q), 0), 1) );
   
-  if(arma_isfinite(outval) == false)  { arma_extra_warn("norm(): given matrix may have non-finite elements"); }
-  
   return outval;
   }
 
@@ -895,12 +893,14 @@ op_norm::mat_norm_2(const Proxy<T1>& P)
   
   typedef typename T1::pod_type T;
   
+  const quasi_unwrap<typename Proxy<T1>::stored_type> U(P.Q);
+  
+  if(U.M.is_finite() == false)  { arma_extra_warn("norm(): given matrix has non-finite elements"); }
+  
   Col<T> S;
-  svd(S, P.Q);
+  svd(S, U.M);
   
   const T outval = (S.n_elem > 0) ? S[0] : T(0);
-  
-  if(arma_isfinite(outval) == false)  { arma_extra_warn("norm(): given matrix may have non-finite elements"); }
   
   return outval;
   }
@@ -918,8 +918,6 @@ op_norm::mat_norm_inf(const Proxy<T1>& P)
   
   // TODO: this can be sped up with a dedicated implementation
   const T outval = as_scalar( max( sum(abs(P.Q), 1), 0) );
-  
-  if(arma_isfinite(outval) == false)  { arma_extra_warn("norm(): given matrix may have non-finite elements"); }
   
   return outval;
   }
