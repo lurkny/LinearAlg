@@ -71,7 +71,8 @@ mvnrnd(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type, T1>&
   
   if(status == false)
     {
-    arma_debug_warn("mvnrnd(): given covariance matrix is not symmetric positive semi-definite");
+    out.soft_reset();
+    arma_extra_warn("mvnrnd(): given covariance matrix is not symmetric positive semi-definite");
     }
   
   return status;
@@ -95,7 +96,8 @@ mvnrnd(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type, T1>&
   
   if(status == false)
     {
-    arma_debug_warn("mvnrnd(): given covariance matrix is not symmetric positive semi-definite");
+    out.soft_reset();
+    arma_extra_warn("mvnrnd(): given covariance matrix is not symmetric positive semi-definite");
     }
   
   return status;
