@@ -58,6 +58,7 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   const bool likely_sympd = bool(flags & solve_opts::flag_likely_sympd);
   const bool refine       = bool(flags & solve_opts::flag_refine      );
   const bool no_trimat    = bool(flags & solve_opts::flag_no_trimat   );
+  const bool no_warnings  = bool(flags & solve_opts::flag_no_warnings );
   
   arma_extra_debug_print("glue_solve_gen::apply(): enabled flags:");
   
@@ -70,10 +71,13 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
   if(refine      )  { arma_extra_debug_print("refine");       }
   if(no_trimat   )  { arma_extra_debug_print("no_trimat");    }
+  if(no_warnings )  { arma_extra_debug_print("no_warnings");  }
   
   arma_debug_check( (fast     && equilibrate ), "solve(): options 'fast' and 'equilibrate' are mutually exclusive"      );
   arma_debug_check( (fast     && refine      ), "solve(): options 'fast' and 'refine' are mutually exclusive"           );
   arma_debug_check( (no_sympd && likely_sympd), "solve(): options 'no_sympd' and 'likely_sympd' are mutually exclusive" );
+  
+  const bool allow_warnings = (no_warnings == false);
   
   T    rcond  = T(0);
   bool status = false;
@@ -238,7 +242,7 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
     
     if( (status == true) && (rcond > T(0)) && (rcond < auxlib::epsilon_lapack(A)) )
       {
-      arma_debug_warn("solve(): solution computed, but system seems singular to working precision (rcond: ", rcond, ")");
+      if(allow_warnings)  { arma_debug_warn("solve(): solution computed, but system seems singular to working precision (rcond: ", rcond, ")"); }
       }
     
     
@@ -248,11 +252,11 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
       
       if(rcond > T(0))
         {
-        arma_debug_warn("solve(): system seems singular (rcond: ", rcond, "); attempting approx solution");
+        if(allow_warnings)  { arma_debug_warn("solve(): system seems singular (rcond: ", rcond, "); attempting approx solution"); }
         }
       else
         {
-        arma_debug_warn("solve(): system seems singular; attempting approx solution");
+        if(allow_warnings)  { arma_debug_warn("solve(): system seems singular; attempting approx solution"); }
         }
       
       // TODO: conditionally recreate A: have a separate state flag which indicates whether A was previously overwritten
@@ -266,9 +270,12 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
     {
     arma_extra_debug_print("glue_solve_gen::apply(): detected non-square system");
     
-    if(equilibrate)   { arma_debug_warn( "solve(): option 'equilibrate' ignored for non-square matrix"  ); }
-    if(refine)        { arma_debug_warn( "solve(): option 'refine' ignored for non-square matrix"       ); }
-    if(likely_sympd)  { arma_debug_warn( "solve(): option 'likely_sympd' ignored for non-square matrix" ); }
+    if(allow_warnings)
+      {
+      if(equilibrate)   { arma_debug_warn( "solve(): option 'equilibrate' ignored for non-square matrix"  ); }
+      if(refine)        { arma_debug_warn( "solve(): option 'refine' ignored for non-square matrix"       ); }
+      if(likely_sympd)  { arma_debug_warn( "solve(): option 'likely_sympd' ignored for non-square matrix" ); }
+      }
     
     if(fast)
       {
@@ -281,7 +288,7 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
 
     if( (status == true) && (rcond > T(0)) && (rcond < auxlib::epsilon_lapack(A)) )
       {
-      arma_debug_warn("solve(): solution computed, but system seems singular to working precision (rcond: ", rcond, ")");
+      if(allow_warnings)  { arma_debug_warn("solve(): solution computed, but system seems singular to working precision (rcond: ", rcond, ")"); }
       }
     
     if( (status == false) && (no_approx == false) )
@@ -290,11 +297,11 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
       
       if(rcond > T(0))
         {
-        arma_debug_warn("solve(): system seems singular (rcond: ", rcond, "); attempting approx solution");
+        if(allow_warnings)  { arma_debug_warn("solve(): system seems singular (rcond: ", rcond, "); attempting approx solution"); }
         }
       else
         {
-        arma_debug_warn("solve(): system seems singular; attempting approx solution");
+        if(allow_warnings)  { arma_debug_warn("solve(): system seems singular; attempting approx solution"); }
         }
       
       A = A_expr.get_ref();  // as A was overwritten
@@ -435,6 +442,7 @@ glue_solve_tri::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const Base
   const bool likely_sympd = bool(flags & solve_opts::flag_likely_sympd);
   const bool refine       = bool(flags & solve_opts::flag_refine      );
   const bool no_trimat    = bool(flags & solve_opts::flag_no_trimat   );
+  const bool no_warnings  = bool(flags & solve_opts::flag_no_warnings );
   
   arma_extra_debug_print("glue_solve_tri::apply(): enabled flags:");
   
@@ -447,6 +455,7 @@ glue_solve_tri::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const Base
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
   if(refine      )  { arma_extra_debug_print("refine");       }
   if(no_trimat   )  { arma_extra_debug_print("no_trimat");    }
+  if(no_warnings )  { arma_extra_debug_print("no_warnings");  }
   
   if(no_trimat || equilibrate || refine)
     {
@@ -455,7 +464,12 @@ glue_solve_tri::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const Base
     return glue_solve_gen::apply(actual_out, ((triu) ? trimatu(A_expr.get_ref()) : trimatl(A_expr.get_ref())), B_expr, (flags & mask));
     }
   
-  if(likely_sympd)  { arma_debug_warn("solve(): option 'likely_sympd' ignored for triangular matrix"); }
+  const bool allow_warnings = (no_warnings == false);
+  
+  if(allow_warnings)
+    {
+    if(likely_sympd)  { arma_debug_warn("solve(): option 'likely_sympd' ignored for triangular matrix"); }
+    }
   
   const quasi_unwrap<T1> U(A_expr.get_ref());
   const Mat<eT>& A     = U.M;
@@ -482,7 +496,7 @@ glue_solve_tri::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const Base
   
   if( (status == true) && (rcond > T(0)) && (rcond < auxlib::epsilon_lapack(A)) )
     {
-    arma_debug_warn("solve(): solution computed, but system seems singular to working precision (rcond: ", rcond, ")");
+    if(allow_warnings)  { arma_debug_warn("solve(): solution computed, but system seems singular to working precision (rcond: ", rcond, ")"); }
     }
   
   
@@ -492,11 +506,11 @@ glue_solve_tri::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const Base
     
     if(rcond > T(0))
       {
-      arma_debug_warn("solve(): system seems singular (rcond: ", rcond, "); attempting approx solution");
+      if(allow_warnings)  { arma_debug_warn("solve(): system seems singular (rcond: ", rcond, "); attempting approx solution"); }
       }
     else
       {
-      arma_debug_warn("solve(): system seems singular; attempting approx solution");
+      if(allow_warnings)  { arma_debug_warn("solve(): system seems singular; attempting approx solution"); }
       }
     
     Mat<eT> triA = (triu) ? trimatu(A) : trimatl(A);  // trimatu() and trimatl() return the same type
