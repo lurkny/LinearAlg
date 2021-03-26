@@ -73,10 +73,9 @@ wishrnd(Mat<typename T1::elem_type>& W, const Base<typename T1::elem_type, T1>& 
   if(status == false)
     {
     arma_debug_warn("wishrnd(): given matrix is not symmetric positive definite");
-    return false;
     }
   
-  return true;
+  return status;
   }
 
 
@@ -157,10 +156,9 @@ iwishrnd(Mat<typename T1::elem_type>& W, const Base<typename T1::elem_type, T1>&
   if(status == false)
     {
     arma_debug_warn("iwishrnd(): given matrix is not symmetric positive definite and/or df is too low");
-    return false;
     }
   
-  return true;
+  return status;
   }
 
 
