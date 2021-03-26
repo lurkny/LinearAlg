@@ -72,7 +72,8 @@ wishrnd(Mat<typename T1::elem_type>& W, const Base<typename T1::elem_type, T1>& 
   
   if(status == false)
     {
-    arma_debug_warn("wishrnd(): given matrix is not symmetric positive definite");
+    W.soft_reset();
+    arma_extra_warn("wishrnd(): given matrix is not symmetric positive definite");
     }
   
   return status;
@@ -93,7 +94,7 @@ wishrnd(Mat<typename T1::elem_type>& W, const Base<typename T1::elem_type, T1>& 
   arma_extra_debug_sigprint();
   arma_ignore(S);
   
-  return op_wishrnd::apply_direct(W, D.get_ref(), df, uword(2));
+  return op_wishrnd::apply_direct(W, D.get_ref(), df, uword(2));  // TODO: reset W ?
   }
 
 
@@ -155,7 +156,8 @@ iwishrnd(Mat<typename T1::elem_type>& W, const Base<typename T1::elem_type, T1>&
   
   if(status == false)
     {
-    arma_debug_warn("iwishrnd(): given matrix is not symmetric positive definite and/or df is too low");
+    W.soft_reset();
+    arma_extra_warn("iwishrnd(): given matrix is not symmetric positive definite and/or df is too low");
     }
   
   return status;
@@ -176,7 +178,7 @@ iwishrnd(Mat<typename T1::elem_type>& W, const Base<typename T1::elem_type, T1>&
   arma_extra_debug_sigprint();
   arma_ignore(T);
   
-  return op_iwishrnd::apply_direct(W, Dinv.get_ref(), df, uword(2));
+  return op_iwishrnd::apply_direct(W, Dinv.get_ref(), df, uword(2));  // TODO: reset W ?
   }
 
 
