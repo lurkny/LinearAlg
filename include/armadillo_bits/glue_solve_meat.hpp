@@ -34,6 +34,7 @@ glue_solve_gen::apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_so
   
   if(status == false)
     {
+    out.soft_reset();
     arma_stop_runtime_error("solve(): solution not found");
     }
   }
@@ -311,8 +312,6 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
     }
   
   
-  if(status == false)  { out.soft_reset(); }
-  
   return status;
   }
 
@@ -333,6 +332,7 @@ glue_solve_tri_default::apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2
   
   if(status == false)
     {
+    out.soft_reset();
     arma_stop_runtime_error("solve(): solution not found");
     }
   }
@@ -398,8 +398,6 @@ glue_solve_tri_default::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, co
     }
   
   
-  if(status == false)  { out.soft_reset(); }
-  
   if(is_alias)  { actual_out.steal_mem(out); }
   
   return status;
@@ -418,6 +416,7 @@ glue_solve_tri::apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_so
   
   if(status == false)
     {
+    out.soft_reset();
     arma_stop_runtime_error("solve(): solution not found");
     }
   }
@@ -518,8 +517,6 @@ glue_solve_tri::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const Base
     status = auxlib::solve_approx_svd(out, triA, B_expr.get_ref());  // triA is overwritten
     }
   
-  
-  if(status == false)  { out.soft_reset(); }
   
   if(is_alias)  { actual_out.steal_mem(out); }
   
