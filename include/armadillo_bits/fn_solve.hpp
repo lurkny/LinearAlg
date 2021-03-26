@@ -34,7 +34,7 @@ solve
   const solve_opts::opts&                opts = solve_opts::none
   )
   {
-  arma_extra_warn_sigprint();
+  arma_extra_debug_sigprint();
   
   return Glue<T1, T2, glue_solve_gen>(A.get_ref(), B.get_ref(), opts.flags);
   }
@@ -52,7 +52,7 @@ solve
   const solve_opts::opts&                opts = solve_opts::none
   )
   {
-  arma_extra_warn_sigprint();
+  arma_extra_debug_sigprint();
   
   const bool status = glue_solve_gen::apply(out, A.get_ref(), B.get_ref(), opts.flags);
   
@@ -79,7 +79,7 @@ solve
   const Base<typename T1::elem_type,T2>& B
   )
   {
-  arma_extra_warn_sigprint();
+  arma_extra_debug_sigprint();
   
   uword flags = uword(0);
   
@@ -102,7 +102,7 @@ solve
   const solve_opts::opts&                opts
   )
   {
-  arma_extra_warn_sigprint();
+  arma_extra_debug_sigprint();
   
   uword flags = opts.flags;
   
@@ -124,7 +124,7 @@ solve
   const Base<typename T1::elem_type,T2>& B
   )
   {
-  arma_extra_warn_sigprint();
+  arma_extra_debug_sigprint();
   
   uword flags = uword(0);
   
@@ -153,7 +153,7 @@ solve
   const solve_opts::opts&                opts
   )
   {
-  arma_extra_warn_sigprint();
+  arma_extra_debug_sigprint();
   
   uword flags = opts.flags;
   
