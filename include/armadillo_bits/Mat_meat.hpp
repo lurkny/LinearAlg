@@ -7535,7 +7535,7 @@ Mat<eT>::save(std::ostream& os, const file_type type) const
       save_okay = false;
     }
   
-  if(save_okay == false)  { arma_extra_warn("Mat::save(): couldn't write to the given stream"); }
+  if(save_okay == false)  { arma_extra_warn("Mat::save(): couldn't write to stream"); }
   
   return save_okay;
   }
@@ -7815,7 +7815,7 @@ Mat<eT>::load(std::istream& is, const file_type type)
       }
     else
       {
-      arma_extra_warn("Mat::load(): couldn't load from the given stream");
+      arma_extra_warn("Mat::load(): couldn't load from stream");
       }
     }
   

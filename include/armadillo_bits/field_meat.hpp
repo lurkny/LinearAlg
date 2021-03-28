@@ -1739,7 +1739,7 @@ field<oT>::save(std::ostream& os, const file_type type, const bool print_status)
       }
     else
       {
-      arma_debug_warn("field::save(): couldn't write to the given stream");
+      arma_debug_warn("field::save(): couldn't write to stream");
       }
     }
   
@@ -1798,7 +1798,7 @@ field<oT>::load(std::istream& is, const file_type type, const bool print_status)
       }
     else
       {
-      arma_debug_warn("field::load(): couldn't read from the given stream");
+      arma_debug_warn("field::load(): couldn't read from stream");
       }
     }
   
