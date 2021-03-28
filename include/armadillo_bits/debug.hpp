@@ -1354,6 +1354,9 @@ arma_assert_atlas_size(const T1& A, const T2& B)
 
 #if defined(ARMA_EXTRA_DEBUG)
   
+  #undef  ARMA_EXTRA_WARNINGS
+  #define ARMA_EXTRA_WARNINGS
+  
   #define arma_extra_debug_sigprint       arma_sigprint(ARMA_FNSIG); arma_bktprint
   #define arma_extra_debug_sigprint_this  arma_sigprint(ARMA_FNSIG); arma_thisprint
   #define arma_extra_debug_print          arma_print
