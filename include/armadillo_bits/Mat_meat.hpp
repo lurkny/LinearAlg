@@ -7425,7 +7425,7 @@ Mat<eT>::save(const csv_name& spec, const file_type type) const
   
   if(type != csv_ascii)
     {
-    arma_debug_check(true, "Mat::save(): unsupported file type for csv_name()");
+    arma_stop_runtime_error("Mat::save(): unsupported file type for csv_name()");
     return false;
     }
   
@@ -7531,7 +7531,7 @@ Mat<eT>::save(std::ostream& os, const file_type type) const
       break;
     
     default:
-      arma_warn("Mat::save(): unsupported file type");
+      arma_debug_warn("Mat::save(): unsupported file type");
       save_okay = false;
     }
   
@@ -7630,7 +7630,6 @@ Mat<eT>::load(const hdf5_name& spec, const file_type type)
   
   if( (type != hdf5_binary) && (type != hdf5_binary_trans) )
     {
-    (*this).soft_reset();
     arma_stop_runtime_error("Mat::load(): unsupported file type for hdf5_name()");
     return false;
     }
@@ -7683,7 +7682,7 @@ Mat<eT>::load(const csv_name& spec, const file_type type)
   
   if(type != csv_ascii)
     {
-    arma_debug_check(true, "Mat::load(): unsupported file type for csv_name()");
+    arma_stop_runtime_error("Mat::load(): unsupported file type for csv_name()");
     return false;
     }
   

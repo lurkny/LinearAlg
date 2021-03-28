@@ -4495,7 +4495,6 @@ Cube<eT>::load(const hdf5_name& spec, const file_type type)
   
   if( (type != hdf5_binary) && (type != hdf5_binary_trans) )
     {
-    (*this).soft_reset();
     arma_stop_runtime_error("Cube::load(): unsupported file type for hdf5_name()");
     return false;
     }
