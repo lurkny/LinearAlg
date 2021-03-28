@@ -176,6 +176,9 @@
 //// Uncomment the above line if you want to see the function traces of how Armadillo evaluates expressions.
 //// This is mainly useful for debugging of the library.
 
+// #define ARMA_EXTRA_WARNINGS
+//// Uncomment the above line to enable warnings about failed decompositions, failed saving/loading, etc.
+
 
 #if defined(ARMA_DEFAULT_OSTREAM)
   #pragma message ("WARNING: support for ARMA_DEFAULT_OSTREAM is deprecated and will be removed;")
