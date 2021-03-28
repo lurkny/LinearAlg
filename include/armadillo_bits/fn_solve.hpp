@@ -61,6 +61,8 @@ solve
     out.soft_reset();
     arma_extra_warn("solve(): solution not found");
     }
+  
+  return status;
   }
 
 
@@ -138,6 +140,8 @@ solve
     out.soft_reset();
     arma_extra_warn("solve(): solution not found");
     }
+  
+  return status;
   }
 
 
@@ -167,6 +171,8 @@ solve
     out.soft_reset();
     arma_extra_warn("solve(): solution not found");
     }
+  
+  return status;
   }
 
 
