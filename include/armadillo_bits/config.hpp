@@ -176,7 +176,7 @@
 //// Uncomment the above line if you want to see the function traces of how Armadillo evaluates expressions.
 //// This is mainly useful for debugging of the library.
 
-// #define ARMA_EXTRA_WARNINGS
+// #define ARMA_EXTRA_WARN
 //// Uncomment the above line to enable warnings about failed decompositions, failed saving/loading, etc.
 
 

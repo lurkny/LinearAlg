@@ -1320,7 +1320,7 @@ arma_assert_atlas_size(const T1& A, const T2& B)
 #if defined(ARMA_NO_DEBUG)
   
   #undef ARMA_EXTRA_DEBUG
-  #undef ARMA_EXTRA_WARNINGS
+  #undef ARMA_EXTRA_WARN
   
   #define arma_debug_print                   true ? (void)0 : arma_print
   #define arma_debug_warn                    true ? (void)0 : arma_warn
@@ -1354,8 +1354,8 @@ arma_assert_atlas_size(const T1& A, const T2& B)
 
 #if defined(ARMA_EXTRA_DEBUG)
   
-  #undef  ARMA_EXTRA_WARNINGS
-  #define ARMA_EXTRA_WARNINGS
+  #undef  ARMA_EXTRA_WARN
+  #define ARMA_EXTRA_WARN
   
   #define arma_extra_debug_sigprint       arma_sigprint(ARMA_FNSIG); arma_bktprint
   #define arma_extra_debug_sigprint_this  arma_sigprint(ARMA_FNSIG); arma_thisprint
@@ -1371,7 +1371,7 @@ arma_assert_atlas_size(const T1& A, const T2& B)
 
 
 
-#if defined(ARMA_EXTRA_WARNINGS)
+#if defined(ARMA_EXTRA_WARN)
   #define arma_extra_warn  arma_warn
 #else
   #define arma_extra_warn  true ? (void)0 : arma_warn
