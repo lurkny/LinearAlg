@@ -117,7 +117,6 @@ namespace solve_opts
   static constexpr uword flag_likely_sympd = uword(1u <<  8);
   static constexpr uword flag_refine       = uword(1u <<  9);
   static constexpr uword flag_no_trimat    = uword(1u << 10);
-  static constexpr uword flag_no_warn      = uword(1u << 11);
   
   struct opts_none         : public opts { inline opts_none()         : opts(flag_none        ) {} };
   struct opts_fast         : public opts { inline opts_fast()         : opts(flag_fast        ) {} };
@@ -131,7 +130,6 @@ namespace solve_opts
   struct opts_likely_sympd : public opts { inline opts_likely_sympd() : opts(flag_likely_sympd) {} };
   struct opts_refine       : public opts { inline opts_refine()       : opts(flag_refine      ) {} };
   struct opts_no_trimat    : public opts { inline opts_no_trimat()    : opts(flag_no_trimat   ) {} };
-  struct opts_no_warn      : public opts { inline opts_no_warn()      : opts(flag_no_warn     ) {} };
   
   static const opts_none         none;
   static const opts_fast         fast;
@@ -145,7 +143,6 @@ namespace solve_opts
   static const opts_likely_sympd likely_sympd;
   static const opts_refine       refine;
   static const opts_no_trimat    no_trimat;
-  static const opts_no_warn      no_warn;
   }
 
 
