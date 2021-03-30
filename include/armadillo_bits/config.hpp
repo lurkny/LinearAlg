@@ -22,7 +22,7 @@
 //// Must be an integer >= 0
 //// 0 = no warnings
 //// 1 = only critical warnings, which cannot be communicated through the return value (true/false) of functions
-//// 2 = critical warnings as above, and warnings about poorly conditioned systems (low rcond) detected by solve()
+//// 2 = critical warnings as above, and warnings about poorly conditioned systems (low rcond) detected by solve(), spsolve(), etc
 //// 3 = all warnings (eg. failed decompositions, failed saving/loading, etc)
 
 #if !defined(ARMA_USE_LAPACK)

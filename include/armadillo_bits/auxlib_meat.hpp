@@ -1629,7 +1629,7 @@ auxlib::eig_pair
         }
       }
     
-    if(beta_has_zero)  { arma_debug_warn("eig_pair(): given matrices appear ill-conditioned"); }
+    if(beta_has_zero)  { arma_debug_warn_level(1, "eig_pair(): given matrices appear ill-conditioned"); }
     
     if(vecs_on)
       {
@@ -1755,7 +1755,7 @@ auxlib::eig_pair
       beta_has_zero = (beta_has_zero || (beta_val == zero));
       }
     
-    if(beta_has_zero)  { arma_debug_warn("eig_pair(): given matrices appear ill-conditioned"); }
+    if(beta_has_zero)  { arma_debug_warn_level(1, "eig_pair(): given matrices appear ill-conditioned"); }
     
     return true;
     }
@@ -1869,7 +1869,7 @@ auxlib::eig_pair_twosided
         }
       }
     
-    if(beta_has_zero)  { arma_debug_warn("eig_pair(): given matrices appear ill-conditioned"); }
+    if(beta_has_zero)  { arma_debug_warn_level(1, "eig_pair(): given matrices appear ill-conditioned"); }
     
     for(uword j=0; j < A.n_rows; ++j)
       {
@@ -1992,7 +1992,7 @@ auxlib::eig_pair_twosided
       beta_has_zero = (beta_has_zero || (beta_val == zero));
       }
     
-    if(beta_has_zero)  { arma_debug_warn("eig_pair(): given matrices appear ill-conditioned"); }
+    if(beta_has_zero)  { arma_debug_warn_level(1, "eig_pair(): given matrices appear ill-conditioned"); }
     
     return true;
     }
@@ -2033,13 +2033,13 @@ auxlib::eig_sym(Col<eT>& eigval, const Base<eT,T1>& X)
     
     // if(auxlib::rudimentary_sym_check(A) == false)
     //   {
-    //   arma_debug_warn("eig_sym(): given matrix is not symmetric");
+    //   arma_debug_warn_level(1, "eig_sym(): given matrix is not symmetric");
     //   return false;
     //   }
     
     if((arma_config::debug) && (auxlib::rudimentary_sym_check(A) == false))
       {
-      arma_debug_warn("eig_sym(): given matrix is not symmetric");
+      arma_debug_warn_level(1, "eig_sym(): given matrix is not symmetric");
       }
     
     arma_debug_assert_blas_size(A);
@@ -2096,13 +2096,13 @@ auxlib::eig_sym(Col<T>& eigval, const Base<std::complex<T>,T1>& X)
     
     // if(auxlib::rudimentary_sym_check(A) == false)
     //   {
-    //   arma_debug_warn("eig_sym(): given matrix is not hermitian");
+    //   arma_debug_warn_level(1, "eig_sym(): given matrix is not hermitian");
     //   return false;
     //   }
     
     if((arma_config::debug) && (auxlib::rudimentary_sym_check(A) == false))
       {
-      arma_debug_warn("eig_sym(): given matrix is not hermitian");
+      arma_debug_warn_level(1, "eig_sym(): given matrix is not hermitian");
       }
     
     arma_debug_assert_blas_size(A);

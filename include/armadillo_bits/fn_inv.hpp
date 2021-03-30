@@ -51,7 +51,7 @@ inv
   if(status == false)
     {
     out.soft_reset();
-    arma_extra_warn("inv(): matrix seems singular");
+    arma_debug_warn_level(3, "inv(): matrix seems singular");
     }
   
   return status;
@@ -91,7 +91,7 @@ inv_sympd
   if(status == false)
     {
     out.soft_reset();
-    arma_extra_warn("inv_sympd(): matrix is singular or not positive definite");
+    arma_debug_warn_level(3, "inv_sympd(): matrix is singular or not positive definite");
     }
   
   return status;

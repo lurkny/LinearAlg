@@ -48,7 +48,7 @@ log_det
     out_val  = eT(Datum<T>::nan);
     out_sign = T(0);
     
-    arma_extra_warn("log_det(): failed to find determinant");
+    arma_debug_warn_level(3, "log_det(): failed to find determinant");
     }
   
   return status;

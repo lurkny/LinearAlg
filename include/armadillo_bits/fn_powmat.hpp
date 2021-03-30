@@ -54,7 +54,7 @@ powmat
   if(status == false)
     {
     out.soft_reset();
-    arma_extra_warn("powmat(): transformation failed");
+    arma_debug_warn_level(3, "powmat(): transformation failed");
     }
   
   return status;
@@ -96,7 +96,7 @@ powmat
   if(status == false)
     {
     out.soft_reset();
-    arma_extra_warn("powmat(): transformation failed");
+    arma_debug_warn_level(3, "powmat(): transformation failed");
     }
   
   return status;

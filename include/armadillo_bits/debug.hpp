@@ -426,54 +426,47 @@ arma_warn(const T1& arg1, const T2& arg2, const T3& arg3, const T4& arg4)
 
 
 template<typename T1>
-arma_cold
-arma_noinline
+inline
 static
 void
 arma_warn_level(const uword level, const T1& arg1)
   {
-  constexpr uword config_warn_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : 0;
+  constexpr uword config_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : uword(0);
   
-  if((config_warn_level > 0) && (level >= config_warn_level))  { arma_warn(arg1); }
+  if((config_level > 0) && (level <= config_level))  { arma_warn(arg1); }
   }
 
 
 template<typename T1, typename T2>
-arma_cold
-arma_noinline
-static
+inline
 void
-arma_warn_level(const T1& arg1, const T2& arg2)
+arma_warn_level(const uword level, const T1& arg1, const T2& arg2)
   {
-  constexpr uword config_warn_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : 0;
+  constexpr uword config_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : uword(0);
   
-  if((config_warn_level > 0) && (level >= config_warn_level))  { arma_warn(arg1,arg2); }
+  if((config_level > 0) && (level <= config_level))  { arma_warn(arg1,arg2); }
   }
 
 
 template<typename T1, typename T2, typename T3>
-arma_cold
-arma_noinline
-static
+inline
 void
-arma_warn_level(const T1& arg1, const T2& arg2, const T3& arg3)
+arma_warn_level(const uword level, const T1& arg1, const T2& arg2, const T3& arg3)
   {
-  constexpr uword config_warn_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : 0;
+  constexpr uword config_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : uword(0);
   
-  if((config_warn_level > 0) && (level >= config_warn_level))  { arma_warn(arg1,arg2,arg3); }
+  if((config_level > 0) && (level <= config_level))  { arma_warn(arg1,arg2,arg3); }
   }
 
 
 template<typename T1, typename T2, typename T3, typename T4>
-arma_cold
-arma_noinline
-static
+inline
 void
-arma_warn_level(const T1& arg1, const T2& arg2, const T3& arg3, const T4& arg4)
+arma_warn_level(const uword level, const T1& arg1, const T2& arg2, const T3& arg3, const T4& arg4)
   {
-  constexpr uword config_warn_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : 0;
+  constexpr uword config_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : uword(0);
   
-  if((config_warn_level > 0) && (level >= config_warn_level))  { arma_warn(arg1,arg2,arg3,arg4); }
+  if((config_level > 0) && (level <= config_level))  { arma_warn(arg1,arg2,arg3,arg4); }
   }
 
 

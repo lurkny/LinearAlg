@@ -606,7 +606,7 @@ Cube<eT>::Cube(eT* aux_mem, const uword aux_n_rows, const uword aux_n_cols, cons
   {
   arma_extra_debug_sigprint_this(this);
   
-  if(prealloc_mat)  { arma_debug_warn("Cube::Cube(): parameter 'prealloc_mat' ignored as it's no longer used"); }
+  if(prealloc_mat)  { arma_debug_warn_level(1, "Cube::Cube(): parameter 'prealloc_mat' ignored as it's no longer used"); }
   
   if(copy_aux_mem)
     {
@@ -4300,11 +4300,11 @@ Cube<eT>::save(const std::string name, const file_type type) const
       break;
     
     default:
-      arma_debug_warn("Cube::save(): unsupported file type");
+      arma_debug_warn_level(1, "Cube::save(): unsupported file type");
       save_okay = false;
     }
   
-  if(save_okay == false)  { arma_extra_warn("Cube::save(): couldn't write; file: ", name); }
+  if(save_okay == false)  { arma_debug_warn_level(3, "Cube::save(): couldn't write; file: ", name); }
   
   return save_okay;
   }
@@ -4357,11 +4357,11 @@ Cube<eT>::save(const hdf5_name& spec, const file_type type) const
     {
     if(err_msg.length() > 0)
       {
-      arma_extra_warn("Cube::save(): ", err_msg, "; file: ", spec.filename);
+      arma_debug_warn_level(3, "Cube::save(): ", err_msg, "; file: ", spec.filename);
       }
     else
       {
-      arma_extra_warn("Cube::save(): couldn't write; file: ", spec.filename);
+      arma_debug_warn_level(3, "Cube::save(): couldn't write; file: ", spec.filename);
       }
     }
   
@@ -4404,11 +4404,11 @@ Cube<eT>::save(std::ostream& os, const file_type type) const
       break;
     
     default:
-      arma_debug_warn("Cube::save(): unsupported file type");
+      arma_debug_warn_level(1, "Cube::save(): unsupported file type");
       save_okay = false;
     }
   
-  if(save_okay == false)  { arma_extra_warn("Cube::save(): couldn't write to stream"); }
+  if(save_okay == false)  { arma_debug_warn_level(3, "Cube::save(): couldn't write to stream"); }
   
   return save_okay;
   }
@@ -4462,7 +4462,7 @@ Cube<eT>::load(const std::string name, const file_type type)
       break;
     
     default:
-      arma_debug_warn("Cube::load(): unsupported file type");
+      arma_debug_warn_level(1, "Cube::load(): unsupported file type");
       load_okay = false;
     }
   
@@ -4472,11 +4472,11 @@ Cube<eT>::load(const std::string name, const file_type type)
     
     if(err_msg.length() > 0)
       {
-      arma_extra_warn("Cube::load(): ", err_msg, "; file: ", name);
+      arma_debug_warn_level(3, "Cube::load(): ", err_msg, "; file: ", name);
       }
     else
       {
-      arma_extra_warn("Cube::load(): couldn't read; file: ", name);
+      arma_debug_warn_level(3, "Cube::load(): couldn't read; file: ", name);
       }
     }
   
@@ -4524,11 +4524,11 @@ Cube<eT>::load(const hdf5_name& spec, const file_type type)
     
     if(err_msg.length() > 0)
       {
-      arma_extra_warn("Cube::load(): ", err_msg, "; file: ", spec.filename);
+      arma_debug_warn_level(3, "Cube::load(): ", err_msg, "; file: ", spec.filename);
       }
     else
       {
-      arma_extra_warn("Cube::load(): couldn't read; file: ", spec.filename);
+      arma_debug_warn_level(3, "Cube::load(): couldn't read; file: ", spec.filename);
       }
     }
   
@@ -4576,7 +4576,7 @@ Cube<eT>::load(std::istream& is, const file_type type)
       break;
     
     default:
-      arma_debug_warn("Cube::load(): unsupported file type");
+      arma_debug_warn_level(1, "Cube::load(): unsupported file type");
       load_okay = false;
     }
   
@@ -4586,11 +4586,11 @@ Cube<eT>::load(std::istream& is, const file_type type)
     
     if(err_msg.length() > 0)
       {
-      arma_extra_warn("Cube::load(): ", err_msg);
+      arma_debug_warn_level(3, "Cube::load(): ", err_msg);
       }
     else
       {
-      arma_extra_warn("Cube::load(): couldn't load from stream");
+      arma_debug_warn_level(3, "Cube::load(): couldn't load from stream");
       }
     }
   
