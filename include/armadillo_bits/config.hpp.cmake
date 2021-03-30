@@ -15,6 +15,16 @@
 
 
 
+#if !defined(ARMA_WARN_LEVEL)
+  #define ARMA_WARN_LEVEL 2
+#endif
+//// The required level for warning messages (printed to ARMA_CERR_STREAM)
+//// Must be an integer >= 0
+//// 0 = no warnings
+//// 1 = only critical warnings, which cannot be communicated through the return value (true/false) of functions
+//// 2 = critical warnings as above, and warnings about poorly conditioned systems (low rcond) detected by solve()
+//// 3 = all warnings (eg. failed decompositions, failed saving/loading, etc)
+
 #if !defined(ARMA_USE_LAPACK)
 #cmakedefine ARMA_USE_LAPACK
 //// Comment out the above line if you don't have LAPACK or a high-speed replacement for LAPACK,
@@ -175,9 +185,6 @@
 // #define ARMA_EXTRA_DEBUG
 //// Uncomment the above line if you want to see the function traces of how Armadillo evaluates expressions.
 //// This is mainly useful for debugging of the library.
-
-// #define ARMA_EXTRA_WARN
-//// Uncomment the above line to enable warnings about failed decompositions, failed saving/loading, etc.
 
 
 #if defined(ARMA_DEFAULT_OSTREAM)

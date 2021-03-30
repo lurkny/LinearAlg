@@ -422,6 +422,63 @@ arma_warn(const T1& arg1, const T2& arg2, const T3& arg3, const T4& arg4)
 
 
 //
+// arma_warn_level
+
+
+template<typename T1>
+arma_cold
+arma_noinline
+static
+void
+arma_warn_level(const uword level, const T1& arg1)
+  {
+  constexpr uword config_warn_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : 0;
+  
+  if((config_warn_level > 0) && (level >= config_warn_level))  { arma_warn(arg1); }
+  }
+
+
+template<typename T1, typename T2>
+arma_cold
+arma_noinline
+static
+void
+arma_warn_level(const T1& arg1, const T2& arg2)
+  {
+  constexpr uword config_warn_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : 0;
+  
+  if((config_warn_level > 0) && (level >= config_warn_level))  { arma_warn(arg1,arg2); }
+  }
+
+
+template<typename T1, typename T2, typename T3>
+arma_cold
+arma_noinline
+static
+void
+arma_warn_level(const T1& arg1, const T2& arg2, const T3& arg3)
+  {
+  constexpr uword config_warn_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : 0;
+  
+  if((config_warn_level > 0) && (level >= config_warn_level))  { arma_warn(arg1,arg2,arg3); }
+  }
+
+
+template<typename T1, typename T2, typename T3, typename T4>
+arma_cold
+arma_noinline
+static
+void
+arma_warn_level(const T1& arg1, const T2& arg2, const T3& arg3, const T4& arg4)
+  {
+  constexpr uword config_warn_level = (sword(ARMA_WARN_LEVEL) > 0) ? uword(ARMA_WARN_LEVEL) : 0;
+  
+  if((config_warn_level > 0) && (level >= config_warn_level))  { arma_warn(arg1,arg2,arg3,arg4); }
+  }
+
+
+
+//
 // arma_check
 
 //! if state is true, abort program
@@ -1319,11 +1376,9 @@ arma_assert_atlas_size(const T1& A, const T2& B)
 
 #if defined(ARMA_NO_DEBUG)
   
-  #undef ARMA_EXTRA_DEBUG
-  #undef ARMA_EXTRA_WARN
-  
   #define arma_debug_print                   true ? (void)0 : arma_print
   #define arma_debug_warn                    true ? (void)0 : arma_warn
+  #define arma_debug_warn_level              true ? (void)0 : arma_warn_level
   #define arma_debug_check                   true ? (void)0 : arma_check
   #define arma_debug_check_bounds            true ? (void)0 : arma_check_bounds
   #define arma_debug_set_error               true ? (void)0 : arma_set_error
@@ -1338,6 +1393,7 @@ arma_assert_atlas_size(const T1& A, const T2& B)
   
   #define arma_debug_print                 arma_print
   #define arma_debug_warn                  arma_warn
+  #define arma_debug_warn_level            arma_warn_level
   #define arma_debug_check                 arma_check
   #define arma_debug_check_bounds          arma_check_bounds
   #define arma_debug_set_error             arma_set_error
@@ -1354,8 +1410,8 @@ arma_assert_atlas_size(const T1& A, const T2& B)
 
 #if defined(ARMA_EXTRA_DEBUG)
   
-  #undef  ARMA_EXTRA_WARN
-  #define ARMA_EXTRA_WARN
+  #undef  ARMA_WARN_LEVEL
+  #define ARMA_WARN_LEVEL 3
   
   #define arma_extra_debug_sigprint       arma_sigprint(ARMA_FNSIG); arma_bktprint
   #define arma_extra_debug_sigprint_this  arma_sigprint(ARMA_FNSIG); arma_thisprint
@@ -1367,14 +1423,6 @@ arma_assert_atlas_size(const T1& A, const T2& B)
   #define arma_extra_debug_sigprint_this   true ? (void)0 : arma_thisprint
   #define arma_extra_debug_print           true ? (void)0 : arma_print
  
-#endif
-
-
-
-#if defined(ARMA_EXTRA_WARN)
-  #define arma_extra_warn  arma_warn
-#else
-  #define arma_extra_warn  true ? (void)0 : arma_warn
 #endif
 
 
