@@ -33,7 +33,7 @@ class op_det
     };
   
   template<typename T1>
-  inline static typename T1::elem_type apply(const Base<typename T1::elem_type,T1>& expr);
+  inline static bool apply_direct(typename T1::elem_type& out_val, const Base<typename T1::elem_type,T1>& expr);
   
   template<typename T1>
   inline static typename T1::elem_type apply_diagmat(const Base<typename T1::elem_type,T1>& expr);

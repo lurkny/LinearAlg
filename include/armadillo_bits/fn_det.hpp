@@ -27,7 +27,42 @@ det(const Base<typename T1::elem_type,T1>& X)
   {
   arma_extra_debug_sigprint();
   
-  return op_det::apply(X.get_ref());
+  typedef typename T1::elem_type eT;
+  
+  eT out_val = eT(0);
+  
+  const bool status = op_det::apply_direct(out_val, X.get_ref());
+  
+  if(status == false)
+    {
+    out_val = eT(0);
+    arma_stop_runtime_error("det(): failed to find determinant");
+    }
+  
+  return out_val;
+  }
+
+
+
+template<typename T1>
+arma_warn_unused
+inline
+typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, bool >::result
+det(typename T1::elem_type& out_val, const Base<typename T1::elem_type,T1>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename T1::elem_type eT;
+  
+  const bool status = op_det::apply_direct(out_val, X.get_ref());
+  
+  if(status == false)
+    {
+    out_val = eT(0);
+    arma_debug_warn_level(3, "det(): failed to find determinant");
+    }
+  
+  return status;
   }
 
 

@@ -352,12 +352,12 @@ auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, const T rcond_threshold)
 //! determinant of a matrix
 template<typename eT>
 inline
-eT
-auxlib::det(Mat<eT>& A)
+bool
+auxlib::det(eT& out_val, Mat<eT>& A)
   {
   arma_extra_debug_sigprint();
   
-  if(A.is_empty())  { return eT(1); }
+  if(A.is_empty())  { out_val = eT(1); return true; }
   
   #if defined(ARMA_USE_ATLAS)
     {
@@ -366,26 +366,24 @@ auxlib::det(Mat<eT>& A)
     podarray<int> ipiv(A.n_rows);
     
     arma_extra_debug_print("atlas::clapack_getrf()");
-    //const int info =
-    atlas::clapack_getrf(atlas::CblasColMajor, A.n_rows, A.n_cols, A.memptr(), A.n_rows, ipiv.memptr());
+    const int info = atlas::clapack_getrf(atlas::CblasColMajor, A.n_rows, A.n_cols, A.memptr(), A.n_rows, ipiv.memptr());
+    
+    if(info < 0)  { return false; }
     
     // on output A appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
     eT val = A.at(0,0);
-    for(uword i=1; i < A.n_rows; ++i)
-      {
-      val *= A.at(i,i);
-      }
+    for(uword i=1; i < A.n_rows; ++i)  { val *= A.at(i,i); }
     
     int sign = +1;
     for(uword i=0; i < A.n_rows; ++i)
       {
-      if( int(i) != ipiv.mem[i] )  // NOTE: no adjustment required, as the clapack version of getrf() assumes counting from 0
-        {
-        sign *= -1;
-        }
+      // NOTE: no adjustment required, as the clapack version of getrf() assumes counting from 0
+      if( int(i) != ipiv.mem[i] )  { sign *= -1; }
       }
     
-    return ( (sign < 0) ? -val : val );
+    out_val = (sign < 0) ? eT(-val) : eT(val);
+    
+    return true;
     }
   #elif defined(ARMA_USE_LAPACK)
     {
@@ -400,28 +398,29 @@ auxlib::det(Mat<eT>& A)
     arma_extra_debug_print("lapack::getrf()");
     lapack::getrf(&n_rows, &n_cols, A.memptr(), &n_rows, ipiv.memptr(), &info);
     
+    if(info < 0)  { return false; }
+    
     // on output A appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
     eT val = A.at(0,0);
-    for(uword i=1; i < A.n_rows; ++i)
-      {
-      val *= A.at(i,i);
-      }
+    for(uword i=1; i < A.n_rows; ++i)  { val *= A.at(i,i); }
     
     blas_int sign = +1;
     for(uword i=0; i < A.n_rows; ++i)
       {
-      if( blas_int(i) != (ipiv.mem[i] - 1) )  // NOTE: adjustment of -1 is required as Fortran counts from 1
-        {
-        sign *= -1;
-        }
+      // NOTE: adjustment of -1 is required as Fortran counts from 1
+      if( blas_int(i) != (ipiv.mem[i] - 1) )  { sign *= -1; }
       }
     
-    return ( (sign < 0) ? -val : val );
+    out_val = (sign < 0) ? eT(-val) : eT(val);
+    
+    return true;
     }
   #else
     {
+    arma_ignore(out_val);
+    arma_ignore(A);
     arma_stop_logic_error("det(): use of ATLAS or LAPACK must be enabled");
-    return eT(0);
+    return false;
     }
   #endif
   }
@@ -533,12 +532,9 @@ auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, Mat<eT
   #else
     {
     arma_ignore(A);
-    
-    out_val  = eT(0);
-    out_sign =  T(0);
-    
+    arma_ignore(out_val);
+    arma_ignore(out_sign);
     arma_stop_logic_error("log_det(): use of ATLAS or LAPACK must be enabled");
-    
     return false;
     }
   #endif

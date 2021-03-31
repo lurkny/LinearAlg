@@ -52,7 +52,7 @@ class auxlib
   // det and log_det
   
   template<typename eT>
-  inline static eT det(Mat<eT>& A);
+  inline static bool det(eT& out_val, Mat<eT>& A);
   
   template<typename eT>
   inline static bool log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, Mat<eT>& A);

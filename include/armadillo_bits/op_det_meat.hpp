@@ -21,8 +21,8 @@
 
 template<typename T1>
 inline
-typename T1::elem_type
-op_det::apply(const Base<typename T1::elem_type,T1>& expr)
+bool
+op_det::apply_direct(typename T1::elem_type& out_val, const Base<typename T1::elem_type,T1>& expr)
   {
   arma_extra_debug_sigprint();
   
@@ -33,14 +33,18 @@ op_det::apply(const Base<typename T1::elem_type,T1>& expr)
     {
     const strip_diagmat<T1> strip(expr.get_ref());
     
-    return op_det::apply_diagmat(strip.M);
+    out_val = op_det::apply_diagmat(strip.M);
+    
+    return true;
     }
   
   if(strip_trimat<T1>::do_trimat)
     {
     const strip_trimat<T1> strip(expr.get_ref());
     
-    return op_det::apply_trimat(strip.M);
+    out_val = op_det::apply_trimat(strip.M);
+    
+    return true;
     }
   
   Mat<eT> A(expr.get_ref());
@@ -55,19 +59,19 @@ op_det::apply(const Base<typename T1::elem_type,T1>& expr)
     const eT     det_val = op_det::apply_tiny(A);
     const  T abs_det_val = std::abs(det_val);
     
-    if((abs_det_val > det_min) && (abs_det_val < det_max))  { return det_val; }
+    if((abs_det_val > det_min) && (abs_det_val < det_max))  { out_val = det_val; return true; }
     
     // fallthrough if det_val is suspect
     }
   
-  if(A.is_diagmat())  { return op_det::apply_diagmat(A); }
+  if(A.is_diagmat())  { out_val = op_det::apply_diagmat(A); return true; }
   
   const bool is_triu =                   trimat_helper::is_triu(A);
   const bool is_tril = is_triu ? false : trimat_helper::is_tril(A);
   
-  if(is_triu || is_tril)  { return op_det::apply_trimat(A); }
+  if(is_triu || is_tril)  { out_val = op_det::apply_trimat(A); return true; }
   
-  return auxlib::det(A);
+  return auxlib::det(out_val, A);
   }
 
 
