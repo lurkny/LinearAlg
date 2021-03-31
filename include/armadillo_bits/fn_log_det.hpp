@@ -37,11 +37,7 @@ log_det
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  Mat<eT> A(X.get_ref());
-  
-  arma_debug_check( (A.is_square() == false), "log_det(): given matrix must be square sized" );
-  
-  const bool status = auxlib::log_det(out_val, out_sign, A);
+  const bool status = op_log_det::apply_direct(out_val, out_sign, X.get_ref());
   
   if(status == false)
     {
@@ -52,58 +48,6 @@ log_det
     }
   
   return status;
-  }
-
-
-
-template<typename T1>
-inline
-bool
-log_det
-  (
-        typename T1::elem_type& out_val,
-        typename T1::pod_type&  out_sign,
-  const Op<T1,op_diagmat>&      X,
-  const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr
-  )
-  {
-  arma_extra_debug_sigprint();
-  arma_ignore(junk);
-  
-  typedef typename T1::elem_type eT;
-  typedef typename T1::pod_type   T;
-  
-  const diagmat_proxy<T1> A(X.m);
-  
-  arma_debug_check( (A.n_rows != A.n_cols), "log_det(): given matrix must be square sized" );
-  
-  const uword N = (std::min)(A.n_rows, A.n_cols);
-  
-  if(N == 0)
-    {
-    out_val  = eT(0);
-    out_sign =  T(1);
-    
-    return true;
-    }
-  
-  eT x = A[0];
-  
-  T  sign = (is_cx<eT>::no) ?         ( (access::tmp_real(x) < T(0)) ?   T(-1) : T(1) ) : T(1);
-  eT val  = (is_cx<eT>::no) ? std::log( (access::tmp_real(x) < T(0)) ? x*T(-1) : x    ) : std::log(x);
-  
-  for(uword i=1; i<N; ++i)
-    {
-    x = A[i];
-    
-    sign *= (is_cx<eT>::no) ?         ( (access::tmp_real(x) < T(0)) ?   T(-1) : T(1) ) : T(1);
-    val  += (is_cx<eT>::no) ? std::log( (access::tmp_real(x) < T(0)) ? x*T(-1) : x    ) : std::log(x);
-    }
-  
-  out_val  = val;
-  out_sign = sign;
-  
-  return arma_isnan(out_val);
   }
 
 
@@ -127,11 +71,7 @@ log_det
   eT out_val  = eT(0);
    T out_sign =  T(0);
   
-  Mat<eT> A(X.get_ref());
-  
-  arma_debug_check( (A.is_square() == false), "log_det(): given matrix must be square sized" );
-  
-  const bool status = auxlib::log_det(out_val, out_sign, A);
+  const bool status = op_log_det::apply_direct(out_val, out_sign, X.get_ref());
   
   if(status == false)
     {
