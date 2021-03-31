@@ -73,7 +73,8 @@ SparseGenRealShiftSolve<eT>::SparseGenRealShiftSolve(const SpMat<eT>& mat_obj, c
     
     if( (x_rcond < std::numeric_limits<eT>::epsilon()) || arma_isnan(x_rcond) )
       {
-      arma_debug_warn_level(2, "matrix is singular to working precision (rcond: ", x_rcond, ")");
+      if(x_cond > eT(0))  { arma_debug_warn_level(2, "matrix is singular to working precision (rcond: ", x_rcond, ")"); }
+      else                { arma_debug_warn_level(2, "matrix is singular to working precision");                        }
       return;
       }
     
