@@ -75,45 +75,36 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
     const bool status = op_inv::apply_tiny_noalias(tmp, out);
     
     if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
-    }
-  else
-  if(out.is_diagmat())
-    {
-    return op_inv::apply_diagmat(out, out, caller_sig);
-    }
-  else
-    {
-    const bool is_triu =                     trimat_helper::is_triu(out);
-    const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(out);
     
-    if(is_triu || is_tril)
-      {
-      const uword layout = (is_triu) ? uword(0) : uword(1);
-      
-      return auxlib::inv_tr(out, layout);
-      }
-    else
-      {
-      #if defined(ARMA_OPTIMISE_SYMPD)
-        const bool try_sympd = sympd_helper::guess_sympd_anysize(out);
-      #else
-        const bool try_sympd = false;
-      #endif
-      
-      if(try_sympd)
-        {
-        arma_extra_debug_print("op_inv: attempting sympd optimisation");
-        
-        Mat<eT> tmp = out;
-        
-        const bool status = auxlib::inv_sympd(tmp);
-        
-        if(status)  { out.steal_mem(tmp); return true; }
-        
-        arma_extra_debug_print("op_inv: sympd optimisation failed");
-        // auxlib::inv_sympd() will fail if A isn't really positive definite
-        }
-      }
+    // fallthrough if optimisation failed
+    }
+  
+  if(out.is_diagmat())  {  return op_inv::apply_diagmat(out, out, caller_sig); }
+  
+  const bool is_triu =                     trimat_helper::is_triu(out);
+  const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(out);
+  
+  if(is_triu || is_tril)  { return auxlib::inv_tr(out, ((is_triu) ? uword(0) : uword(1))); }
+
+  #if defined(ARMA_OPTIMISE_SYMPD)
+    const bool try_sympd = sympd_helper::guess_sympd_anysize(out);
+  #else
+    const bool try_sympd = false;
+  #endif
+  
+  if(try_sympd)
+    {
+    arma_extra_debug_print("op_inv: attempting sympd optimisation");
+    
+    Mat<eT> tmp = out;
+    
+    const bool status = auxlib::inv_sympd(tmp);
+    
+    if(status)  { out.steal_mem(tmp); return true; }
+    
+    arma_extra_debug_print("op_inv: sympd optimisation failed");
+    
+    // fallthrough if optimisation failed
     }
   
   return auxlib::inv(out);
@@ -331,6 +322,8 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
     const bool status = op_inv::apply_tiny_noalias(tmp, out);
     
     if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
+    
+    // fallthrough if optimisation failed
     }
   
   return auxlib::inv_sympd(out);
