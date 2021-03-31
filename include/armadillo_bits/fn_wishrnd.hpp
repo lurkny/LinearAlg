@@ -94,7 +94,15 @@ wishrnd(Mat<typename T1::elem_type>& W, const Base<typename T1::elem_type, T1>& 
   arma_extra_debug_sigprint();
   arma_ignore(S);
   
-  return op_wishrnd::apply_direct(W, D.get_ref(), df, uword(2));  // TODO: reset W ?
+  const bool status = op_wishrnd::apply_direct(W, D.get_ref(), df, uword(2));
+  
+  if(status == false)
+    {
+    W.soft_reset();
+    arma_debug_warn_level(3, "wishrnd(): problem with given 'D' matrix");
+    }
+  
+  return status;
   }
 
 
@@ -178,7 +186,15 @@ iwishrnd(Mat<typename T1::elem_type>& W, const Base<typename T1::elem_type, T1>&
   arma_extra_debug_sigprint();
   arma_ignore(T);
   
-  return op_iwishrnd::apply_direct(W, Dinv.get_ref(), df, uword(2));  // TODO: reset W ?
+  const bool status = op_iwishrnd::apply_direct(W, Dinv.get_ref(), df, uword(2));
+  
+  if(status == false)
+    {
+    W.soft_reset();
+    arma_debug_warn_level(3, "wishrnd(): problem with given 'Dinv' matrix and/or df is too low");
+    }
+  
+  return status;
   }
 
 
