@@ -135,7 +135,7 @@ static
 void
 arma_stop_logic_error(const T1& x)
   {
-  #if defined(ARMA_PRINT_ERRORS)
+  #if (defined(ARMA_PRINT_EXCEPTIONS) && defined(ARMA_PRINT_ERRORS))
     {
     get_cerr_stream() << "\nerror: " << x << std::endl;
     }
@@ -165,7 +165,7 @@ static
 void
 arma_stop_bounds_error(const T1& x)
   {
-  #if defined(ARMA_PRINT_ERRORS)
+  #if (defined(ARMA_PRINT_EXCEPTIONS) && defined(ARMA_PRINT_ERRORS))
     {
     get_cerr_stream() << "\nerror: " << x << std::endl;
     }
@@ -184,7 +184,7 @@ static
 void
 arma_stop_bad_alloc(const T1& x)
   {
-  #if defined(ARMA_PRINT_ERRORS)
+  #if (defined(ARMA_PRINT_EXCEPTIONS) && defined(ARMA_PRINT_ERRORS))
     {
     get_cerr_stream() << "\nerror: " << x << std::endl;
     }
@@ -207,7 +207,7 @@ static
 void
 arma_stop_runtime_error(const T1& x)
   {
-  #if defined(ARMA_PRINT_ERRORS)
+  #if (defined(ARMA_PRINT_EXCEPTIONS) && defined(ARMA_PRINT_ERRORS))
     {
     get_cerr_stream() << "\nerror: " << x << std::endl;
     }
