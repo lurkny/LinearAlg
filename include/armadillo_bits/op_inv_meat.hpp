@@ -31,7 +31,7 @@ op_inv::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv>& X)
   if(status == false)
     {
     out.soft_reset();
-    arma_stop_runtime_error("inv(): matrix seems singular");
+    arma_stop_runtime_error("inv(): matrix is singular");
     }
   }
 

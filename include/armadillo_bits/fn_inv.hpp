@@ -51,7 +51,7 @@ inv
   if(status == false)
     {
     out.soft_reset();
-    arma_debug_warn_level(3, "inv(): matrix seems singular");
+    arma_debug_warn_level(3, "inv(): matrix is singular");
     }
   
   return status;

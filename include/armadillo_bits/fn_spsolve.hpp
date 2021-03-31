@@ -109,12 +109,12 @@ spsolve_helper
   
   if( (status == false) && (rcond > T(0)) )
     {
-    arma_debug_warn_level(2, "spsolve(): system seems singular (rcond: ", rcond, ")");
+    arma_debug_warn_level(2, "spsolve(): system is singular (rcond: ", rcond, ")");
     }
   
   if( (status == true) && (rcond > T(0)) && (rcond < auxlib::epsilon_lapack(out)) )
     {
-    arma_debug_warn_level(2, "solve(): solution computed, but system seems singular to working precision (rcond: ", rcond, ")");
+    arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
     }
   
   return status;
