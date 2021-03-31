@@ -2313,11 +2313,11 @@ sp_auxlib::run_aupd_shiftinvert
       
       if(sym)
         {
-        arma_debug_warn_level(1, "eigs_sym(): ARPACK error ", info, " in saupd()");
+        arma_debug_warn_level(2, "eigs_sym(): ARPACK error ", info, " in saupd()");
         }
       else
         {
-        arma_debug_warn_level(1, "eigs_gen(): ARPACK error ", info, " in naupd()");
+        arma_debug_warn_level(2, "eigs_gen(): ARPACK error ", info, " in naupd()");
         }
       
       return; // Parent frame can look at the value of info.
