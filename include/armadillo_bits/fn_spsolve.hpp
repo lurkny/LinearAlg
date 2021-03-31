@@ -107,12 +107,9 @@ spsolve_helper
     }
   
   
-  if(status == false)
+  if( (status == false) && (rcond > T(0)) )
     {
-    if(rcond > T(0))  { arma_debug_warn_level(2, "spsolve(): system seems singular (rcond: ", rcond, ")"); }
-    else              { arma_debug_warn_level(2, "spsolve(): system seems singular");                      }
-    
-    out.soft_reset();
+    arma_debug_warn_level(2, "spsolve(): system seems singular (rcond: ", rcond, ")");
     }
   
   if( (status == true) && (rcond > T(0)) && (rcond < auxlib::epsilon_lapack(out)) )
@@ -143,6 +140,12 @@ spsolve
   
   const bool status = spsolve_helper(out, A.get_ref(), B.get_ref(), solver, settings);
   
+  if(status == false)
+    {
+    out.soft_reset();
+    arma_debug_warn_level(3, "spsolve(): solution not found");
+    }
+  
   return status;
   }
 
@@ -172,6 +175,7 @@ spsolve
   
   if(status == false)
     {
+    out.soft_reset();
     arma_stop_runtime_error("spsolve(): solution not found");
     }
   
