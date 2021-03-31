@@ -62,7 +62,10 @@ op_det::apply(const Base<typename T1::elem_type,T1>& expr)
   
   if(A.is_diagmat())  { return op_det::apply_diagmat(A); }
   
-  // TODO: optimised handling of triangular matrices
+  const bool is_triu =                   trimat_helper::is_triu(A);
+  const bool is_tril = is_triu ? false : trimat_helper::is_tril(A);
+  
+  if(is_triu || is_tril)  { return op_det::apply_trimat(A); }
   
   return auxlib::det(A);
   }
