@@ -18,12 +18,12 @@
 #if !defined(ARMA_WARN_LEVEL)
   #define ARMA_WARN_LEVEL 2
 #endif
-//// The required level for warning messages (printed to ARMA_CERR_STREAM)
-//// Must be an integer >= 0
+//// The level of warning messages printed to ARMA_CERR_STREAM.
+//// Must be an integer >= 0. The default value is 2.
 //// 0 = no warnings
-//// 1 = only critical warnings, which cannot be communicated through the return value (true/false) of functions
-//// 2 = critical warnings as above, and warnings about poorly conditioned systems (low rcond) detected by solve(), spsolve(), etc
-//// 3 = all warnings (eg. failed decompositions, failed saving/loading, etc)
+//// 1 = only critical warnings about arguments and/or data which are likely to lead to incorrect results
+//// 2 = as per level 1, and warnings about poorly conditioned systems (low rcond) detected by solve(), spsolve(), etc
+//// 3 = as per level 2, and warnings about failed decompositions, failed saving/loading, etc
 
 #if !defined(ARMA_USE_LAPACK)
 #define ARMA_USE_LAPACK
