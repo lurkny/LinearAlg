@@ -219,6 +219,7 @@
 
 #if !defined(ARMA_PRINT_EXCEPTIONS)
 // #define ARMA_PRINT_EXCEPTIONS
+//// see also compiler_setup.hpp
 #endif
 
 #if !defined(ARMA_PRINT_HDF5_ERRORS)
