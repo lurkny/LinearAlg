@@ -437,15 +437,15 @@ auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, Mat<eT
   
   typedef typename get_pod_type<eT>::result T;
   
+  if(A.is_empty())
+    {
+    out_val  = eT(0);
+    out_sign =  T(1);
+    return true;
+    }
+    
   #if defined(ARMA_USE_ATLAS)
     {
-    if(A.is_empty())
-      {
-      out_val  = eT(0);
-      out_sign =  T(1);
-      return true;
-      }
-    
     arma_debug_assert_atlas_size(A);
     
     podarray<int> ipiv(A.n_rows);
@@ -483,13 +483,6 @@ auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, Mat<eT
     }
   #elif defined(ARMA_USE_LAPACK)
     {
-    if(A.is_empty())
-      {
-      out_val  = eT(0);
-      out_sign =  T(1);
-      return true;
-      }
-    
     arma_debug_assert_blas_size(A);
     
     podarray<blas_int> ipiv(A.n_rows);
