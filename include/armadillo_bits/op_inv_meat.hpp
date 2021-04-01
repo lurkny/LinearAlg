@@ -179,7 +179,7 @@ op_inv::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
   
   out.set_size(N,N);
   
-  constexpr T det_min = std::numeric_limits<T>::epsilon();
+  constexpr T det_min =        std::numeric_limits<T>::epsilon();
   constexpr T det_max = T(1) / std::numeric_limits<T>::epsilon();
   
   const eT* Xm   =   X.memptr();
