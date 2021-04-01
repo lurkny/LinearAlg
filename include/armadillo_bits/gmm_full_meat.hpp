@@ -2540,9 +2540,9 @@ gmm_full<eT>::em_update_params
     eT log_det_val  = eT(0);
     eT log_det_sign = eT(0);
     
-    log_det(log_det_val, log_det_sign, acc_fcov);
+    const bool log_det_status = log_det(log_det_val, log_det_sign, acc_fcov);
     
-    const bool log_det_ok = ( (arma_isfinite(log_det_val)) && (log_det_sign > eT(0)) );
+    const bool log_det_ok = ( log_det_status && (arma_isfinite(log_det_val)) && (log_det_sign > eT(0)) );
     
     const bool inv_ok = (log_det_ok) ? bool(auxlib::inv_sympd(mean_outer, acc_fcov)) : bool(false);  // mean_outer is used as a junk matrix
     
