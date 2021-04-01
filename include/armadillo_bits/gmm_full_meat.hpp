@@ -940,9 +940,9 @@ gmm_full<eT>::init_constants(const bool calc_chol)
     eT log_det_val  = eT(0);
     eT log_det_sign = eT(0);
     
-    log_det(log_det_val, log_det_sign, fcov);
+    const bool log_det_status = log_det(log_det_val, log_det_sign, fcov);
     
-    const bool log_det_ok = ( (arma_isfinite(log_det_val)) && (log_det_sign > eT(0)) );
+    const bool log_det_ok = ( log_det_status && (arma_isfinite(log_det_val)) && (log_det_sign > eT(0)) );
     
     if(inv_ok && log_det_ok)
       {
