@@ -314,3 +314,8 @@
 // Do not use these unless you know what you are doing.
 #define ARMA_AUX_LIBS
 #define ARMA_AUX_INCDIRS
+
+
+#if defined(ARMA_WARN_LEVEL)
+  #pragma message ("WARNING: the ARMA_WARN_LEVEL option is not supported in this version of Armadillo")
+#endif
