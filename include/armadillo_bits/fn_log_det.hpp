@@ -86,4 +86,70 @@ log_det
 
 
 
+//
+
+
+
+template<typename T1>
+inline
+bool
+log_det_sympd
+  (
+        typename T1::pod_type&          out_val,
+  const Base<typename T1::elem_type,T1>& X,
+  const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr
+  )
+  {
+  arma_extra_debug_sigprint();
+  arma_ignore(junk);
+  
+  typedef typename T1::pod_type T;
+  
+  out_val = T(0);
+  
+  const bool status = op_log_det_sympd::apply_direct(out_val, X.get_ref());
+  
+  if(status == false)
+    {
+    out_val = Datum<T>::nan;
+    
+    arma_debug_warn_level(3, "log_det_sympd(): given matrix is not symmetric positive definite");
+    }
+  
+  return status;
+  }
+
+
+
+template<typename T1>
+inline
+arma_warn_unused
+typename T1::pod_type
+log_det_sympd
+  (
+  const Base<typename T1::elem_type,T1>& X,
+  const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr
+  )
+  {
+  arma_extra_debug_sigprint();
+  arma_ignore(junk);
+  
+  typedef typename T1::pod_type T;
+  
+  T out_val = T(0);
+  
+  const bool status = op_log_det_sympd::apply_direct(out_val, X.get_ref());
+  
+  if(status == false)
+    {
+    out_val = Datum<T>::nan;
+    
+    arma_stop_runtime_error("log_det_sympd(): given matrix is not symmetric positive definite");
+    }
+  
+  return out_val;
+  }
+
+
+
 //! @}

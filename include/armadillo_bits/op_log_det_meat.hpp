@@ -148,4 +148,32 @@ op_log_det::apply_trimat(typename T1::elem_type& out_val, typename T1::pod_type&
 
 
 
+//
+
+
+
+template<typename T1>
+inline
+bool
+op_log_det_sympd::apply_direct(typename T1::pod_type& out_val, const Base<typename T1::elem_type,T1>& expr)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename T1::elem_type eT;
+  
+  Mat<eT> A(expr.get_ref());
+  
+  arma_debug_check( (A.is_square() == false), "log_det_sympd(): given matrix must be square sized" );
+  
+  if((arma_config::debug) && (auxlib::rudimentary_sym_check(A) == false))
+    {
+    if(is_cx<eT>::no )  { arma_debug_warn_level(1, "log_det_sympd(): given matrix is not symmetric"); }
+    if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "log_det_sympd(): given matrix is not hermitian"); }
+    }
+  
+  return auxlib::log_det_sympd(out_val, A);
+  }
+
+
+
 //! @}

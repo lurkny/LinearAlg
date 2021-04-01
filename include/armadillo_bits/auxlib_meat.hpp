@@ -542,6 +542,69 @@ auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, Mat<eT
 
 
 
+template<typename eT>
+inline
+bool
+auxlib::log_det_sympd(typename get_pod_type<eT>::result& out_val, Mat<eT>& A)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename get_pod_type<eT>::result T;
+  
+  if(A.is_empty())  { out_val = T(0); return true; }
+  
+  #if defined(ARMA_USE_ATLAS)
+    {
+    arma_debug_assert_atlas_size(A);
+    
+    int info = 0;
+    
+    arma_extra_debug_print("atlas::clapack_potrf()");
+    info = atlas::clapack_potrf(atlas::CblasColMajor, atlas::CblasLower, A.n_rows, A.memptr(), A.n_rows);
+    
+    if(info != 0)  { return false; }
+    
+    T val = std::log( access::tmp_real(A.at(0,0)) );
+    
+    for(uword i=1; i < A.n_rows; ++i)  { val += std::log( access::tmp_real(A.at(i,i)) ); }
+    
+    out_val = T(2) * val;
+    
+    return true;
+    }
+  #elif defined(ARMA_USE_LAPACK)
+    {
+    arma_debug_assert_blas_size(A);
+    
+    char     uplo = 'L';
+    blas_int n    = blas_int(A.n_rows);
+    blas_int info = 0;
+    
+    arma_extra_debug_print("lapack::potrf()");
+    lapack::potrf(&uplo, &n, A.memptr(), &n, &info);
+    
+    if(info != 0)  { return false; }
+    
+    T val = std::log( access::tmp_real(A.at(0,0)) );
+    
+    for(uword i=1; i < A.n_rows; ++i)  { val += std::log( access::tmp_real(A.at(i,i)) ); }
+    
+    out_val = T(2) * val;
+    
+    return true;
+    }
+  #else
+    {
+    arma_ignore(out_val);
+    arma_ignore(A);
+    arma_stop_logic_error("det(): use of ATLAS or LAPACK must be enabled");
+    return false;
+    }
+  #endif
+  }
+
+
+
 //! LU decomposition of a matrix
 template<typename eT, typename T1>
 inline

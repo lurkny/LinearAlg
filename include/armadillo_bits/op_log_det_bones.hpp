@@ -36,4 +36,15 @@ class op_log_det
 
 
 
+class op_log_det_sympd
+  : public traits_op_default
+  {
+  public:
+  
+  template<typename T1>
+  inline static bool apply_direct(typename T1::pod_type& out_val, const Base<typename T1::elem_type,T1>& expr);
+  };
+
+
+
 //! @}
