@@ -18898,6 +18898,35 @@ By default defined to <i>std::cerr</i>
   </tr>
   <tr>
     <td style="vertical-align: top;">
+<code>ARMA_WARN_LEVEL</code>
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+The level of warning messages printed to <i>ARMA_CERR_STREAM</i>.
+<br>Must be an integer &geq; 0. The default value is 2.
+<table>
+<tr><td>0</td><td>&nbsp;=&nbsp;</td><td>no warnings</td></tr>
+<tr><td>1</td><td>&nbsp;=&nbsp;</td><td>only critical warnings about arguments and/or data which are likely to lead to incorrect results</td></tr>
+<tr><td>2</td><td>&nbsp;=&nbsp;</td><td>as per level 1, and warnings about poorly conditioned systems (low rcond) detected by solve(), spsolve(), etc</td></tr>
+<tr><td>3</td><td>&nbsp;=&nbsp;</td><td>as per level 2, and warnings about failed decompositions, failed saving/loading, etc</td></tr>
+</table>
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
 <code>ARMA_PRINT_ERRORS</code>
     </td>
     <td style="vertical-align: top;">
@@ -18926,7 +18955,8 @@ Print errors and warnings encountered during program execution
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-Do not print errors or warnings; overrides <i>ARMA_PRINT_ERRORS</i>
+Do not print errors or warnings; overrides <i>ARMA_PRINT_ERRORS</i>.
+<br><b>Caveat</b>: with Armadillo 10.4 or later versions, consider using <i>ARMA_WARN_LEVEL</i> instead
     </td>
   </tr>
   <tr>
