@@ -18954,7 +18954,7 @@ The level of warning messages printed to <i>ARMA_CERR_STREAM</i>.
 <table>
 <tr><td>0</td><td>&nbsp;=&nbsp;</td><td>no warnings</td></tr>
 <tr><td>1</td><td>&nbsp;=&nbsp;</td><td>only critical warnings about arguments and/or data which are likely to lead to incorrect results</td></tr>
-<tr><td>2</td><td>&nbsp;=&nbsp;</td><td>as per level 1, and warnings about poorly conditioned systems (low rcond) detected by solve(), spsolve(), etc</td></tr>
+<tr><td>2</td><td>&nbsp;=&nbsp;</td><td>as per level 1, and warnings about poorly conditioned systems (low rcond) detected by <a href="#solve">solve()</a>, <a href="#spsolve">spsolve()</a>, etc</td></tr>
 <tr><td>3</td><td>&nbsp;=&nbsp;</td><td>as per level 2, and warnings about failed decompositions, failed saving/loading, etc</td></tr>
 </table>
     </td>
@@ -19100,8 +19100,8 @@ List of additions and changes for each version:
 <ul>
 <li>faster handling of triangular matrices by <a href="#log_det">log_det()</a></li>
 <li>added <a href="#log_det_sympd">log_det_sympd()</a> for log determinant of symmetric positive matrices</li>
-<li>added ARMA_WARN_LEVEL <a href="#config_hpp">configuration option</a>, to control the degree of emitted warning messages</li>
-<li>...</li>
+<li>added <code>ARMA_WARN_LEVEL</code> <a href="#config_hpp">configuration option</a>, to control the degree of emitted warning messages</li>
+<li>reduced the default degree of warning messages, so that failed decompositions, failed saving/loading, etc, no longer emit warnings</li>
 </ul>
 </li>
 <br>
