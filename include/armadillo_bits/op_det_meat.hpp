@@ -53,7 +53,7 @@ op_det::apply_direct(typename T1::elem_type& out_val, const Base<typename T1::el
   
   if((A.n_rows <= 4) && is_cx<eT>::no)
     {
-    constexpr T det_min = std::numeric_limits<T>::epsilon();
+    constexpr T det_min =        std::numeric_limits<T>::epsilon();
     constexpr T det_max = T(1) / std::numeric_limits<T>::epsilon();
     
     const eT     det_val = op_det::apply_tiny(A);
