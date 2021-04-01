@@ -9910,9 +9910,9 @@ mat B = A.t() * A;
 
 double result1;
 
-bool success = log_det_sympd(result1, A);  // form 1
+bool   success = log_det_sympd(result1, A);  // form 1
 
-double result2 = log_det(A);               // form 2
+double result2 = log_det_sympd(A);           // form 2
 </pre>
 </ul>
 </li>
