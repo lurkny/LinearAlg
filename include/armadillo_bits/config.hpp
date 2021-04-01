@@ -217,6 +217,10 @@
 //// Comment out the above line if you don't want errors and warnings printed (eg. failed decompositions)
 #endif
 
+#if !defined(ARMA_PRINT_EXCEPTIONS)
+// #define ARMA_PRINT_EXCEPTIONS
+#endif
+
 #if !defined(ARMA_PRINT_HDF5_ERRORS)
 // #define ARMA_PRINT_HDF5_ERRORS
 #endif
@@ -309,6 +313,10 @@
 
 #if defined(ARMA_DONT_PRINT_ERRORS)
   #undef ARMA_PRINT_ERRORS
+#endif
+
+#if defined(ARMA_DONT_PRINT_EXCEPTIONS)
+  #undef ARMA_PRINT_EXCEPTIONS
 #endif
 
 #if defined(ARMA_DONT_PRINT_HDF5_ERRORS)
