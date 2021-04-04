@@ -95,7 +95,9 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
   
   if(n_cols > n_rows)  { A = trans(A); }
   
-  const bool status = (method_id == uword(2)) ? auxlib::svd_dc_econ(U, s, V, A) : auxlib::svd_econ(U, s, V, A, 'b');
+  cout << "*** method_id: " << method_id << endl;
+  
+  const bool status = ((method_id == uword(0)) || (method_id == uword(2))) ? auxlib::svd_dc_econ(U, s, V, A) : auxlib::svd_econ(U, s, V, A, 'b');
   
   if(status == false)  { return false; }
   
