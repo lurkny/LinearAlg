@@ -79,7 +79,7 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
     // fallthrough if optimisation failed
     }
   
-  if(out.is_diagmat())  {  return op_inv::apply_diagmat(out, out, caller_sig); }
+  if(out.is_diagmat())  { return op_inv::apply_diagmat(out, out, caller_sig); }
   
   const bool is_triu =                     trimat_helper::is_triu(out);
   const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(out);
