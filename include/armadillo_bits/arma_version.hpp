@@ -20,9 +20,9 @@
 
 
 #define ARMA_VERSION_MAJOR 10
-#define ARMA_VERSION_MINOR 3
-#define ARMA_VERSION_PATCH 90
-#define ARMA_VERSION_NAME  "unstable"
+#define ARMA_VERSION_MINOR 4
+#define ARMA_VERSION_PATCH 0
+#define ARMA_VERSION_NAME  "Pressure Cooker"
 
 
 
