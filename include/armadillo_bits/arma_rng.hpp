@@ -489,7 +489,13 @@ struct arma_rng::randn
     {
     #if defined(ARMA_RNG_ALT)
       {
-      for(uword i=0; i < N; ++i)  { mem[i] = eT( arma_rng_alt::randn_val() ); }
+      // NOTE: old method to avoid regressions in user code that assumes specific sequence
+      
+      uword i, j;
+      
+      for(i=0, j=1; j < N; i+=2, j+=2)  { arma_rng_alt::randn_dual_val( mem[i], mem[j] ); }
+      
+      if(i < N)  { mem[i] = eT( arma_rng_alt::randn_val() ); }
       }
     #elif defined(ARMA_USE_EXTERN_RNG)
       {
