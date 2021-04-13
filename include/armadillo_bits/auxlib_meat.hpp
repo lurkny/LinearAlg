@@ -5185,6 +5185,9 @@ auxlib::solve_approx_svd(Mat<typename T1::pod_type>& out, Mat<typename T1::pod_t
     blas_int rank   = blas_int(0);
     blas_int info   = blas_int(0);
     
+    // TODO: extend to use given (pre-calculated) rcond instead of simply defaulting to eps
+    // TODO: example: eT rcond = (given_rcond > Datum<eT>::eps) ? given_rcond : eT(-1);  // -1 means "use machine precision"
+      
     podarray<eT> S( static_cast<uword>(min_mn) );
     
     // NOTE: with LAPACK 3.8, can use the workspace query to also obtain liwork,
@@ -5306,6 +5309,9 @@ auxlib::solve_approx_svd(Mat< std::complex<typename T1::pod_type> >& out, Mat< s
     blas_int rank   = blas_int(0);
     blas_int info   = blas_int(0);
     
+    // TODO: extend to use given (pre-calculated) rcond instead of simply defaulting to eps
+    // TODO: example: T rcond = (given_rcond > Datum<T>::eps) ? given_rcond : T(-1);  // -1 means "use machine precision"
+      
     podarray<T> S( static_cast<uword>(min_mn) );
     
     blas_int ispec = blas_int(9);
