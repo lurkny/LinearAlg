@@ -11635,8 +11635,8 @@ See also:
 <tr><td><b>exp      </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log      </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>pow   </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>floor </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>erf   </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>tgamma</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>sign  </b></td></tr>
 <tr><td><b>exp2     </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log2     </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>square</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>ceil  </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>erfc  </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>lgamma</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
 <tr><td><b>exp10    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log10    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>sqrt  </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>round </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
-<tr><td><b>trunc_exp</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>trunc_log</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>trunc </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
-<tr><td><b>expm1    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log1p    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
+<tr><td><b>expm1    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log1p    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>trunc </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
+<tr><td><b>trunc_exp</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>trunc_log</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
 </table>
 </ul>
 <ul>
@@ -11690,6 +11690,17 @@ fn(A) is one of:
   </tr>
   <tr style="background-color: #F5F5F5;">
     <td style="vertical-align: top; text-align: right;">
+      <code>expm1(A)</code>
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      compute <code>exp(A)-1</code> accurately for values of A close to zero &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
+    </td>
+  </tr>
+  <tr style="background-color: #F5F5F5;">
+    <td style="vertical-align: top; text-align: right;">
       <code>trunc_exp(A)</code>
     </td>
     <td style="vertical-align: top;">
@@ -11698,17 +11709,6 @@ fn(A) is one of:
     <td style="vertical-align: top;">
       base-e exponential,
       truncated to avoid infinity &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
-    </td>
-  </tr>
-  <tr style="background-color: #F5F5F5;">
-    <td style="vertical-align: top; text-align: right;">
-      <code>expm1(A)</code>
-    </td>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-    <td style="vertical-align: top;">
-      compute <code>exp(A)-1</code> accurately for values of A close to zero &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
     </td>
   </tr>
   <tr>
@@ -11746,6 +11746,17 @@ fn(A) is one of:
   </tr>
   <tr>
     <td style="vertical-align: top; text-align: right;">
+      <code>log1p(A)</code>
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      compute <code>log(1+A)</code> accurately for values of A close to zero &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top; text-align: right;">
       <code>trunc_log(A)</code>
     </td>
     <td style="vertical-align: top;">
@@ -11754,17 +11765,6 @@ fn(A) is one of:
     <td style="vertical-align: top;">
       natural log,
       truncated to avoid &plusmn;infinity &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
-    </td>
-  </tr>
-  <tr>
-    <td style="vertical-align: top; text-align: right;">
-      <code>log1p(A)</code>
-    </td>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-    <td style="vertical-align: top;">
-      compute <code>log(1+A)</code> accurately for values of A close to zero &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
     </td>
   </tr>
   <tr style="background-color: #F5F5F5;">
