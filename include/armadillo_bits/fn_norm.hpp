@@ -90,9 +90,10 @@ norm
   
   if(is_vec)
     {
-    if( (sig == 'i') || (sig == 'I') || (sig == '+') )  { return op_norm::vec_norm_max(P); }
-    if( (sig == '-')                                 )  { return op_norm::vec_norm_min(P); }
-    if( (sig == 'f') || (sig == 'F')                 )  { return op_norm::vec_norm_2(P);   }
+    if( (sig == 'i') || (sig == 'I') || (sig == '+') )  { return op_norm::vec_norm_max(P);  }
+    if( (sig == '-')                                 )  { return op_norm::vec_norm_min(P);  }
+    if( (sig == 'f') || (sig == 'F')                 )  { return op_norm::vec_norm_2(P);    }
+    if( (sig == 'h') || (sig == 'H')                 )  { return op_norm::vec_norm_hamm(P); }
     
     arma_stop_logic_error("norm(): unsupported vector norm type");
     }
@@ -221,6 +222,10 @@ norm
     if( (sig == 'f') || (sig == 'F') )
       {
       return op_norm::vec_norm_2(P_fake_vector);
+      }
+    if( (sig == 'h') || (sig == 'H') )   // Hamming "norm"
+      {
+      return T(X.n_nonzero);
       }
     
     arma_stop_logic_error("norm(): unsupported vector norm type");
