@@ -2492,4 +2492,58 @@ class Proxy< Op<T1, op_vectorise_col> >
 
 
 
+template<typename T1>
+class Proxy< mtOp<typename T1::elem_type, T1, op_clamp> >
+  {
+  public:
+  
+  typedef typename T1::elem_type                   elem_type;
+  typedef typename get_pod_type<elem_type>::result pod_type;
+  typedef          mtOp<elem_type, T1, op_clamp>   stored_type;
+  typedef          const Proxy< stored_type >&     ea_type;
+  typedef          const Proxy< stored_type >&     aligned_ea_type;
+  
+  static constexpr bool use_at      = Proxy<T1>::use_at;
+  static constexpr bool use_mp      = Proxy<T1>::use_mp;
+  static constexpr bool has_subview = Proxy<T1>::has_subview;
+  
+  static constexpr bool is_row  = Proxy<T1>::is_row;
+  static constexpr bool is_col  = Proxy<T1>::is_col;
+  static constexpr bool is_xvec = Proxy<T1>::is_xvec;
+  
+  arma_aligned const mtOp<elem_type, T1, op_clamp>& Q;
+  arma_aligned const Proxy<T1>                      R;
+  
+  inline explicit Proxy(const mtOp<typename T1::elem_type, T1, op_clamp>& A)
+    : Q(A)
+    , R(A.m)
+    {
+    arma_extra_debug_sigprint();
+    }
+  
+  arma_inline uword get_n_rows() const { return R.get_n_rows(); }
+  arma_inline uword get_n_cols() const { return R.get_n_cols(); }
+  arma_inline uword get_n_elem() const { return R.get_n_elem(); }
+  
+  // clamp() stores min_val in mtOp.aux, and max_val in mtOp.aux_out_eT
+  arma_inline elem_type process(const elem_type& val) const { return (val < Q.aux) ? Q.aux : ((val > Q.aux_out_eT) ? Q.aux_out_eT : val); }
+  
+  arma_inline elem_type operator[] (const uword i)                    const { return process(R[i]          ); }
+  arma_inline elem_type at         (const uword row, const uword col) const { return process(R.at(row, col)); }
+  arma_inline elem_type at_alt     (const uword i)                    const { return process(R.at_alt(i)   ); }
+  
+  arma_inline         ea_type         get_ea() const { return (*this); }
+  arma_inline aligned_ea_type get_aligned_ea() const { return (*this); }
+  
+  template<typename eT2>
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return R.is_alias(X); }
+  
+  template<typename eT2>
+  arma_inline bool has_overlap(const subview<eT2>& X) const { return is_alias(X.m); }
+  
+  constexpr bool is_aligned() const { return false; }
+  };
+
+
+
 //! @}
