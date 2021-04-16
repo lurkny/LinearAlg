@@ -10116,7 +10116,7 @@ See also:
 <b>nonzeros( X )</b>
 <ul>
 <li>
-Return a column vector containing the non-zero values of <i>X</i>
+Return a column vector containing the non-zero <b>values</b> of <i>X</i>
 </li>
 <br>
 <li>
@@ -10124,8 +10124,19 @@ Return a column vector containing the non-zero values of <i>X</i>
 </li>
 <br>
 <li>
-<b>Caveat:</b> do not use <i>nonzeros()</i> to obtain the number of non-zero elements in a sparse matrix;
-use the <i>.n_nonzero</i> <a href="#attributes">attribute</a> instead, eg.&nbsp;<i>X.n_nonzero</i>
+<b>Caveats:</b>
+<ul>
+<li>
+for dense matrices/vectors, 
+to obtain the <b>number</b> of non-zero elements, 
+the expression <code><a href="#accu">accu</a>(X != 0)</code> is more efficient
+</li>
+<li>
+for sparse matrices,
+to obtain the <b>number</b> of non-zero elements,
+the <code><a href="#attributes">.n_nonzero</a></code> attribute is more efficient, eg.&nbsp;<code>X.n_nonzero</code>
+</li>
+</ul>
 </li>
 <br>
 <li>
