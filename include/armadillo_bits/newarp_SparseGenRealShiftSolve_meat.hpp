@@ -49,10 +49,10 @@ SparseGenRealShiftSolve<eT>::SparseGenRealShiftSolve(const SpMat<eT>& mat_obj, c
     
     if(status_x == false)  { arma_stop_runtime_error("newarp::SparseGenRealShiftSolve::SparseGenRealShiftSolve(): could not construct SuperLU matrix"); return; }
     
-    int   panel_size = superlu::sp_ispec_environ(1);
-    int   relax      = superlu::sp_ispec_environ(2);
-    int   slu_info   = 0; // Return code
-    int   lwork      = 0; // lwork = 0: allocate space internally by system malloc
+    int panel_size = superlu::sp_ispec_environ(1);
+    int relax      = superlu::sp_ispec_environ(2);
+    int slu_info   = 0; // Return code
+    int lwork      = 0; // lwork = 0: allocate space internally by system malloc
     
     superlu_stat_wrangler stat;
     

@@ -1444,9 +1444,9 @@ sp_auxlib::spsolve_refine(Mat<typename T1::elem_type>& X, typename T1::pod_type&
 //     
 //     superlu_stat_wrangler stat;
 //     
-//     int   panel_size = superlu::sp_ispec_environ(1);
-//     int   relax      = superlu::sp_ispec_environ(2);
-//     int   slu_info   = 0; // Return code.
+//     int panel_size = superlu::sp_ispec_environ(1);
+//     int relax      = superlu::sp_ispec_environ(2);
+//     int slu_info   = 0; // Return code.
 //     
 //     arma_extra_debug_print("superlu::gstrf()");
 //     superlu::get_permutation_c(options.ColPerm, a.get_ptr(), perm_c.get_ptr());
@@ -2215,9 +2215,9 @@ sp_auxlib::run_aupd_shiftinvert
     
     superlu_stat_wrangler stat;
     
-    int   panel_size = superlu::sp_ispec_environ(1);
-    int   relax      = superlu::sp_ispec_environ(2);
-    int   slu_info   = 0; // Return code.
+    int panel_size = superlu::sp_ispec_environ(1);
+    int relax      = superlu::sp_ispec_environ(2);
+    int slu_info   = 0; // Return code.
     
     arma_extra_debug_print("superlu::gstrf()");
     superlu::get_permutation_c(options.ColPerm, x.get_ptr(), perm_c.get_ptr());
