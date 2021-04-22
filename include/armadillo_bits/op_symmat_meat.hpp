@@ -56,10 +56,14 @@ op_symmatu::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_symmatu>& in)
   for(uword col=1; col < N; ++col)
     {
     const eT* coldata = out.colptr(col);
+          eT* row_ptr = &(out.at(col,0));
     
     for(uword row=0; row < col; ++row)
       {
-      out.at(col,row) = coldata[row];
+      // out.at(col,row) = coldata[row];
+      
+      (*row_ptr) = coldata[row];
+      row_ptr += N;
       }
     }
   }
@@ -103,10 +107,14 @@ op_symmatl::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_symmatl>& in)
   for(uword col=0; col < N; ++col)
     {
     const eT* coldata = out.colptr(col);
+          eT* row_ptr = &(out.at(col,col+1));
     
     for(uword row=(col+1); row < N; ++row)
       {
-      out.at(col,row) = coldata[row];
+      //out.at(col,row) = coldata[row];
+      
+      (*row_ptr) = coldata[row];
+      row_ptr += N;
       }
     }
   }
@@ -158,10 +166,14 @@ op_symmatu_cx::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_symmatu_cx
     for(uword col=1; col < N; ++col)
       {
       const eT* coldata = out.colptr(col);
+            eT* row_ptr = &(out.at(col,0));
       
       for(uword row=0; row < col; ++row)
         {
-        out.at(col,row) = std::conj(coldata[row]);
+        // out.at(col,row) = std::conj(coldata[row]);
+        
+        (*row_ptr) = std::conj(coldata[row]);
+        row_ptr += N;
         }
       }
     }
@@ -172,10 +184,14 @@ op_symmatu_cx::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_symmatu_cx
     for(uword col=1; col < N; ++col)
       {
       const eT* coldata = out.colptr(col);
+            eT* row_ptr = &(out.at(col,0));
       
       for(uword row=0; row < col; ++row)
         {
-        out.at(col,row) = coldata[row];
+        // out.at(col,row) = coldata[row];
+        
+        (*row_ptr) = coldata[row];
+        row_ptr += N;
         }
       }
     }
@@ -224,10 +240,14 @@ op_symmatl_cx::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_symmatl_cx
     for(uword col=0; col < N; ++col)
       {
       const eT* coldata = out.colptr(col);
+            eT* row_ptr = &(out.at(col,col+1));
       
       for(uword row=(col+1); row < N; ++row)
         {
-        out.at(col,row) = std::conj(coldata[row]);
+        // out.at(col,row) = std::conj(coldata[row]);
+        
+        (*row_ptr) = std::conj(coldata[row]);
+        row_ptr += N;
         }
       }
     }
@@ -238,10 +258,14 @@ op_symmatl_cx::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_symmatl_cx
     for(uword col=0; col < N; ++col)
       {
       const eT* coldata = out.colptr(col);
+            eT* row_ptr = &(out.at(col,col+1));
       
       for(uword row=(col+1); row < N; ++row)
         {
-        out.at(col,row) = coldata[row];
+        // out.at(col,row) = coldata[row];
+        
+        (*row_ptr) = coldata[row];
+        row_ptr += N;
         }
       }
     }
