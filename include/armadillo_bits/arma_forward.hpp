@@ -331,6 +331,7 @@ struct arma_vec_indicator     {};
 struct arma_fixed_indicator   {};
 struct arma_reserve_indicator {};
 struct arma_layout_indicator  {};
+struct arma_nozeros_indicator {};
 
 
 //! \addtogroup injector
