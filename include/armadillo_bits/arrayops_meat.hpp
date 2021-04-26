@@ -24,23 +24,22 @@ arma_inline
 void
 arrayops::copy(eT* dest, const eT* src, const uword n_elem)
   {
-  if(dest != src)
+  if( (dest == src) || (n_elem == 0) )  { return; }
+  
+  if(is_cx<eT>::no)
     {
-    if(is_cx<eT>::no)
+    if(n_elem <= 9)
       {
-      if(n_elem <= 9)
-        {
-        arrayops::copy_small(dest, src, n_elem);
-        }
-      else
-        {
-        std::memcpy(dest, src, n_elem*sizeof(eT));
-        }
+      arrayops::copy_small(dest, src, n_elem);
       }
     else
       {
-      if(n_elem > 0)  { std::memcpy(dest, src, n_elem*sizeof(eT)); }
+      std::memcpy(dest, src, n_elem*sizeof(eT));
       }
+    }
+  else
+    {
+    std::memcpy(dest, src, n_elem*sizeof(eT));
     }
   }
 
@@ -85,9 +84,13 @@ arrayops::fill_zeros(eT* dest, const uword n_elem)
   {
   typedef typename get_pod_type<eT>::result pod_type;
   
+  if(n_elem == 0)  { return; }
+  
+  if(n_elem == 1)  { (*dest) = eT(0); return; }
+  
   if(std::numeric_limits<eT>::is_integer || std::numeric_limits<pod_type>::is_iec559)
     {
-    if(n_elem > 0)  { std::memset((void*)dest, 0, sizeof(eT)*n_elem); }
+    std::memset((void*)dest, 0, sizeof(eT)*n_elem);
     }
   else
     {
