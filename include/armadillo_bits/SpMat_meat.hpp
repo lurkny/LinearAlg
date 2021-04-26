@@ -343,8 +343,8 @@ SpMat<eT>::SpMat(const Base<uword,T1>& locations_expr, const Base<eT,T2>& vals_e
   
   if(N_new != N_old)
     {
-    Col<eT>    filtered_vals(N_new);
-    Mat<uword> filtered_locs(2, N_new);
+    Col<eT>    filtered_vals(   N_new);
+    Mat<uword> filtered_locs(2, N_new, arma_nozeros_indicator());
     
     uword index = 0;
     for(uword i = 0; i < N_old; ++i)
@@ -413,8 +413,8 @@ SpMat<eT>::SpMat(const Base<uword,T1>& locations_expr, const Base<eT,T2>& vals_e
     
     if(N_new != N_old)
       {
-      Col<eT>    filtered_vals(N_new);
-      Mat<uword> filtered_locs(2, N_new);
+      Col<eT>    filtered_vals(   N_new);
+      Mat<uword> filtered_locs(2, N_new, arma_nozeros_indicator());
       
       uword index = 0;
       for(uword i = 0; i < N_old; ++i)
@@ -482,8 +482,8 @@ SpMat<eT>::SpMat(const bool add_values, const Base<uword,T1>& locations_expr, co
     
     if(N_new != N_old)
       {
-      Col<eT>    filtered_vals(N_new);
-      Mat<uword> filtered_locs(2, N_new);
+      Col<eT>    filtered_vals(   N_new);
+      Mat<uword> filtered_locs(2, N_new, arma_nozeros_indicator());
       
       uword index = 0;
       for(uword i = 0; i < N_old; ++i)

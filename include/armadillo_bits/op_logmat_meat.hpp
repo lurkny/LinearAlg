@@ -174,7 +174,7 @@ op_logmat::apply_direct(Mat< std::complex<typename T1::elem_type> >& out, const 
     }
   
   
-  Mat<out_T> S(A.n_rows, A.n_cols);
+  Mat<out_T> S(A.n_rows, A.n_cols, arma_nozeros_indicator());
   
   const  in_T* Amem = A.memptr();
         out_T* Smem = S.memptr();

@@ -172,7 +172,7 @@ conv_to< Mat<out_eT> >::from(const Base<in_eT, T1>& in, const typename arma_not_
   const quasi_unwrap<T1> tmp(in.get_ref());
   const Mat<in_eT>& X  = tmp.M;
   
-  Mat<out_eT> out(X.n_rows, X.n_cols);
+  Mat<out_eT> out(X.n_rows, X.n_cols, arma_nozeros_indicator());
   
   arrayops::convert( out.memptr(), X.memptr(), X.n_elem );
   
@@ -194,7 +194,7 @@ conv_to< Mat<out_eT> >::from(const Base<in_eT, T1>& in, const typename arma_cx_o
   const quasi_unwrap<T1> tmp(in.get_ref());
   const Mat<in_eT>& X  = tmp.M;
   
-  Mat<out_eT> out(X.n_rows, X.n_cols);
+  Mat<out_eT> out(X.n_rows, X.n_cols, arma_nozeros_indicator());
   
   arrayops::convert_cx( out.memptr(), X.memptr(), X.n_elem );
   
@@ -229,7 +229,7 @@ conv_to< Mat<out_eT> >::from(const std::vector<in_eT>& in, const typename arma_n
   
   const uword N = uword( in.size() );
   
-  Mat<out_eT> out(N, 1);
+  Mat<out_eT> out(N, 1, arma_nozeros_indicator());
   
   if(N > 0)
     {
@@ -253,7 +253,7 @@ conv_to< Mat<out_eT> >::from(const std::vector<in_eT>& in, const typename arma_c
   
   const uword N = uword( in.size() );
   
-  Mat<out_eT> out(N, 1);
+  Mat<out_eT> out(N, 1, arma_nozeros_indicator());
   
   if(N > 0)
     {

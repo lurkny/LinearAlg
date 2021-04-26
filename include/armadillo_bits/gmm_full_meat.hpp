@@ -410,8 +410,8 @@ gmm_full<eT>::generate(const uword N_vec) const
   const uword N_dims = means.n_rows;
   const uword N_gaus = means.n_cols;
   
-  Mat<eT> out( ( (N_gaus > 0) ? N_dims : uword(0) ), N_vec              );
-  Mat<eT> tmp( ( (N_gaus > 0) ? N_dims : uword(0) ), N_vec, fill::randn );
+  Mat<eT> out( ( (N_gaus > 0) ? N_dims : uword(0) ), N_vec, arma_nozeros_indicator() );
+  Mat<eT> tmp( ( (N_gaus > 0) ? N_dims : uword(0) ), N_vec, fill::randn              );
   
   if(N_gaus > 0)
     {
@@ -1035,7 +1035,7 @@ gmm_full<eT>::internal_gen_boundaries(const uword N) const
   
   // get_cout_stream() << "gmm_full::internal_gen_boundaries(): n_threads: " << n_threads << '\n';
   
-  umat boundaries(2, n_threads);
+  umat boundaries(2, n_threads, arma_nozeros_indicator());
   
   if(N > 0)
     {
@@ -2476,7 +2476,7 @@ gmm_full<eT>::em_update_params
   
   eT* hefts_mem = access::rw(hefts).memptr();
   
-  Mat<eT> mean_outer(N_dims, N_dims);
+  Mat<eT> mean_outer(N_dims, N_dims, arma_nozeros_indicator());
   
   
   //// update each component without sanity checking

@@ -288,7 +288,7 @@ op_htrans::apply_proxy(Mat<typename T1::elem_type>& out, const T1& X)
       }
     else  // aliasing
       {
-      Mat<eT> out2(n_cols, n_rows);
+      Mat<eT> out2(n_cols, n_rows, arma_nozeros_indicator());
       
       eT* out_mem = out2.memptr();
       
@@ -324,7 +324,7 @@ op_htrans::apply_proxy(Mat<typename T1::elem_type>& out, const T1& X)
       }
     else // aliasing
       {
-      Mat<eT> out2(n_cols, n_rows);
+      Mat<eT> out2(n_cols, n_rows, arma_nozeros_indicator());
       
       eT* out2ptr = out2.memptr();
       

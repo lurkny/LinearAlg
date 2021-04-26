@@ -313,7 +313,7 @@ ind2sub(const SizeMat& s, const T1& indices)
   
   arma_debug_check( ((P_is_empty == false) && (P_is_vec == false)), "ind2sub(): parameter 'indices' must be a vector" );
   
-  umat out(2,P_n_elem);
+  umat out(2, P_n_elem, arma_nozeros_indicator());
   
   if(Proxy<T1>::use_at == false)
     {
@@ -427,7 +427,7 @@ ind2sub(const SizeCube& s, const T1& indices)
   const uword  U_n_elem = U.M.n_elem;
   const uword* U_mem    = U.M.memptr();
   
-  umat out(3,U_n_elem);
+  umat out(3, U_n_elem, arma_nozeros_indicator());
   
   for(uword count=0; count < U_n_elem; ++count)
     {

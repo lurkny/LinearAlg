@@ -342,7 +342,7 @@ op_index_min::apply_noalias(Cube<uword>& out, const Cube<eT>& X, const uword dim
     
     uword* out_mem = out.memptr();
     
-    Mat<T> tmp(X_n_rows, X_n_cols);
+    Mat<T> tmp(X_n_rows, X_n_cols, arma_nozeros_indicator());
     
            T*      tmp_mem = tmp.memptr();
     const eT* X_slice0_mem = X.slice_memptr(0);

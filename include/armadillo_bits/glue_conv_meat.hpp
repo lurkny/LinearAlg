@@ -235,7 +235,7 @@ glue_conv2::apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B)
   if(G.is_empty() || W.is_empty())  { out.zeros(); return; }
   
   
-  Mat<eT> H(G.n_rows, G.n_cols);  // flipped filter coefficients
+  Mat<eT> H(G.n_rows, G.n_cols, arma_nozeros_indicator());  // flipped filter coefficients
   
   const uword H_n_rows = H.n_rows;
   const uword H_n_cols = H.n_cols;

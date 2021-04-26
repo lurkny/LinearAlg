@@ -1018,7 +1018,7 @@ gmm_diag<eT>::internal_gen_boundaries(const uword N) const
   
   // get_cout_stream() << "gmm_diag::internal_gen_boundaries(): n_threads: " << n_threads << '\n';
   
-  umat boundaries(2, n_threads);
+  umat boundaries(2, n_threads, arma_nozeros_indicator());
   
   if(N > 0)
     {

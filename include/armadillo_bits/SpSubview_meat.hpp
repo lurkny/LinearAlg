@@ -111,7 +111,7 @@ SpSubview<eT>::operator+=(const eT val)
   
   if(val == eT(0))  { return *this; }
   
-  Mat<eT> tmp( (*this).n_rows, (*this).n_cols );
+  Mat<eT> tmp( (*this).n_rows, (*this).n_cols, arma_nozeros_indicator() );
   
   tmp.fill(val);
   
@@ -129,7 +129,7 @@ SpSubview<eT>::operator-=(const eT val)
   
   if(val == eT(0))  { return *this; }
   
-  Mat<eT> tmp( (*this).n_rows, (*this).n_cols );
+  Mat<eT> tmp( (*this).n_rows, (*this).n_cols, arma_nozeros_indicator() );
   
   tmp.fill(val);
   
@@ -779,7 +779,7 @@ SpSubview<eT>::fill(const eT val)
   
   if(val != eT(0))
     {
-    Mat<eT> tmp( (*this).n_rows, (*this).n_cols );
+    Mat<eT> tmp( (*this).n_rows, (*this).n_cols, arma_nozeros_indicator() );
     
     tmp.fill(val);
     

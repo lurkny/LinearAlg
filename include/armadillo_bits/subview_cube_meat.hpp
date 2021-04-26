@@ -1117,7 +1117,7 @@ subview_cube<eT>::each_slice(const std::function< void(Mat<eT>&) >& F)
   {
   arma_extra_debug_sigprint();
   
-  Mat<eT> tmp1(n_rows, n_cols);
+  Mat<eT> tmp1(n_rows, n_cols, arma_nozeros_indicator());
   Mat<eT> tmp2('j', tmp1.memptr(), n_rows, n_cols);
   
   for(uword slice_id=0; slice_id < n_slices; ++slice_id)
@@ -1145,7 +1145,7 @@ subview_cube<eT>::each_slice(const std::function< void(const Mat<eT>&) >& F) con
   {
   arma_extra_debug_sigprint();
   
-        Mat<eT> tmp1(n_rows, n_cols);
+        Mat<eT> tmp1(n_rows, n_cols, arma_nozeros_indicator());
   const Mat<eT> tmp2('j', tmp1.memptr(), n_rows, n_cols);
   
   for(uword slice_id=0; slice_id < n_slices; ++slice_id)

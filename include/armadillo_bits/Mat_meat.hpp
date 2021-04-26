@@ -69,6 +69,8 @@ Mat<eT>::Mat(const uword in_n_rows, const uword in_n_cols)
   arma_extra_debug_sigprint_this(this);
   
   init_cold();
+  
+  arrayops::fill_zeros(memptr(), n_elem);
   }
 
 
@@ -76,6 +78,46 @@ Mat<eT>::Mat(const uword in_n_rows, const uword in_n_cols)
 template<typename eT>
 inline
 Mat<eT>::Mat(const SizeMat& s)
+  : n_rows(s.n_rows)
+  , n_cols(s.n_cols)
+  , n_elem(s.n_rows*s.n_cols)
+  , n_alloc()
+  , vec_state(0)
+  , mem_state(0)
+  , mem()
+  {
+  arma_extra_debug_sigprint_this(this);
+  
+  init_cold();
+  
+  arrayops::fill_zeros(memptr(), n_elem);
+  }
+
+
+
+//! internal use only
+template<typename eT>
+inline
+Mat<eT>::Mat(const uword in_n_rows, const uword in_n_cols, const arma_nozeros_indicator&)
+  : n_rows(in_n_rows)
+  , n_cols(in_n_cols)
+  , n_elem(in_n_rows*in_n_cols)
+  , n_alloc()
+  , vec_state(0)
+  , mem_state(0)
+  , mem()
+  {
+  arma_extra_debug_sigprint_this(this);
+  
+  init_cold();
+  }
+
+
+
+//! internal use only
+template<typename eT>
+inline
+Mat<eT>::Mat(const SizeMat& s, const arma_nozeros_indicator&)
   : n_rows(s.n_rows)
   , n_cols(s.n_cols)
   , n_elem(s.n_rows*s.n_cols)
@@ -1175,7 +1217,7 @@ Mat<eT>::steal_mem_col(Mat<eT>& x, const uword max_n_rows)
     }
   else
     {
-    Mat<eT> tmp(alt_n_rows, 1);
+    Mat<eT> tmp(alt_n_rows, 1, arma_nozeros_indicator());
     
     arrayops::copy( tmp.memptr(), x.memptr(), alt_n_rows );
     
@@ -4214,7 +4256,7 @@ Mat<eT>::shed_rows(const uword in_row1, const uword in_row2)
   const uword n_keep_front = in_row1;
   const uword n_keep_back  = n_rows - (in_row2 + 1);
   
-  Mat<eT> X(n_keep_front + n_keep_back, n_cols);
+  Mat<eT> X(n_keep_front + n_keep_back, n_cols, arma_nozeros_indicator());
   
   if(n_keep_front > 0)
     {
@@ -4248,7 +4290,7 @@ Mat<eT>::shed_cols(const uword in_col1, const uword in_col2)
   const uword n_keep_front = in_col1;
   const uword n_keep_back  = n_cols - (in_col2 + 1);
   
-  Mat<eT> X(n_rows, n_keep_front + n_keep_back);
+  Mat<eT> X(n_rows, n_keep_front + n_keep_back, arma_nozeros_indicator());
   
   if(n_keep_front > 0)
     {
@@ -4425,7 +4467,7 @@ Mat<eT>::insert_rows(const uword row_num, const uword N, const bool set_to_zero)
   
   if(N > 0)
     {
-    Mat<eT> out(t_n_rows + N, t_n_cols);
+    Mat<eT> out(t_n_rows + N, t_n_cols, arma_nozeros_indicator());
     
     if(A_n_rows > 0)
       {
@@ -4468,7 +4510,7 @@ Mat<eT>::insert_cols(const uword col_num, const uword N, const bool set_to_zero)
   
   if(N > 0)
     {
-    Mat<eT> out(t_n_rows, t_n_cols + N);
+    Mat<eT> out(t_n_rows, t_n_cols + N, arma_nozeros_indicator());
     
     if(A_n_cols > 0)
       {
@@ -4538,7 +4580,7 @@ Mat<eT>::insert_rows(const uword row_num, const Base<eT,T1>& X)
   
   if(C_n_rows > 0)
     {
-    Mat<eT> out( t_n_rows + C_n_rows, (std::max)(t_n_cols, C_n_cols) );
+    Mat<eT> out( t_n_rows + C_n_rows, (std::max)(t_n_cols, C_n_cols), arma_nozeros_indicator() );
     
     if(t_n_cols > 0)
       {
@@ -4611,7 +4653,7 @@ Mat<eT>::insert_cols(const uword col_num, const Base<eT,T1>& X)
   
   if(C_n_cols > 0)
     {
-    Mat<eT> out( (std::max)(t_n_rows, C_n_rows), t_n_cols + C_n_cols );
+    Mat<eT> out( (std::max)(t_n_rows, C_n_rows), t_n_cols + C_n_cols, arma_nozeros_indicator() );
     
     if(t_n_rows > 0)
       {
