@@ -1938,8 +1938,8 @@ gmm_full<eT>::generate_initial_params(const Mat<eT>& X, const eT var_floor)
   // as the covariances are calculated via accumulators,
   // the means also need to be calculated via accumulators to ensure numerical consistency
   
-  Mat<eT> acc_means(N_dims, N_gaus, fill::zeros);
-  Mat<eT> acc_dcovs(N_dims, N_gaus, fill::zeros);
+  Mat<eT> acc_means(N_dims, N_gaus);
+  Mat<eT> acc_dcovs(N_dims, N_gaus);
   
   Row<uword> acc_hefts(N_gaus, fill::zeros);
   
@@ -2101,7 +2101,7 @@ gmm_full<eT>::km_iterate(const Mat<eT>& X, const uword max_iter, const bool verb
   
   const eT* mah_aux_mem = mah_aux.memptr();
   
-  Mat<eT>    acc_means(N_dims, N_gaus, fill::zeros);
+  Mat<eT>    acc_means(N_dims, N_gaus);
   Row<uword> acc_hefts(N_gaus, fill::zeros);
   Row<uword> last_indx(N_gaus, fill::zeros);
   

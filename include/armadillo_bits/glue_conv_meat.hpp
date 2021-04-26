@@ -106,7 +106,7 @@ glue_conv::apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B, const bool A_
 //   
 //   const uword HH_n_rows = h_n_elem + (N_copies-1);
 //   
-//   Mat<eT> HH(HH_n_rows, N_copies, fill::zeros);
+//   Mat<eT> HH(HH_n_rows, N_copies);
 //   
 //   for(uword i=0; i<N_copies; ++i)
 //     {
@@ -255,7 +255,7 @@ glue_conv2::apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B)
     }
   
   
-  Mat<eT> X( (W.n_rows + 2*H_n_rows_m1), (W.n_cols + 2*H_n_cols_m1), fill::zeros );
+  Mat<eT> X( (W.n_rows + 2*H_n_rows_m1), (W.n_cols + 2*H_n_cols_m1) );
   
   X( H_n_rows_m1, H_n_cols_m1, arma::size(W) ) = W;  // zero padded version of 2D image
   

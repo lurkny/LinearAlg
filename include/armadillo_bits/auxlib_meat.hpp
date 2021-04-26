@@ -5073,7 +5073,6 @@ auxlib::solve_rect_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_type
       // xGEQRF docs: elements on and above the diagonal contain the min(M,N)-by-N upper trapezoidal matrix R
       
       Mat<eT> R(A.n_cols, A.n_cols);
-      R.zeros();
       
       for(uword col=0; col < A.n_cols; ++col)
         {
@@ -5097,7 +5096,6 @@ auxlib::solve_rect_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_type
       // xGELQF docs: elements on and below the diagonal contain the M-by-min(M,N) lower trapezoidal matrix L
       
       Mat<eT> L(A.n_rows, A.n_rows);
-      L.zeros();
       
       for(uword col=0; col < A.n_rows; ++col)
         {
