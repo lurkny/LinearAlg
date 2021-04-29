@@ -5072,7 +5072,7 @@ auxlib::solve_rect_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_type
       // xGELS  docs: for M >= N, A contains details of its QR decomposition as returned by xGEQRF
       // xGEQRF docs: elements on and above the diagonal contain the min(M,N)-by-N upper trapezoidal matrix R
       
-      Mat<eT> R(A.n_cols, A.n_cols);
+      Mat<eT> R(A.n_cols, A.n_cols, arma_zeros_indicator());
       
       for(uword col=0; col < A.n_cols; ++col)
         {
@@ -5095,7 +5095,7 @@ auxlib::solve_rect_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_type
       // xGELS  docs: for M < N, A contains details of its LQ decomposition as returned by xGELQF
       // xGELQF docs: elements on and below the diagonal contain the M-by-min(M,N) lower trapezoidal matrix L
       
-      Mat<eT> L(A.n_rows, A.n_rows);
+      Mat<eT> L(A.n_rows, A.n_rows, arma_zeros_indicator());
       
       for(uword col=0; col < A.n_rows; ++col)
         {

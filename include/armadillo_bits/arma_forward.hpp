@@ -331,7 +331,11 @@ struct arma_vec_indicator     {};
 struct arma_fixed_indicator   {};
 struct arma_reserve_indicator {};
 struct arma_layout_indicator  {};
-struct arma_nozeros_indicator {};
+
+template<bool do_zeros> struct arma_initmode_indicator {};
+
+struct arma_zeros_indicator   : public arma_initmode_indicator<true > {};
+struct arma_nozeros_indicator : public arma_initmode_indicator<false> {};
 
 
 //! \addtogroup injector

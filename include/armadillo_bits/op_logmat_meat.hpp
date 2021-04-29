@@ -433,7 +433,7 @@ op_logmat_cx::helper(Mat<eT>& A, const uword m)
   
   const vec indices = regspace<vec>(1,m-1);
   
-  mat tmp(m,m);
+  mat tmp(m, m, arma_zeros_indicator());
   
   tmp.diag(-1) = indices / sqrt(square(2.0*indices) - 1.0);
   tmp.diag(+1) = indices / sqrt(square(2.0*indices) - 1.0);
@@ -450,7 +450,7 @@ op_logmat_cx::helper(Mat<eT>& A, const uword m)
   
   const uword N = A.n_rows;
   
-  Mat<eT> B(N,N);
+  Mat<eT> B(N, N, arma_zeros_indicator());
   
   Mat<eT> X;
   

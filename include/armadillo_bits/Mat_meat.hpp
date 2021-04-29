@@ -99,8 +99,9 @@ Mat<eT>::Mat(const SizeMat& s)
 
 //! internal use only
 template<typename eT>
+template<bool do_zeros>
 inline
-Mat<eT>::Mat(const uword in_n_rows, const uword in_n_cols, const arma_nozeros_indicator&)
+Mat<eT>::Mat(const uword in_n_rows, const uword in_n_cols, const arma_initmode_indicator<do_zeros>&)
   : n_rows(in_n_rows)
   , n_cols(in_n_cols)
   , n_elem(in_n_rows*in_n_cols)
@@ -112,14 +113,21 @@ Mat<eT>::Mat(const uword in_n_rows, const uword in_n_cols, const arma_nozeros_in
   arma_extra_debug_sigprint_this(this);
   
   init_cold();
+  
+  if(do_zeros)
+    {
+    arma_extra_debug_print("Mat::constructor: zeroing memory");
+    arrayops::fill_zeros(memptr(), n_elem);
+    }
   }
 
 
 
 //! internal use only
 template<typename eT>
+template<bool do_zeros>
 inline
-Mat<eT>::Mat(const SizeMat& s, const arma_nozeros_indicator&)
+Mat<eT>::Mat(const SizeMat& s, const arma_initmode_indicator<do_zeros>&)
   : n_rows(s.n_rows)
   , n_cols(s.n_cols)
   , n_elem(s.n_rows*s.n_cols)
@@ -131,6 +139,12 @@ Mat<eT>::Mat(const SizeMat& s, const arma_nozeros_indicator&)
   arma_extra_debug_sigprint_this(this);
   
   init_cold();
+  
+  if(do_zeros)
+    {
+    arma_extra_debug_print("Mat::constructor: zeroing memory");
+    arrayops::fill_zeros(memptr(), n_elem);
+    }
   }
 
 

@@ -144,7 +144,7 @@ op_inv::apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X, const char*
     }
   else
     {
-    Mat<eT> tmp(N, N);
+    Mat<eT> tmp(N, N, arma_zeros_indicator());
     
     for(uword i=0; i<N; ++i)
       {

@@ -61,8 +61,8 @@ class Mat : public Base< eT, Mat<eT> >
   inline explicit Mat(const uword in_rows, const uword in_cols);
   inline explicit Mat(const SizeMat& s);
   
-  inline explicit Mat(const uword in_rows, const uword in_cols, const arma_nozeros_indicator&);
-  inline explicit Mat(const SizeMat& s,                         const arma_nozeros_indicator&);
+  template<bool do_zeros> inline explicit Mat(const uword in_rows, const uword in_cols, const arma_initmode_indicator<do_zeros>&);
+  template<bool do_zeros> inline explicit Mat(const SizeMat& s,                         const arma_initmode_indicator<do_zeros>&);
   
   template<typename fill_type> inline Mat(const uword in_rows, const uword in_cols, const fill::fill_class<fill_type>& f);
   template<typename fill_type> inline Mat(const SizeMat& s,                         const fill::fill_class<fill_type>& f);
