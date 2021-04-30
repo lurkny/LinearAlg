@@ -174,7 +174,7 @@ SymEigsSolver<eT, SelectionRule, OpType>::restart(uword k)
   Col<eT> fk = fac_f * Q(ncv - 1, k - 1) + fac_V.col(k) * fac_H(k, k - 1);
   factorise_from(k, ncv, fk);
   retrieve_ritzpair();
-}
+  }
 
 
 
