@@ -1177,6 +1177,12 @@ Col<eT>::fixed<fixed_n_elem>::fixed()
   : Col<eT>( arma_fixed_indicator(), fixed_n_elem, ((use_extra) ? mem_local_extra : Mat<eT>::mem_local) )
   {
   arma_extra_debug_sigprint_this(this);
+  
+  arma_extra_debug_print("Col::fixed::constructor: zeroing memory");
+  
+  eT* mem_use = (use_extra) ? &(mem_local_extra[0]) : &(Mat<eT>::mem_local[0]);
+  
+  arrayops::inplace_set_fixed<eT,fixed_n_elem>( mem_use, eT(0) );
   }
 
 
