@@ -151,6 +151,7 @@ GenEigsSolver<eT, SelectionRule, OpType>::restart(uword k)
       fac_H.diag() += ritz_val(i).real();
       }
     }
+  
   // V -> VQ
   // Q has some elements being zero
   // The first (ncv - k + i) elements of the i-th column of Q are non-zero
@@ -186,7 +187,7 @@ GenEigsSolver<eT, SelectionRule, OpType>::num_converged(eT tol)
   const eT f_norm = arma::norm(fac_f);
   for(uword i = 0; i < nev; i++)
     {
-    eT thresh = tol * std::max(approx0, std::abs(ritz_val(i)));
+    eT thresh = tol * (std::max)(approx0, std::abs(ritz_val(i)));
     eT resid = std::abs(ritz_est(i)) * f_norm;
     ritz_conv[i] = (resid < thresh);
     }
@@ -210,7 +211,7 @@ GenEigsSolver<eT, SelectionRule, OpType>::nev_adjusted(uword nconv)
     if(std::abs(ritz_est(i)) < eps) { nev_new++; }
     }
   // Adjust nev_new again, according to dnaup2.f line 660~674 in ARPACK
-  nev_new += std::min(nconv, (ncv - nev_new) / 2);
+  nev_new += (std::min)(nconv, (ncv - nev_new) / 2);
   if(nev_new == 1 && ncv >= 6)
     {
     nev_new = ncv / 2;
@@ -394,7 +395,7 @@ GenEigsSolver<eT, SelectionRule, OpType>::compute(uword maxit, eT tol)
 
   niter = i + 1;
 
-  return std::min(nev, nconv);
+  return (std::min)(nev, nconv);
   }
 
 
@@ -435,7 +436,7 @@ GenEigsSolver<eT, SelectionRule, OpType>::eigenvectors(uword nvec)
   arma_extra_debug_sigprint();
   
   uword nconv = std::count(ritz_conv.begin(), ritz_conv.end(), true);
-  nvec = std::min(nvec, nconv);
+  nvec = (std::min)(nvec, nconv);
   Mat< std::complex<eT> > res(dim_n, nvec);
   
   if(nvec > 0)

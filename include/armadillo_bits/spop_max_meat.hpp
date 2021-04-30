@@ -150,7 +150,7 @@ spop_max::vector_max
       }
     else
       {
-      return std::max(eT(0), op_max::direct_max(p.get_values(), p.get_n_nonzero()));
+      return (std::max)(eT(0), op_max::direct_max(p.get_values(), p.get_n_nonzero()));
       }
     }
   else
@@ -175,7 +175,7 @@ spop_max::vector_max
       }
     else
       {
-      return std::max(eT(0), result);
+      return (std::max)(eT(0), result);
       }
     }
   }
@@ -234,7 +234,7 @@ spop_max::max(const SpBase<typename T1::elem_type, T1>& X)
     }
   else
     {
-    return std::max(eT(0), max_val);
+    return (std::max)(eT(0), max_val);
     }
   }
 
@@ -298,7 +298,7 @@ spop_max::max_with_index(const SpProxy<T1>& P, uword& index_of_max_val)
   
   if(n_elem != n_nonzero)
     {
-    max_val = std::max(eT(0), max_val);
+    max_val = (std::max)(eT(0), max_val);
     
     // If the max_val is a nonzero element, we need its actual position in the matrix.
     if(max_val == eT(0))
@@ -631,7 +631,7 @@ spop_max::max_with_index(const SpProxy<T1>& P, uword& index_of_max_val)
   
   if(n_elem != n_nonzero)
     {
-    max_val = std::max(T(0), max_val);
+    max_val = (std::max)(T(0), max_val);
 
     // If the max_val is a nonzero element, we need its actual position in the matrix.
     if(max_val == T(0))

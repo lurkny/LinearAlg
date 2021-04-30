@@ -172,6 +172,7 @@ SymEigsSolver<eT, SelectionRule, OpType>::restart(uword k)
     Col<eT> v(Vs.colptr(i), dim_n, false, true);
     v = V * q;
     }
+  
   Vs.col(k) = fac_V * Q.col(k);
   fac_V.head_cols(k + 1) = Vs;
 
@@ -193,7 +194,7 @@ SymEigsSolver<eT, SelectionRule, OpType>::num_converged(eT tol)
   const eT f_norm = norm(fac_f);
   for(uword i = 0; i < nev; i++)
     {
-    eT thresh = tol * std::max(eps23, std::abs(ritz_val(i)));
+    eT thresh = tol * (std::max)(eps23, std::abs(ritz_val(i)));
     eT resid = std::abs(ritz_est(i)) * f_norm;
     ritz_conv[i] = (resid < thresh);
     }
@@ -217,7 +218,7 @@ SymEigsSolver<eT, SelectionRule, OpType>::nev_adjusted(uword nconv)
     }
 
   // Adjust nev_new, according to dsaup2.f line 677~684 in ARPACK
-  nev_new += std::min(nconv, (ncv - nev_new) / 2);
+  nev_new += (std::min)(nconv, (ncv - nev_new) / 2);
   if(nev_new >= ncv) { nev_new = ncv - 1; }
   if(nev_new == 1 && ncv >= 6)
     {
@@ -416,7 +417,7 @@ SymEigsSolver<eT, SelectionRule, OpType>::compute(uword maxit, eT tol)
 
   niter = i + 1;
 
-  return std::min(nev, nconv);
+  return (std::min)(nev, nconv);
   }
 
 
@@ -457,7 +458,7 @@ SymEigsSolver<eT, SelectionRule, OpType>::eigenvectors(uword nvec)
   arma_extra_debug_sigprint();
   
   uword nconv = std::count(ritz_conv.begin(), ritz_conv.end(), true);
-  nvec = std::min(nvec, nconv);
+  nvec = (std::min)(nvec, nconv);
   Mat<eT> res(dim_n, nvec);
   
   if(nvec > 0)
