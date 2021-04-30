@@ -48,6 +48,9 @@ Col<eT>::Col(const uword in_n_elem)
   : Mat<eT>(arma_vec_indicator(), in_n_elem, 1, 1)
   {
   arma_extra_debug_sigprint();
+  
+  arma_extra_debug_print("Col::constructor: zeroing memory");
+  arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
   }
 
 
@@ -60,6 +63,9 @@ Col<eT>::Col(const uword in_n_rows, const uword in_n_cols)
   arma_extra_debug_sigprint();
   
   Mat<eT>::init_warm(in_n_rows, in_n_cols);
+  
+  arma_extra_debug_print("Col::constructor: zeroing memory");
+  arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
   }
 
 
@@ -72,6 +78,9 @@ Col<eT>::Col(const SizeMat& s)
   arma_extra_debug_sigprint();
   
   Mat<eT>::init_warm(s.n_rows, s.n_cols);
+  
+  arma_extra_debug_print("Col::constructor: zeroing memory");
+  arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
   }
 
 
