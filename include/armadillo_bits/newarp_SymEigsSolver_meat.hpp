@@ -166,7 +166,11 @@ SymEigsSolver<eT, SelectionRule, OpType>::restart(uword k)
     nnz = ncv - k + i + 1;
     Mat<eT> V(fac_V.memptr(), dim_n, nnz, false);
     Col<eT> q(Q.colptr(i), nnz, false);
-    Vs.col(i) = V * q;
+    // OLD CODE:
+    // Vs.col(i) = V * q;
+    // NEW CODE:
+    Col<eT> v(Vs.colptr(i), dim_n, false, true);
+    v = V * q;
     }
   Vs.col(k) = fac_V * Q.col(k);
   fac_V.head_cols(k + 1) = Vs;
