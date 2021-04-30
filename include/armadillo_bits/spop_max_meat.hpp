@@ -71,8 +71,8 @@ spop_max::apply_proxy
   
   if(dim == 0) // find the maximum in each column
     {
-    Row<eT> value(p_n_cols, fill::zeros);
-    urowvec count(p_n_cols, fill::zeros);
+    Row<eT> value(p_n_cols, arma_zeros_indicator());
+    urowvec count(p_n_cols, arma_zeros_indicator());
     
     while(it != it_end)
       {
@@ -373,8 +373,8 @@ spop_max::apply_proxy
   
   if(dim == 0) // find the maximum in each column
     {
-    Row<eT> rawval(p_n_cols, fill::zeros);
-    Row< T> absval(p_n_cols, fill::zeros);
+    Row<eT> rawval(p_n_cols, arma_zeros_indicator());
+    Row< T> absval(p_n_cols, arma_zeros_indicator());
     
     while(it != it_end)
       {

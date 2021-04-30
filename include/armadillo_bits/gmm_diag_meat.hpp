@@ -643,7 +643,7 @@ gmm_diag<eT>::norm_hist(const Base<eT,T1>& expr, const gmm_dist_mode& dist_mode)
   
   if(acc == eT(0))  { acc = eT(1); }
   
-  Row<eT> out(hist_n_elem);
+  Row<eT> out(hist_n_elem, arma_nozeros_indicator());
   
   eT* out_mem = out.memptr();
   
@@ -1135,7 +1135,7 @@ gmm_diag<eT>::internal_vec_log_p(const Mat<eT>& X) const
   
   const uword N = X.n_cols;
   
-  Row<eT> out(N);
+  Row<eT> out(N, arma_nozeros_indicator());
   
   if(N > 0)
     {
@@ -1188,7 +1188,7 @@ gmm_diag<eT>::internal_vec_log_p(const Mat<eT>& X, const uword gaus_id) const
   
   const uword N = X.n_cols;
   
-  Row<eT> out(N);
+  Row<eT> out(N, arma_nozeros_indicator());
   
   if(N > 0)
     {
@@ -1914,7 +1914,7 @@ gmm_diag<eT>::generate_initial_params(const Mat<eT>& X, const eT var_floor)
   Mat<eT> acc_means(N_dims, N_gaus, arma_zeros_indicator());
   Mat<eT> acc_dcovs(N_dims, N_gaus, arma_zeros_indicator());
   
-  Row<uword> acc_hefts(N_gaus, fill::zeros);
+  Row<uword> acc_hefts(N_gaus, arma_zeros_indicator());
   
   uword* acc_hefts_mem = acc_hefts.memptr();
   
@@ -2073,8 +2073,8 @@ gmm_diag<eT>::km_iterate(const Mat<eT>& X, const uword max_iter, const bool verb
   const eT* mah_aux_mem = mah_aux.memptr();
   
   Mat<eT>    acc_means(N_dims, N_gaus, arma_zeros_indicator());
-  Row<uword> acc_hefts(N_gaus, fill::zeros);
-  Row<uword> last_indx(N_gaus, fill::zeros);
+  Row<uword> acc_hefts(        N_gaus, arma_zeros_indicator());
+  Row<uword> last_indx(        N_gaus, arma_zeros_indicator());
   
   Mat<eT> new_means = means;
   Mat<eT> old_means = means;

@@ -48,6 +48,9 @@ Row<eT>::Row(const uword in_n_elem)
   : Mat<eT>(arma_vec_indicator(), 1, in_n_elem, 2)
   {
   arma_extra_debug_sigprint();
+  
+  arma_extra_debug_print("Row::constructor: zeroing memory");
+  arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
   }
 
 
@@ -60,6 +63,9 @@ Row<eT>::Row(const uword in_n_rows, const uword in_n_cols)
   arma_extra_debug_sigprint();
   
   Mat<eT>::init_warm(in_n_rows, in_n_cols);
+  
+  arma_extra_debug_print("Row::constructor: zeroing memory");
+  arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
   }
 
 
@@ -72,6 +78,67 @@ Row<eT>::Row(const SizeMat& s)
   arma_extra_debug_sigprint();
   
   Mat<eT>::init_warm(s.n_rows, s.n_cols);
+  
+  arma_extra_debug_print("Row::constructor: zeroing memory");
+  arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
+  }
+
+
+
+//! internal use only
+template<typename eT>
+template<bool do_zeros>
+inline
+Row<eT>::Row(const uword in_n_elem, const arma_initmode_indicator<do_zeros>&)
+  : Mat<eT>(arma_vec_indicator(), 1, in_n_elem, 2)
+  {
+  arma_extra_debug_sigprint();
+  
+  if(do_zeros)
+    {
+    arma_extra_debug_print("Row::constructor: zeroing memory");
+    arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
+    }
+  }
+
+
+
+//! internal use only
+template<typename eT>
+template<bool do_zeros>
+inline
+Row<eT>::Row(const uword in_n_rows, const uword in_n_cols, const arma_initmode_indicator<do_zeros>&)
+  : Mat<eT>(arma_vec_indicator(), 0, 0, 2)
+  {
+  arma_extra_debug_sigprint();
+  
+  Mat<eT>::init_warm(in_n_rows, in_n_cols);
+  
+  if(do_zeros)
+    {
+    arma_extra_debug_print("Row::constructor: zeroing memory");
+    arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
+    }
+  }
+
+
+
+//! internal use only
+template<typename eT>
+template<bool do_zeros>
+inline
+Row<eT>::Row(const SizeMat& s, const arma_initmode_indicator<do_zeros>&)
+  : Mat<eT>(arma_vec_indicator(), 0, 0, 2)
+  {
+  arma_extra_debug_sigprint();
+  
+  Mat<eT>::init_warm(s.n_rows, s.n_cols);
+  
+  if(do_zeros)
+    {
+    arma_extra_debug_print("Row::constructor: zeroing memory");
+    arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
+    }
   }
 
 
@@ -909,7 +976,7 @@ Row<eT>::shed_cols(const uword in_col1, const uword in_col2)
   const uword n_keep_front = in_col1;
   const uword n_keep_back  = Mat<eT>::n_cols - (in_col2 + 1);
   
-  Row<eT> X(n_keep_front + n_keep_back);
+  Row<eT> X(n_keep_front + n_keep_back, arma_nozeros_indicator());
   
         eT* X_mem = X.memptr();
   const eT* t_mem = (*this).memptr();
@@ -962,7 +1029,7 @@ Row<eT>::insert_cols(const uword col_num, const uword N, const bool set_to_zero)
   
   if(N > 0)
     {
-    Row<eT> out(t_n_cols + N);
+    Row<eT> out(t_n_cols + N, arma_nozeros_indicator());
     
           eT* out_mem = out.memptr();
     const eT*   t_mem = (*this).memptr();

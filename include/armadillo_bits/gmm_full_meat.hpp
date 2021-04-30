@@ -682,7 +682,7 @@ gmm_full<eT>::norm_hist(const Base<eT,T1>& expr, const gmm_dist_mode& dist_mode)
   
   if(acc == eT(0))  { acc = eT(1); }
   
-  Row<eT> out(hist_n_elem);
+  Row<eT> out(hist_n_elem, arma_nozeros_indicator());
   
   eT* out_mem = out.memptr();
   
@@ -1143,7 +1143,7 @@ gmm_full<eT>::internal_vec_log_p(const Mat<eT>& X) const
   
   arma_debug_check( (X.n_rows != N_dims), "gmm_full::log_p(): incompatible dimensions" );
   
-  Row<eT> out(N_samples);
+  Row<eT> out(N_samples, arma_nozeros_indicator());
   
   if(N_samples > 0)
     {
@@ -1197,7 +1197,7 @@ gmm_full<eT>::internal_vec_log_p(const Mat<eT>& X, const uword gaus_id) const
   arma_debug_check( (X.n_rows != N_dims),       "gmm_full::log_p(): incompatible dimensions"            );
   arma_debug_check( (gaus_id  >= means.n_cols), "gmm_full::log_p(): specified gaussian is out of range" );
   
-  Row<eT> out(N_samples);
+  Row<eT> out(N_samples, arma_nozeros_indicator());
   
   if(N_samples > 0)
     {
@@ -1941,7 +1941,7 @@ gmm_full<eT>::generate_initial_params(const Mat<eT>& X, const eT var_floor)
   Mat<eT> acc_means(N_dims, N_gaus);
   Mat<eT> acc_dcovs(N_dims, N_gaus);
   
-  Row<uword> acc_hefts(N_gaus, fill::zeros);
+  Row<uword> acc_hefts(N_gaus, arma_zeros_indicator());
   
   uword* acc_hefts_mem = acc_hefts.memptr();
   
@@ -2101,9 +2101,9 @@ gmm_full<eT>::km_iterate(const Mat<eT>& X, const uword max_iter, const bool verb
   
   const eT* mah_aux_mem = mah_aux.memptr();
   
-  Mat<eT>    acc_means(N_dims, N_gaus);
-  Row<uword> acc_hefts(N_gaus, fill::zeros);
-  Row<uword> last_indx(N_gaus, fill::zeros);
+  Mat<eT>    acc_means(N_dims, N_gaus, arma_zeros_indicator());
+  Row<uword> acc_hefts(        N_gaus, arma_zeros_indicator());
+  Row<uword> last_indx(        N_gaus, arma_zeros_indicator());
   
   Mat<eT> new_means = means;
   Mat<eT> old_means = means;
