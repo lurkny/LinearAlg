@@ -611,7 +611,7 @@ conv_to< Cube<out_eT> >::from(const BaseCube<in_eT, T1>& in, const typename arma
   const unwrap_cube<T1>  tmp( in.get_ref() );
   const Cube<in_eT>& X = tmp.M;
   
-  Cube<out_eT> out(X.n_rows, X.n_cols, X.n_slices);
+  Cube<out_eT> out(X.n_rows, X.n_cols, X.n_slices, arma_nozeros_indicator());
   
   arrayops::convert( out.memptr(), X.memptr(), X.n_elem );
   
@@ -633,7 +633,7 @@ conv_to< Cube<out_eT> >::from(const BaseCube<in_eT, T1>& in, const typename arma
   const unwrap_cube<T1>  tmp( in.get_ref() );
   const Cube<in_eT>& X = tmp.M;
   
-  Cube<out_eT> out(X.n_rows, X.n_cols, X.n_slices);
+  Cube<out_eT> out(X.n_rows, X.n_cols, X.n_slices, arma_nozeros_indicator());
   
   arrayops::convert_cx( out.memptr(), X.memptr(), X.n_elem );
   

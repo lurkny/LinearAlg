@@ -311,7 +311,7 @@ gmm_diag<eT>::save(const std::string name) const
   {
   arma_extra_debug_sigprint();
   
-  Cube<eT> Q(means.n_rows + 1, means.n_cols, 2);
+  Cube<eT> Q(means.n_rows + 1, means.n_cols, 2, arma_nozeros_indicator());
   
   if(Q.n_elem > 0)
     {
