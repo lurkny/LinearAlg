@@ -29,7 +29,7 @@ GenEigsSolver<eT, SelectionRule, OpType>::factorise_from(uword from_k, uword to_
 
   fac_f = fk;
 
-  Col<eT> w(dim_n);
+  Col<eT> w(dim_n, arma_zeros_indicator());
   eT beta = norm(fac_f);
   // Keep the upperleft k x k submatrix of H and set other elements to 0
   fac_H.tail_cols(ncv - from_k).zeros();
@@ -154,7 +154,7 @@ GenEigsSolver<eT, SelectionRule, OpType>::restart(uword k)
   // V -> VQ
   // Q has some elements being zero
   // The first (ncv - k + i) elements of the i-th column of Q are non-zero
-  Mat<eT> Vs(dim_n, k + 1);
+  Mat<eT> Vs(dim_n, k + 1, arma_nozeros_indicator());
   uword nnz;
   for(uword i = 0; i < k; i++)
     {
@@ -278,8 +278,8 @@ GenEigsSolver<eT, SelectionRule, OpType>::sort_ritzpair()
   
   std::vector<uword> ind = sorting.index();
   
-  Col< std::complex<eT> > new_ritz_val(ncv);
-  Mat< std::complex<eT> > new_ritz_vec(ncv, nev);
+  Col< std::complex<eT> > new_ritz_val(ncv,      arma_zeros_indicator()  );
+  Mat< std::complex<eT> > new_ritz_vec(ncv, nev, arma_nozeros_indicator());
   std::vector<bool>       new_ritz_conv(nev);
   
   for(uword i = 0; i < nev; i++)
@@ -342,7 +342,7 @@ GenEigsSolver<eT, SelectionRule, OpType>::init(eT* init_resid)
   arma_check( (rnorm < eps), "newarp::GenEigsSolver::init(): initial residual vector cannot be zero" );
   v = r / rnorm;
 
-  Col<eT> w(dim_n);
+  Col<eT> w(dim_n, arma_zeros_indicator());
   op.perform_op(v.memptr(), w.memptr());
   nmatop++;
 
@@ -407,7 +407,7 @@ GenEigsSolver<eT, SelectionRule, OpType>::eigenvalues()
   arma_extra_debug_sigprint();
   
   uword nconv = std::count(ritz_conv.begin(), ritz_conv.end(), true);
-  Col< std::complex<eT> > res(nconv);
+  Col< std::complex<eT> > res(nconv, arma_zeros_indicator());
   
   if(nconv > 0)
     {
@@ -440,7 +440,7 @@ GenEigsSolver<eT, SelectionRule, OpType>::eigenvectors(uword nvec)
   
   if(nvec > 0)
     {
-    Mat< std::complex<eT> > ritz_vec_conv(ncv, nvec);
+    Mat< std::complex<eT> > ritz_vec_conv(ncv, nvec, arma_zeros_indicator());
     uword j = 0;
     for(uword i = 0; (i < nev) && (j < nvec); i++)
       {
