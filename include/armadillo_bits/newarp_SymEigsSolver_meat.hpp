@@ -138,7 +138,7 @@ SymEigsSolver<eT, SelectionRule, OpType>::restart(uword k)
   if(k >= ncv) { return; }
 
   TridiagQR<eT> decomp;
-  Mat<eT> Q = eye< Mat<eT> >(ncv, ncv);
+  Mat<eT> Q(ncv, ncv, fill::eye);
 
   for(uword i = k; i < ncv; i++)
     {
