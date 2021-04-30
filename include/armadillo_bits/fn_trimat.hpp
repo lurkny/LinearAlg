@@ -18,7 +18,6 @@
 //! @{
 
 
-// TODO: split into seperate op_trimatu and op_trimatl classes ?
 template<typename T1>
 arma_warn_unused
 arma_inline
