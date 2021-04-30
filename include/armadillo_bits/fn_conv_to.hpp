@@ -422,7 +422,7 @@ conv_to< Col<out_eT> >::from(const Base<in_eT, T1>& in, const typename arma_not_
   
   arma_debug_check( ( (X.is_vec() == false) && (X.is_empty() == false) ), "conv_to(): given object can't be interpreted as a vector" );
   
-  Col<out_eT> out(X.n_elem);
+  Col<out_eT> out(X.n_elem, arma_nozeros_indicator());
   
   arrayops::convert( out.memptr(), X.memptr(), X.n_elem );
   
@@ -446,7 +446,7 @@ conv_to< Col<out_eT> >::from(const Base<in_eT, T1>& in, const typename arma_cx_o
   
   arma_debug_check( ( (X.is_vec() == false) && (X.is_empty() == false) ), "conv_to(): given object can't be interpreted as a vector" );
   
-  Col<out_eT> out(X.n_rows, X.n_cols);
+  Col<out_eT> out(X.n_rows, X.n_cols, arma_nozeros_indicator());
   
   arrayops::convert_cx( out.memptr(), X.memptr(), X.n_elem );
   
@@ -467,7 +467,7 @@ conv_to< Col<out_eT> >::from(const std::vector<in_eT>& in, const typename arma_n
   
   const uword N = uword( in.size() );
   
-  Col<out_eT> out(N);
+  Col<out_eT> out(N, arma_nozeros_indicator());
   
   if(N > 0)
     {
@@ -491,7 +491,7 @@ conv_to< Col<out_eT> >::from(const std::vector<in_eT>& in, const typename arma_c
   
   const uword N = uword( in.size() );
   
-  Col<out_eT> out(N);
+  Col<out_eT> out(N, arma_nozeros_indicator());
   
   if(N > 0)
     {

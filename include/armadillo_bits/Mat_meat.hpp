@@ -4356,7 +4356,7 @@ Mat<eT>::shed_rows(const Base<uword, T1>& indices)
       }
     }
   
-  Col<uword> tmp3(n_rows);
+  Col<uword> tmp3(n_rows, arma_nozeros_indicator());
   
   uword* tmp3_mem = tmp3.memptr();
   
@@ -4426,7 +4426,7 @@ Mat<eT>::shed_cols(const Base<uword, T1>& indices)
       }
     }
   
-  Col<uword> tmp3(n_cols);
+  Col<uword> tmp3(n_cols, arma_nozeros_indicator());
   
   uword* tmp3_mem = tmp3.memptr();
   

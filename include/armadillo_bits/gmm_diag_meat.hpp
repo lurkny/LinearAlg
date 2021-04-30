@@ -1249,7 +1249,7 @@ gmm_diag<eT>::internal_sum_log_p(const Mat<eT>& X) const
     
     const uword n_threads = boundaries.n_cols;
     
-    Col<eT> t_accs(n_threads, fill::zeros);
+    Col<eT> t_accs(n_threads, arma_zeros_indicator());
     
     #pragma omp parallel for schedule(static)
     for(uword t=0; t < n_threads; ++t)
@@ -1306,7 +1306,7 @@ gmm_diag<eT>::internal_sum_log_p(const Mat<eT>& X, const uword gaus_id) const
     
     const uword n_threads = boundaries.n_cols;
     
-    Col<eT> t_accs(n_threads, fill::zeros);
+    Col<eT> t_accs(n_threads, arma_zeros_indicator());
     
     #pragma omp parallel for schedule(static)
     for(uword t=0; t < n_threads; ++t)
@@ -2314,7 +2314,7 @@ gmm_diag<eT>::em_iterate(const Mat<eT>& X, const uword max_iter, const eT var_fl
   field< Col<eT> > t_acc_norm_lhoods(n_threads);
   field< Col<eT> > t_gaus_log_lhoods(n_threads);
   
-  Col<eT>          t_progress_log_lhood(n_threads);
+  Col<eT>          t_progress_log_lhood(n_threads, arma_nozeros_indicator());
   
   for(uword t=0; t<n_threads; t++)
     {

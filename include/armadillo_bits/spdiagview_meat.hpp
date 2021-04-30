@@ -683,7 +683,7 @@ spdiagview<eT>::extract(SpMat<eT>& out, const spdiagview<eT>& d)
   const uword d_row_offset = d.row_offset;
   const uword d_col_offset = d.col_offset;
   
-  Col<eT> cache(d_n_elem);
+  Col<eT> cache(d_n_elem, arma_nozeros_indicator());
   eT* cache_mem = cache.memptr();
   
   uword d_n_nonzero = 0;

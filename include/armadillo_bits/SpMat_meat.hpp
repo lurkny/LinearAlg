@@ -343,7 +343,7 @@ SpMat<eT>::SpMat(const Base<uword,T1>& locations_expr, const Base<eT,T2>& vals_e
   
   if(N_new != N_old)
     {
-    Col<eT>    filtered_vals(   N_new);
+    Col<eT>    filtered_vals(   N_new, arma_nozeros_indicator());
     Mat<uword> filtered_locs(2, N_new, arma_nozeros_indicator());
     
     uword index = 0;
@@ -413,7 +413,7 @@ SpMat<eT>::SpMat(const Base<uword,T1>& locations_expr, const Base<eT,T2>& vals_e
     
     if(N_new != N_old)
       {
-      Col<eT>    filtered_vals(   N_new);
+      Col<eT>    filtered_vals(   N_new, arma_nozeros_indicator());
       Mat<uword> filtered_locs(2, N_new, arma_nozeros_indicator());
       
       uword index = 0;
@@ -482,7 +482,7 @@ SpMat<eT>::SpMat(const bool add_values, const Base<uword,T1>& locations_expr, co
     
     if(N_new != N_old)
       {
-      Col<eT>    filtered_vals(   N_new);
+      Col<eT>    filtered_vals(   N_new, arma_nozeros_indicator());
       Mat<uword> filtered_locs(2, N_new, arma_nozeros_indicator());
       
       uword index = 0;
@@ -5365,7 +5365,7 @@ SpMat<eT>::init_batch_add(const Mat<uword>& locs, const Mat<eT>& vals, const boo
     if(actually_sorted == false)
       {
       // This may not be the fastest possible implementation but it maximizes code reuse.
-      Col<uword> abslocs(locs.n_cols);
+      Col<uword> abslocs(locs.n_cols, arma_nozeros_indicator());
       
       for(uword i = 0; i < locs.n_cols; ++i)
         {

@@ -2097,7 +2097,7 @@ Cube<eT>::shed_slices(const Base<uword, T1>& indices)
       }
     }
   
-  Col<uword> tmp3(n_slices);
+  Col<uword> tmp3(n_slices, arma_nozeros_indicator());
   
   uword* tmp3_mem = tmp3.memptr();
   

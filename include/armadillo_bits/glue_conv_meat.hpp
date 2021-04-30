@@ -38,7 +38,7 @@ glue_conv::apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B, const bool A_
   if( (h_n_elem == 0) || (x_n_elem == 0) )  { out.zeros(); return; }
   
   
-  Col<eT> hh(h_n_elem);  // flipped version of h
+  Col<eT> hh(h_n_elem, arma_nozeros_indicator());  // flipped version of h
   
   const eT*   h_mem =  h.memptr();
         eT*  hh_mem = hh.memptr();
@@ -49,7 +49,7 @@ glue_conv::apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B, const bool A_
     }
   
   
-  Col<eT> xx( (x_n_elem + 2*h_n_elem_m1), fill::zeros );  // zero padded version of x
+  Col<eT> xx( (x_n_elem + 2*h_n_elem_m1), arma_zeros_indicator() );  // zero padded version of x
   
   const eT*  x_mem =  x.memptr();
         eT* xx_mem = xx.memptr();
@@ -90,7 +90,7 @@ glue_conv::apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B, const bool A_
 //   if( (h_n_elem == 0) || (x_n_elem == 0) )  { out.zeros(); return; }
 //   
 //   
-//   Col<eT> hh(h_n_elem);  // flipped version of h
+//   Col<eT> hh(h_n_elem, arma_nozeros_indicator());  // flipped version of h
 //   
 //   const eT*   h_mem =  h.memptr();
 //         eT*  hh_mem = hh.memptr();
@@ -115,7 +115,7 @@ glue_conv::apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B, const bool A_
 //   
 //   
 //   
-//   Col<eT> xx( (x_n_elem + 2*h_n_elem_m1), fill::zeros );  // zero padded version of x
+//   Col<eT> xx( (x_n_elem + 2*h_n_elem_m1), arma_zeros_indicator() );  // zero padded version of x
 //   
 //   const eT*  x_mem =  x.memptr();
 //         eT* xx_mem = xx.memptr();

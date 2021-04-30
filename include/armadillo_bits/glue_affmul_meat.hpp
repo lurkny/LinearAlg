@@ -240,7 +240,7 @@ glue_affmul::apply_noalias_square(Mat<typename T1::elem_type>& out, const T1& A,
       {
       if(B_n_cols == 1)
         {
-        Col<eT> tmp(N);
+        Col<eT> tmp(N, arma_nozeros_indicator());
         eT*     tmp_mem = tmp.memptr();
         
         arrayops::copy(tmp_mem, B.memptr(), N-1);
@@ -423,7 +423,7 @@ glue_affmul::apply_noalias_rectangle(Mat<typename T1::elem_type>& out, const T1&
       
       if(B_n_cols == 1)
         {
-        Col<eT> tmp(A_n_cols);
+        Col<eT> tmp(A_n_cols, arma_nozeros_indicator());
         eT*     tmp_mem = tmp.memptr();
         
         arrayops::copy(tmp_mem, B.memptr(), A_n_cols-1);

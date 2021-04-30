@@ -109,7 +109,7 @@ spop_reverse::apply_proxy(SpMat<typename T1::elem_type>& out, const T1& X, const
     }
   
   umat    locs(2, N, arma_nozeros_indicator());
-  Col<eT> vals(   N);
+  Col<eT> vals(   N, arma_nozeros_indicator());
   
   uword* locs_mem = locs.memptr();
   eT*    vals_mem = vals.memptr();

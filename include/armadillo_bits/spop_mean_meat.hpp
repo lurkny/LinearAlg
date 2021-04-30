@@ -108,7 +108,7 @@ spop_mean::apply_noalias_fast
   else
   if(dim == 1)  // find the mean in each row
     {
-    Col<eT> acc(p_n_rows, fill::zeros);
+    Col<eT> acc(p_n_rows, arma_zeros_indicator());
     
     eT* acc_mem = acc.memptr();
     

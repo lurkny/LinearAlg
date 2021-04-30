@@ -76,6 +76,64 @@ Col<eT>::Col(const SizeMat& s)
 
 
 
+//! internal use only
+template<typename eT>
+template<bool do_zeros>
+inline
+Col<eT>::Col(const uword in_n_elem, const arma_initmode_indicator<do_zeros>&)
+  : Mat<eT>(arma_vec_indicator(), in_n_elem, 1, 1)
+  {
+  arma_extra_debug_sigprint();
+  
+  if(do_zeros)
+    {
+    arma_extra_debug_print("Col::constructor: zeroing memory");
+    arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
+    }
+  }
+
+
+
+//! internal use only
+template<typename eT>
+template<bool do_zeros>
+inline
+Col<eT>::Col(const uword in_n_rows, const uword in_n_cols, const arma_initmode_indicator<do_zeros>&)
+  : Mat<eT>(arma_vec_indicator(), 0, 0, 1)
+  {
+  arma_extra_debug_sigprint();
+  
+  Mat<eT>::init_warm(in_n_rows, in_n_cols);
+  
+  if(do_zeros)
+    {
+    arma_extra_debug_print("Col::constructor: zeroing memory");
+    arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
+    }
+  }
+
+
+
+//! internal use only
+template<typename eT>
+template<bool do_zeros>
+inline
+Col<eT>::Col(const SizeMat& s, const arma_initmode_indicator<do_zeros>&)
+  : Mat<eT>(arma_vec_indicator(), 0, 0, 1)
+  {
+  arma_extra_debug_sigprint();
+  
+  Mat<eT>::init_warm(s.n_rows, s.n_cols);
+  
+  if(do_zeros)
+    {
+    arma_extra_debug_print("Col::constructor: zeroing memory");
+    arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
+    }
+  }
+
+
+
 template<typename eT>
 template<typename fill_type>
 inline
@@ -909,7 +967,7 @@ Col<eT>::shed_rows(const uword in_row1, const uword in_row2)
   const uword n_keep_front = in_row1;
   const uword n_keep_back  = Mat<eT>::n_rows - (in_row2 + 1);
   
-  Col<eT> X(n_keep_front + n_keep_back);
+  Col<eT> X(n_keep_front + n_keep_back, arma_nozeros_indicator());
   
         eT* X_mem = X.memptr();
   const eT* t_mem = (*this).memptr();
@@ -962,7 +1020,7 @@ Col<eT>::insert_rows(const uword row_num, const uword N, const bool set_to_zero)
   
   if(N > 0)
     {
-    Col<eT> out(t_n_rows + N);
+    Col<eT> out(t_n_rows + N, arma_nozeros_indicator());
     
           eT* out_mem = out.memptr();
     const eT*   t_mem = (*this).memptr();

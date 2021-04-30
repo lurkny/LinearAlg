@@ -78,7 +78,7 @@ spop_normalise::apply_direct(SpMat<eT>& out, const SpMat<eT>& X, const uword p, 
     const uword N = X.n_nonzero;
     
     umat    locs(2, N, arma_nozeros_indicator());
-    Col<eT> vals(   N);
+    Col<eT> vals(   N, arma_nozeros_indicator());
     
     uword* locs_mem = locs.memptr();
     eT*    vals_mem = vals.memptr();
@@ -162,7 +162,7 @@ spop_normalise::apply_direct(SpMat<eT>& out, const SpMat<eT>& X, const uword p, 
     const uword N = X.n_nonzero;
     
     umat    locs(2, N, arma_nozeros_indicator());
-    Col<eT> vals(   N);
+    Col<eT> vals(   N, arma_nozeros_indicator());
     
     uword* locs_mem = locs.memptr();
     eT*    vals_mem = vals.memptr();
