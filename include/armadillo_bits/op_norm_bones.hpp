@@ -39,8 +39,6 @@ class op_norm
   template<typename T1> arma_hot inline static typename T1::pod_type vec_norm_max(const Proxy<T1>& P);
   template<typename T1> arma_hot inline static typename T1::pod_type vec_norm_min(const Proxy<T1>& P);
   
-  template<typename T1> arma_hot inline static typename T1::pod_type vec_norm_hamm(const Proxy<T1>& P);
-  
   template<typename eT> inline static typename get_pod_type<eT>::result mat_norm_1(const Mat<eT>& X);
   template<typename eT> inline static typename get_pod_type<eT>::result mat_norm_2(const Mat<eT>& X);
   

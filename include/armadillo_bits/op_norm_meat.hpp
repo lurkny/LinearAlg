@@ -867,57 +867,6 @@ op_norm::vec_norm_min(const Proxy<T1>& P)
 
 
 
-template<typename T1>
-arma_hot
-inline
-typename T1::pod_type
-op_norm::vec_norm_hamm(const Proxy<T1>& P)
-  {
-  arma_extra_debug_sigprint();
-  
-  // Hamming "norm", aka L0 "norm", defined as the number of non-zero elements
-  // this is not really a norm, but is implemented for completeness
-  // https://en.wikipedia.org/wiki/Lp_space
-  
-  typedef typename T1::elem_type eT;
-  typedef typename T1::pod_type   T;
-  
-  const eT zero = eT(0);
-  
-  uword count = 0;
-  
-  if(Proxy<T1>::use_at == false)
-    {
-    typename Proxy<T1>::ea_type A = P.get_ea();
-    
-    const uword N = P.get_n_elem();
-    
-    for(uword i=0; i < N; ++i)  { count += (A[i] != zero) ? uword(1) : uword(0); }
-    }
-  else
-    {
-    const uword n_rows = P.get_n_rows();
-    const uword n_cols = P.get_n_cols();
-    
-    if(n_rows == 1)
-      {
-      for(uword col=0; col < n_cols; ++col)  { count += (P.at(0,col) != zero) ? uword(1) : uword(0); }
-      }
-    else
-      {
-      for(uword col=0; col < n_cols; ++col)
-      for(uword row=0; row < n_rows; ++row)
-        {
-        count += (P.at(row,col) != zero) ? uword(1) : uword(0);
-        }
-      }
-    }
-  
-  return T(count);
-  }
-
-
-
 template<typename eT>
 inline
 typename get_pod_type<eT>::result
