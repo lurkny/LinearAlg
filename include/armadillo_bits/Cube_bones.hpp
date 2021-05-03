@@ -323,6 +323,8 @@ class Cube : public BaseCube< eT, Cube<eT> >
   
   inline const Cube& clean(const pod_type threshold);
   
+  inline const Cube& clamp(const eT min_val, const eT max_val);
+  
   inline const Cube& fill(const eT val);
   
   inline const Cube& zeros();

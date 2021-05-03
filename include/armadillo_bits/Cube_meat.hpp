@@ -3942,6 +3942,22 @@ Cube<eT>::clean(const typename get_pod_type<eT>::result threshold)
 
 
 
+template<typename eT>
+inline
+const Cube<eT>&
+Cube<eT>::clamp(const eT min_val, const eT max_val)
+  {
+  arma_extra_debug_sigprint();
+  
+  arma_debug_check( (min_val > max_val), "Cube::clamp(): min_val must be less than max_val" );
+  
+  arrayops::clamp(memptr(), n_elem, min_val, max_val);
+  
+  return *this;
+  }
+
+
+
 //! fill the cube with the specified value
 template<typename eT>
 inline
