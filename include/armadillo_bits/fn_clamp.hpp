@@ -32,8 +32,6 @@ clamp(const T1& X, const typename T1::elem_type min_val, const typename T1::elem
   {
   arma_extra_debug_sigprint();
   
-  arma_debug_check( (min_val > max_val), "clamp(): min_val must be less than max_val" );
-  
   return mtOp<typename T1::elem_type, T1, op_clamp>(mtOp_dual_aux_indicator(), X, min_val, max_val);
   }
 
@@ -65,8 +63,6 @@ clamp(const BaseCube<typename T1::elem_type,T1>& X, const typename T1::elem_type
   {
   arma_extra_debug_sigprint();
   arma_ignore(junk);
-  
-  arma_debug_check( (min_val > max_val), "clamp(): min_val must be less than max_val" );
   
   return mtOpCube<typename T1::elem_type, T1, op_clamp>(mtOpCube_dual_aux_indicator(), X.get_ref(), min_val, max_val);
   }
