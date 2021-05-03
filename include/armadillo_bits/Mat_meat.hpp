@@ -6860,6 +6860,20 @@ Mat<eT>::clean(const typename get_pod_type<eT>::result threshold)
 
 
 
+template<typename eT>
+inline
+const Mat<eT>&
+Mat<eT>::clamp(const eT min_val, const eT max_val)
+  {
+  arma_extra_debug_sigprint();
+  
+  arrayops::clamp(memptr(), n_elem, min_val, max_val);
+  
+  return *this;
+  }
+
+
+
 //! fill the matrix with the specified value
 template<typename eT>
 inline

@@ -177,6 +177,54 @@ arrayops::clean(std::complex<T>* mem, const uword n_elem, const T abs_limit)
 
 
 
+template<typename eT>
+arma_hot
+inline
+void
+arrayops::clamp(eT* mem, const uword n_elem, const eT min_val, const eT max_val, const typename arma_not_cx<eT>::result* junk)
+  {
+  arma_ignore(junk);
+  
+  for(uword i=0; i<n_elem; ++i)
+    {
+    eT& val = mem[i];
+    
+    val = (val < min_val) ? min_val : ((val > max_val) ? max_val : val);
+    }
+  }
+
+
+
+template<typename T>
+arma_hot
+inline
+void
+arrayops::clamp(std::complex<T>* mem, const uword n_elem, const std::complex<T>& min_val, const std::complex<T>& max_val)
+  {
+  typedef typename std::complex<T> eT;
+  
+  const T min_val_real = std::real(min_val);
+  const T min_val_imag = std::imag(min_val);
+  
+  const T max_val_real = std::real(max_val);
+  const T max_val_imag = std::imag(max_val);
+  
+  for(uword i=0; i<n_elem; ++i)
+    {
+    eT& val = mem[i];
+    
+    T val_real = std::real(val);
+    T val_imag = std::imag(val);
+    
+    val_real = (val_real < min_val_real) ? min_val_real : ((val_real > max_val_real) ? max_val_real : val_real);
+    val_imag = (val_imag < min_val_imag) ? min_val_imag : ((val_imag > max_val_imag) ? max_val_imag : val_imag);
+    
+    val = std::complex<T>(val_real,val_imag);
+    }
+  }
+
+
+
 template<typename out_eT, typename in_eT>
 arma_inline
 void
