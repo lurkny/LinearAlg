@@ -24,7 +24,7 @@ Mat<eT>::~Mat()
   {
   arma_extra_debug_sigprint_this(this);
   
-  if(n_alloc > arma_config::mat_prealloc)
+  if(n_alloc > 0)
     {
     arma_extra_debug_print("Mat::destructor: releasing memory");
     memory::release( access::rw(mem) );
@@ -363,8 +363,8 @@ Mat<eT>::init_warm(uword in_n_rows, uword in_n_cols)
     
     if(new_n_elem > 0)  { arma_extra_debug_print("Mat::init(): using local memory"); }
     
-    access::rw(mem)       = (new_n_elem == 0) ? nullptr : mem_local;
-    access::rw(n_alloc)   = 0;
+    access::rw(mem)     = (new_n_elem == 0) ? nullptr : mem_local;
+    access::rw(n_alloc) = 0;
     }
   else  // condition: new_n_elem > arma_config::mat_prealloc
     {
@@ -374,11 +374,12 @@ Mat<eT>::init_warm(uword in_n_rows, uword in_n_cols)
         {
         arma_extra_debug_print("Mat::init(): releasing memory");
         memory::release( access::rw(mem) );
+        access::rw(n_alloc) = 0;   // in case memory::acquire() throws an exception
         }
       
       arma_extra_debug_print("Mat::init(): acquiring memory");
-      access::rw(mem)       = memory::acquire<eT>(new_n_elem);
-      access::rw(n_alloc)   = new_n_elem;
+      access::rw(mem)     = memory::acquire<eT>(new_n_elem);
+      access::rw(n_alloc) = new_n_elem;
       }
     else // condition: new_n_elem <= n_alloc
       {
