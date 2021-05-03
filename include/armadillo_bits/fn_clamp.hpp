@@ -105,11 +105,7 @@ clamp(const SpBase<typename T1::elem_type,T1>& X, const typename T1::elem_type m
   
   SpMat<eT> out = X.get_ref();
   
-  out.sync();
-  
-  arrayops::clamp(access::rwp(out.values), out.n_nonzero, min_val, max_val);
-  
-  if( (min_val == eT(0)) || (max_val == eT(0)) )  { out.remove_zeros(); }
+  out.clamp(min_val, max_val);
   
   return out;
   }
