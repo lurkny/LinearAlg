@@ -3949,7 +3949,15 @@ Cube<eT>::clamp(const eT min_val, const eT max_val)
   {
   arma_extra_debug_sigprint();
   
-  arma_debug_check( (min_val > max_val), "Cube::clamp(): min_val must be less than max_val" );
+  if(is_cx<eT>::no)
+    {
+    arma_debug_check( (access::tmp_real(min_val) > access::tmp_real(max_val)), "Mat::clamp(): min_val must be less than max_val" );
+    }
+  else
+    {
+    arma_debug_check( (access::tmp_real(min_val) > access::tmp_real(max_val)), "Mat::clamp(): real(min_val) must be less than real(max_val)" );
+    arma_debug_check( (access::tmp_imag(min_val) > access::tmp_imag(max_val)), "Mat::clamp(): imag(min_val) must be less than imag(max_val)" );
+    }
   
   arrayops::clamp(memptr(), n_elem, min_val, max_val);
   
