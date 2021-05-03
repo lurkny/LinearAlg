@@ -88,16 +88,7 @@ op_clamp::apply_direct(Mat<eT>& out, const Mat<eT>& X, const eT min_val, const e
     {
     arma_extra_debug_print("op_clamp::apply_direct(): inplace operation");
     
-    const uword N = out.n_elem;
-    
-    eT* out_mem = out.memptr();
-    
-    for(uword i=0; i<N; ++i)
-      {
-      eT& out_val = out_mem[i];
-      
-      out_val = (out_val < min_val) ? min_val : ((out_val > max_val) ? max_val : out_val);
-      }
+    arrayops::clamp(out.memptr(), out.n_elem, min_val, max_val);
     }
   }
 
@@ -220,16 +211,7 @@ op_clamp::apply_direct(Cube<eT>& out, const Cube<eT>& X, const eT min_val, const
     {
     arma_extra_debug_print("op_clamp::apply_direct(): inplace operation");
     
-    const uword N = out.n_elem;
-    
-    eT* out_mem = out.memptr();
-    
-    for(uword i=0; i<N; ++i)
-      {
-      eT& out_val = out_mem[i];
-      
-      out_val = (out_val < min_val) ? min_val : ( (out_val > max_val) ? max_val : out_val );
-      }
+    arrayops::clamp(out.memptr(), out.n_elem, min_val, max_val);
     }
   }
 
@@ -366,22 +348,7 @@ op_clamp_cx::apply_direct(Mat<eT>& out, const Mat<eT>& X, const eT min_val, cons
     {
     arma_extra_debug_print("op_clamp_cx::apply_direct(): inplace operation");
     
-    const uword N = out.n_elem;
-    
-    eT* out_mem = out.memptr();
-    
-    for(uword i=0; i<N; ++i)
-      {
-      eT& out_val = out_mem[i];
-      
-      T val_real = std::real(out_val);
-      T val_imag = std::imag(out_val);
-      
-      val_real = (val_real < min_val_real) ? min_val_real : ((val_real > max_val_real) ? max_val_real : val_real);
-      val_imag = (val_imag < min_val_imag) ? min_val_imag : ((val_imag > max_val_imag) ? max_val_imag : val_imag);
-      
-      out_val = std::complex<T>(val_real,val_imag);
-      }
+    arrayops::clamp(out.memptr(), out.n_elem, min_val, max_val);
     }
   }
 
@@ -534,22 +501,7 @@ op_clamp_cx::apply_direct(Cube<eT>& out, const Cube<eT>& X, const eT min_val, co
     {
     arma_extra_debug_print("op_clamp_cx::apply_direct(): inplace operation");
     
-    const uword N = out.n_elem;
-    
-    eT* out_mem = out.memptr();
-    
-    for(uword i=0; i<N; ++i)
-      {
-      eT& out_val = out_mem[i];
-      
-      T val_real = std::real(out_val);
-      T val_imag = std::imag(out_val);
-      
-      val_real = (val_real < min_val_real) ? min_val_real : ((val_real > max_val_real) ? max_val_real : val_real);
-      val_imag = (val_imag < min_val_imag) ? min_val_imag : ((val_imag > max_val_imag) ? max_val_imag : val_imag);
-      
-      out_val = std::complex<T>(val_real,val_imag);
-      }
+    arrayops::clamp(out.memptr(), out.n_elem, min_val, max_val);
     }
   }
 

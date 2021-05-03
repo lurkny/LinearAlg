@@ -86,87 +86,28 @@ clamp(const BaseCube<typename T1::elem_type,T1>& X, const typename T1::elem_type
 template<typename T1>
 arma_warn_unused
 inline
-typename
-enable_if2
-  <
-  is_cx<typename T1::elem_type>::no,
-  SpMat<typename T1::elem_type>
-  >::result
+SpMat<typename T1::elem_type>
 clamp(const SpBase<typename T1::elem_type,T1>& X, const typename T1::elem_type min_val, const typename T1::elem_type max_val)
   {
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
   
-  arma_debug_check( (min_val > max_val), "clamp(): min_val must be less than max_val" );
+  if(is_cx<eT>::no)
+    {
+    arma_debug_check( (access::tmp_real(min_val) > access::tmp_real(max_val)), "clamp(): min_val must be less than max_val" );
+    }
+  else
+    {
+    arma_debug_check( (access::tmp_real(min_val) > access::tmp_real(max_val)), "clamp(): real(min_val) must be less than real(max_val)" );
+    arma_debug_check( (access::tmp_imag(min_val) > access::tmp_imag(max_val)), "clamp(): imag(min_val) must be less than imag(max_val)" );
+    }
   
   SpMat<eT> out = X.get_ref();
   
   out.sync();
   
-  const uword N = out.n_nonzero;
-  
-  eT* out_values = access::rwp(out.values);
-  
-  for(uword i=0; i<N; ++i)
-    {
-    eT& out_val = out_values[i];
-    
-    out_val = (out_val < min_val) ? min_val : ( (out_val > max_val) ? max_val : out_val );
-    }
-  
-  if( (min_val == eT(0)) || (max_val == eT(0)) )  { out.remove_zeros(); }
-  
-  return out;
-  }
-
-
-
-template<typename T1>
-arma_warn_unused
-inline
-typename
-enable_if2
-  <
-  is_cx<typename T1::elem_type>::yes,
-  SpMat<typename T1::elem_type>
-  >::result
-clamp(const SpBase<typename T1::elem_type,T1>& X, const typename T1::elem_type min_val, const typename T1::elem_type max_val)
-  {
-  arma_extra_debug_sigprint();
-  
-  typedef typename T1::elem_type eT;
-  typedef typename T1::pod_type   T;
-  
-  const T min_val_real = std::real(min_val);
-  const T min_val_imag = std::imag(min_val);
-  
-  const T max_val_real = std::real(max_val);
-  const T max_val_imag = std::imag(max_val);
-  
-  arma_debug_check( (min_val_real > max_val_real), "clamp(): real(min_val) must be less than real(max_val)" );
-  arma_debug_check( (min_val_imag > max_val_imag), "clamp(): imag(min_val) must be less than imag(max_val)" );
-  
-  SpMat<eT> out = X.get_ref();
-  
-  out.sync();
-  
-  const uword N = out.n_nonzero;
-  
-  eT* out_values = access::rwp(out.values);
-  
-  for(uword i=0; i<N; ++i)
-    {
-    eT& out_val = out_values[i];
-    
-    T val_real = std::real(out_val);
-    T val_imag = std::imag(out_val);
-    
-    val_real = (val_real < min_val_real) ? min_val_real : ((val_real > max_val_real) ? max_val_real : val_real);
-    val_imag = (val_imag < min_val_imag) ? min_val_imag : ((val_imag > max_val_imag) ? max_val_imag : val_imag);
-    
-    out_val = std::complex<T>(val_real,val_imag);
-    }
+  arrayops::clamp(access::rwp(out.values), out.n_nonzero, min_val, max_val);
   
   if( (min_val == eT(0)) || (max_val == eT(0)) )  { out.remove_zeros(); }
   
