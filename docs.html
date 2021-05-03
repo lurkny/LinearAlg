@@ -10174,7 +10174,7 @@ Compute the <i>p</i>-norm of <i>X</i>, where <i>X</i> can be a vector or matrix
 </li>
 <br>
 <li>
-For vectors, <i>p</i> is an integer &ge;1, or one of: <code>"-inf"</code>, <code>"inf"</code>, <code>"fro"</code><!--, <code>"hamm"</code>-->
+For vectors, <i>p</i> is an integer &ge;1, or one of: <code>"-inf"</code>, <code>"inf"</code>, <code>"fro"</code>
 </li>
 <br>
 <li>
@@ -10182,7 +10182,7 @@ For matrices, <i>p</i> is one of: 1, 2, <code>"inf"</code>, <code>"fro"</code>; 
 </li>
 <br>
 <li>
-<code>"-inf"</code> is the minimum norm, <code>"inf"</code> is the maximum norm, <code>"fro"</code> is the Frobenius norm<!--, <code>"hamm"</code> is the Hamming "norm" (number of non-zero elements)-->
+<code>"-inf"</code> is the minimum norm, <code>"inf"</code> is the maximum norm, <code>"fro"</code> is the Frobenius norm
 </li>
 <br>
 <li>
@@ -10194,7 +10194,7 @@ For vector norm with <i>p=2</i> and matrix norm with <i>p="fro"</i>, a robust al
 </li>
 <br>
 <li>
-To obtain the zero "norm" or Hamming "norm" (the number of non-zero elements),
+To obtain the zero/Hamming pseudo-norm (the number of non-zero elements),
 use this expression: <code><a href="#accu">accu</a>(X&nbsp;!=&nbsp;0)</code>
 </li>
 <br>
