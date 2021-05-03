@@ -178,7 +178,6 @@ arrayops::clean(std::complex<T>* mem, const uword n_elem, const T abs_limit)
 
 
 template<typename eT>
-arma_hot
 inline
 void
 arrayops::clamp(eT* mem, const uword n_elem, const eT min_val, const eT max_val, const typename arma_not_cx<eT>::result* junk)
@@ -196,7 +195,6 @@ arrayops::clamp(eT* mem, const uword n_elem, const eT min_val, const eT max_val,
 
 
 template<typename T>
-arma_hot
 inline
 void
 arrayops::clamp(std::complex<T>* mem, const uword n_elem, const std::complex<T>& min_val, const std::complex<T>& max_val)
