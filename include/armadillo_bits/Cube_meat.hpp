@@ -26,7 +26,7 @@ Cube<eT>::~Cube()
   
   delete_mat();
   
-  if( (mem_state == 0) && (n_alloc > Cube_prealloc::mem_n_elem) )
+  if( (mem_state == 0) && (n_alloc > 0) )
     {
     arma_extra_debug_print("Cube::destructor: releasing memory");
     memory::release( access::rw(mem) );
@@ -381,6 +381,7 @@ Cube<eT>::init_warm(const uword in_n_rows, const uword in_n_cols, const uword in
         {
         arma_extra_debug_print("Cube::init(): releasing memory");
         memory::release( access::rw(mem) );
+        access::rw(n_alloc) = 0;   // in case memory::acquire() throws an exception
         }
       
       arma_extra_debug_print("Cube::init(): acquiring memory");
