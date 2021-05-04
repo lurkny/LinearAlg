@@ -702,10 +702,10 @@ Constructors:
 <table>
 <tbody>
 <tr><td><code>mat()</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td><code>mat(<i>n_rows</i>, <i>n_cols</i>)</code></td><td>&nbsp;</td><td>(elements are not initialised)</td></tr>
-<tr><td><code>mat(<i>n_rows</i>, <i>n_cols</i>, <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised)</td></tr>
-<tr><td><code>mat(size(<i>X</i>))</code></td><td>&nbsp;</td><td>(elements are not initialised)</td></tr>
-<tr><td><code>mat(size(<i>X</i>), <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised)</td></tr>
+<tr><td><code>mat(<i>n_rows</i>, <i>n_cols</i>)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td><code>mat(<i>n_rows</i>, <i>n_cols</i>, <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised according to <i>fill_type</i>)</td></tr>
+<tr><td><code>mat(size(<i>X</i>))</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td><code>mat(size(<i>X</i>), <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised according to <i>fill_type</i>)</td></tr>
 <tr><td><code>mat(mat)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr><td><code>mat(vec)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr><td><code>mat(rowvec)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -720,7 +720,7 @@ Constructors:
 </li>
 <br>
 <li>
-When using the <i>mat(n_rows, n_cols)</i> or <i>mat(size(X))</i> constructors, by default the elements are not initialised (ie. may contain garbage values, including NaN);
+When using the <i>mat(n_rows, n_cols)</i> or <i>mat(size(X))</i> constructors, 
 the elements can be explicitly initialised by specifying the <i>fill_type</i>,
 which is one of:
 <i>fill::zeros</i>,
@@ -741,6 +741,14 @@ with the following meanings:
 <tr><td><code>fill::none</code></td><td>&nbsp;=&nbsp;</td><td>do not initialise the elements</td></tr>
 </tbody>
 </table>
+</ul>
+</li>
+<br>
+<li>
+<b>Caveats:</b>
+<ul>
+<li>in Armadillo 10.4 and earlier, the elements are not initialised during construction unless the <i>fill_type</i> is specified<br>(ie. the elements may contain garbage values, including NaN)</li>
+<li>in Armadillo 10.5+, by default the elements are initialised to zero during construction</li>
 </ul>
 </li>
 <br>
