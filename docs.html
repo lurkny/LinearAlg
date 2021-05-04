@@ -266,9 +266,11 @@ Conrad Sanderson and Ryan Curtin.
 <tr><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td></tr>
 <tr><td><a href="#fill">.fill</a></td><td>&nbsp;</td><td>set all elements to specified value</td></tr>
 <tr><td><a href="#imbue">.imbue</a></td><td>&nbsp;</td><td>imbue (fill) with values provided by functor or lambda function</td></tr>
-<tr><td><a href="#clean">.clean</a></td><td>&nbsp;</td><td>replace elements below a threshold with zeros</td></tr>
 <tr><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td></tr>
+<tr><td><a href="#clean">.clean</a></td><td>&nbsp;</td><td>replace elements below a threshold with zeros</td></tr>
 <tr><td><a href="#replace">.replace</a></td><td>&nbsp;</td><td>replace specific elements with a new value</td></tr>
+<tr><td><a href="#clamp_member">.clamp</a></td><td>&nbsp;</td><td>clamp values to lower and upper limits</td></tr>
+<tr><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td></tr>
 <tr><td><a href="#transform">.transform</a></td><td>&nbsp;</td><td>transform each element via functor or lambda function</td></tr>
 <tr><td><a href="#for_each">.for_each</a></td><td>&nbsp;</td><td>apply a functor or lambda function to each element</td></tr>
 <tr><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td></tr>
@@ -3131,13 +3133,55 @@ See also:
 <li><a href="#transform">.transform()</a></li>
 <li><a href="#for_each">.for_each()</a></li>
 <li><a href="#clean">.clean()</a></li>
+<li><a href="#clamp_member">.clamp()</a></li>
 <li><a href="#fill">.fill()</a></li>
 <li><a href="#has_nan">.has_nan()</a></li>
 <li><a href="#has_inf">.has_inf()</a></li>
 <li><a href="#find">find()</a></li>
-<li><a href="#clamp">clamp()</a></li>
 <li><a href="#operators">relational operators</a></li>
 <li><a href="#constants">constants (pi, nan, inf, ...)</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="clamp_member"></a>
+<b>.clamp( min_value, max_value )</b>
+<ul>
+<li>
+Member function of <i>Mat</i>, <i>Col</i>, <i>Row</i>, <i>Cube</i> and <i>SpMat</i>
+</li>
+<br>
+<li>
+Create a copy of <i>X</i> with each element clamped to the [<i>min_val</i>,&nbsp;<i>max_val</i>] interval;
+<br>any value lower than <i>min_val</i> will be set to <i>min_val</i>, and any value higher than <i>max_val</i> will be set to <i>max_val</i>
+</li>
+<br>
+<li>
+If <i>X</i> is a sparse matrix, clamping is applied only to the non-zero elements
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+mat A(5, 6, fill::randu);
+
+A.clamp(0.2, 0.8);
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#replace">.replace()</a></li>
+<li><a href="#clean">.clean()</a></li>
+<li><a href="#transform">.transform()</a></li>
+<li><a href="#for_each">.for_each()</a></li>
+<li><a href="#clamp">clamp()</a> (standalone function)</li>
+<li><a href="#operators">relational operators</a></li>
 </ul>
 </li>
 <br>
@@ -8443,6 +8487,7 @@ mat D = clamp(A, 0.2, A.max());
 <li>
 See also:
 <ul>
+<li><a href="#clamp_member">.clamp()</a> (member function)</li>
 <li><a href="#min_and_max_member">.min() &amp; .max()</a></li>
 <li><a href="#clean">.clean()</a></li>
 <li><a href="#replace">.replace()</a></li>
