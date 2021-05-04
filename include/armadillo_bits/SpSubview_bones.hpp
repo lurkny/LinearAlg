@@ -92,6 +92,8 @@ class SpSubview : public SpBase< eT, SpSubview<eT> >
   
   inline void clean(const pod_type threshold);
   
+  inline void clamp(const eT min_val, const eT max_val);
+  
   inline void fill(const eT val);
   inline void zeros();
   inline void ones();
