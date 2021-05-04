@@ -19165,9 +19165,10 @@ List of additions and changes for each version:
 <a name="version_105"></a>
 <li>Version 10.5:
 <ul>
-<li>TODO: default zero init</li>
-<li>expanded <a href="#clamp">clamp()</a> to handle complex values</li>
 <li>added <a href="#clamp_member">.clamp()</a> member function</li>
+<li>expanded the standalone <a href="#clamp">clamp()</a> function to handle complex values</li>
+<li>vector, matrix and cube constructors now initialise the elements to zero by default;
+<br>use the <code>fill::none</code> specifier, eg. <code>mat X(4,5,fill::none)</code>, to disable element initialisation
 </ul>
 </li>
 <br>
