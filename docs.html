@@ -3083,10 +3083,10 @@ A.clean(datum::eps);
 See also:
 <ul>
 <li><a href="#replace">.replace()</a></li>
+<li><a href="#clamp_member">.clamp()</a></li>
 <li><a href="#transform">.transform()</a></li>
 <li><a href="#is_zero">.is_zero()</a></li>
 <li><a href="#zeros_member">.zeros()</a></li>
-<li><a href="#clamp">clamp()</a></li>
 <li><a href="#constants">datum::eps</a></li>
 </ul>
 </li>
@@ -3154,12 +3154,16 @@ Member function of <i>Mat</i>, <i>Col</i>, <i>Row</i>, <i>Cube</i> and <i>SpMat<
 </li>
 <br>
 <li>
-Create a copy of <i>X</i> with each element clamped to the [<i>min_val</i>,&nbsp;<i>max_val</i>] interval;
+Clamp each element to the [<i>min_val</i>,&nbsp;<i>max_val</i>] interval;
 <br>any value lower than <i>min_val</i> will be set to <i>min_val</i>, and any value higher than <i>max_val</i> will be set to <i>max_val</i>
 </li>
 <br>
 <li>
-If <i>X</i> is a sparse matrix, clamping is applied only to the non-zero elements
+For complex elements, the real and imaginary components are clamped separately
+</li>
+<br>
+<li>
+For sparse matrices, clamping is applied only to the non-zero elements
 </li>
 <br>
 <li>
@@ -3233,7 +3237,7 @@ See also:
 <li><a href="#replace">.replace()</a></li>
 <li><a href="#imbue">.imbue()</a></li>
 <li><a href="#clean">.clean()</a></li>
-<li><a href="#fill">.fill()</a></li>
+<li><a href="#clamp_member">.clamp()</a></li>
 <li><a href="#element_access">element access</a></li>
 <li><a href="#operators">overloaded operators</a></li>
 <li><a href="#misc_fns">miscellaneous element-wise functions</a> &nbsp; (exp, log, pow, sqrt, square, round, ...)</li>
@@ -8464,6 +8468,10 @@ See also:
 <li>
 Create a copy of <i>X</i> with each element clamped to the [<i>min_val</i>,&nbsp;<i>max_val</i>] interval;
 <br>any value lower than <i>min_val</i> will be set to <i>min_val</i>, and any value higher than <i>max_val</i> will be set to <i>max_val</i>
+</li>
+<br>
+<li>
+For objects with complex elements, the real and imaginary components are clamped separately
 </li>
 <br>
 <li>
