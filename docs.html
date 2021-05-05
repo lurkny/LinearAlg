@@ -720,16 +720,16 @@ Constructors:
 </li>
 <br>
 <li>
-The elements can be explicitly initialised during construction by specifying the <i>fill_type</i>,
+The elements can be explicitly initialised during construction by specifying <i>fill_type</i>,
 which is one of:
 <ul>
 <table>
 <tbody>
 <tr><td><code>fill::zeros</code></td><td>&nbsp;=&nbsp;</td><td>set all elements to 0</td></tr>
 <tr><td><code>fill::ones</code></td><td>&nbsp;=&nbsp;</td><td>set all elements to 1</td></tr>
-<tr><td><code>fill::eye</code></td><td>&nbsp;=&nbsp;</td><td>set the elements along the main diagonal to 1 and off-diagonal elements to 0</td></tr>
-<tr><td><code>fill::randu</code></td><td>&nbsp;=&nbsp;</td><td>set each element to a random value from a uniform distribution in the [0,1] interval</td></tr>
-<tr><td><code>fill::randn</code></td><td>&nbsp;=&nbsp;</td><td>set each element to a random value from a normal/Gaussian distribution with zero mean and unit variance</td></tr>
+<tr><td><code>fill::eye</code></td><td>&nbsp;=&nbsp;</td><td>set the elements on the main diagonal to 1 and off-diagonal elements to 0</td></tr>
+<tr><td><code>fill::randu</code></td><td>&nbsp;=&nbsp;</td><td>set all elements to random values from a uniform distribution in the [0,1] interval</td></tr>
+<tr><td><code>fill::randn</code></td><td>&nbsp;=&nbsp;</td><td>set all elements to random values from a normal/Gaussian distribution with zero mean and unit variance</td></tr>
 <tr><td><code>fill::none</code></td><td>&nbsp;=&nbsp;</td><td>do not initialise the elements</td></tr>
 </tbody>
 </table>
@@ -739,7 +739,7 @@ which is one of:
 <li>
 <b>Caveats:</b>
 <ul>
-<li>in Armadillo 10.4 and earlier, the elements are not initialised during construction unless the <i>fill_type</i> is specified<br>(ie. the elements may contain garbage values, including NaN)</li>
+<li>in Armadillo 10.4 and earlier, the elements are not initialised during construction unless <i>fill_type</i> is specified (ie. the elements may contain garbage values, including NaN)</li>
 <li>in Armadillo 10.5+, by default the elements are initialised to zero during construction</li>
 </ul>
 </li>
