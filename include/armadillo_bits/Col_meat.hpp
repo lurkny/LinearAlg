@@ -50,8 +50,10 @@ Col<eT>::Col(const uword in_n_elem)
   arma_extra_debug_sigprint();
   
   #if (!defined(ARMA_DONT_ZERO_INIT))
+    {
     arma_extra_debug_print("Col::constructor: zeroing memory");
     arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
+    }
   #endif
   }
 
@@ -67,8 +69,10 @@ Col<eT>::Col(const uword in_n_rows, const uword in_n_cols)
   Mat<eT>::init_warm(in_n_rows, in_n_cols);
   
   #if (!defined(ARMA_DONT_ZERO_INIT))
+    {
     arma_extra_debug_print("Col::constructor: zeroing memory");
     arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
+    }
   #endif
   }
 
@@ -84,8 +88,10 @@ Col<eT>::Col(const SizeMat& s)
   Mat<eT>::init_warm(s.n_rows, s.n_cols);
   
   #if (!defined(ARMA_DONT_ZERO_INIT))
+    {
     arma_extra_debug_print("Col::constructor: zeroing memory");
     arrayops::fill_zeros(Mat<eT>::memptr(), Mat<eT>::n_elem);
+    }
   #endif
   }
 
@@ -1231,11 +1237,11 @@ Col<eT>::fixed<fixed_n_elem>::fixed(const fill::fill_class<fill_type>&)
   {
   arma_extra_debug_sigprint_this(this);
   
-  if(is_same_type<fill_type, fill::fill_zeros>::yes)  (*this).zeros();
-  if(is_same_type<fill_type, fill::fill_ones >::yes)  (*this).ones();
-  if(is_same_type<fill_type, fill::fill_eye  >::yes)  (*this).eye();
-  if(is_same_type<fill_type, fill::fill_randu>::yes)  (*this).randu();
-  if(is_same_type<fill_type, fill::fill_randn>::yes)  (*this).randn();
+  if(is_same_type<fill_type, fill::fill_zeros>::yes)  { (*this).zeros(); }
+  if(is_same_type<fill_type, fill::fill_ones >::yes)  { (*this).ones();  }
+  if(is_same_type<fill_type, fill::fill_eye  >::yes)  { (*this).eye();   }
+  if(is_same_type<fill_type, fill::fill_randu>::yes)  { (*this).randu(); }
+  if(is_same_type<fill_type, fill::fill_randn>::yes)  { (*this).randn(); }
   }
 
 
