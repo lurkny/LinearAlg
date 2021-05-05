@@ -9074,11 +9074,14 @@ Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::fixed()
   {
   arma_extra_debug_sigprint_this(this);
   
-  arma_extra_debug_print("Mat::fixed::constructor: zeroing memory");
-  
-  eT* mem_use = (use_extra) ? &(mem_local_extra[0]) : &(mem_local[0]);
-  
-  arrayops::inplace_set_fixed<eT,fixed_n_elem>( mem_use, eT(0) );
+  #if (!defined(ARMA_DONT_ZERO_INIT))
+    {
+    arma_extra_debug_print("Mat::fixed::constructor: zeroing memory");
+    
+    eT* mem_use = (use_extra) ? &(mem_local_extra[0]) : &(mem_local[0]);
+    
+    arrayops::inplace_set_fixed<eT,fixed_n_elem>( mem_use, eT(0) );
+    }
   }
 
 
