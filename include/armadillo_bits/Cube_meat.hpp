@@ -5170,6 +5170,7 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::fixed()
     
     arrayops::fill_zeros(mem_use, fixed_n_elem);
     }
+  #endif
   }
 
 

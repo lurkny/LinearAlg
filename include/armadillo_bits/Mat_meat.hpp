@@ -9082,6 +9082,7 @@ Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::fixed()
     
     arrayops::inplace_set_fixed<eT,fixed_n_elem>( mem_use, eT(0) );
     }
+  #endif
   }
 
 
