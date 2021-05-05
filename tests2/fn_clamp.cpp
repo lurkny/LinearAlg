@@ -22,7 +22,7 @@ using namespace arma;
 
 TEST_CASE("fn_clamp_1")
   {
-  mat A = randu<mat>(5,6);
+  mat A = randu<mat>(100,123);
   
   mat B = clamp(A, 0.2, 0.8); 
   REQUIRE( B.min() == Approx(0.2) );
@@ -36,5 +36,6 @@ TEST_CASE("fn_clamp_1")
   REQUIRE( D.min() == Approx(0.2) );
   REQUIRE( D.max() == A.max()     );
   
-  REQUIRE_THROWS( clamp(A, A.max(), A.min() ) );
+  mat E;
+  REQUIRE_THROWS( E = clamp(A, A.max(), A.min() ) );
   }
