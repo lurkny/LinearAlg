@@ -737,9 +737,12 @@ which is one of:
 </li>
 <br>
 <li>
-<b>Caveats:</b>
+<b>Caveat:</b>
 <ul>
-<li>in Armadillo 10.4 and earlier, the elements are not initialised during construction unless <i>fill_type</i> is specified (ie. the elements may contain garbage values, including NaN)</li>
+<li>
+in Armadillo 10.4 and earlier, the elements are not initialised during construction unless <i>fill_type</i> is specified
+<br>(ie. without specifying <i>fill_type</i>, the elements may contain garbage values, including NaN)
+</li>
 <li>in Armadillo 10.5+, by default the elements are initialised to zero during construction</li>
 </ul>
 </li>
@@ -1069,10 +1072,10 @@ Constructors:
 <table>
 <tbody>
 <tr><td><code>vec()</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td><code>vec(<i>n_elem</i>)</code></td><td>&nbsp;</td><td>(elements are not initialised)</td></tr>
-<tr><td><code>vec(<i>n_elem</i>, <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised)</td></tr>
-<tr><td><code>vec(size(<i>X</i>))</code></td><td>&nbsp;</td><td>(elements are not initialised)</td></tr>
-<tr><td><code>vec(size(<i>X</i>), <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised)</td></tr>
+<tr><td><code>vec(<i>n_elem</i>)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td><code>vec(<i>n_elem</i>, <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised according to <i>fill_type</i>)</td></tr>
+<tr><td><code>vec(size(<i>X</i>))</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td><code>vec(size(<i>X</i>), <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised according to <i>fill_type</i>)</td></tr>
 <tr><td><code>vec(vec)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr><td><code>vec(mat)</code></td><td>&nbsp;</td><td>(<i>std::logic_error</i> exception is thrown if the given matrix has more than one column)</td></tr>
 <tr><td><code>vec(initializer_list)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -1085,9 +1088,14 @@ Constructors:
 </li>
 <br>
 <li>
-When using the <i>vec(n_elem)</i> or <i>vec(size(X))</i> constructors, by default the elements are not initialised (ie. may contain garbage values, including NaN);
-the elements can be explicitly initialised by specifying the <i>fill_type</i>,
-as per the <a href="#Mat">Mat class</a>
+<b>Caveat:</b>
+<ul>
+<li>
+in Armadillo 10.4 and earlier, the elements are not initialised during construction unless <i>fill_type</i> is specified, as per the <a href="#Mat">Mat class</a>
+<br>(ie. without specifying <i>fill_type</i>, the elements may contain garbage values, including NaN)
+</li>
+<li>in Armadillo 10.5+, by default the elements are initialised to zero during construction</li>
+</ul>
 </li>
 <br>
 <a name="adv_constructors_col"></a>
@@ -1324,10 +1332,10 @@ Constructors:
 <table>
 <tbody>
 <tr><td><code>rowvec()</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td><code>rowvec(<i>n_elem</i>)</code></td><td>&nbsp;</td><td>(elements are not initialised)</td></tr>
-<tr><td><code>rowvec(<i>n_elem</i>, <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised)</td></tr>
-<tr><td><code>rowvec(size(<i>X</i>))</code></td><td>&nbsp;</td><td>(elements are not initialised)</td></tr>
-<tr><td><code>rowvec(size(<i>X</i>), <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised)</td></tr>
+<tr><td><code>rowvec(<i>n_elem</i>)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td><code>rowvec(<i>n_elem</i>, <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised according to <i>fill_type</i>)</td></tr>
+<tr><td><code>rowvec(size(<i>X</i>))</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td><code>rowvec(size(<i>X</i>), <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised according to <i>fill_type</i>)</td></tr>
 <tr><td><code>rowvec(rowvec)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr><td><code>rowvec(mat)</code></td><td>&nbsp;</td><td>(<i>std::logic_error</i> exception is thrown if the given matrix has more than one row)</td></tr>
 <tr><td><code>rowvec(initializer_list)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -1340,9 +1348,14 @@ Constructors:
 </li>
 <br>
 <li>
-When using the <i>rowvec(n_elem)</i> or <i>rowvec(size(X))</i> constructors, by default the elements are not initialised (ie. may contain garbage values, including NaN);
-the elements can be explicitly initialised by specifying the <i>fill_type</i>,
-as per the <a href="#Mat">Mat class</a>
+<b>Caveat:</b>
+<ul>
+<li>
+in Armadillo 10.4 and earlier, the elements are not initialised during construction unless <i>fill_type</i> is specified, as per the <a href="#Mat">Mat class</a>
+<br>(ie. without specifying <i>fill_type</i>, the elements may contain garbage values, including NaN)
+</li>
+<li>in Armadillo 10.5+, by default the elements are initialised to zero during construction</li>
+</ul>
 </li>
 <br>
 <a name="adv_constructors_row"></a>
@@ -1589,10 +1602,10 @@ Constructors:
 <table>
 <tbody>
 <code>cube()</code>
-<tr><td><code>cube(<i>n_rows</i>, <i>n_cols</i>, <i>n_slices</i>)</code></td><td>&nbsp;</td><td>(elements are not initialised)</td></tr>
-<tr><td><code>cube(<i>n_rows</i>, <i>n_cols</i>, <i>n_slices</i>, <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised)</td></tr>
-<tr><td><code>cube(size(<i>X</i>))</code></td><td>&nbsp;</td><td>(elements are not initialised)</td></tr>
-<tr><td><code>cube(size(<i>X</i>), <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised)</td></tr>
+<tr><td><code>cube(<i>n_rows</i>, <i>n_cols</i>, <i>n_slices</i>)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td><code>cube(<i>n_rows</i>, <i>n_cols</i>, <i>n_slices</i>, <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised according to <i>fill_type</i>)</td></tr>
+<tr><td><code>cube(size(<i>X</i>))</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td><code>cube(size(<i>X</i>), <i>fill_type</i>)</code></td><td>&nbsp;</td><td>(elements are initialised according to <i>fill_type</i>)</td></tr>
 <tr><td><code>cube(cube)</code></td><td>&nbsp;</td><td>&nbsp;</td></tr>
 <tr><td><code>cx_cube(cube, cube)</code></td><td>&nbsp;</td><td>(for constructing a complex cube out of two real cubes)</td></tr>
 </tbody>
@@ -1601,9 +1614,14 @@ Constructors:
 </li>
 <br>
 <li>
-When using the <i>cube(n_rows, n_cols, n_slices)</i> or <i>cube(size(X))</i> constructors, by default the elements are not initialised (ie. may contain garbage values, including NaN);
-the elements can be explicitly initialised by specifying the <i>fill_type</i>,
-as per the <a href="#Mat">Mat class</a> (except for <i>fill::eye</i>)
+<b>Caveat:</b>
+<ul>
+<li>
+in Armadillo 10.4 and earlier, the elements are not initialised during construction unless <i>fill_type</i> is specified, as per the <a href="#Mat">Mat class</a> (except for <i>fill::eye</i>)
+<br>(ie. without specifying <i>fill_type</i>, the elements may contain garbage values, including NaN)
+</li>
+<li>in Armadillo 10.5+, by default the elements are initialised to zero during construction</li>
+</ul>
 </li>
 <br>
 <li>
