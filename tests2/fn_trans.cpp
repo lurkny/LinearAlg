@@ -157,8 +157,9 @@ TEST_CASE("fn_trans_1")
 
   REQUIRE( abs( sum(A.col(1).t()) - accu_A_col1_t ) == Approx(0.0) );
   REQUIRE( abs( sum(A.row(1).t()) - accu_A_row1_t ) == Approx(0.0) );
-
-  REQUIRE_THROWS( A + A.t() );
+  
+  mat B; 
+  REQUIRE_THROWS( B = A + A.t() );
   }
 
 
@@ -286,8 +287,10 @@ TEST_CASE("fn_trans_2")
   REQUIRE( accu(abs( (C.row(1).st() + conj(C_row1_t)) - conj(2*C_row1_t))) == Approx(0.0) );
 
   //
-
-  REQUIRE_THROWS( C + C.t() );
+  
+  cx_mat D;
+  
+  REQUIRE_THROWS( D = C + C.t() );
   }
 
 
