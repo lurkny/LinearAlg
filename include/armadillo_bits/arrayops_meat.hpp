@@ -86,8 +86,6 @@ arrayops::fill_zeros(eT* dest, const uword n_elem)
   
   if(n_elem == 0)  { return; }
   
-  if(n_elem == 1)  { (*dest) = eT(0); return; }
-  
   if(std::numeric_limits<eT>::is_integer || std::numeric_limits<pod_type>::is_iec559)
     {
     std::memset((void*)dest, 0, sizeof(eT)*n_elem);
