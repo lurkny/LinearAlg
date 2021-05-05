@@ -740,10 +740,10 @@ which is one of:
 <b>Caveat:</b>
 <ul>
 <li>
-in Armadillo 10.4 and earlier, the elements are not initialised during construction unless <i>fill_type</i> is specified
+in Armadillo 10.4 and earlier versions, the elements are not initialised during construction unless <i>fill_type</i> is specified
 <br>(ie. without specifying <i>fill_type</i>, the elements may contain garbage values, including NaN)
 </li>
-<li>in Armadillo 10.5+, by default the elements are initialised to zero during construction</li>
+<li>in Armadillo 10.5 and later versions, by default the elements are initialised to zero during construction</li>
 </ul>
 </li>
 <br>
@@ -1091,10 +1091,10 @@ Constructors:
 <b>Caveat:</b>
 <ul>
 <li>
-in Armadillo 10.4 and earlier, the elements are not initialised during construction unless <i>fill_type</i> is specified, as per the <a href="#Mat">Mat class</a>
+in Armadillo 10.4 and earlier versions, the elements are not initialised during construction unless <i>fill_type</i> is specified, as per the <a href="#Mat">Mat class</a>
 <br>(ie. without specifying <i>fill_type</i>, the elements may contain garbage values, including NaN)
 </li>
-<li>in Armadillo 10.5+, by default the elements are initialised to zero during construction</li>
+<li>in Armadillo 10.5 and later versions, by default the elements are initialised to zero during construction</li>
 </ul>
 </li>
 <br>
@@ -1351,10 +1351,10 @@ Constructors:
 <b>Caveat:</b>
 <ul>
 <li>
-in Armadillo 10.4 and earlier, the elements are not initialised during construction unless <i>fill_type</i> is specified, as per the <a href="#Mat">Mat class</a>
+in Armadillo 10.4 and earlier versions, the elements are not initialised during construction unless <i>fill_type</i> is specified, as per the <a href="#Mat">Mat class</a>
 <br>(ie. without specifying <i>fill_type</i>, the elements may contain garbage values, including NaN)
 </li>
-<li>in Armadillo 10.5+, by default the elements are initialised to zero during construction</li>
+<li>in Armadillo 10.5 and later versions, by default the elements are initialised to zero during construction</li>
 </ul>
 </li>
 <br>
@@ -1617,10 +1617,10 @@ Constructors:
 <b>Caveat:</b>
 <ul>
 <li>
-in Armadillo 10.4 and earlier, the elements are not initialised during construction unless <i>fill_type</i> is specified, as per the <a href="#Mat">Mat class</a> (except for <i>fill::eye</i>)
+in Armadillo 10.4 and earlier versions, the elements are not initialised during construction unless <i>fill_type</i> is specified, as per the <a href="#Mat">Mat class</a> (except for <i>fill::eye</i>)
 <br>(ie. without specifying <i>fill_type</i>, the elements may contain garbage values, including NaN)
 </li>
-<li>in Armadillo 10.5+, by default the elements are initialised to zero during construction</li>
+<li>in Armadillo 10.5 and later versions, by default the elements are initialised to zero during construction</li>
 </ul>
 </li>
 <br>
@@ -17129,7 +17129,7 @@ cout &lt;&lt; "number of seconds: " &lt;&lt; n &lt;&lt; endl;
 <ul>
 <li>
 In Armadillo 8.x and later versions, warnings and errors are printed by default to the <i>std::cerr</i> stream;
-in Armadillo 7.x and earlier, the <i>std::cout</i> stream is used
+in Armadillo 7.x and earlier versions, the <i>std::cout</i> stream is used
 <ul>
 <li>the printing can be disabled by placing <i>#define <a href="#config_hpp">ARMA_DONT_PRINT_ERRORS</a></i> before <i>#include&nbsp;&lt;armadillo&gt;</i></li>
 <li>detailed information about errors is always reported via the base <i>std::exception</i> class</li>
