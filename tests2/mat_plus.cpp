@@ -107,7 +107,8 @@ TEST_CASE("mat_plus_2")
   REQUIRE( accu(A + B/2 + C) == Approx(double(5*6*5)) );
   
   mat X(6,5);
-  REQUIRE_THROWS( A+X );  // adding non-conformant matrices will throw unless ARMA_NO_DEBUG is defined
+  mat Y;
+  REQUIRE_THROWS( Y = A+X );  // adding non-conformant matrices will throw unless ARMA_NO_DEBUG is defined
   }
 
 
