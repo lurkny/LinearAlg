@@ -208,9 +208,11 @@ option(DETECT_HDF5 "Detect HDF5 and include HDF5 support, if found" ON)
 ## you can also disable HDF5 detection directly on the command line:
 ## cmake -D DETECT_HDF5=false .
 
-option(ALLOW_FLEXIBLAS_LINUX "Allow detection of FlexiBLAS on Linux (EXPERIMENTAL)" OFF)
-## Example use on the command line:
-## cmake -D ALLOW_FLEXIBLAS_LINUX=true .
+option(ALLOW_FLEXIBLAS_LINUX "Allow detection of FlexiBLAS on Linux" ON)
+# set(ALLOW_FLEXIBLAS_LINUX false)
+## uncomment the above line to disable the detection of FlexiBLAS;
+## you can also disable FlexiBLAS detection directly on the command line:
+## cmake -D ALLOW_FLEXIBLAS_LINUX=false .
 
 option(ALLOW_OPENBLAS_MACOS "Allow detection of OpenBLAS on macOS" OFF)
 ## Example use on the command line:
