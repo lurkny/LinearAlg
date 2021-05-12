@@ -186,6 +186,28 @@ spdiagview<eT>::operator= (const Base<eT,T1>& o)
   const uword d_row_offset = d.row_offset;
   const uword d_col_offset = d.col_offset;
   
+  if(is_same_type< T1, Gen<Col<eT>, gen_zeros> >::yes)
+    {
+    const Proxy<T1> P(o.get_ref());
+    
+    arma_debug_check( (d_n_elem != P.get_n_elem()), "spdiagview: given object has incompatible size" );
+    
+    (*this).zeros();
+    
+    return;
+    }
+  
+  if(is_same_type< T1, Gen<Col<eT>, gen_ones> >::yes)
+    {
+    const Proxy<T1> P(o.get_ref());
+    
+    arma_debug_check( (d_n_elem != P.get_n_elem()), "spdiagview: given object has incompatible size" );
+    
+    (*this).ones();
+    
+    return;
+    }
+  
   const quasi_unwrap<T1> U(o.get_ref());
   const Mat<eT>& x     = U.M;
   
@@ -215,6 +237,8 @@ spdiagview<eT>::operator= (const Base<eT,T1>& o)
       }
     
     if(has_zero)  { tmp1.remove_zeros(); }
+    
+    if(tmp1.n_nonzero == 0)  { (*this).zeros(); return; }
     
     SpMat<eT> tmp2;
     
