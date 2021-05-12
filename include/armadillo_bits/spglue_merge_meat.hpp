@@ -510,7 +510,7 @@ spglue_merge::diagview_merge(SpMat<eT>& out, const SpMat<eT>& A, const SpMat<eT>
       {
       if((x_it_col < y_it_col) || ((x_it_col == y_it_col) && (x_it_row < y_it_row))) // if y is closer to the end
         {
-        if(x_it_col != x_it_row)  { out_val = (*x_it); }  // y is ahead of x, so there is a zero on the main diagonal of B
+        if(x_it_col != x_it_row)  { out_val = (*x_it); }  // don't take values from the main diagonal of A
         
         ++x_it;
         }
