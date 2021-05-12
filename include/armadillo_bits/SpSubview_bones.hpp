@@ -98,6 +98,9 @@ class SpSubview : public SpBase< eT, SpSubview<eT> >
   inline void zeros();
   inline void ones();
   inline void eye();
+  inline void randu();
+  inline void randn();
+  
   
   arma_hot inline SpSubview_MapMat_val<eT> operator[](const uword i);
   arma_hot inline eT                       operator[](const uword i) const;

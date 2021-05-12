@@ -909,6 +909,36 @@ SpSubview<eT>::eye()
 
 
 template<typename eT>
+inline
+void
+SpSubview<eT>::randu()
+  {
+  arma_extra_debug_sigprint();
+  
+  Mat<eT> tmp( (*this).n_rows, (*this).n_cols );
+  tmp.randu();
+  
+  (*this).operator=(tmp);
+  }
+
+
+
+template<typename eT>
+inline
+void
+SpSubview<eT>::randn()
+  {
+  arma_extra_debug_sigprint();
+  
+  Mat<eT> tmp( (*this).n_rows, (*this).n_cols );
+  tmp.randn();
+  
+  (*this).operator=(tmp);
+  }
+
+
+
+template<typename eT>
 arma_hot
 inline
 SpSubview_MapMat_val<eT>
