@@ -915,8 +915,7 @@ SpSubview<eT>::randu()
   {
   arma_extra_debug_sigprint();
   
-  Mat<eT> tmp( (*this).n_rows, (*this).n_cols );
-  tmp.randu();
+  Mat<eT> tmp( (*this).n_rows, (*this).n_cols, fill::randu );
   
   (*this).operator=(tmp);
   }
@@ -930,8 +929,7 @@ SpSubview<eT>::randn()
   {
   arma_extra_debug_sigprint();
   
-  Mat<eT> tmp( (*this).n_rows, (*this).n_cols );
-  tmp.randn();
+  Mat<eT> tmp( (*this).n_rows, (*this).n_cols, fill::randn );
   
   (*this).operator=(tmp);
   }
