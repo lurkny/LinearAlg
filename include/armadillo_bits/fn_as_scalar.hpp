@@ -53,8 +53,6 @@ as_scalar_redirect<N>::apply(const T1& X)
   {
   arma_extra_debug_sigprint();
   
-  typedef typename T1::elem_type eT;
-  
   const Proxy<T1> P(X);
   
   arma_debug_check( (P.get_n_elem() != 1), "as_scalar(): expression must evaluate to exactly one element" );
@@ -325,8 +323,6 @@ as_scalar(const Base<typename T1::elem_type,T1>& X)
   {
   arma_extra_debug_sigprint();
   
-  typedef typename T1::elem_type eT;
-  
   const Proxy<T1> P(X.get_ref());
   
   arma_debug_check( (P.get_n_elem() != 1), "as_scalar(): expression must evaluate to exactly one element" );
@@ -376,8 +372,6 @@ typename T1::elem_type
 as_scalar(const BaseCube<typename T1::elem_type,T1>& X)
   {
   arma_extra_debug_sigprint();
-  
-  typedef typename T1::elem_type eT;
   
   const ProxyCube<T1> P(X.get_ref());
   
