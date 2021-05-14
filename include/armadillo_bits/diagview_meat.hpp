@@ -944,29 +944,11 @@ diagview<eT>::clamp(const eT min_val, const eT max_val)
   {
   arma_extra_debug_sigprint();
   
-  if(is_cx<eT>::no)
-    {
-    arma_debug_check( (access::tmp_real(min_val) > access::tmp_real(max_val)), "diagview::clamp(): min_val must be less than max_val" );
-    }
-  else
-    {
-    arma_debug_check( (access::tmp_real(min_val) > access::tmp_real(max_val)), "diagview::clamp(): real(min_val) must be less than real(max_val)" );
-    arma_debug_check( (access::tmp_imag(min_val) > access::tmp_imag(max_val)), "diagview::clamp(): imag(min_val) must be less than imag(max_val)" );
-    }
+  Mat<eT> tmp(*this);
   
-  Mat<eT>& x = const_cast< Mat<eT>& >(m);
+  tmp.clamp(min_val, max_val);
   
-  const uword local_n_elem = n_elem;
-  
-  podarray<eT> tmp(local_n_elem);
-  
-  eT* tmp_mem = tmp.memptr();
-  
-  for(uword ii=0; ii < local_n_elem; ++ii)  { tmp_mem[ii] = x.at(ii+row_offset, ii+col_offset); }
-  
-  arrayops::clamp( tmp_mem, local_n_elem, min_val, max_val );
-  
-  for(uword ii=0; ii < local_n_elem; ++ii)  { x.at(ii+row_offset, ii+col_offset) = tmp_mem[ii]; }
+  (*this).operator=(tmp);
   }
 
 
