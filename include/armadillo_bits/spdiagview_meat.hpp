@@ -880,6 +880,45 @@ spdiagview<eT>::operator()(const uword row, const uword col) const
 template<typename eT>
 inline
 void
+spdiagview<eT>::replace(const eT old_val, const eT new_val)
+  {
+  arma_extra_debug_sigprint();
+  
+  if(old_val == eT(0))
+    {
+    arma_debug_warn_level(1, "spdiagview::replace(): replacement not done, as old_val = 0");
+    }
+  else
+    {
+    Mat<eT> tmp(*this);
+    
+    tmp.replace(old_val, new_val);
+    
+    (*this).operator=(tmp);
+    }
+  }
+
+
+
+template<typename eT>
+inline
+void
+spdiagview<eT>::clean(const typename get_pod_type<eT>::result threshold)
+  {
+  arma_extra_debug_sigprint();
+  
+  Mat<eT> tmp(*this);
+  
+  tmp.clean(threshold);
+  
+  (*this).operator=(tmp);
+  }
+
+
+
+template<typename eT>
+inline
+void
 spdiagview<eT>::clamp(const eT min_val, const eT max_val)
   {
   arma_extra_debug_sigprint();
