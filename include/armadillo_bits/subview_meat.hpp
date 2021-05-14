@@ -1160,7 +1160,7 @@ subview<eT>::randu()
     {
     podarray<eT> tmp(local_n_cols);
     
-    eT* tmp_mem = tmp.memptr()
+    eT* tmp_mem = tmp.memptr();
     
     arma_rng::randu<eT>::fill( tmp_mem, local_n_cols );
     
@@ -1191,7 +1191,7 @@ subview<eT>::randn()
     {
     podarray<eT> tmp(local_n_cols);
     
-    eT* tmp_mem = tmp.memptr()
+    eT* tmp_mem = tmp.memptr();
     
     arma_rng::randn<eT>::fill( tmp_mem, local_n_cols );
     
