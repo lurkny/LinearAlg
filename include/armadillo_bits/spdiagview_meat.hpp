@@ -880,6 +880,32 @@ spdiagview<eT>::operator()(const uword row, const uword col) const
 template<typename eT>
 inline
 void
+spdiagview<eT>::clamp(const eT min_val, const eT max_val)
+  {
+  arma_extra_debug_sigprint();
+  
+  if(is_cx<eT>::no)
+    {
+    arma_debug_check( (access::tmp_real(min_val) > access::tmp_real(max_val)), "spdiagview::clamp(): min_val must be less than max_val" );
+    }
+  else
+    {
+    arma_debug_check( (access::tmp_real(min_val) > access::tmp_real(max_val)), "spdiagview::clamp(): real(min_val) must be less than real(max_val)" );
+    arma_debug_check( (access::tmp_imag(min_val) > access::tmp_imag(max_val)), "spdiagview::clamp(): imag(min_val) must be less than imag(max_val)" );
+    }
+  
+  Mat<eT> tmp(*this);
+  
+  tmp.clamp(min_val, max_val);
+  
+  (*this).operator=(tmp);
+  }
+
+
+
+template<typename eT>
+inline
+void
 spdiagview<eT>::fill(const eT val)
   {
   arma_extra_debug_sigprint();

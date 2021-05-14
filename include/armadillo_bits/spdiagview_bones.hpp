@@ -87,6 +87,8 @@ class spdiagview : public SpBase< eT, spdiagview<eT> >
   inline eT                   operator()(const uword in_n_row, const uword in_n_col) const;
   
   
+  inline void clamp(const eT min_val, const eT max_val);
+  
   inline void fill(const eT val);
   inline void zeros();
   inline void ones();
