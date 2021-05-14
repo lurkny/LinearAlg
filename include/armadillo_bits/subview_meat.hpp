@@ -1158,10 +1158,13 @@ subview<eT>::randu()
   
   if(local_n_rows == 1)
     {
-    for(uword ii=0; ii < local_n_cols; ++ii)
-      {
-      at(0,ii) = eT(arma_rng::randu<eT>());
-      }
+    podarray<eT> tmp(local_n_cols);
+    
+    eT* tmp_mem = tmp.memptr()
+    
+    arma_rng::randu<eT>::fill( tmp_mem, local_n_cols );
+    
+    for(uword ii=0; ii < local_n_cols; ++ii)  { at(0,ii) = tmp_mem[ii]; }
     }
   else
     {
@@ -1186,10 +1189,13 @@ subview<eT>::randn()
   
   if(local_n_rows == 1)
     {
-    for(uword ii=0; ii < local_n_cols; ++ii)
-      {
-      at(0,ii) = eT(arma_rng::randn<eT>());
-      }
+    podarray<eT> tmp(local_n_cols);
+    
+    eT* tmp_mem = tmp.memptr()
+    
+    arma_rng::randn<eT>::fill( tmp_mem, local_n_cols );
+    
+    for(uword ii=0; ii < local_n_cols; ++ii)  { at(0,ii) = tmp_mem[ii]; }
     }
   else
     {
