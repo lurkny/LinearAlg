@@ -93,6 +93,8 @@ class diagview : public Base< eT, diagview<eT> >
   
   inline void replace(const eT old_val, const eT new_val);
   
+  inline void clamp(const eT min_val, const eT max_val);
+  
   inline void fill(const eT val);
   inline void zeros();
   inline void ones();
