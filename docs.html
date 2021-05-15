@@ -19185,7 +19185,8 @@ List of additions and changes for each version:
 <ul>
 <li>added <a href="#clamp_member">.clamp()</a> member function</li>
 <li>expanded the standalone <a href="#clamp">clamp()</a> function to handle complex values</li>
-<li>vector, matrix and cube constructors now initialise the elements to zero by default;
+<li>more efficient use of OpenMP</li>
+<li>vector, matrix and cube constructors now initialise elements to zero by default;
 <br>use the <code>fill::none</code> specifier, eg. <code>mat X(4,5,fill::none)</code>, to disable element initialisation
 </ul>
 </li>
