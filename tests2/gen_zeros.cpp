@@ -120,8 +120,8 @@ TEST_CASE("gen_zeros_sp_mat")
   {
   SpMat<unsigned int> e(2, 2);
 
-  e(0, 0) = 3.1;
-  e(1, 1) = 2.2;
+  e(0, 0) = 3;
+  e(1, 1) = 2;
 
   e *= zeros<SpMat<unsigned int> >(2, 2);
 
