@@ -1408,7 +1408,6 @@ bool
 diskio::load_raw_binary(Mat<eT>& x, std::istream& f, std::string& err_msg)
   {
   arma_extra_debug_sigprint();
-  arma_ignore(err_msg);
   
   f.clear();
   const std::streampos pos1 = f.tellg();
@@ -1482,7 +1481,7 @@ diskio::load_arma_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
   
   if(f_header == diskio::gen_txt_header(x))
     {
-    x.zeros(f_n_rows, f_n_cols);
+    try { x.zeros(f_n_rows, f_n_cols); } catch(...) { err_msg = "not enough memory"; return false; }
     
     std::string token;
     
@@ -1611,7 +1610,7 @@ diskio::load_csv_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg
 template<typename eT>
 inline
 bool
-diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string&)
+diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
   {
   arma_extra_debug_sigprint();
   
@@ -1658,7 +1657,7 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string&)
   f.clear();
   f.seekg(pos1);
   
-  x.zeros(f_n_rows, f_n_cols);
+  try { x.zeros(f_n_rows, f_n_cols); } catch(...) { err_msg = "not enough memory"; return false; }
   
   uword row = 0;
   
@@ -1694,7 +1693,7 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string&)
 template<typename T>
 inline
 bool
-diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string&)
+diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string& err_msg)
   {
   arma_extra_debug_sigprint();
   
@@ -1741,7 +1740,7 @@ diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string&)
   f.clear();
   f.seekg(pos1);
   
-  x.zeros(f_n_rows, f_n_cols);
+  try { x.zeros(f_n_rows, f_n_cols); } catch(...) { err_msg = "not enough memory"; return false; }
   
   uword row = 0;
   
@@ -2991,7 +2990,6 @@ bool
 diskio::load_csv_ascii(SpMat<eT>& x, std::istream& f, std::string& err_msg)
   {
   arma_extra_debug_sigprint();
-  arma_ignore(err_msg);
   
   // TODO: replace with more efficient implementation
   
@@ -3036,7 +3034,7 @@ diskio::load_csv_ascii(SpMat<eT>& x, std::istream& f, std::string& err_msg)
   f.clear();
   f.seekg(pos1);
   
-  x.zeros(f_n_rows, f_n_cols);
+  try { x.zeros(f_n_rows, f_n_cols); } catch(...) { err_msg = "not enough memory"; return false; }
   
   uword row = 0;
   
@@ -3119,7 +3117,6 @@ bool
 diskio::load_coord_ascii(SpMat<eT>& x, std::istream& f, std::string& err_msg)
   {
   arma_extra_debug_sigprint();
-  arma_ignore(err_msg);
   
   bool load_okay = f.good();
   
@@ -3174,7 +3171,9 @@ diskio::load_coord_ascii(SpMat<eT>& x, std::istream& f, std::string& err_msg)
     f.clear();
     f.seekg(pos1);
     
-    MapMat<eT> tmp(f_n_rows, f_n_cols);
+    MapMat<eT> tmp;
+    
+    try { tmp.set_size(f_n_rows, f_n_cols); } catch(...) { err_msg = "not enough memory"; return false; }
     
     while(f.good())
       {
@@ -3217,7 +3216,6 @@ bool
 diskio::load_coord_ascii(SpMat< std::complex<T> >& x, std::istream& f, std::string& err_msg)
   {
   arma_extra_debug_sigprint();
-  arma_ignore(err_msg);
   
   bool load_okay = f.good();
   
@@ -3272,6 +3270,8 @@ diskio::load_coord_ascii(SpMat< std::complex<T> >& x, std::istream& f, std::stri
     f.seekg(pos1);
     
     MapMat< std::complex<T> > tmp(f_n_rows, f_n_cols);
+    
+    try { tmp.set_size(f_n_rows, f_n_cols); } catch(...) { err_msg = "not enough memory"; return false; }
     
     while(f.good())
       {
@@ -3885,7 +3885,6 @@ bool
 diskio::load_raw_binary(Cube<eT>& x, std::istream& f, std::string& err_msg)
   {
   arma_extra_debug_sigprint();
-  arma_ignore(err_msg);
   
   f.clear();
   const std::streampos pos1 = f.tellg();
