@@ -1999,11 +1999,11 @@ diskio::load_coord_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
   // take into account that indices start at 0
   if(size_found)  { ++f_n_rows;  ++f_n_cols; }
   
+  f.clear();
+  f.seekg(pos1);
+  
   try
     {
-    f.clear();
-    f.seekg(pos1);
-    
     Mat<eT> tmp(f_n_rows, f_n_cols, arma_zeros_indicator());
     
     while(f.good())
@@ -2100,11 +2100,11 @@ diskio::load_coord_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string
   // take into account that indices start at 0
   if(size_found)  { ++f_n_rows;  ++f_n_cols; }
   
+  f.clear();
+  f.seekg(pos1);
+  
   try
     {
-    f.clear();
-    f.seekg(pos1);
-    
     Mat< std::complex<T> > tmp(f_n_rows, f_n_cols, arma_zeros_indicator());
     
     while(f.good())
@@ -3035,11 +3035,11 @@ diskio::load_csv_ascii(SpMat<eT>& x, std::istream& f, std::string& err_msg)
     ++f_n_rows;
     }
   
+  f.clear();
+  f.seekg(pos1);
+  
   try
     {
-    f.clear();
-    f.seekg(pos1);
-    
     MapMat<eT> tmp(f_n_rows, f_n_cols);
     
     uword row = 0;
@@ -3178,11 +3178,11 @@ diskio::load_coord_ascii(SpMat<eT>& x, std::istream& f, std::string& err_msg)
   // take into account that indices start at 0
   if(size_found)  { ++f_n_rows;  ++f_n_cols; }
   
+  f.clear();
+  f.seekg(pos1);
+  
   try
     {
-    f.clear();
-    f.seekg(pos1);
-    
     MapMat<eT> tmp(f_n_rows, f_n_cols);
     
     while(f.good())
@@ -3279,11 +3279,11 @@ diskio::load_coord_ascii(SpMat< std::complex<T> >& x, std::istream& f, std::stri
   // take into account that indices start at 0
   if(size_found)  { ++f_n_rows;  ++f_n_cols; }
   
+  f.clear();
+  f.seekg(pos1);
+  
   try
     {
-    f.clear();
-    f.seekg(pos1);
-    
     MapMat< std::complex<T> > tmp(f_n_rows, f_n_cols);
     
     while(f.good())
