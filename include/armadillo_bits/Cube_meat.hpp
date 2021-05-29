@@ -4177,7 +4177,6 @@ Cube<eT>::soft_reset()
     }
   else
     {
-    // fill(Datum<eT>::nan);
     zeros();
     }
   }
