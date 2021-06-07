@@ -1762,6 +1762,9 @@ diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string& 
       {
       std::getline(line_stream, token, ',');
       
+      // remove spaces and tabs
+      token.erase(std::remove_if(token.begin(), token.end(), [](char c) { return ((c == ' ') || (c == '\t')); }), token.end());
+      
       const size_t token_len = size_t( token.length() );
       
       if(token_len == 0)  { col++; continue; }
