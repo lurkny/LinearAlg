@@ -108,6 +108,13 @@ class field
   arma_inline const oT& operator()(const uword row, const uword col, const uword slice) const;
   
   
+  arma_inline       oT& front();
+  arma_inline const oT& front() const;
+  
+  arma_inline       oT& back();
+  arma_inline const oT& back() const;
+  
+  
   arma_cold inline field_injector<field> operator<<(const oT& val);
   arma_cold inline field_injector<field> operator<<(const injector_end_of_row<>& x);
   

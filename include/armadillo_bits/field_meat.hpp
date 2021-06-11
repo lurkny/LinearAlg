@@ -634,6 +634,54 @@ field<oT>::at(const uword in_row, const uword in_col, const uword in_slice) cons
 
 
 template<typename oT>
+arma_inline
+oT&
+field<oT>::front()
+  {
+  arma_debug_check( (n_elem == 0), "field::front(): field is empty" );
+  
+  return (*mem[0]);
+  }
+
+
+
+template<typename oT>
+arma_inline
+const oT&
+field<oT>::front() const
+  {
+  arma_debug_check( (n_elem == 0), "field::front(): field is empty" );
+  
+  return (*mem[0]);
+  }
+
+
+
+template<typename oT>
+arma_inline
+oT&
+field<oT>::back()
+  {
+  arma_debug_check( (n_elem == 0), "field::back(): field is empty" );
+  
+  return (*mem[n_elem-1]);
+  }
+
+
+
+template<typename oT>
+arma_inline
+const oT&
+field<oT>::back() const
+  {
+  arma_debug_check( (n_elem == 0), "field::back(): field is empty" );
+  
+  return (*mem[n_elem-1]);
+  }
+
+
+
+template<typename oT>
 arma_cold
 inline
 field_injector< field<oT> >
