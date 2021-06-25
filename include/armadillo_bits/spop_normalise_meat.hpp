@@ -50,7 +50,7 @@ spop_normalise::apply_direct(SpMat<eT>& out, const SpMat<eT>& X, const uword p, 
   
   X.sync();
   
-  if( X.is_empty() || (X.n_nonzero == 0) )  { return; }
+  if( X.is_empty() || (X.n_nonzero == 0) )  { out.zeros(X.n_rows, X.n_cols); return; }
   
   if(dim == 0)
     {
