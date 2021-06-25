@@ -49,12 +49,14 @@ spop_normalise::apply(SpMat<typename T1::elem_type>& out, const SpOp<T1,spop_nor
   else
   if(dim == 1)
     {
-    SpMat<eT> tmp1 = strans(X);
+    SpMat<eT> tmp1;
     SpMat<eT> tmp2;
+    
+    spop_strans::apply_noalias(tmp1, X);
     
     spop_normalise::apply_direct(tmp2, tmp1, p);
     
-    out = strans(tmp2);
+    spop_strans::apply_noalias(out, tmp2);
     }
   }
 
