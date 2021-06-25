@@ -79,10 +79,10 @@ spop_normalise::apply_direct(SpMat<eT>& out, const SpMat<eT>& X, const uword p)
   
   T* norm_vals_mem = norm_vals.memptr();
   
-  for(uword i=0; i < norm_vals.n_elem; ++i)
+  for(uword col=0; col < X.n_cols; ++col)
     {
-    const uword      col_offset = X.col_ptrs[i    ];
-    const uword next_col_offset = X.col_ptrs[i + 1];
+    const uword      col_offset = X.col_ptrs[col    ];
+    const uword next_col_offset = X.col_ptrs[col + 1];
     
     const eT* start_ptr = &X.values[     col_offset];
     const eT*   end_ptr = &X.values[next_col_offset];
@@ -93,7 +93,7 @@ spop_normalise::apply_direct(SpMat<eT>& out, const SpMat<eT>& X, const uword p)
     
     const T norm_val = norm(fake_vec, p);
     
-    norm_vals_mem[i] = (norm_val != T(0)) ? norm_val : T(1);
+    norm_vals_mem[col] = (norm_val != T(0)) ? norm_val : T(1);
     }
   
   const uword N = X.n_nonzero;
