@@ -52,6 +52,10 @@ spop_normalise::apply_direct(SpMat<eT>& out, const SpMat<eT>& X, const uword p, 
   
   if( X.is_empty() || (X.n_nonzero == 0) )  { out.zeros(X.n_rows, X.n_cols); return; }
   
+  SpMat<eT> tmp(arma_reserve_indicator(), X.n_rows, X.n_cols, X.n_nonzero);
+  
+  bool has_zero = false;
+  
   if(dim == 0)
     {
     podarray<T> norm_vals(X.n_cols);
@@ -77,15 +81,7 @@ spop_normalise::apply_direct(SpMat<eT>& out, const SpMat<eT>& X, const uword p, 
     
     const uword N = X.n_nonzero;
     
-    umat    locs(2, N, arma_nozeros_indicator());
-    Col<eT> vals(   N, arma_nozeros_indicator());
-    
-    uword* locs_mem = locs.memptr();
-    eT*    vals_mem = vals.memptr();
-    
     typename SpMat<eT>::const_iterator it = X.begin();
-    
-    uword new_n_nonzero = 0;
     
     for(uword i=0; i < N; ++i)
       {
@@ -94,25 +90,19 @@ spop_normalise::apply_direct(SpMat<eT>& out, const SpMat<eT>& X, const uword p, 
         
       const eT val = (*it) / norm_vals_mem[col];
       
-      if(val != eT(0))
-        {
-        (*vals_mem) = val;  vals_mem++;
-        
-        (*locs_mem) = row;  locs_mem++;
-        (*locs_mem) = col;  locs_mem++;
-        
-        new_n_nonzero++;
-        }
+      if(val == eT(0))  { has_zero = true; }
+      
+      access::rw(tmp.values[i])      = val;
+      access::rw(tmp.row_indices[i]) = row;
+      access::rw(tmp.col_ptrs[col + 1])++;
       
       ++it;
       }
     
-    const umat    tmp_locs(locs.memptr(), 2, new_n_nonzero, false, false);
-    const Col<eT> tmp_vals(vals.memptr(),    new_n_nonzero, false, false);
-    
-    SpMat<eT> tmp(tmp_locs, tmp_vals, X.n_rows, X.n_cols, false, false);
-    
-    out.steal_mem(tmp);
+    for(uword c=0; c < tmp.n_cols; ++c)
+      {
+      access::rw(tmp.col_ptrs[c + 1]) += tmp.col_ptrs[c];
+      }
     }
   else
   if(dim == 1)
@@ -161,15 +151,7 @@ spop_normalise::apply_direct(SpMat<eT>& out, const SpMat<eT>& X, const uword p, 
     
     const uword N = X.n_nonzero;
     
-    umat    locs(2, N, arma_nozeros_indicator());
-    Col<eT> vals(   N, arma_nozeros_indicator());
-    
-    uword* locs_mem = locs.memptr();
-    eT*    vals_mem = vals.memptr();
-    
     typename SpMat<eT>::const_iterator it = X.begin();
-    
-    uword new_n_nonzero = 0;
     
     for(uword i=0; i < N; ++i)
       {
@@ -178,26 +160,24 @@ spop_normalise::apply_direct(SpMat<eT>& out, const SpMat<eT>& X, const uword p, 
         
       const eT val = (*it) / norm_vals_mem[row];
       
-      if(val != eT(0))
-        {
-        (*vals_mem) = val;  vals_mem++;
-        
-        (*locs_mem) = row;  locs_mem++;
-        (*locs_mem) = col;  locs_mem++;
-        
-        new_n_nonzero++;
-        }
+      if(val == eT(0))  { has_zero = true; }
+      
+      access::rw(tmp.values[i])      = val;
+      access::rw(tmp.row_indices[i]) = row;
+      access::rw(tmp.col_ptrs[col + 1])++;
       
       ++it;
       }
     
-    const umat    tmp_locs(locs.memptr(), 2, new_n_nonzero, false, false);
-    const Col<eT> tmp_vals(vals.memptr(),    new_n_nonzero, false, false);
-    
-    SpMat<eT> tmp(tmp_locs, tmp_vals, X.n_rows, X.n_cols, false, false);
-    
-    out.steal_mem(tmp);
+    for(uword c=0; c < tmp.n_cols; ++c)
+      {
+      access::rw(tmp.col_ptrs[c + 1]) += tmp.col_ptrs[c];
+      }
     }
+  
+  if(has_zero)  { tmp.remove_zeros(); }
+  
+  out.steal_mem(tmp);
   }
 
 
