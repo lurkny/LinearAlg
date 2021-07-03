@@ -1274,6 +1274,19 @@ Row<eT>::fixed<fixed_n_elem>::fixed(const subview_cube<eT>& X)
 
 template<typename eT>
 template<uword fixed_n_elem>
+inline
+Row<eT>::fixed<fixed_n_elem>::fixed(const fill::scalar_holder<eT> f)
+  : Row<eT>( arma_fixed_indicator(), fixed_n_elem, ((use_extra) ? mem_local_extra : Mat<eT>::mem_local) )
+  {
+  arma_extra_debug_sigprint_this(this);
+  
+  (*this).fill(f.scalar);
+  }
+
+
+
+template<typename eT>
+template<uword fixed_n_elem>
 template<typename fill_type>
 inline
 Row<eT>::fixed<fixed_n_elem>::fixed(const fill::fill_class<fill_type>&)

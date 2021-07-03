@@ -9155,6 +9155,19 @@ Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::fixed(const fixed<fixed_n_rows, fixe
 
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols>
+inline
+Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::fixed(const fill::scalar_holder<eT> f)
+  : Mat<eT>( arma_fixed_indicator(), fixed_n_rows, fixed_n_cols, 0, ((use_extra) ? mem_local_extra : Mat<eT>::mem_local) )
+  {
+  arma_extra_debug_sigprint_this(this);
+  
+  (*this).fill(f.scalar);
+  }
+
+
+
+template<typename eT>
+template<uword fixed_n_rows, uword fixed_n_cols>
 template<typename fill_type>
 inline
 Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::fixed(const fill::fill_class<fill_type>&)

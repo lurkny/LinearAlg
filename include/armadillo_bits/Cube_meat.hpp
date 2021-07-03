@@ -5251,6 +5251,20 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::fixed(const fixed<f
 
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
+inline
+Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::fixed(const fill::scalar_holder<eT> f)
+  {
+  arma_extra_debug_sigprint_this(this);
+  
+  mem_setup();
+  
+  (*this).fill(f.scalar);
+  }
+
+
+
+template<typename eT>
+template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
 template<typename fill_type>
 inline
 Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::fixed(const fill::fill_class<fill_type>&)
