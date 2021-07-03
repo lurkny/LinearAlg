@@ -230,6 +230,51 @@ Cube<eT>::Cube(const SizeCube& s, const fill::fill_class<fill_type>&)
 
 
 
+//! construct the cube to have user specified dimensions and fill with specified value
+template<typename eT>
+inline
+Cube<eT>::Cube(const uword in_n_rows, const uword in_n_cols, const uword in_n_slices, const fill::scalar_holder<eT> f)
+  : n_rows(in_n_rows)
+  , n_cols(in_n_cols)
+  , n_elem_slice(in_n_rows*in_n_cols)
+  , n_slices(in_n_slices)
+  , n_elem(in_n_rows*in_n_cols*in_n_slices)
+  , n_alloc()
+  , mem_state(0)
+  , mem()
+  , mat_ptrs(nullptr)
+  {
+  arma_extra_debug_sigprint_this(this);
+  
+  init_cold();
+  
+  (*this).fill(f.scalar);
+  }
+
+
+
+template<typename eT>
+inline
+Cube<eT>::Cube(const SizeCube& s, const fill::scalar_holder<eT> f)
+  : n_rows(s.n_rows)
+  , n_cols(s.n_cols)
+  , n_elem_slice(s.n_rows*s.n_cols)
+  , n_slices(s.n_slices)
+  , n_elem(s.n_rows*s.n_cols*s.n_slices)
+  , n_alloc()
+  , mem_state(0)
+  , mem()
+  , mat_ptrs(nullptr)
+  {
+  arma_extra_debug_sigprint_this(this);
+  
+  init_cold();
+  
+  (*this).fill(f.scalar);
+  }
+
+
+
 template<typename eT>
 inline
 Cube<eT>::Cube(Cube<eT>&& in_cube)
