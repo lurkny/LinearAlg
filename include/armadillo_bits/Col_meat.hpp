@@ -200,6 +200,46 @@ Col<eT>::Col(const SizeMat& s, const fill::fill_class<fill_type>& f)
 
 template<typename eT>
 inline
+Col<eT>::Col(const uword in_n_elem, const fill::scalar_holder<eT> f)
+  : Mat<eT>(arma_vec_indicator(), in_n_elem, 1, 1)
+  {
+  arma_extra_debug_sigprint();
+  
+  (*this).fill(f.scalar);
+  }
+
+
+
+template<typename eT>
+inline
+Col<eT>::Col(const uword in_n_rows, const uword in_n_cols, const fill::scalar_holder<eT> f)
+  : Mat<eT>(arma_vec_indicator(), 0, 0, 1)
+  {
+  arma_extra_debug_sigprint();
+  
+  Mat<eT>::init_warm(in_n_rows, in_n_cols);
+  
+  (*this).fill(f.scalar);
+  }
+
+
+
+template<typename eT>
+inline
+Col<eT>::Col(const SizeMat& s, const fill::scalar_holder<eT> f)
+  : Mat<eT>(arma_vec_indicator(), 0, 0, 1)
+  {
+  arma_extra_debug_sigprint();
+  
+  Mat<eT>::init_warm(s.n_rows, s.n_cols);
+  
+  (*this).fill(f.scalar);
+  }
+
+
+
+template<typename eT>
+inline
 Col<eT>::Col(const char* text)
   : Mat<eT>(arma_vec_indicator(), 1)
   {

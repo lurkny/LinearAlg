@@ -46,6 +46,10 @@ class Row : public Mat<eT>
   template<typename fill_type> inline Row(const uword in_rows, const uword in_cols, const fill::fill_class<fill_type>& f);
   template<typename fill_type> inline Row(const SizeMat& s,                         const fill::fill_class<fill_type>& f);
   
+  inline Row(const uword N,                            const fill::scalar_holder<eT> f);
+  inline Row(const uword in_rows, const uword in_cols, const fill::scalar_holder<eT> f);
+  inline Row(const SizeMat& s,                         const fill::scalar_holder<eT> f);
+  
   inline            Row(const char*        text);
   inline Row& operator=(const char*        text);
   

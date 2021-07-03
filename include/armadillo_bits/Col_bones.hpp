@@ -46,6 +46,10 @@ class Col : public Mat<eT>
   template<typename fill_type> inline Col(const uword in_rows, const uword in_cols, const fill::fill_class<fill_type>& f);
   template<typename fill_type> inline Col(const SizeMat& s,                         const fill::fill_class<fill_type>& f);
   
+  inline Col(const uword N,                            const fill::scalar_holder<eT> f);
+  inline Col(const uword in_rows, const uword in_cols, const fill::scalar_holder<eT> f);
+  inline Col(const SizeMat& s,                         const fill::scalar_holder<eT> f);
+  
   inline            Col(const char*        text);
   inline Col& operator=(const char*        text);
   
