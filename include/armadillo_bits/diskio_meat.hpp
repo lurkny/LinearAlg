@@ -1659,29 +1659,84 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
   
   try { x.zeros(f_n_rows, f_n_cols); } catch(...) { err_msg = "not enough memory"; return false; }
   
-  uword row = 0;
-  
-  while(f.good())
+  if(arma_config::openmp && (f_n_rows >= 2) && (f_n_cols >= 64))
     {
-    std::getline(f, line_string);
-    
-    if(line_string.size() == 0)  { break; }
-    
-    line_stream.clear();
-    line_stream.str(line_string);
-    
-    uword col = 0;
-    
-    while(line_stream.good())
+    #if defined(ARMA_USE_OPENMP)
       {
-      std::getline(line_stream, token, ',');
+      field<std::string> token_array;
       
-      diskio::convert_token( x.at(row,col), token );
+      try
+        {
+        token_array.set_size(f_n_cols);
+        
+        for(uword i=0; i < f_n_cols; ++i)  { token_array(i).reserve(32); }
+        }
+      catch(...)
+        {
+        err_msg = "not enough memory"; return false;
+        }
       
-      ++col;
+      uword row = 0;
+      
+      while(f.good())
+        {
+        std::getline(f, line_string);
+        
+        if(line_string.size() == 0)  { break; }
+        
+        line_stream.clear();
+        line_stream.str(line_string);
+        
+        for(uword i=0; i < f_n_cols; ++i)  { token_array(i).clear(); }
+        
+        uword line_stream_col = 0;
+        
+        while(line_stream.good())
+          {
+          std::getline(line_stream, token_array(line_stream_col), ',');
+          
+          ++line_stream_col;
+          }
+        
+        const int n_threads = mp_thread_limit::get();
+        
+        #pragma omp parallel for schedule(static) num_threads(n_threads)
+        for(uword col=0; col < line_stream_col; ++col)
+          {
+          diskio::convert_token( x.at(row,col), token_array(col) );
+          }
+        
+        ++row;
+        }
       }
+    #endif
+    }
+  else  // serial implementation
+    {
+    uword row = 0;
     
-    ++row;
+    while(f.good())
+      {
+      std::getline(f, line_string);
+      
+      if(line_string.size() == 0)  { break; }
+      
+      line_stream.clear();
+      line_stream.str(line_string);
+      
+      uword col = 0;
+      
+      while(line_stream.good())
+        {
+        std::getline(line_stream, token, ',');
+        
+        diskio::convert_token( x.at(row,col), token );
+        
+        ++col;
+        }
+      
+      ++row;
+      }
     }
   
   return true;
