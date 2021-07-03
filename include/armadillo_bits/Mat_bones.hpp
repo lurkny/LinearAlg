@@ -67,6 +67,9 @@ class Mat : public Base< eT, Mat<eT> >
   template<typename fill_type> inline Mat(const uword in_rows, const uword in_cols, const fill::fill_class<fill_type>& f);
   template<typename fill_type> inline Mat(const SizeMat& s,                         const fill::fill_class<fill_type>& f);
   
+  inline Mat(const uword in_rows, const uword in_cols, const fill::scalar_holder<eT> f);
+  inline Mat(const SizeMat& s,                         const fill::scalar_holder<eT> f);
+  
   inline arma_cold            Mat(const char*        text);
   inline arma_cold Mat& operator=(const char*        text);
   

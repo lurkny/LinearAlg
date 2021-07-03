@@ -200,6 +200,47 @@ Mat<eT>::Mat(const SizeMat& s, const fill::fill_class<fill_type>& f)
 
 
 
+//! construct the matrix to have user specified dimensions and fill with specified value
+template<typename eT>
+inline
+Mat<eT>::Mat(const uword in_n_rows, const uword in_n_cols, const fill::scalar_holder<eT> f)
+  : n_rows(in_n_rows)
+  , n_cols(in_n_cols)
+  , n_elem(in_n_rows*in_n_cols)
+  , n_alloc()
+  , vec_state(0)
+  , mem_state(0)
+  , mem()
+  {
+  arma_extra_debug_sigprint_this(this);
+  
+  init_cold();
+  
+  (*this).fill(f.scalar);
+  }
+
+
+
+template<typename eT>
+inline
+Mat<eT>::Mat(const SizeMat& s, const fill::scalar_holder<eT> f)
+  : n_rows(s.n_rows)
+  , n_cols(s.n_cols)
+  , n_elem(s.n_rows*s.n_cols)
+  , n_alloc()
+  , vec_state(0)
+  , mem_state(0)
+  , mem()
+  {
+  arma_extra_debug_sigprint_this(this);
+  
+  init_cold();
+  
+  (*this).fill(f.scalar);
+  }
+
+
+
 //! constructor used by Row and Col classes
 template<typename eT>
 inline
@@ -6909,7 +6950,7 @@ Mat<eT>::fill(const eT val)
 
 
 
-//! fill the matrix with the specified value
+//! fill the matrix with the specified pattern
 template<typename eT>
 template<typename fill_type>
 inline
