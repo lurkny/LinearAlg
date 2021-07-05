@@ -6902,7 +6902,7 @@ Mat<eT>::fill(const eT val)
 
 
 
-//! fill the matrix with the specified value
+//! fill the matrix with the specified pattern
 template<typename eT>
 template<typename fill_type>
 inline
