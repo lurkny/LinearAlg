@@ -12123,32 +12123,54 @@ See also:
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="chol"></a>
-<b>R = chol( X )</b>
-<br><b>R = chol( X, layout )</b>
-<br>
-<br><b>chol( R, X )</b>
-<br><b>chol( R, X, layout )</b>
+<table>
+<tr><td><b>R = chol(       X                 )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
+<tr><td><b>R = chol(       X, layout         )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td>                                          </td><td>&nbsp;&nbsp;&nbsp;</td><td>        </td></tr>
+<tr><td><b>    chol( R,    X                 )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 3)</td></tr>
+<tr><td><b>    chol( R,    X, layout         )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 4)</td></tr>
+<tr><td>                                          </td><td>&nbsp;&nbsp;&nbsp;</td><td>        </td></tr>
+<tr><td><b>    chol( R, P, X                 )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 5)</td></tr>
+<tr><td><b>    chol( R, P, X, layout         )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 6)</td></tr>
+<tr><td><b>    chol( R, P, X, layout, P_mode )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 7)</td></tr>
+</table>
 <ul>
 <li>
-Cholesky decomposition of matrix <i>X</i>
+Cholesky decomposition of symmetric/hermitian positive-definite matrix <i>X</i> into triangular matrix <i>R</i>, with an optional permutation matrix/vector <i>P</i>
 </li>
 <br>
 <li>
-Matrix <i>X</i> must be symmetric/hermitian and positive-definite
+By default, <i>R</i> is upper triangular
 </li>
 <br>
 <li>
-By default, <i>R</i> is upper triangular, such that <i>R.t()*R = X</i>
+The optional argument <i>layout</i> is either <code>"upper"</code> or <code>"lower"</code>, which specifies whether <i>R</i> is upper or lower triangular
 </li>
 <br>
 <li>
-The argument <i>layout</i> is optional; <i>layout</i> is either <code>"upper"</code> or <code>"lower"</code>, which specifies whether <i>R</i> is upper or lower triangular
+Forms 5 to 7 also produce a permutation matrix/vector <i>P</i>
+</li>
+<br>
+<li>
+The optional argument <i>P_mode</i> is either <code>"vector"</code> or <code>"matrix"</code>, which specifies the form of <i>P</i>; by default <i>P_mode = "vector"</i>
+</li>
+<br>
+<li>
+The decomposition has the following form:
+<ul>
+<li>forms 1 to 4, with <i>layout = "upper"</i>: <i>X = R.t() * R</i></li>
+<li>forms 1 to 4, with <i>layout = "lower"</i>: <i>X = R * R.t()</i></li>
+<li>forms 5 to 7, with <i>layout = "upper"</i> and <i>P_mode = "matrix"</i>: <i>X = P * R.t() * R * P.t()</i></li>
+<li>forms 5 to 7, with <i>layout = "lower"</i> and <i>P_mode = "matrix"</i>: <i>X = P * R * R.t() * P.t()</i></li>
+<li>forms 5 to 7, with <i>layout = "upper"</i> and <i>P_mode = "vector"</i>: <i>X(P,P) = R.t() * R</i>, where <i>X(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>X</i></li>
+<li>forms 5 to 7, with <i>layout = "lower"</i> and <i>P_mode = "vector"</i>: <i>X(P,P) = R * R.t()</i>, where <i>X(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>X</i></li>
+</ul>
 </li>
 <br>
 <li>If the decomposition fails:
 <ul>
-<li><i>R = chol(X)</i> resets <i>R</i> and throws a <i>std::runtime_error</i> exception</li>
-<li><i>chol(R,X)</i> resets <i>R</i> and returns a bool set to <i>false</i> (exception is not thrown)</li>
+<li>the forms <i>R = chol(X)</i> and <i>R = chol(X,layout)</i> reset <i>R</i> and throw a <i>std::runtime_error</i> exception</li>
+<li>the other forms reset <i>R</i> and <i>P</i>, and return a bool set to <i>false</i> (exception is not thrown)</li>
 </ul>
 </li>
 <br>
@@ -19199,6 +19221,7 @@ List of additions and changes for each version:
 <a name="version_106"></a>
 <li>Version 10.6:
 <ul>
+<li>expanded <a href="#chol">chol()</a> to optionally use pivoted decomposition</li>
 <li>...</li>
 </ul>
 </li>
