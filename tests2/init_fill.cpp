@@ -62,5 +62,5 @@ TEST_CASE("init_fill_2")
   
   cube X(5, 6, 2, fill::none);   // only to test instantiation
   
-  cube I;  REQUIRE_THROWS( I = cube(5, 6, 2, fill::eye) );
+  // cube I;  REQUIRE_THROWS( I = cube(5, 6, 2, fill::eye) );
   }
