@@ -1659,12 +1659,16 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
   
   try { x.zeros(f_n_rows, f_n_cols); } catch(...) { err_msg = "not enough memory"; return false; }
   
-  if(arma_config::openmp && (f_n_rows >= 2) && (f_n_cols >= 64))
+  const bool use_mp = (arma_config::openmp) && (f_n_rows >= 2) && (f_n_cols >= 64);
+  
+  field<std::string> token_array;
+  
+  bool token_array_ok = true;
+  
+  if(use_mp)
     {
     #if defined(ARMA_USE_OPENMP)
       {
-      field<std::string> token_array;
-      
       try
         {
         token_array.set_size(f_n_cols);
@@ -1673,9 +1677,18 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
         }
       catch(...)
         {
-        err_msg = "not enough memory"; return false;
+        token_array_ok = false;
+        
+        token_array.reset();
         }
-      
+      }
+    #endif
+    }
+  
+  if(use_mp && token_array_ok)
+    {
+    #if defined(ARMA_USE_OPENMP)
+      {
       uword row = 0;
       
       while(f.good())
