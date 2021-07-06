@@ -12160,8 +12160,8 @@ The decomposition has the following form:
 <li>forms 1 and 3: <i>X = R.t() * R</i></li>
 <li>forms 2 and 4 with <i>layout = "upper"</i>: <i>X = R.t() * R</i></li>
 <li>forms 2 and 4 with <i>layout = "lower"</i>: <i>X = R * R.t()</i></li>
-<li>form 5 with <i>layout = "upper"</i>: <i>X = Y(P,P)</i>, where <i>Y = R.t() * R</i> and <i>Y(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>Y</i></li>
-<li>form 5 with <i>layout = "lower"</i>: <i>X = Y(P,P)</i>, where <i>Y = R * R.t()</i> and <i>Y(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>Y</i></li>
+<li>form 5 with <i>layout = "upper"</i>: <i>X(P,P) = R.t() * R</i>, where <i>X(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>X</i></li>
+<li>form 5 with <i>layout = "lower"</i>: <i>X(P,P) = R * R.t()</i>, where <i>X(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>X</i></li>
 <li>form 6 with <i>layout = "upper"</i>: <i>X = P * R.t() * R * P.t()</i></li>
 <li>form 6 with <i>layout = "lower"</i>: <i>X = P * R * R.t() * P.t()</i></li>
 </ul>
@@ -12179,18 +12179,18 @@ Examples:
 <ul>
 <pre>
 mat A(5, 5, fill::randu);
-mat B = A.t()*A;
+mat X = A.t()*A;
 
-mat R1 = chol(B);
-mat R2 = chol(B, "lower");
+mat R1 = chol(X);
+mat R2 = chol(X, "lower");
 
 
  mat R;
 uvec P_vec;
 umat P_mat;
 
-chol(R, P_vec, B, "upper", "vector");
-chol(R, P_mat, B, "lower", "matrix");
+chol(R, P_vec, X, "upper", "vector");
+chol(R, P_mat, X, "lower", "matrix");
 </pre>
 </ul>
 </li>
