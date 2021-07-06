@@ -1196,13 +1196,13 @@ vec v(5);  v = 123.0;
 Use the following code instead:
 <ul>
 <pre>
-vec v(5,fill::value(123.0));         // Armadillo 10.6 and later
+vec v(5, fill::value(123.0));         // Armadillo 10.6 and later
 </pre>
 </ul>
 or
 <ul>
 <pre>
-vec v(5,fill::none); v.fill(123.0);  // Armadillo 10.5 and earlier
+vec v(5, fill::none); v.fill(123.0);  // Armadillo 10.5 and earlier
 </pre>
 </ul>
 </li>
@@ -19257,7 +19257,7 @@ List of additions and changes for each version:
 <ul>
 <li>faster <a href="#save_load_mat">loading</a> of CSV files when using OpenMP
 <li>expanded <a href="#chol">chol()</a> to optionally use pivoted decomposition</li>
-<li>expanded vector, matrix and cube constructors to allow initialisation of elements via <code>fill::value(scalar)</code></li>
+<li>expanded vector, matrix and cube constructors to allow element initilisation via <code>fill::value(scalar)</code></li>
 </ul>
 </li>
 <br>
