@@ -761,7 +761,7 @@ diskio::save_arma_ascii(const Mat<eT>& x, std::ostream& f)
 template<typename eT>
 inline
 bool
-diskio::save_csv_ascii(const Mat<eT>& x, const std::string& final_name, const field<std::string>& header, const bool with_header)
+diskio::save_csv_ascii(const Mat<eT>& x, const std::string& final_name, const field<std::string>& header, const bool with_header, const char separator)
   {
   arma_extra_debug_sigprint();
   
@@ -781,7 +781,7 @@ diskio::save_csv_ascii(const Mat<eT>& x, const std::string& final_name, const fi
       {
       f << header.at(i);
       
-      if(i != (header.n_elem-1))  { f.put(','); }
+      if(i != (header.n_elem-1))  { f.put(separator); }
       }
     
     f.put('\n');
@@ -789,7 +789,7 @@ diskio::save_csv_ascii(const Mat<eT>& x, const std::string& final_name, const fi
     save_okay = f.good();
     }
   
-  if(save_okay)  { save_okay = diskio::save_csv_ascii(x, f); }
+  if(save_okay)  { save_okay = diskio::save_csv_ascii(x, f, separator); }
   
   f.flush();
   f.close();
@@ -805,7 +805,7 @@ diskio::save_csv_ascii(const Mat<eT>& x, const std::string& final_name, const fi
 template<typename eT>
 inline
 bool
-diskio::save_csv_ascii(const Mat<eT>& x, std::ostream& f)
+diskio::save_csv_ascii(const Mat<eT>& x, std::ostream& f, const char separator)
   {
   arma_extra_debug_sigprint();
   
@@ -822,7 +822,7 @@ diskio::save_csv_ascii(const Mat<eT>& x, std::ostream& f)
       {
       arma_ostream::raw_print_elem(f, x.at(row,col));
       
-      if( col < (x_n_cols-1) )  { f.put(','); }
+      if( col < (x_n_cols-1) )  { f.put(separator); }
       }
     
     f.put('\n');
@@ -841,7 +841,7 @@ diskio::save_csv_ascii(const Mat<eT>& x, std::ostream& f)
 template<typename T>
 inline
 bool
-diskio::save_csv_ascii(const Mat< std::complex<T> >& x, std::ostream& f)
+diskio::save_csv_ascii(const Mat< std::complex<T> >& x, std::ostream& f, const char separator)
   {
   arma_extra_debug_sigprint();
   
@@ -870,7 +870,7 @@ diskio::save_csv_ascii(const Mat< std::complex<T> >& x, std::ostream& f)
       arma_ostream::raw_print_elem(f, tmp_i_abs);
       f.put('i');
       
-      if( col < (x_n_cols-1) )  { f.put(','); }
+      if( col < (x_n_cols-1) )  { f.put(separator); }
       }
     
     f.put('\n');
@@ -1542,7 +1542,7 @@ diskio::load_arma_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
 template<typename eT>
 inline
 bool
-diskio::load_csv_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg, field<std::string>& header, const bool with_header)
+diskio::load_csv_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg, field<std::string>& header, const bool with_header, const char separator)
   {
   arma_extra_debug_sigprint();
   
@@ -1576,7 +1576,7 @@ diskio::load_csv_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg
       
       while(header_stream.good())
         {
-        std::getline(header_stream, token, ',');
+        std::getline(header_stream, token, separator);
         ++header_n_tokens;
         header_tokens.push_back(token);
         }
@@ -1596,7 +1596,7 @@ diskio::load_csv_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg
   
   if(load_okay)
     {
-    load_okay = diskio::load_csv_ascii(x, f, err_msg);
+    load_okay = diskio::load_csv_ascii(x, f, err_msg, separator);
     }
   
   f.close();
@@ -1610,7 +1610,7 @@ diskio::load_csv_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg
 template<typename eT>
 inline
 bool
-diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
+diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg, const char separator)
   {
   arma_extra_debug_sigprint();
   
@@ -1645,7 +1645,7 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
     
     while(line_stream.good())
       {
-      std::getline(line_stream, token, ',');
+      std::getline(line_stream, token, separator);
       ++line_n_cols;
       }
     
@@ -1706,7 +1706,7 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
         
         while(line_stream.good())
           {
-          std::getline(line_stream, token_array(line_stream_col), ',');
+          std::getline(line_stream, token_array(line_stream_col), separator);
           
           ++line_stream_col;
           }
@@ -1741,7 +1741,7 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
       
       while(line_stream.good())
         {
-        std::getline(line_stream, token, ',');
+        std::getline(line_stream, token, separator);
         
         diskio::convert_token( x.at(row,col), token );
         
@@ -1761,7 +1761,7 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
 template<typename T>
 inline
 bool
-diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string& err_msg)
+diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string& err_msg, const char separator)
   {
   arma_extra_debug_sigprint();
   
@@ -1796,7 +1796,7 @@ diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string& 
     
     while(line_stream.good())
       {
-      std::getline(line_stream, token, ',');
+      std::getline(line_stream, token, separator);
       ++line_n_cols;
       }
     
@@ -1828,7 +1828,7 @@ diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string& 
     
     while(line_stream.good())
       {
-      std::getline(line_stream, token, ',');
+      std::getline(line_stream, token, separator);
       
       // remove spaces and tabs
       if(token.length() > 0)
@@ -2734,7 +2734,7 @@ diskio::load_auto_detect(Mat<eT>& x, std::istream& f, std::string& err_msg)
 template<typename eT>
 inline
 bool
-diskio::save_csv_ascii(const SpMat<eT>& x, const std::string& final_name, const field<std::string>& header, const bool with_header)
+diskio::save_csv_ascii(const SpMat<eT>& x, const std::string& final_name, const field<std::string>& header, const bool with_header, const char separator)
   {
   arma_extra_debug_sigprint();
   
@@ -2754,7 +2754,7 @@ diskio::save_csv_ascii(const SpMat<eT>& x, const std::string& final_name, const 
       {
       f << header(i);
       
-      if(i != (header.n_elem-1))  { f.put(','); }
+      if(i != (header.n_elem-1))  { f.put(separator); }
       }
     
     f.put('\n');
@@ -2762,7 +2762,7 @@ diskio::save_csv_ascii(const SpMat<eT>& x, const std::string& final_name, const 
     save_okay = f.good();
     }
   
-  if(save_okay)  { save_okay = diskio::save_csv_ascii(x, f); }
+  if(save_okay)  { save_okay = diskio::save_csv_ascii(x, f, separator); }
   
   f.flush();
   f.close();
@@ -2778,7 +2778,7 @@ diskio::save_csv_ascii(const SpMat<eT>& x, const std::string& final_name, const 
 template<typename eT>
 inline
 bool
-diskio::save_csv_ascii(const SpMat<eT>& x, std::ostream& f)
+diskio::save_csv_ascii(const SpMat<eT>& x, std::ostream& f, const char separator)
   {
   arma_extra_debug_sigprint();
   
@@ -2799,7 +2799,7 @@ diskio::save_csv_ascii(const SpMat<eT>& x, std::ostream& f)
       
       if(val != eT(0))  { arma_ostream::raw_print_elem(f, val); }
       
-      if( col < (x_n_cols-1) )  { f.put(','); }
+      if( col < (x_n_cols-1) )  { f.put(separator); }
       }
     
     f.put('\n');
@@ -2818,12 +2818,13 @@ diskio::save_csv_ascii(const SpMat<eT>& x, std::ostream& f)
 template<typename T>
 inline
 bool
-diskio::save_csv_ascii(const SpMat< std::complex<T> >& x, std::ostream& f)
+diskio::save_csv_ascii(const SpMat< std::complex<T> >& x, std::ostream& f, const char separator)
   {
   arma_extra_debug_sigprint();
   
   arma_ignore(x);
   arma_ignore(f);
+  arma_ignore(separator);
   
   arma_debug_warn_level(1, "saving complex sparse matrices as csv_ascii not yet implemented");
   
@@ -3004,7 +3005,7 @@ diskio::save_arma_binary(const SpMat<eT>& x, std::ostream& f)
 template<typename eT>
 inline
 bool
-diskio::load_csv_ascii(SpMat<eT>& x, const std::string& name, std::string& err_msg, field<std::string>& header, const bool with_header)
+diskio::load_csv_ascii(SpMat<eT>& x, const std::string& name, std::string& err_msg, field<std::string>& header, const bool with_header, const char separator)
   {
   arma_extra_debug_sigprint();
   
@@ -3038,7 +3039,7 @@ diskio::load_csv_ascii(SpMat<eT>& x, const std::string& name, std::string& err_m
       
       while(header_stream.good())
         {
-        std::getline(header_stream, token, ',');
+        std::getline(header_stream, token, separator);
         ++header_n_tokens;
         header_tokens.push_back(token);
         }
@@ -3058,7 +3059,7 @@ diskio::load_csv_ascii(SpMat<eT>& x, const std::string& name, std::string& err_m
   
   if(load_okay)
     {
-    load_okay = diskio::load_csv_ascii(x, f, err_msg);
+    load_okay = diskio::load_csv_ascii(x, f, err_msg, separator);
     }
   
   f.close();
@@ -3071,7 +3072,7 @@ diskio::load_csv_ascii(SpMat<eT>& x, const std::string& name, std::string& err_m
 template<typename eT>
 inline
 bool
-diskio::load_csv_ascii(SpMat<eT>& x, std::istream& f, std::string& err_msg)
+diskio::load_csv_ascii(SpMat<eT>& x, std::istream& f, std::string& err_msg, const char separator)
   {
   arma_extra_debug_sigprint();
   
@@ -3106,7 +3107,7 @@ diskio::load_csv_ascii(SpMat<eT>& x, std::istream& f, std::string& err_msg)
     
     while(line_stream.good())
       {
-      std::getline(line_stream, token, ',');
+      std::getline(line_stream, token, separator);
       ++line_n_cols;
       }
     
@@ -3137,7 +3138,7 @@ diskio::load_csv_ascii(SpMat<eT>& x, std::istream& f, std::string& err_msg)
       
       while(line_stream.good())
         {
-        std::getline(line_stream, token, ',');
+        std::getline(line_stream, token, separator);
         
         eT val = eT(0);
         
@@ -3167,13 +3168,14 @@ diskio::load_csv_ascii(SpMat<eT>& x, std::istream& f, std::string& err_msg)
 template<typename T>
 inline
 bool
-diskio::load_csv_ascii(SpMat< std::complex<T> >& x, std::istream& f, std::string& err_msg)
+diskio::load_csv_ascii(SpMat< std::complex<T> >& x, std::istream& f, std::string& err_msg, const char separator)
   {
   arma_extra_debug_sigprint();
   
   arma_ignore(x);
   arma_ignore(f);
   arma_ignore(err_msg);
+  arma_ignore(separator);
   
   arma_debug_warn_level(1, "loading complex sparse matrices as csv_ascii not yet implemented");
   
