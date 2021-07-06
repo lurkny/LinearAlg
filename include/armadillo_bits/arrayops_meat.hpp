@@ -252,7 +252,11 @@ arrayops::convert_cx_scalar
   {
   arma_ignore(junk);
   
-  out = out_eT( in.real() );
+  const in_T val = in.real();
+  
+  const bool conversion_ok = (std::is_integral<out_eT>::value && std::is_floating_point<in_T>::value) ? arma_isfinite(val) : true;
+  
+  out = conversion_ok ? out_eT(val) : out_eT(0);
   }
 
 
