@@ -69,6 +69,13 @@ namespace fill
   
   //
   
+  template<typename eT> inline bool isfinite_wrapper(eT                )  { return true;                                               }
+  template<>            inline bool isfinite_wrapper(float            x)  { return std::isfinite(x);                                   }
+  template<>            inline bool isfinite_wrapper(double           x)  { return std::isfinite(x);                                   }
+  template<typename  T> inline bool isfinite_wrapper(std::complex<T>& x)  { return std::isfinite(x.real()) && std::isfinite(x.imag()); }
+  
+  //
+  
   template<typename scalar_type1>
   struct scalar_holder
     {
@@ -86,7 +93,9 @@ namespace fill
     inline
     operator scalar_holder<scalar_type2>() const
       {
-      return scalar_holder<scalar_type2>( scalar_type2(scalar) );
+      const bool ok_conversion = (std::is_integral<scalar_type2>::value && std::is_floating_point<scalar_type1>::value) ? isfinite_wrapper(scalar) : true;
+      
+      return scalar_holder<scalar_type2>( ok_conversion ? scalar_type2(scalar) : scalar_type2(0) );
       }
     };
   
