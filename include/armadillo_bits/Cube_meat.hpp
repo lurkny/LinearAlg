@@ -192,12 +192,12 @@ Cube<eT>::Cube(const uword in_n_rows, const uword in_n_cols, const uword in_n_sl
   
   init_cold();
   
-  if(is_same_type<fill_type, fill::fill_zeros>::yes)  { (*this).zeros(); }
-  if(is_same_type<fill_type, fill::fill_ones >::yes)  { (*this).ones();  }
-  if(is_same_type<fill_type, fill::fill_randu>::yes)  { (*this).randu(); }
-  if(is_same_type<fill_type, fill::fill_randn>::yes)  { (*this).randn(); }
+  if(is_same_type<fill_type, fill::fill_zeros>::yes)  { (*this).zeros(); return; }
+  if(is_same_type<fill_type, fill::fill_ones >::yes)  { (*this).ones();  return; }
+  if(is_same_type<fill_type, fill::fill_randu>::yes)  { (*this).randu(); return; }
+  if(is_same_type<fill_type, fill::fill_randn>::yes)  { (*this).randn(); return; }
   
-  if(is_same_type<fill_type, fill::fill_eye  >::yes)  { arma_debug_check(true, "Cube::Cube(): unsupported fill type"); }
+  arma_debug_check(true, "Cube::Cube(): unsupported fill type");
   }
 
 
@@ -220,12 +220,12 @@ Cube<eT>::Cube(const SizeCube& s, const fill::fill_class<fill_type>&)
   
   init_cold();
   
-  if(is_same_type<fill_type, fill::fill_zeros>::yes)  { (*this).zeros(); }
-  if(is_same_type<fill_type, fill::fill_ones >::yes)  { (*this).ones();  }
-  if(is_same_type<fill_type, fill::fill_randu>::yes)  { (*this).randu(); }
-  if(is_same_type<fill_type, fill::fill_randn>::yes)  { (*this).randn(); }
+  if(is_same_type<fill_type, fill::fill_zeros>::yes)  { (*this).zeros(); return; }
+  if(is_same_type<fill_type, fill::fill_ones >::yes)  { (*this).ones();  return; }
+  if(is_same_type<fill_type, fill::fill_randu>::yes)  { (*this).randu(); return; }
+  if(is_same_type<fill_type, fill::fill_randn>::yes)  { (*this).randn(); return; }
   
-  if(is_same_type<fill_type, fill::fill_eye  >::yes)  { arma_debug_check(true, "Cube::Cube(): unsupported fill type"); }
+  arma_debug_check(true, "Cube::Cube(): unsupported fill type");
   }
 
 
@@ -5273,12 +5273,12 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::fixed(const fill::f
   
   mem_setup();
   
-  if(is_same_type<fill_type, fill::fill_zeros>::yes)  { (*this).zeros(); }
-  if(is_same_type<fill_type, fill::fill_ones >::yes)  { (*this).ones();  }
-  if(is_same_type<fill_type, fill::fill_randu>::yes)  { (*this).randu(); }
-  if(is_same_type<fill_type, fill::fill_randn>::yes)  { (*this).randn(); }
+  if(is_same_type<fill_type, fill::fill_zeros>::yes)  { (*this).zeros(); return; }
+  if(is_same_type<fill_type, fill::fill_ones >::yes)  { (*this).ones();  return; }
+  if(is_same_type<fill_type, fill::fill_randu>::yes)  { (*this).randu(); return; }
+  if(is_same_type<fill_type, fill::fill_randn>::yes)  { (*this).randn(); return; }
   
-  if(is_same_type<fill_type, fill::fill_eye  >::yes)  { arma_debug_check(true, "Cube::fixed::fixed(): unsupported fill type"); }
+  arma_debug_check(true, "Cube::fixed::fixed(): unsupported fill type");
   }
 
 
