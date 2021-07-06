@@ -12136,7 +12136,7 @@ See also:
 </table>
 <ul>
 <li>
-Cholesky decomposition of symmetric/hermitian positive-definite matrix <i>X</i> into triangular matrix <i>R</i>, with an optional permutation matrix/vector <i>P</i>
+Cholesky decomposition of symmetric/hermitian matrix <i>X</i> into triangular matrix <i>R</i>, with an optional permutation vector/matrix <i>P</i>
 </li>
 <br>
 <li>
@@ -12148,7 +12148,15 @@ The optional argument <i>layout</i> is either <code>"upper"</code> or <code>"low
 </li>
 <br>
 <li>
-Forms 5 to 7 also produce a permutation matrix/vector <i>P</i>
+Forms 1 to 4 require <i>X</i> to be positive definite
+</li>
+<br>
+<li>
+Forms 5 to 7 require <i>X</i> to be positive semi-definite
+</li>
+<br>
+<li>
+Forms 5 to 7 also provide a permutation vector/matrix <i>P</i> with type <a href="#Col">uvec</a> or <a href="#Mat">umat</a>
 </li>
 <br>
 <li>
@@ -12161,9 +12169,9 @@ The decomposition has the following form:
 <li>forms 1 to 4, with <i>layout = "upper"</i>: <i>X = R.t() * R</i></li>
 <li>forms 1 to 4, with <i>layout = "lower"</i>: <i>X = R * R.t()</i></li>
 <li>forms 5 to 7, with <i>layout = "upper"</i> and <i>P_mode = "matrix"</i>: <i>X = P * R.t() * R * P.t()</i></li>
+<li>forms 5 to 7, with <i>layout = "upper"</i> and <i>P_mode = "vector"</i>: <i>X = Y(P,P)</i>, where <i>Y = R.t() * R</i> and <i>Y(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>Y</i></li>
 <li>forms 5 to 7, with <i>layout = "lower"</i> and <i>P_mode = "matrix"</i>: <i>X = P * R * R.t() * P.t()</i></li>
-<li>forms 5 to 7, with <i>layout = "upper"</i> and <i>P_mode = "vector"</i>: <i>X(P,P) = R.t() * R</i>, where <i>X(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>X</i></li>
-<li>forms 5 to 7, with <i>layout = "lower"</i> and <i>P_mode = "vector"</i>: <i>X(P,P) = R * R.t()</i>, where <i>X(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>X</i></li>
+<li>forms 5 to 7, with <i>layout = "lower"</i> and <i>P_mode = "vector"</i>: <i>X = Y(P,P)</i>, where <i>Y = R * R.t()</i> and <i>Y(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>Y</i></li>
 </ul>
 </li>
 <br>
@@ -12178,11 +12186,19 @@ The decomposition has the following form:
 Examples:
 <ul>
 <pre>
-mat X(5, 5, fill::randu);
-mat Y = X.t()*X;
+mat A(5, 5, fill::randu);
+mat B = A.t()*A;
 
-mat R1 = chol(Y);
-mat R2 = chol(Y, "lower");
+mat R1 = chol(B);
+mat R2 = chol(B, "lower");
+
+
+ mat R;
+uvec P_vec;
+umat P_mat;
+
+chol(R, P_vec, B);
+chol(R, P_mat, B, "lower", "matrix");
 </pre>
 </ul>
 </li>
@@ -12194,8 +12210,9 @@ See also:
 <li><a href="#lu">lu()</a></li>
 <li><a href="#qr">qr()</a></li>
 <li><a href="#is_sympd">.is_sympd()</a></li>
-<li><a href="http://mathworld.wolfram.com/CholeskyDecomposition.html">Cholesky decomposition in MathWorld</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Cholesky_decomposition">Cholesky decomposition in Wikipedia</a></li>
+<li><a href="https://mathworld.wolfram.com/CholeskyDecomposition.html">Cholesky decomposition in MathWorld</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Cholesky_decomposition">Cholesky decomposition in Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Definite_matrix">Definite matrix in Wikipedia</a></li>
 </ul>
 </li>
 <br>
