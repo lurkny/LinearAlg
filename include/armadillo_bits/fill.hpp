@@ -84,7 +84,7 @@ namespace fill
       typename arma::enable_if2<allow_conversion<scalar_type1, scalar_type2>::value, int>::result = 0
       >
     inline
-    operator scalar_holder<scalar_type2>()
+    operator scalar_holder<scalar_type2>() const
       {
       return scalar_holder<scalar_type2>( scalar_type2(scalar) );
       }
