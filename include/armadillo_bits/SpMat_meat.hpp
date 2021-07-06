@@ -4620,9 +4620,9 @@ SpMat<eT>::save(const csv_name& spec, const file_type type) const
       {
       const std::string& token = spec.header_ro.at(i);
       
-      if(token.find(',') != std::string::npos)
+      if(token.find(separator) != std::string::npos)
         {
-        arma_debug_warn_level(1, "SpMat::save(): token within the header contains a comma: '", token, "'");
+        arma_debug_warn_level(1, "SpMat::save(): token within the header contains the separator character: '", token, "'");
         return false;
         }
       }
