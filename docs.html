@@ -12124,15 +12124,14 @@ See also:
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="chol"></a>
 <table>
-<tr><td><b>R = chol(       X                 )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td><b>R = chol(       X, layout         )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
-<tr><td>                                          </td><td>&nbsp;&nbsp;&nbsp;</td><td>        </td></tr>
-<tr><td><b>    chol( R,    X                 )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 3)</td></tr>
-<tr><td><b>    chol( R,    X, layout         )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 4)</td></tr>
-<tr><td>                                          </td><td>&nbsp;&nbsp;&nbsp;</td><td>        </td></tr>
-<tr><td><b>    chol( R, P, X                 )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 5)</td></tr>
-<tr><td><b>    chol( R, P, X, layout         )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 6)</td></tr>
-<tr><td><b>    chol( R, P, X, layout, P_mode )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 7)</td></tr>
+<tr><td><b>R = chol(       X                   )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
+<tr><td><b>R = chol(       X, layout           )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td>                                            </td><td>&nbsp;&nbsp;&nbsp;</td><td>        </td></tr>
+<tr><td><b>    chol( R,    X                   )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 3)</td></tr>
+<tr><td><b>    chol( R,    X, layout           )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 4)</td></tr>
+<tr><td>                                            </td><td>&nbsp;&nbsp;&nbsp;</td><td>        </td></tr>
+<tr><td><b>    chol( R, P, X, layout, "vector" )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 5)</td></tr>
+<tr><td><b>    chol( R, P, X, layout, "matrix" )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 6)</td></tr>
 </table>
 <ul>
 <li>
@@ -12152,26 +12151,19 @@ Forms 1 to 4 require <i>X</i> to be positive definite
 </li>
 <br>
 <li>
-Forms 5 to 7 require <i>X</i> to be positive semi-definite
-</li>
-<br>
-<li>
-Forms 5 to 7 also provide a permutation vector/matrix <i>P</i> with type <a href="#Col">uvec</a> or <a href="#Mat">umat</a>
-</li>
-<br>
-<li>
-The optional argument <i>P_mode</i> is either <code>"vector"</code> or <code>"matrix"</code>, which specifies the form of <i>P</i>; by default <i>P_mode = "vector"</i>
+Forms 5 to 6 require <i>X</i> to be positive semi-definite; these forms also provide a permutation vector/matrix <i>P</i> with type <a href="#Col">uvec</a> or <a href="#Mat">umat</a>
 </li>
 <br>
 <li>
 The decomposition has the following form:
 <ul>
-<li>forms 1 to 4, with <i>layout = "upper"</i>: <i>X = R.t() * R</i></li>
-<li>forms 1 to 4, with <i>layout = "lower"</i>: <i>X = R * R.t()</i></li>
-<li>forms 5 to 7, with <i>layout = "upper"</i> and <i>P_mode = "matrix"</i>: <i>X = P * R.t() * R * P.t()</i></li>
-<li>forms 5 to 7, with <i>layout = "upper"</i> and <i>P_mode = "vector"</i>: <i>X = Y(P,P)</i>, where <i>Y = R.t() * R</i> and <i>Y(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>Y</i></li>
-<li>forms 5 to 7, with <i>layout = "lower"</i> and <i>P_mode = "matrix"</i>: <i>X = P * R * R.t() * P.t()</i></li>
-<li>forms 5 to 7, with <i>layout = "lower"</i> and <i>P_mode = "vector"</i>: <i>X = Y(P,P)</i>, where <i>Y = R * R.t()</i> and <i>Y(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>Y</i></li>
+<li>forms 1 and 3: <i>X = R.t() * R</i></li>
+<li>forms 2 and 4 with <i>layout = "upper"</i>: <i>X = R.t() * R</i></li>
+<li>forms 2 and 4 with <i>layout = "lower"</i>: <i>X = R * R.t()</i></li>
+<li>form 5 with <i>layout = "upper"</i>: <i>X = Y(P,P)</i>, where <i>Y = R.t() * R</i> and <i>Y(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>Y</i></li>
+<li>form 5 with <i>layout = "lower"</i>: <i>X = Y(P,P)</i>, where <i>Y = R * R.t()</i> and <i>Y(P,P)</i> is a <a href="#submat">non-contiguous view</a> of <i>Y</i></li>
+<li>form 6 with <i>layout = "upper"</i>: <i>X = P * R.t() * R * P.t()</i></li>
+<li>form 6 with <i>layout = "lower"</i>: <i>X = P * R * R.t() * P.t()</i></li>
 </ul>
 </li>
 <br>
@@ -12197,7 +12189,7 @@ mat R2 = chol(B, "lower");
 uvec P_vec;
 umat P_mat;
 
-chol(R, P_vec, B);
+chol(R, P_vec, B, "upper", "vector");
 chol(R, P_mat, B, "lower", "matrix");
 </pre>
 </ul>
