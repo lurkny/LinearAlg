@@ -725,12 +725,13 @@ which is one of:
 <ul>
 <table>
 <tbody>
-<tr><td><code>fill::zeros</code></td><td>&nbsp;=&nbsp;</td><td>set all elements to 0</td></tr>
-<tr><td><code>fill::ones</code></td><td>&nbsp;=&nbsp;</td><td>set all elements to 1</td></tr>
-<tr><td><code>fill::eye</code></td><td>&nbsp;=&nbsp;</td><td>set the elements on the main diagonal to 1 and off-diagonal elements to 0</td></tr>
-<tr><td><code>fill::randu</code></td><td>&nbsp;=&nbsp;</td><td>set all elements to random values from a uniform distribution in the [0,1] interval</td></tr>
-<tr><td><code>fill::randn</code></td><td>&nbsp;=&nbsp;</td><td>set all elements to random values from a normal/Gaussian distribution with zero mean and unit variance</td></tr>
-<tr><td><code>fill::none</code></td><td>&nbsp;=&nbsp;</td><td>do not initialise the elements</td></tr>
+<tr><td><code>fill::zeros</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>set all elements to 0</td></tr>
+<tr><td><code>fill::ones</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>set all elements to 1</td></tr>
+<tr><td><code>fill::eye</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>set the elements on the main diagonal to 1 and off-diagonal elements to 0</td></tr>
+<tr><td><code>fill::randu</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>set all elements to random values from a uniform distribution in the [0,1] interval</td></tr>
+<tr><td><code>fill::randn</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>set all elements to random values from a normal/Gaussian distribution with zero mean and unit variance</td></tr>
+<tr><td><code>fill::value(scalar)</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>set all elements to specified scalar (Armadillo 10.6 and later)</td></tr>
+<tr><td><code>fill::none</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>do not initialise the elements</td></tr>
 </tbody>
 </table>
 </ul>
@@ -866,7 +867,13 @@ mat A(5,5);  A = 123.0;
 Use the following code instead:
 <ul>
 <pre>
-mat A(5,5);  A.fill(123.0);
+mat A(5,5,fill::value(123.0));         // Armadillo 10.6 and later
+</pre>
+</ul>
+or
+<ul>
+<pre>
+mat A(5,5,fill::none); A.fill(123.0);  // Armadillo 10.5 and earlier
 </pre>
 </ul>
 <br>
@@ -1183,13 +1190,19 @@ For mathematical correctness, scalars are treated as 1x1 matrices during initial
 As such, the code below <b>will not</b> generate a column vector with every element equal to 123.0:
 <ul>
 <pre>
-vec a(5);  a = 123.0;
+vec v(5);  v = 123.0;
 </pre>
 </ul>
 Use the following code instead:
 <ul>
 <pre>
-vec a(5);  a.fill(123.0);
+vec v(5,fill::value(123.0));         // Armadillo 10.6 and later
+</pre>
+</ul>
+or
+<ul>
+<pre>
+vec v(5,fill::none); v.fill(123.0);  // Armadillo 10.5 and earlier
 </pre>
 </ul>
 </li>
@@ -1449,7 +1462,13 @@ rowvec r(5);  r = 123.0;
 Use the following code instead:
 <ul>
 <pre>
-rowvec r(5);  r.fill(123.0);
+rowvec r(5, fill::value(123.0));         // Armadillo 10.6 and later
+</pre>
+</ul>
+or
+<ul>
+<pre>
+rowvec r(5, fill::none); r.fill(123.0);  // Armadillo 10.5 and earlier
 </pre>
 </ul>
 <br>
@@ -1729,7 +1748,13 @@ cube c(5,6,7);  c = 123.0;
 Use the following code instead:
 <ul>
 <pre>
-cube c(5,6,7);  c.fill(123.0);
+cube c(5,6,7,fill::value(123.0));         // Armadillo 10.6 and later
+</pre>
+</ul>
+or
+<ul>
+<pre>
+cube c(5,6,7,fill::none); c.fill(123.0);  // Armadillo 10.5 and earlier
 </pre>
 </ul>
 <br>
