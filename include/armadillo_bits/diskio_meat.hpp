@@ -2702,7 +2702,7 @@ diskio::load_auto_detect(Mat<eT>& x, std::istream& f, std::string& err_msg)
     switch(ft)
       {
       case csv_ascii:
-        return load_csv_ascii(x, f, err_msg);
+        return load_csv_ascii(x, f, err_msg, char(','));
         break;
       
       case raw_binary:

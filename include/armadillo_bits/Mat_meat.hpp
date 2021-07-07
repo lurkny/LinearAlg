@@ -7578,7 +7578,7 @@ Mat<eT>::save(const csv_name& spec, const file_type type) const
   if(with_header  )  { arma_extra_debug_print("with_header"); }
   if(use_semicolon)  { arma_extra_debug_print("semicolon");   }
   
-  const char separator = (use_semicolon) ? ';' : ',';
+  const char separator = (use_semicolon) ? char(';') : char(',');
   
   if(no_header)  { with_header = false; }
   
@@ -7652,7 +7652,7 @@ Mat<eT>::save(std::ostream& os, const file_type type) const
       break;
     
     case csv_ascii:
-      save_okay = diskio::save_csv_ascii(*this, os);
+      save_okay = diskio::save_csv_ascii(*this, os, char(','));
       break;
     
     case coord_ascii:
@@ -7839,7 +7839,7 @@ Mat<eT>::load(const csv_name& spec, const file_type type)
   if(with_header  )  { arma_extra_debug_print("with_header"); }
   if(use_semicolon)  { arma_extra_debug_print("semicolon");   }
   
-  const char separator = (use_semicolon) ? ';' : ',';
+  const char separator = (use_semicolon) ? char(';') : char(',');
   
   if(no_header)  { with_header = false; }
   
@@ -7928,7 +7928,7 @@ Mat<eT>::load(std::istream& is, const file_type type)
       break;
     
     case csv_ascii:
-      load_okay = diskio::load_csv_ascii(*this, is, err_msg);
+      load_okay = diskio::load_csv_ascii(*this, is, err_msg, char(','));
       break;
     
     case coord_ascii:
