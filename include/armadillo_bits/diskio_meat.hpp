@@ -1663,26 +1663,22 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg, const 
   
   field<std::string> token_array;
   
-  bool token_array_ok = true;
+  bool token_array_ok = false;
   
   if(use_mp)
     {
-    #if defined(ARMA_USE_OPENMP)
+    try
       {
-      try
-        {
-        token_array.set_size(f_n_cols);
-        
-        for(uword i=0; i < f_n_cols; ++i)  { token_array(i).reserve(32); }
-        }
-      catch(...)
-        {
-        token_array_ok = false;
-        
-        token_array.reset();
-        }
+      token_array.set_size(f_n_cols);
+      
+      for(uword i=0; i < f_n_cols; ++i)  { token_array(i).reserve(32); }
+      
+      token_array_ok = true;
       }
-    #endif
+    catch(...)
+      {
+      token_array.reset();
+      }
     }
   
   if(use_mp && token_array_ok)
