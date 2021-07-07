@@ -5278,7 +5278,7 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::fixed(const fill::f
   if(is_same_type<fill_type, fill::fill_randu>::yes)  { (*this).randu(); }
   if(is_same_type<fill_type, fill::fill_randn>::yes)  { (*this).randn(); }
   
-  arma_static_check( (is_same_type<fill_type, fill::fill_eye>::yes), "Cube::Cube(): unsupported fill type" );
+  arma_static_check( (is_same_type<fill_type, fill::fill_eye>::yes), "Cube::fixed::fixed(): unsupported fill type" );
   }
 
 
