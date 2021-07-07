@@ -319,24 +319,33 @@ diskio::guess_file_type_internal(std::istream& f)
   
   if(load_okay == false)  { return file_type_unknown; }
   
-  bool has_binary  = false;
-  bool has_bracket = false;
-  bool has_comma   = false;
+  bool has_binary    = false;
+  bool has_bracket   = false;
+  bool has_comma     = false;
+  bool has_semicolon = false;
   
   for(uword i=0; i<N_use; ++i)
     {
     const unsigned char val = data_mem[i];
     
-    if( (val <=   8) || (val >= 123) )  { has_binary  = true; break; }  // the range checking can be made more elaborate
+    if( (val <=   8) || (val >= 123) )  { has_binary    = true; break; }  // the range checking can be made more elaborate
     
-    if( (val == '(') || (val == ')') )  { has_bracket = true;        }
+    if( (val == '(') || (val == ')') )  { has_bracket   = true;        }
     
-    if( (val == ',')                 )  { has_comma   = true;        }
+    if( (val == ';')                 )  { has_semicolon = true;        }
+    
+    if( (val == ',')                 )  { has_comma     = true;        }
     }
   
   if(has_binary)  { return raw_binary; }
   
-  if(has_comma && (has_bracket == false))  { return csv_ascii; }
+  // ssv_ascii has to be before csv_ascii;
+  // if the data has semicolons, it suggests a CSV file with semicolon as the separating character;
+  // the semicolon may be used to allow the comma character to represent the decimal point (eg. 1,2345 vs 1.2345)
+  
+  if(has_semicolon && (has_bracket == false))  { return ssv_ascii; }
+  
+  if(has_comma     && (has_bracket == false))  { return csv_ascii; }
   
   return raw_ascii;
   }
@@ -2699,6 +2708,10 @@ diskio::load_auto_detect(Mat<eT>& x, std::istream& f, std::string& err_msg)
       {
       case csv_ascii:
         return load_csv_ascii(x, f, err_msg, char(','));
+        break;
+      
+      case ssv_ascii:
+        return load_csv_ascii(x, f, err_msg, char(';'));
         break;
       
       case raw_binary:
