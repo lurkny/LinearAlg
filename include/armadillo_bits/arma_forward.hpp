@@ -369,7 +369,7 @@ enum struct file_type : unsigned int
   hdf5_binary,        //!< HDF5: open binary format, not specific to Armadillo, which can store arbitrary data
   hdf5_binary_trans,  //!< [NOTE: DO NOT USE - deprecated] as per hdf5_binary, but save/load the data with columns transposed to rows
   coord_ascii,        //!< simple co-ordinate format for sparse matrices (indices start at zero)
-  ssv_ascii,          //!< [NOTE: internal use only!] similar to csv_ascii, but uses semicolon (;) as the separator character
+  ssv_ascii,          //!< similar to csv_ascii; uses semicolon (;) instead of comma (,) as the separator
   };
 
 

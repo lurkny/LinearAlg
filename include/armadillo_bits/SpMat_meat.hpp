@@ -4558,6 +4558,10 @@ SpMat<eT>::save(const std::string name, const file_type type) const
       return (*this).save(csv_name(name), type);
       break;
     
+    case ssv_ascii:
+      return (*this).save(csv_name(name), type);
+      break;
+    
     case arma_binary:
       save_okay = diskio::save_arma_binary(*this, name);
       break;
@@ -4586,7 +4590,7 @@ SpMat<eT>::save(const csv_name& spec, const file_type type) const
   {
   arma_extra_debug_sigprint();
   
-  if(type != csv_ascii)
+  if( (type != csv_ascii) && (type != ssv_ascii) ) 
     {
     arma_stop_runtime_error("SpMat::save(): unsupported file type for csv_name()");
     return false;
@@ -4595,7 +4599,7 @@ SpMat<eT>::save(const csv_name& spec, const file_type type) const
   const bool   do_trans     = bool(spec.opts.flags & csv_opts::flag_trans      );
   const bool   no_header    = bool(spec.opts.flags & csv_opts::flag_no_header  );
         bool with_header    = bool(spec.opts.flags & csv_opts::flag_with_header);
-  const bool  use_semicolon = bool(spec.opts.flags & csv_opts::flag_semicolon  );
+  const bool  use_semicolon = bool(spec.opts.flags & csv_opts::flag_semicolon  ) || (type == ssv_ascii);
   
   arma_extra_debug_print("SpMat::save(csv_name): enabled flags:");
   
@@ -4675,6 +4679,10 @@ SpMat<eT>::save(std::ostream& os, const file_type type) const
       save_okay = diskio::save_csv_ascii(*this, os, char(','));
       break;
     
+    case ssv_ascii:
+      save_okay = diskio::save_csv_ascii(*this, os, char(';'));
+      break;
+    
     case arma_binary:
       save_okay = diskio::save_arma_binary(*this, os);
       break;
@@ -4719,6 +4727,10 @@ SpMat<eT>::load(const std::string name, const file_type type)
       return (*this).load(csv_name(name), type);
       break;
     
+    case ssv_ascii:
+      return (*this).load(csv_name(name), type);
+      break;
+    
     case arma_binary:
       load_okay = diskio::load_arma_binary(*this, name, err_msg);
       break;
@@ -4759,7 +4771,7 @@ SpMat<eT>::load(const csv_name& spec, const file_type type)
   {
   arma_extra_debug_sigprint();
   
-  if(type != csv_ascii)
+  if( (type != csv_ascii) && (type != ssv_ascii) ) 
     {
     arma_stop_runtime_error("SpMat::load(): unsupported file type for csv_name()");
     return false;
@@ -4768,7 +4780,7 @@ SpMat<eT>::load(const csv_name& spec, const file_type type)
   const bool   do_trans     = bool(spec.opts.flags & csv_opts::flag_trans      );
   const bool   no_header    = bool(spec.opts.flags & csv_opts::flag_no_header  );
         bool with_header    = bool(spec.opts.flags & csv_opts::flag_with_header);
-  const bool  use_semicolon = bool(spec.opts.flags & csv_opts::flag_semicolon  );
+  const bool  use_semicolon = bool(spec.opts.flags & csv_opts::flag_semicolon  ) || (type == ssv_ascii);
   
   arma_extra_debug_print("SpMat::load(csv_name): enabled flags:");
   
@@ -4861,6 +4873,10 @@ SpMat<eT>::load(std::istream& is, const file_type type)
     
     case csv_ascii:
       load_okay = diskio::load_csv_ascii(*this, is, err_msg, char(','));
+      break;
+    
+    case ssv_ascii:
+      load_okay = diskio::load_csv_ascii(*this, is, err_msg, char(';'));
       break;
     
     case arma_binary:
