@@ -12177,7 +12177,7 @@ Forms 1 to 4 require <i>X</i> to be positive definite
 </li>
 <br>
 <li>
-Forms 5 to 6 require <i>X</i> to be positive semi-definite; these forms also provide a permutation vector/matrix <i>P</i> with type <a href="#Col">uvec</a> or <a href="#Mat">umat</a>
+Forms 5 to 6 require <i>X</i> to be positive semi-definite; these forms use pivoted decomposition and provide a permutation vector/matrix <i>P</i> with type <a href="#Col">uvec</a> or <a href="#Mat">umat</a>
 </li>
 <br>
 <li>
@@ -19257,7 +19257,7 @@ List of additions and changes for each version:
 <li>Version 10.6:
 <ul>
 <li>expanded <a href="#chol">chol()</a> to optionally use pivoted decomposition</li>
-<li>expanded vector, matrix and cube constructors to allow element initialisation via <code>fill::value(scalar)</code></li>
+<li>expanded vector, matrix and cube constructors to allow element initialisation via <code>fill::value(scalar)</code>, eg. <code>mat X(4,5,fill::value(123))</code></li>
 <li>faster <a href="#save_load_mat">loading</a> of CSV files when using OpenMP
 <li>added <i>csv_opts::semicolon</i> option to allow <a href="#save_load_mat">saving/loading</a> of CSV files with semicolon (;) instead of comma (,) as the separator</li>
 </ul>
