@@ -10500,7 +10500,7 @@ See also:
 <li>Any singular values less than <i>tolerance</i> are treated as zero</li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)*max_sv*datum::eps</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&middot;max_sv&middot;datum::eps</i>, where:
 <ul>
 <li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>X</i></li>
 <li><i>max_sv</i> = maximal singular value of <i>X</i></li>
@@ -10633,8 +10633,8 @@ mat B = repelem(A, 4, 5);
 <ul>
 <table border="0">
 <tbody>
-<tr><td>n_rows</td><td>&nbsp;=&nbsp;</td><td>num_copies_per_row</td><td>*</td><td>A.n_rows</td></tr>
-<tr><td>n_cols</td><td>&nbsp;=&nbsp;</td><td>num_copies_per_col</td><td>*</td><td>A.n_cols</td></tr>
+<tr><td>n_rows</td><td>&nbsp;=&nbsp;</td><td>num_copies_per_row</td><td>&times;</td><td>A.n_rows</td></tr>
+<tr><td>n_cols</td><td>&nbsp;=&nbsp;</td><td>num_copies_per_col</td><td>&times;</td><td>A.n_cols</td></tr>
 </tbody>
 </table>
 </ul>
@@ -12711,7 +12711,7 @@ The dimension of the range space is the number of singular values of <i>A</i> no
 </li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)*max_sv*datum::eps</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&middot;max_sv&middot;datum::eps</i>, where:
 <ul>
 <li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>A</i></li>
 <li><i>max_sv</i> = maximal singular value of <i>A</i></li>
@@ -12773,7 +12773,7 @@ The dimension of the range space is the number of singular values of <i>A</i> gr
 </li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)*max_sv*datum::eps</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&middot;max_sv&middot;datum::eps</i>, where:
 <ul>
 <li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>A</i></li>
 <li><i>max_sv</i> = maximal singular value of <i>A</i></li>
@@ -12832,7 +12832,7 @@ The computation is based on singular value decomposition
 <br>
 <li>The <i>tolerance</i> argument is optional</li>
 <br>
-<li>The default tolerance is <i>max(m,n)*max_sv*datum::eps</i>, where:
+<li>The default tolerance is <i>max(m,n)&middot;max_sv&middot;datum::eps</i>, where:
 <ul>
 <li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>A</i></li>
 <li><i>max_sv</i> = maximal singular value of <i>A</i></li>
@@ -13191,7 +13191,7 @@ If no solution is found:
 </li>
 <br>
 <li>
-Internal implementation details are available in the following paper: 
+Implementation details are available in the following paper: 
 <br>
 <ul>
 Conrad Sanderson and Ryan Curtin.<br>
@@ -17200,14 +17200,13 @@ cout &lt;&lt; "number of seconds: " &lt;&lt; n &lt;&lt; endl;
 <br><b>std::ostream&amp; x = get_cout_stream()</b>
 <br>
 <ul>
-<li>
-In Armadillo 8.x and later versions, warnings and errors are printed by default to the <i>std::cerr</i> stream;
-in Armadillo 7.x and earlier versions, the <i>std::cout</i> stream is used
-<ul>
-<li>the printing can be disabled by placing <i>#define <a href="#config_hpp">ARMA_DONT_PRINT_ERRORS</a></i> before <i>#include&nbsp;&lt;armadillo&gt;</i></li>
-<li>detailed information about errors is always reported via the base <i>std::exception</i> class</li>
-</ul>
-</li>
+<li>Warnings and errors are printed by default to the <i>std::cerr</i> stream</li>
+<br>
+<li>Printing of all warnings and errors can be disabled by placing <i>#define <a href="#config_hpp">ARMA_DONT_PRINT_ERRORS</a></i> before <i>#include&nbsp;&lt;armadillo&gt;</i></li>
+<br>
+<li>More fine grained control over the degree of warnings and errors is avaiable via the <i><a href="#config_hpp">ARMA_WARN_LEVEL</a></i> option (Armadillo 10.4 and later)</li>
+<br>
+<li>Detailed information about errors is always reported via the base <i>std::exception</i> class</li>
 <br>
 <li><b>set_cerr_stream()</b>:
 <ul>
