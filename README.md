@@ -114,7 +114,7 @@ while ARPACK and SuperLU are used for sparse matrices.
 
 Armadillo can work without the above libraries, but its functionality will be reduced.
 Basic functionality will be available (eg. matrix addition and multiplication),
-but operations like eigen decomposition or matrix inversion will not be.
+but operations such as eigen decomposition and system solvers will not be.
 Matrix multiplication (mainly for big matrices) may not be as fast.
 
 As Armadillo is a template library, we recommended that optimisation
