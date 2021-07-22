@@ -268,11 +268,13 @@ The installation is comprised of 3 steps:
     #define ARMA_USE_SUPERLU  
 
   If support for sparse matrices is not required,
-  don't worry about ARPACK or SuperLU.
+  ARPACK or SuperLU are not necessary.
 
 * Step 3:
   Configure your compiler to link with LAPACK and BLAS
   (and optionally ARPACK and SuperLU).
+  Note that OpenBLAS can be used as a high-performance substitute
+  for both LAPACK and BLAS.
 
 ---
 
@@ -283,8 +285,8 @@ which can be used to compile "example1.cpp". The project needs to be compiled as
 64 bit program: the active solution platform must be set to x64, instead of win32.
 
 The MSVC project was tested on Windows 10 (64 bit) with Visual Studio C++ 2019.
-Adaptations may need to be made for 32 bit systems, later versions of Windows
-and/or the compiler. For example, options such as ARMA_BLAS_LONG and ARMA_BLAS_UNDERSCORE,
+Adaptations may be required for 32 bit systems, later versions of Windows and/or the compiler.
+For example, options such as ARMA_BLAS_LONG and ARMA_BLAS_UNDERSCORE,
 defined in "armadillo_bits/config.hpp", may need to be either enabled or disabled.
 
 The folder "examples/lib_win64" contains a copy of lib and dll files
