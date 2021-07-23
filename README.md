@@ -291,7 +291,7 @@ defined in "armadillo_bits/config.hpp", may need to be either enabled or disable
 
 The folder "examples/lib_win64" contains a copy of lib and dll files
 obtained from a pre-compiled release of OpenBLAS:
-https://github.com/xianyi/OpenBLAS/releases/
+https://github.com/xianyi/OpenBLAS/releases/  
 The compilation was done by a third party.  USE AT YOUR OWN RISK.
 
 **Caveat:** 
