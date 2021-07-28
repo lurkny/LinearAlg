@@ -139,7 +139,7 @@ On macOS systems, cmake can be installed through MacPorts or Homebrew.
 The cmake based installer detects which relevant libraries
 are installed on your system (eg. OpenBLAS, LAPACK, SuperLU, ARPACK, etc)
 and correspondingly modifies Armadillo's configuration.
-The installer also generates the Armadillo run-time library,
+The installer also generates the Armadillo runtime library,
 which provides a thread-safe random number generator
 and is also a wrapper for all the detected libraries.
 
@@ -160,7 +160,7 @@ To detect standard BLAS and LAPACK, use the `ALLOW_BLAS_LAPACK_MACOS` option:
 
     cmake -DALLOW_BLAS_LAPACK_MACOS=ON .
 
-By default, cmake assumes that the Armadillo library and the corresponding header files 
+By default, cmake assumes that the Armadillo runtime library and the corresponding header files 
 will be installed in the default system directory (eg. in the `/usr` hierarchy in Linux-based systems).
 To install the library and headers in an alternative directory,
 use the additional option `CMAKE_INSTALL_PREFIX` in this form:
@@ -229,9 +229,9 @@ enable the `ARMA_DONT_USE_WRAPPER` option:
 If you don't have OpenBLAS, on Linux change `-lopenblas` to `-lblas`
 while on macOS change `-lopenblas -llapack` to `-framework Accelerate`
 
-The "examples" directory contains a short example program that uses the Armadillo library.
+The "examples" directory contains a short example program that uses Armadillo.
 
-We recommended that compilation is done with optimisation enabled,
+We recommend that compilation is done with optimisation enabled,
 in order to make best use of the extensive template meta-programming
 techniques employed in Armadillo.
 For GCC and Clang compilers use `-O2` or `-O3` to enable optimisation.
@@ -304,7 +304,7 @@ Armadillo can use OpenBLAS or Intel Math Kernel Library (MKL) as high-speed
 replacements for BLAS and LAPACK. In essence this involves linking with the
 replacement libraries instead of BLAS and LAPACK.
 
-Minor modifications to include/armadillo_bits/config.hpp may be required
+Minor modifications to `include/armadillo_bits/config.hpp` may be required
 to ensure Armadillo uses the same integer sizes and style of function names
 as used by the replacement libraries. Specifically, the following defines
 may need to be enabled or disabled:
@@ -317,25 +317,26 @@ may need to be enabled or disabled:
 
 See the documentation for more information on the above defines.
 
-On Linux-based systems, MKL might be installed in a non-standard location
-such as /opt which can cause problems during linking.  Before installing
-Armadillo, the system should know where the MKL libraries are located.
-For example, /opt/intel/mkl/lib/intel64/.  This can be achieved by setting
-the LD_LIBRARY_PATH environment variable, or for a more permanent solution,
-adding the directory locations to /etc/ld.so.conf.  It may also be possible
-to store a text file with the locations in the /etc/ld.so.conf.d directory.
-For example, /etc/ld.so.conf.d/mkl.conf.  If /etc/ld.so.conf is modified
-or /etc/ld.so.conf.d/mkl.conf is created, /sbin/ldconfig must be run afterwards.
+On Linux-based systems, MKL might be installed in a non-standard location such as `/opt`
+which can cause problems during linking.
+Before installing Armadillo, the system should know where the MKL libraries are located.
+For example, `/opt/intel/mkl/lib/intel64/`.
+This can be achieved by setting the `LD_LIBRARY_PATH` environment variable,
+or for a more permanent solution, adding the directory locations to `/etc/ld.so.conf`.
+It may also be possible to store a text file with the locations
+in the `/etc/ld.so.conf.d` directory. For example, `/etc/ld.so.conf.d/mkl.conf`.
+If `/etc/ld.so.conf` is modified or `/etc/ld.so.conf.d/mkl.conf` is created,
+`/sbin/ldconfig` must be run afterwards.
 
-Below is an example of /etc/ld.so.conf.d/mkl.conf
-where Intel MKL is installed in /opt/intel
+Below is an example of `/etc/ld.so.conf.d/mkl.conf`
+where Intel MKL is installed in `/opt/intel`
 
     /opt/intel/lib/intel64  
     /opt/intel/mkl/lib/intel64  
 
 If MKL is installed and it is persistently giving problems during linking,
-Support for MKL can be disabled by editing the cmakeLists.txt file,
-deleting cmakeCache.txt and re-running the cmake based installation.
+Support for MKL can be disabled by editing the CMakeLists.txt file,
+deleting CMakeCache.txt and re-running the cmake based installation.
 Comment out the line containing:
 
     INCLUDE(ARMA_FindMKL)
@@ -360,8 +361,8 @@ Armadillo can use OpenMP to automatically speed up computationally
 expensive element-wise functions such as exp(), log(), cos(), etc.
 This requires a C++11/C++14 compiler with OpenMP 3.1+ support.
 
-When using gcc or clang, use the following options to enable both
-C++11 and OpenMP:  -std=c++11 -fopenmp
+When using GCC or Clang, use the following options to enable both C++11 and OpenMP:
+`-std=c++11 -fopenmp`
 
 ---
 
