@@ -122,7 +122,7 @@ OpenBLAS and LAPACK are used for dense matrices,
 while ARPACK and SuperLU are used for sparse matrices
 (caveat: only SuperLU versions 5.2.x can be used).
 
-On Linux-based systems it is also necessary to install the corresponding development files for each library.
+It is also necessary to install the corresponding development files for each library.
 For example, when installing the "libopenblas" package, also install the "libopenblas-dev" package.
 On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
 
@@ -208,7 +208,7 @@ use the following command to compile your programs:
 
     g++ prog.cpp -o prog -O2 -std=c++11 -larmadillo
 
-If you have installed Armadillo manually, link with OpenBLAS directly
+If you have installed Armadillo manually, link with OpenBLAS and LAPACK
 instead of the Armadillo runtime library:
 
     g++ prog.cpp -o prog -O2 -std=c++11 -lopenblas -llapack
@@ -219,15 +219,15 @@ that your C++ compiler searches `/home/blah/include/`
 by explicitly specifying the directory as an argument/option. 
 For example, using the `-I` switch in GCC and Clang:
 
-    g++ prog.cpp -o prog -O2 -std=c++11 -I /home/blah/include/ -lopenblas
+    g++ prog.cpp -o prog -O2 -std=c++11 -I /home/blah/include/ -lopenblas -llapack
 
 If you're getting linking issues (unresolved symbols),
 enable the `ARMA_DONT_USE_WRAPPER` option:
 
-    g++ prog.cpp -o prog -O2 -std=c++11 -I /home/blah/include/ -DARMA_DONT_USE_WRAPPER -lopenblas
+    g++ prog.cpp -o prog -O2 -std=c++11 -I /home/blah/include/ -DARMA_DONT_USE_WRAPPER -lopenblas -llapack
 
-If you don't have OpenBLAS, on Linux change `-lopenblas` to `-lblas -llapack`
-and on macOS change `-lopenblas` to `-framework Accelerate`
+If you don't have OpenBLAS, on Linux change `-lopenblas` to `-lblas`
+while on macOS change `-lopenblas -llapack` to `-framework Accelerate`
 
 For more info on compiling and linking, see the Questions page: 
 http://arma.sourceforge.net/faq.html
@@ -291,7 +291,7 @@ The compilation was done by a third party.  USE AT YOUR OWN RISK.
 
 **Caveat:** 
 for any high performance scientific/engineering workloads,
-we strongly recommend using a Linux based operating system:
+we strongly recommend using a Linux-based operating system:
   * Fedora  http://fedoraproject.org/
   * Ubuntu  http://www.ubuntu.com/
   * CentOS  http://centos.org/
