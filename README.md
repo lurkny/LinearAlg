@@ -23,22 +23,23 @@ Copyright 2017-2021 Data61 / CSIRO
 
 4.  [Compilers and External Dependencies](#4-compilers-and-external-dependencies)
 
-5.  [Linux and macOS: Installation](#5-linux-and-macos-installation)
-6.  [Linux and macOS: Compiling and Linking](#6-linux-and-macos-compiling-and-linking)
+5.  [Linux and macOS: Installation via CMake](#5-linux-and-macos-installation-via-cmake)
+6.  [Linux and macOS: Manual Installation](#6-linux-and-macos-manual-installation)
+7.  [Linux and macOS: Compiling and Linking](#7-linux-and-macos-compiling-and-linking)
 
-7.  [Windows: Installation](#7-windows-installation)
-8.  [Windows: Compiling and Linking](#8-windows-compiling-and-linking)
+9.  [Windows: Installation](#8-windows-installation)
+9.  [Windows: Compiling and Linking](#9-windows-compiling-and-linking)
 
-9.  [Support for OpenBLAS and Intel MKL](#9-support-for-openblas-and-intel-mkl)
-10. [Support for ATLAS](#10-support-for-atlas)
-11. [Support for OpenMP](#11-support-for-openmp)
+10. [Support for OpenBLAS and Intel MKL](#10-support-for-openblas-and-intel-mkl)
+11. [Support for ATLAS](#11-support-for-atlas)
+12. [Support for OpenMP](#12-support-for-openmp)
 
-12. [Documentation](#12-documentation)
-13. [API Stability and Versioning](#13-api-stability-and-versioning)
-14. [Bug Reports and Frequently Asked Questions](#14-bug-reports-and-frequently-asked-questions)
+13. [Documentation](#13-documentation)
+14. [API Stability and Versioning](#14-api-stability-and-versioning)
+15. [Bug Reports and Frequently Asked Questions](#15-bug-reports-and-frequently-asked-questions)
 
-15. [MEX Interface to Octave/Matlab](#15-mex-interface-to-octavematlab)
-16. [Related Software Using Armadillo](#16-related-software-using-armadillo)
+16. [MEX Interface to Octave/Matlab](#16-mex-interface-to-octavematlab)
+17. [Related Software Using Armadillo](#17-related-software-using-armadillo)
 
 ---
 
@@ -108,8 +109,8 @@ Armadillo 10.x requires a C++ compiler that supports at least the C++11 standard
 Use Armadillo 9.900 if your compiler only supports the old C++98/C++03 standards.
 
 The functionality of Armadillo is partly dependent on other libraries:
-LAPACK, BLAS (preferably OpenBLAS), ARPACK and SuperLU.
-LAPACK and BLAS are used for dense matrices,
+OpenBLAS (or standard BLAS), LAPACK, ARPACK and SuperLU.
+OpenBLAS and LAPACK are used for dense matrices,
 while ARPACK and SuperLU are used for sparse matrices.
 
 Armadillo can work without the above libraries, but its functionality will be reduced.
@@ -117,26 +118,35 @@ Basic functionality will be available (eg. matrix addition and multiplication),
 but operations such as eigen decomposition and system solvers will not be.
 Matrix multiplication (mainly for big matrices) may not be as fast.
 
-As Armadillo is a template library, we recommended that optimisation
-is enabled during compilation of programs that use Armadillo.
-For example, for GCC and Clang compilers use -O2 or -O3
+We recommended that optimisation is enabled during compilation,
+since Armadillo extensively uses template meta-programming techniques.
+For GCC and Clang compilers use `-O2` or `-O3` to enable optimisation.
 
 ---
 
-### 5: Linux and macOS: Installation
+### 5: Linux and macOS: Installation via CMake
+
+The CMake based installer detects which relevant libraries
+are installed on your system (eg. OpenBLAS, LAPACK, SuperLU, ARPACK, etc)
+and correspondingly modifies Armadillo's configuration.
+CMake will also generate the Armadillo run-time library,
+which provides a thread-safe random number generator
+and is also a wrapper for all the detected libraries.
 
 * Step 1:
   Ensure a C++ compiler is installed on your system.
 
   - On macOS systems install Xcode (version 8 or later)
-    and then type the following command in a terminal window:  
+    and then run the following command in a terminal window:  
 
     xcode-select --install
+
+  - On Linux-based systems, install gcc-c++
 
 * Step 2:
   Ensure the CMake tool is installed on your system.
 
-  - Cmake can be downloaded from http://www.cmake.org
+  - CMake can be downloaded from http://www.cmake.org
     or (preferably) installed using the package manager on your system.
 
   - On Linux-based systems, CMake can be installed using dnf, yum, apt, aptitude, ...
@@ -145,7 +155,7 @@ For example, for GCC and Clang compilers use -O2 or -O3
 
 * Step 3:
   Ensure that OpenBLAS (or standard BLAS and LAPACK) is installed on your system.
-  On macOS, the Accelerate framework can be used for BLAS/LAPACK.
+  On macOS, the Accelerate framework can be used for BLAS/LAPACK functions.
 
   - On macOS, optionally install OpenBLAS for better performance.
 
@@ -189,12 +199,6 @@ For example, for GCC and Clang compilers use -O2 or -O3
 
       cmake . -DCMAKE_INSTALL_PREFIX:PATH=alternative_directory
 
-  - CMake will detect which relevant libraries are installed on your system
-    (eg. OpenBLAS, LAPACK, SuperLU, ARPACK, etc)
-    and will modify Armadillo's configuration correspondingly.
-    CMake will also generate the Armadillo run-time library,
-    which is a wrapper for all the detected libraries.
-
   - If cmake needs to re-run, it's a good idea to first delete the
     "CMakeCache.txt" file (not "CMakeLists.txt").
 
@@ -220,33 +224,55 @@ For example, for GCC and Clang compilers use -O2 or -O3
 
 ---
 
-### 6: Linux and macOS: Compiling and Linking
+### 6: Linux and macOS: Manual Installation
+
+Manual installation involves simply copying the `include/armadillo` header
+***and** the associated `include/armadillo_bits` directory to a location
+such as `/usr/include/` which is searched by your C++ compiler.
+If you can't use `sudo` or don't have write access to `/usr/include/`,
+use a directory within your own home directory (eg. `/home/blah/include/`).
+
+Note that the manual installation will not generate the Armadillo runtime library,
+and hence you will need to link your programs directly with OpenBLAS and LAPACK.
+
+---
+
+### 7: Linux and macOS: Compiling and Linking
 
 If you have installed Armadillo via the CMake installer,
-use the following command:
+use the following command to compile your programs:
 
-    g++ prog.cpp -o prog -std=c++11 -O2 -larmadillo
+    g++ prog.cpp -o prog -O2 -std=c++11 -larmadillo
 
-Otherwise, if you want to use Armadillo without installation
-(ie. without the Armadillo runtime library), use the following command:
-  
-    g++ prog.cpp -o prog -std=c++11 -O2 -I /home/blah/armadillo-7.200.3/include -DARMA_DONT_USE_WRAPPER -lopenblas
+If you have installed Armadillo manually, link with OpenBLAS directly:
+instead of the Armadillo runtime library:
 
-The above command assumes that the armadillo archive was unpacked into /home/blah/  
-The command needs to be adjusted if the archive was unpacked into a different directory
-and/or for each specific version of Armadillo (ie. "7.200.3" needs to be changed).
-  
-If you don't have OpenBLAS, on Linux change -lopenblas to -lblas -llapack
-and on macOS change -lopenblas to -framework Accelerate
+    g++ prog.cpp -o prog -O2 -std=c++11 -lopenblas -llapack
 
-See the Questions page for more info on linking:
+If you have manually installed Armadillo in a non-standard location,
+such as `/home/blah/include/`, you will need to make sure 
+that your C++ compiler searches `/home/blah/include/` 
+by explicitly specifying the directory as an argument/option. 
+For example, using the `-I` switch in GCC and Clang:
+
+    g++ prog.cpp -o prog -O2 -std=c++11 -I /home/blah/include/ -lopenblas
+
+If you're getting linking issues (unresolved symbols),
+enable the `ARMA_DONT_USE_WRAPPER` option:
+
+    g++ prog.cpp -o prog -O2 -std=c++11 -I /home/blah/include/ -DARMA_DONT_USE_WRAPPER -lopenblas
+
+If you don't have OpenBLAS, on Linux change `-lopenblas` to `-lblas -llapack`
+and on macOS change `-lopenblas` to `-framework Accelerate`
+
+For more info on compiling and linking, see the Questions page: 
 http://arma.sourceforge.net/faq.html
 
 The "examples" directory contains a short example program that uses the Armadillo library.
 
 ---
 
-### 7: Windows: Installation
+### 8: Windows: Installation
 
 The installation is comprised of 3 steps:
 
@@ -278,7 +304,7 @@ The installation is comprised of 3 steps:
 
 ---
 
-### 8: Windows: Compiling and Linking
+### 9: Windows: Compiling and Linking
 
 Within the "examples" folder, there is an MSVC project named "example1_win64"
 which can be used to compile "example1.cpp". The project needs to be compiled as a
@@ -303,7 +329,7 @@ we strongly recommend using a Linux based operating system:
 
 ---
 
-### 9: Support for OpenBLAS and Intel MKL
+### 10: Support for OpenBLAS and Intel MKL
 
 Armadillo can use OpenBLAS or Intel Math Kernel Library (MKL) as high-speed
 replacements for BLAS and LAPACK. In essence this involves linking with the
@@ -347,7 +373,7 @@ Comment out the line containing:
 
 ---
 
-### 10: Support for ATLAS
+### 11: Support for ATLAS
 
 Armadillo can use the ATLAS library for faster versions of a subset
 of LAPACK and BLAS functions. LAPACK should still be installed to
@@ -359,7 +385,7 @@ results and/or corrupt memory, leading to random crashes.
 
 ---
 
-### 11: Support for OpenMP
+### 12: Support for OpenMP
 
 Armadillo can use OpenMP to automatically speed up computationally
 expensive element-wise functions such as exp(), log(), cos(), etc.
@@ -370,7 +396,7 @@ C++11 and OpenMP:  -std=c++11 -fopenmp
 
 ---
 
-### 12: Documentation
+### 13: Documentation
 
 The documentation for Armadillo functions and classes is available at:  
 http://arma.sourceforge.net/docs.html
@@ -380,7 +406,7 @@ which can be viewed with a web browser.
 
 ---
 
-### 13: API Stability and Versioning
+### 14: API Stability and Versioning
 
 Each release of Armadillo has its public API (functions, classes, constants)
 described in the accompanying API documentation (docs.html) specific
@@ -415,7 +441,7 @@ implementation details, and may change or be removed without notice.
 
 ---
 
-### 14: Bug Reports and Frequently Asked Questions
+### 15: Bug Reports and Frequently Asked Questions
 
 Armadillo has gone through extensive testing and has been successfully
 used in production environments. However, as with almost all software,
@@ -435,14 +461,14 @@ http://arma.sourceforge.net/faq.html
 
 ---
 
-### 15: MEX Interface to Octave/Matlab
+### 16: MEX Interface to Octave/Matlab
 
 The "mex_interface" folder contains examples of how to interface
 Octave/Matlab with C++ code that uses Armadillo matrices.
 
 ---
 
-### 16: Related Software Using Armadillo
+### 17: Related Software Using Armadillo
 
 * MLPACK: extensive library of machine learning algorithms  
   http://mlpack.org
