@@ -121,10 +121,10 @@ OpenBLAS (or standard BLAS), LAPACK, ARPACK and SuperLU.
 OpenBLAS and LAPACK are used for dense matrices,
 while ARPACK and SuperLU are used for sparse matrices
 (caveat: only SuperLU versions 5.2.x can be used).
+On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
 
 It is also necessary to install the corresponding development files for each library.
 For example, when installing the "libopenblas" package, also install the "libopenblas-dev" package.
-On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
 
 Armadillo can be installed in several ways: either manually or via cmake, with or without root access.
 The cmake based installation is preferred;
@@ -148,8 +148,8 @@ Change into the directory that was created by unpacking the armadillo archive
 
     cmake .
 
-NOTE: the full stop separated from "cmake" by a space is important.
-  
+**NOTE:** the full stop separated from "cmake" by a space is important.
+
 On macOS, to enable the detection of OpenBLAS, 
 use the additional `ALLOW_OPENBLAS_MACOS` option when running cmake:
 
@@ -229,15 +229,15 @@ enable the `ARMA_DONT_USE_WRAPPER` option:
 If you don't have OpenBLAS, on Linux change `-lopenblas` to `-lblas`
 while on macOS change `-lopenblas -llapack` to `-framework Accelerate`
 
-For more info on compiling and linking, see the Questions page: 
-http://arma.sourceforge.net/faq.html
-
 The "examples" directory contains a short example program that uses the Armadillo library.
 
 We recommended that compilation is done with optimisation enabled,
 in order to make best use of the extensive template meta-programming
 techniques employed in Armadillo.
 For GCC and Clang compilers use `-O2` or `-O3` to enable optimisation.
+
+For more information on compiling and linking, see the Questions page: 
+http://arma.sourceforge.net/faq.html
 
 ---
 
