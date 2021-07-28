@@ -34,7 +34,7 @@ Copyright 2017-2021 Data61 / CSIRO
 11. [Support for ATLAS](#11-support-for-atlas)
 12. [Support for OpenMP](#12-support-for-openmp)
 
-13. [Documentation](#13-documentation)
+13. [Documentation of Functions and Classes](#13-documentation-of-functions-and-classes)
 14. [API Stability and Versioning](#14-api-stability-and-versioning)
 15. [Bug Reports and Frequently Asked Questions](#15-bug-reports-and-frequently-asked-questions)
 
@@ -244,7 +244,7 @@ use the following command to compile your programs:
 
     g++ prog.cpp -o prog -O2 -std=c++11 -larmadillo
 
-If you have installed Armadillo manually, link with OpenBLAS directly:
+If you have installed Armadillo manually, link with OpenBLAS directly
 instead of the Armadillo runtime library:
 
     g++ prog.cpp -o prog -O2 -std=c++11 -lopenblas -llapack
@@ -396,9 +396,9 @@ C++11 and OpenMP:  -std=c++11 -fopenmp
 
 ---
 
-### 13: Documentation
+### 13: Documentation of Functions and Classes
 
-The documentation for Armadillo functions and classes is available at:  
+The documentation of Armadillo functions and classes is available at:  
 http://arma.sourceforge.net/docs.html
 
 The documentation is also in the "docs.html" file in this folder,
