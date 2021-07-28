@@ -108,117 +108,81 @@ informational purposes only and do not modify the License.
 Armadillo 10.x requires a C++ compiler that supports at least the C++11 standard.
 Use Armadillo 9.900 if your compiler only supports the old C++98/C++03 standards.
 
+On Linux-based systems, install the GCC C++ compiler, which is available as pre-built package.
+The package name might be `g++` or `gcc-c++` depending on your system.
+
+On macOS systems, a C++ compiler can be obtained by first installing Xcode (version 8 or later)
+and then running the following command in a terminal window:  
+
+    xcode-select --install
+
 The functionality of Armadillo is partly dependent on other libraries:
 OpenBLAS (or standard BLAS), LAPACK, ARPACK and SuperLU.
 OpenBLAS and LAPACK are used for dense matrices,
-while ARPACK and SuperLU are used for sparse matrices.
+while ARPACK and SuperLU are used for sparse matrices
+(caveat: only SuperLU versions 5.2.x can be used).
 
-Armadillo can work without the above libraries, but its functionality will be reduced.
-Basic functionality will be available (eg. matrix addition and multiplication),
-but operations such as eigen decomposition and system solvers will not be.
-Matrix multiplication (mainly for big matrices) may not be as fast.
+On Linux-based systems it is also necessary to install the corresponding development files for each library.
+For example, when installing the "libopenblas" package, also install the "libopenblas-dev" package.
+On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
 
-We recommended that optimisation is enabled during compilation,
-since Armadillo extensively uses template meta-programming techniques.
-For GCC and Clang compilers use `-O2` or `-O3` to enable optimisation.
+Armadillo can be installed in several ways: either manually or via cmake, with or without root access.
+The cmake based installation is preferred;
+cmake can be downloaded from http://www.cmake.org
+or (preferably) installed using the package manager on your system.
+On macOS systems, cmake can be installed through MacPorts or Homebrew.
 
 ---
 
 ### 5: Linux and macOS: Installation via CMake
 
-The CMake based installer detects which relevant libraries
+The cmake based installer detects which relevant libraries
 are installed on your system (eg. OpenBLAS, LAPACK, SuperLU, ARPACK, etc)
 and correspondingly modifies Armadillo's configuration.
-CMake will also generate the Armadillo run-time library,
+The installer also generates the Armadillo run-time library,
 which provides a thread-safe random number generator
 and is also a wrapper for all the detected libraries.
 
-* Step 1:
-  Ensure a C++ compiler is installed on your system.
-
-  - On macOS systems install Xcode (version 8 or later)
-    and then run the following command in a terminal window:  
-
-    xcode-select --install
-
-  - On Linux-based systems, install gcc-c++
-
-* Step 2:
-  Ensure the CMake tool is installed on your system.
-
-  - CMake can be downloaded from http://www.cmake.org
-    or (preferably) installed using the package manager on your system.
-
-  - On Linux-based systems, CMake can be installed using dnf, yum, apt, aptitude, ...
-
-  - On macOS systems, CMake can be installed through MacPorts or Homebrew.
-
-* Step 3:
-  Ensure that OpenBLAS (or standard BLAS and LAPACK) is installed on your system.
-  On macOS, the Accelerate framework can be used for BLAS/LAPACK functions.
-
-  - On macOS, optionally install OpenBLAS for better performance.
-
-  - If support for sparse matrices is required, also install ARPACK and SuperLU.
-    Caveat: only SuperLU version 5.2 can be used!
-
-  - On Linux-based systems, the following libraries are recommended
-    to be present: OpenBLAS, LAPACK, SuperLU and ARPACK.
-    It is also necessary to install the corresponding development files for each library.
-    For example, when installing the "libopenblas" package, also install the "libopenblas-dev" package.
-  
-* Step 4:
-  Run the cmake installer.
-
-  - Open a terminal window and change into the directory that was created
-    by unpacking the armadillo archive.
-  
-  - The simplest case is to run cmake using:
+Change into the directory that was created by unpacking the armadillo archive
+(eg. `cd armadillo-10.6.1`) and then run cmake using:
 
     cmake .
 
-  - NOTE: the full stop separated from "cmake" by a space is important.
+NOTE: the full stop separated from "cmake" by a space is important.
   
-  - Options to the cmake installer:
-  
-    - On macOS, to enable the detection of OpenBLAS, 
-      use the additional ALLOW_OPENBLAS_MACOS option when running cmake:
+On macOS, to enable the detection of OpenBLAS, 
+use the additional `ALLOW_OPENBLAS_MACOS` option when running cmake:
 
-      cmake -DALLOW_OPENBLAS_MACOS=ON .
+    cmake -DALLOW_OPENBLAS_MACOS=ON .
 
-      Note: depending on your installation, OpenBLAS may masquerade as standard BLAS.
-      To detect standard BLAS and LAPACK, use the ALLOW_BLAS_LAPACK_MACOS option:
+Depending on your installation, OpenBLAS may masquerade as standard BLAS.
+To detect standard BLAS and LAPACK, use the `ALLOW_BLAS_LAPACK_MACOS` option:
 
-      cmake -DALLOW_BLAS_LAPACK_MACOS=ON .
+    cmake -DALLOW_BLAS_LAPACK_MACOS=ON .
 
-    - By default, cmake assumes that the Armadillo library and the
-      corresponding header files will be installed in the default 
-      system directory (eg. in the /usr hierarchy in Linux-based systems).
-      To install the library and headers in an alternative directory,
-      use the additional option CMAKE_INSTALL_PREFIX in this form:
+By default, cmake assumes that the Armadillo library and the corresponding header files 
+will be installed in the default system directory (eg. in the `/usr` hierarchy in Linux-based systems).
+To install the library and headers in an alternative directory,
+use the additional option `CMAKE_INSTALL_PREFIX` in this form:
 
-      cmake . -DCMAKE_INSTALL_PREFIX:PATH=alternative_directory
+    cmake . -DCMAKE_INSTALL_PREFIX:PATH=alternative_directory
 
-  - If cmake needs to re-run, it's a good idea to first delete the
-    "CMakeCache.txt" file (not "CMakeLists.txt").
+If cmake needs to re-run, it's a good idea to first delete the "CMakeCache.txt" file (not "CMakeLists.txt").
 
-  - Caveat: if Armadillo is installed in a non-system directory,
-    make sure that the C++ compiler is configured to use the "lib" and "include"
-    sub-directories present within this directory.  Note that the "lib"
-    directory might be named differently on your system.
-    On recent 64 bit Debian & Ubuntu systems it is "lib/x86_64-linux-gnu".
-    On recent 64 bit Fedora & RHEL systems it is "lib64".
+**Caveat:** if Armadillo is installed in a non-system directory,
+make sure that the C++ compiler is configured to use the "lib" and "include"
+sub-directories present within this directory.
+Note that the "lib" directory might be named differently on your system.
+On recent 64 bit Debian & Ubuntu systems it is "lib/x86_64-linux-gnu".
+On recent 64 bit Fedora & RHEL systems it is "lib64".
 
-* Step 5:
-  If you and have access to root/administrator/superuser privileges
-  (ie. able to use "sudo") and didn't use the CMAKE_INSTALL_PREFIX option,
-  type the following command:
+If you have sudo access (ie. root/administrator/superuser privileges)
+and didn't use the `CMAKE_INSTALL_PREFIX` option, run the following command:
 
     sudo make install
 
-  If you don't have root/administrator/superuser privileges,
-  make sure that you use the CMAKE_INSTALL_PREFIX option in Step 4,
-  and type the following command:
+If you don't have sudo access, make sure that you use the `CMAKE_INSTALL_PREFIX` option
+and run the following command:
 
     make install
 
@@ -229,7 +193,7 @@ and is also a wrapper for all the detected libraries.
 Manual installation involves simply copying the `include/armadillo` header
 **and** the associated `include/armadillo_bits` directory to a location
 such as `/usr/include/` which is searched by your C++ compiler.
-If you can't use `sudo` or don't have write access to `/usr/include/`,
+If you don't have sudo access or don't have write access to `/usr/include/`,
 use a directory within your own home directory (eg. `/home/blah/include/`).
 
 Note that the manual installation will not generate the Armadillo runtime library,
@@ -239,7 +203,7 @@ and hence you will need to link your programs directly with OpenBLAS and LAPACK.
 
 ### 7: Linux and macOS: Compiling and Linking
 
-If you have installed Armadillo via the CMake installer,
+If you have installed Armadillo via the cmake installer,
 use the following command to compile your programs:
 
     g++ prog.cpp -o prog -O2 -std=c++11 -larmadillo
@@ -269,6 +233,11 @@ For more info on compiling and linking, see the Questions page:
 http://arma.sourceforge.net/faq.html
 
 The "examples" directory contains a short example program that uses the Armadillo library.
+
+We recommended that compilation is done with optimisation enabled,
+in order to make best use of the extensive template meta-programming
+techniques employed in Armadillo.
+For GCC and Clang compilers use `-O2` or `-O3` to enable optimisation.
 
 ---
 
@@ -365,8 +334,8 @@ where Intel MKL is installed in /opt/intel
     /opt/intel/mkl/lib/intel64  
 
 If MKL is installed and it is persistently giving problems during linking,
-Support for MKL can be disabled by editing the CMakeLists.txt file,
-deleting CMakeCache.txt and re-running the CMake based installation.
+Support for MKL can be disabled by editing the cmakeLists.txt file,
+deleting cmakeCache.txt and re-running the cmake based installation.
 Comment out the line containing:
 
     INCLUDE(ARMA_FindMKL)
