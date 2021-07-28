@@ -227,7 +227,7 @@ and is also a wrapper for all the detected libraries.
 ### 6: Linux and macOS: Manual Installation
 
 Manual installation involves simply copying the `include/armadillo` header
-***and** the associated `include/armadillo_bits` directory to a location
+**and** the associated `include/armadillo_bits` directory to a location
 such as `/usr/include/` which is searched by your C++ compiler.
 If you can't use `sudo` or don't have write access to `/usr/include/`,
 use a directory within your own home directory (eg. `/home/blah/include/`).
