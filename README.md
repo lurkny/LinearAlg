@@ -143,7 +143,7 @@ It is also necessary to install the corresponding development files for each lib
 For example, when installing the "libopenblas" package, also install the "libopenblas-dev" package.
 
 
-#### Installation via CMake
+#### 5a: Installation via CMake
 
 The cmake based installer detects which relevant libraries
 are installed on your system (eg. OpenBLAS, LAPACK, SuperLU, ARPACK, etc)
@@ -176,7 +176,7 @@ use the additional option `CMAKE_INSTALL_PREFIX` in this form:
 
     cmake . -DCMAKE_INSTALL_PREFIX:PATH=alternative_directory
 
-If cmake needs to re-run, it's a good idea to first delete the "CMakeCache.txt" file (not "CMakeLists.txt").
+If cmake needs to be re-run, it's a good idea to first delete the "CMakeCache.txt" file (not "CMakeLists.txt").
 
 **Caveat:** if Armadillo is installed in a non-system directory,
 make sure that the C++ compiler is configured to use the "lib" and "include"
@@ -196,7 +196,7 @@ and run the following command:
     make install
 
 
-#### Manual Installation
+#### 5b: Manual Installation
 
 Manual installation involves simply copying the `include/armadillo` header
 **and** the associated `include/armadillo_bits` directory to a location
@@ -234,8 +234,8 @@ enable the `ARMA_DONT_USE_WRAPPER` option:
 
     g++ prog.cpp -o prog -O2 -std=c++11 -I /home/blah/include/ -DARMA_DONT_USE_WRAPPER -lopenblas -llapack
 
-If you don't have OpenBLAS, on Linux change `-lopenblas` to `-lblas`
-while on macOS change `-lopenblas -llapack` to `-framework Accelerate`
+If you don't have OpenBLAS, on Linux change `-lopenblas` to `-lblas`;
+on macOS change `-lopenblas -llapack` to `-framework Accelerate`
 
 The "examples" directory contains a short example program that uses Armadillo.
 
