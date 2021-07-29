@@ -214,7 +214,7 @@ Comment or uncomment the following lines
     #define ARMA_USE_ARPACK  
     #define ARMA_USE_SUPERLU  
 
-If support for sparse matrices is not required, ARPACK or SuperLU are not necessary.
+If support for sparse matrices is not needed, ARPACK or SuperLU are not necessary.
 
 Note that the manual installation will not generate the Armadillo runtime library,
 and hence you will need to link your programs directly with OpenBLAS, LAPACK, etc.
@@ -280,7 +280,7 @@ The installation is comprised of 3 steps:
     #define ARMA_USE_ARPACK  
     #define ARMA_USE_SUPERLU  
 
-  If support for sparse matrices is not required, ARPACK or SuperLU are not necessary.
+  If support for sparse matrices is not needed, ARPACK or SuperLU are not necessary.
 
 * Step 3:
   Configure your compiler to link with LAPACK and BLAS
