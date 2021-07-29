@@ -191,7 +191,7 @@ and didn't use the `CMAKE_INSTALL_PREFIX` option, run the following command:
 
     sudo make install
 
-If you don't have sudo access, make sure that you use the `CMAKE_INSTALL_PREFIX` option
+If you don't have sudo access, make sure to use the `CMAKE_INSTALL_PREFIX` option
 and run the following command:
 
     make install
