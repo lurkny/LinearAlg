@@ -140,7 +140,7 @@ On macOS systems, cmake can be installed through MacPorts or Homebrew.
 
 Before installing Armadillo, first install OpenBLAS and LAPACK, and optionally ARPACK and SuperLU.
 It is also necessary to install the corresponding development files for each library.
-For example, when installing the "libopenblas" package, also install the "libopenblas-dev" package.
+For example, when installing the `libopenblas` package, also install the `libopenblas-dev` package.
 
 
 #### 5a: Installation via CMake
@@ -157,7 +157,7 @@ Change into the directory that was created by unpacking the armadillo archive
 
     cmake .
 
-**NOTE:** the full stop separated from "cmake" by a space is important.
+**NOTE:** the full stop (.) separated from `cmake` by a space is important.
 
 On macOS, to enable the detection of OpenBLAS, 
 use the additional `ALLOW_OPENBLAS_MACOS` option when running cmake:
@@ -176,14 +176,15 @@ use the additional option `CMAKE_INSTALL_PREFIX` in this form:
 
     cmake . -DCMAKE_INSTALL_PREFIX:PATH=alternative_directory
 
-If cmake needs to be re-run, it's a good idea to first delete the "CMakeCache.txt" file (not "CMakeLists.txt").
+If cmake needs to be re-run, it's a good idea to first delete the `CMakeCache.txt` file
+(not `CMakeLists.txt`).
 
 **Caveat:** if Armadillo is installed in a non-system directory,
-make sure that the C++ compiler is configured to use the "lib" and "include"
+make sure that the C++ compiler is configured to use the `lib` and `include`
 sub-directories present within this directory.
-Note that the "lib" directory might be named differently on your system.
-On recent 64 bit Debian & Ubuntu systems it is "lib/x86_64-linux-gnu".
-On recent 64 bit Fedora & RHEL systems it is "lib64".
+Note that the `lib` directory might be named differently on your system.
+On recent 64 bit Debian & Ubuntu systems it is `lib/x86_64-linux-gnu`.
+On recent 64 bit Fedora & RHEL systems it is `lib64`.
 
 If you have sudo access (ie. root/administrator/superuser privileges)
 and didn't use the `CMAKE_INSTALL_PREFIX` option, run the following command:
@@ -203,6 +204,17 @@ Manual installation involves simply copying the `include/armadillo` header
 such as `/usr/include/` which is searched by your C++ compiler.
 If you don't have sudo access or don't have write access to `/usr/include/`,
 use a directory within your own home directory (eg. `/home/blah/include/`).
+
+If required, modify `include/armadillo_bits/config.hpp`
+to indicate which libraries are currently available on your system.
+Comment or uncomment the following lines
+
+    #define ARMA_USE_LAPACK  
+    #define ARMA_USE_BLAS  
+    #define ARMA_USE_ARPACK  
+    #define ARMA_USE_SUPERLU  
+
+If support for sparse matrices is not required, ARPACK or SuperLU are not necessary.
 
 Note that the manual installation will not generate the Armadillo runtime library,
 and hence you will need to link your programs directly with OpenBLAS, LAPACK, etc.
@@ -237,7 +249,7 @@ enable the `ARMA_DONT_USE_WRAPPER` option:
 If you don't have OpenBLAS, on Linux change `-lopenblas` to `-lblas`;
 on macOS change `-lopenblas -llapack` to `-framework Accelerate`
 
-The "examples" directory contains a short example program that uses Armadillo.
+The `examples` directory contains a short example program that uses Armadillo.
 
 We recommend that compilation is done with optimisation enabled,
 in order to make best use of the extensive template meta-programming
@@ -254,24 +266,21 @@ http://arma.sourceforge.net/faq.html
 The installation is comprised of 3 steps:
 
 * Step 1:
-  Copy the entire "include" folder to a convenient location
+  Copy the entire `include` folder to a convenient location
   and tell your compiler to use that location for header files
   (in addition to the locations it uses already).
-  Alternatively, the "include" folder can be used directly.
+  Alternatively, the `include` folder can be used directly.
 
 * Step 2:
-  Modify "include/armadillo_bits/config.hpp" to indicate which
-  libraries are currently available on your system. For example,
-  if LAPACK, BLAS (or OpenBLAS), ARPACK and SuperLU present,
-  uncomment the following lines:
+  If required, modify `include/armadillo_bits/config.hpp`
+  to indicate which libraries are currently available on your system:
 
     #define ARMA_USE_LAPACK  
     #define ARMA_USE_BLAS  
     #define ARMA_USE_ARPACK  
     #define ARMA_USE_SUPERLU  
 
-  If support for sparse matrices is not required,
-  ARPACK or SuperLU are not necessary.
+  If support for sparse matrices is not required, ARPACK or SuperLU are not necessary.
 
 * Step 3:
   Configure your compiler to link with LAPACK and BLAS
@@ -283,9 +292,10 @@ The installation is comprised of 3 steps:
 
 ### 8: Windows: Compiling and Linking
 
-Within the "examples" folder, there is an MSVC project named "example1_win64"
-which can be used to compile "example1.cpp". The project needs to be compiled as a
-64 bit program: the active solution platform must be set to x64, instead of win32.
+Within the `examples` folder, there is an MSVC project named `example1_win64`
+which can be used to compile `example1.cpp`.
+The project needs to be compiled as a 64 bit program:
+the active solution platform must be set to x64, instead of win32.
 
 The MSVC project was tested on Windows 10 (64 bit) with Visual Studio C++ 2019.
 Adaptations may be required for 32 bit systems, later versions of Windows and/or the compiler.
@@ -376,8 +386,8 @@ When using GCC or Clang, use the following options to enable both C++11 and Open
 The documentation of Armadillo functions and classes is available at:  
 http://arma.sourceforge.net/docs.html
 
-The documentation is also in the "docs.html" file in this folder,
-which can be viewed with a web browser.
+The documentation is also in the `docs.html` file distributed with Armadillo.
+Use a web browser to view it.
 
 ---
 
@@ -438,7 +448,7 @@ http://arma.sourceforge.net/faq.html
 
 ### 15: MEX Interface to Octave/Matlab
 
-The "mex_interface" folder contains examples of how to interface
+The `mex_interface` folder contains examples of how to interface
 Octave/Matlab with C++ code that uses Armadillo matrices.
 
 ---
