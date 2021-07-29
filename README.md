@@ -289,10 +289,10 @@ which can be used to compile "example1.cpp". The project needs to be compiled as
 
 The MSVC project was tested on Windows 10 (64 bit) with Visual Studio C++ 2019.
 Adaptations may be required for 32 bit systems, later versions of Windows and/or the compiler.
-For example, options such as ARMA_BLAS_LONG and ARMA_BLAS_UNDERSCORE,
-defined in "armadillo_bits/config.hpp", may need to be either enabled or disabled.
+For example, options such as `ARMA_BLAS_LONG` and `ARMA_BLAS_UNDERSCORE`,
+defined in `armadillo_bits/config.hpp`, may need to be either enabled or disabled.
 
-The folder "examples/lib_win64" contains a copy of lib and dll files
+The folder `examples/lib_win64` contains a copy of lib and dll files
 obtained from a pre-compiled release of OpenBLAS:
 https://github.com/xianyi/OpenBLAS/releases/  
 The compilation was done by a third party.  USE AT YOUR OWN RISK.
