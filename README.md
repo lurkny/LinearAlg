@@ -207,14 +207,14 @@ use a directory within your own home directory (eg. `/home/blah/include/`).
 
 If required, modify `include/armadillo_bits/config.hpp`
 to indicate which libraries are currently available on your system.
-Comment or uncomment the following lines
+Comment or uncomment the following lines:
 
     #define ARMA_USE_LAPACK  
     #define ARMA_USE_BLAS  
     #define ARMA_USE_ARPACK  
     #define ARMA_USE_SUPERLU  
 
-If support for sparse matrices is not needed, ARPACK or SuperLU are not necessary.
+If support for sparse matrices is not needed, ARPACK and SuperLU are not necessary.
 
 Note that the manual installation will not generate the Armadillo runtime library,
 and hence you will need to link your programs directly with OpenBLAS, LAPACK, etc.
@@ -292,15 +292,15 @@ The installation is comprised of 3 steps:
 
 ### 8: Windows: Compiling and Linking
 
-Within the `examples` folder, there is an MSVC project named `example1_win64`
-which can be used to compile `example1.cpp`.
+Within the `examples` folder, the MSVC project named `example1_win64`
+can be used to compile `example1.cpp`.
 The project needs to be compiled as a 64 bit program:
 the active solution platform must be set to x64, instead of win32.
 
 The MSVC project was tested on Windows 10 (64 bit) with Visual Studio C++ 2019.
 Adaptations may be required for 32 bit systems, later versions of Windows and/or the compiler.
 For example, options such as `ARMA_BLAS_LONG` and `ARMA_BLAS_UNDERSCORE`,
-defined in `armadillo_bits/config.hpp`, may need to be either enabled or disabled.
+defined in `include/armadillo_bits/config.hpp`, may need to be either enabled or disabled.
 
 The folder `examples/lib_win64` contains a copy of lib and dll files
 obtained from a pre-compiled release of OpenBLAS:
