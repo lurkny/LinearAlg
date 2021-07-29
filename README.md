@@ -389,7 +389,7 @@ as well as the newer C++11 and C++14 standards.
 
 Armadillo will enable extra features (such as move constructors)
 when a C++11/C++14 compiler is detected. You can also force Armadillo
-to make use of C++11 features by defining ARMA_USE_CXX11 before
+to make use of C++11 features by defining `ARMA_USE_CXX11` before
 `#include <armadillo>` in your code.
 
 You may need to explicitly enable C++11 mode in your compiler.
