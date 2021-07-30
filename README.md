@@ -35,7 +35,7 @@ Copyright 2017-2020 Data61, CSIRO
 11. [Support for C++11 / C++14 Features](#11-support-for-c11-c14-features)
 12. [Support for OpenMP](#12-support-for-openmp)
 
-13. [Documentation](#13-documentation)
+13. [Documentation of Functions and Classes](#13-documentation-of-functions-and-classes)
 14. [API Stability and Versioning](#14-api-stability-and-versioning)
 15. [Bug Reports and Frequently Asked Questions](#15-bug-reports-and-frequently-asked-questions)
 
@@ -57,8 +57,8 @@ The library provides efficient classes for vectors, matrices and cubes,
 as well as 200+ associated functions covering essential and advanced functionality
 for data processing and manipulation of matrices.
 
-Various matrix decompositions are provided through integration with LAPACK,
-or one of its high performance drop-in replacements
+Various matrix decompositions (eigen, SVD, QR, etc) are provided through
+integration with LAPACK, or one of its high performance drop-in replacements
 (eg. OpenBLAS, Intel MKL, Apple Accelerate framework, etc).
 
 A sophisticated expression evaluator (via C++ template meta-programming)
@@ -134,10 +134,10 @@ Matrix multiplication may not be as fast (mainly for large matrices).
 ### 5: Linux and macOS: Installation
 
 Armadillo can be installed in several ways: either manually or via cmake, with or without root access.
-The cmake based installation is preferred;
-cmake can be downloaded from http://www.cmake.org
-or (preferably) installed using the package manager on your system.
-On macOS systems, cmake can be installed through MacPorts or Homebrew.
+The cmake based installation is preferred.
+The cmake tool can be downloaded from http://www.cmake.org
+or (preferably) installed using the package manager on your system;
+on macOS systems, cmake can be installed through MacPorts or Homebrew.
 
 Before installing Armadillo, first install OpenBLAS and LAPACK, and optionally ARPACK and SuperLU.
 It is also necessary to install the corresponding development files for each library.
@@ -294,8 +294,9 @@ The installation is comprised of 3 steps:
 ### 8: Windows: Compiling and Linking
 
 Within the `examples` folder, the MSVC project named `example1_win64`
-can be used to compile `example1.cpp`. The project needs to be compiled as a
-64 bit program: the active solution platform must be set to x64, instead of win32.
+can be used to compile `example1.cpp`.
+The project needs to be compiled as a 64 bit program:
+the active solution platform must be set to x64, instead of win32.
 
 The MSVC project was tested on Windows 7 (64 bit) with Visual Studio C++ 2012.
 Adaptations may be required for 32 bit systems, later versions of Windows and/or the compiler.
@@ -316,7 +317,7 @@ OpenBLAS and Intel MKL are generally the fastest replacements for both BLAS and 
 
 **Caveat:** 
 for any high performance scientific/engineering workloads,
-we strongly recommend using a Linux based operating system:
+we strongly recommend using a Linux-based operating system:
   * Fedora  http://fedoraproject.org/
   * Ubuntu  http://www.ubuntu.com/
   * CentOS  http://centos.org/
@@ -372,13 +373,10 @@ Comment out the line containing:
 
 ### 10: Support for ATLAS
 
-Armadillo can use the ATLAS library for faster versions of a subset
-of LAPACK and BLAS functions. LAPACK should still be installed to
-obtain full functionality.
-
-Caveat: the minimum recommended version of ATLAS is 3.10;
-earlier versions (such as 3.6 and 3.8) can produce incorrect
-results and/or corrupt memory, leading to random crashes.
+If OpenBLAS is not available, Armadillo can use the ATLAS library for faster versions
+of a subset of LAPACK and BLAS functions.
+LAPACK should still be installed to obtain full functionality.
+The minimum recommended version of ATLAS is 3.10.
 
 ---
 
@@ -407,14 +405,14 @@ Armadillo can use OpenMP to automatically speed up computationally
 expensive element-wise functions such as exp(), log(), cos(), etc.
 This requires a C++11/C++14 compiler with OpenMP 3.1+ support.
 
-When using gcc or clang, use the following options to enable both C++11 and OpenMP:
+For GCC and Clang compilers, use the following options to enable both C++11 and OpenMP:
 `-std=c++11 -fopenmp`
 
 ---
 
-### 13: Documentation
+### 13: Documentation of Functions and Classes
 
-The documentation for Armadillo functions and classes is available at:  
+The documentation of Armadillo functions and classes is available at:  
 http://arma.sourceforge.net/docs.html
 
 The documentation is also in the `docs.html` file distributed with Armadillo.
