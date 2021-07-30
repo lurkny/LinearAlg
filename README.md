@@ -133,10 +133,10 @@ Matrix multiplication may not be as fast (mainly for large matrices).
 ### 5: Linux and macOS: Installation
 
 Armadillo can be installed in several ways: either manually or via cmake, with or without root access.
-The cmake based installation is preferred;
-cmake can be downloaded from http://www.cmake.org
-or (preferably) installed using the package manager on your system.
-On macOS systems, cmake can be installed through MacPorts or Homebrew.
+The cmake based installation is preferred.
+The cmake tool can be downloaded from http://www.cmake.org
+or (preferably) installed using the package manager on your system;
+on macOS systems, cmake can be installed through MacPorts or Homebrew.
 
 Before installing Armadillo, first install OpenBLAS and LAPACK, and optionally ARPACK and SuperLU.
 It is also necessary to install the corresponding development files for each library.
