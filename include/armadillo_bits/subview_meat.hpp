@@ -1094,13 +1094,13 @@ subview<eT>::fill(const eT val)
     if( (s.aux_row1 == 0) && (s_n_rows == s.m.n_rows) )
       {
       arrayops::inplace_set( s.colptr(0), val, s.n_elem );
-      
-      return;
       }
-    
-    for(uword ucol=0; ucol < s_n_cols; ++ucol)
+    else
       {
-      arrayops::inplace_set( s.colptr(ucol), val, s_n_rows );
+      for(uword ucol=0; ucol < s_n_cols; ++ucol)
+        {
+        arrayops::inplace_set( s.colptr(ucol), val, s_n_rows );
+        }
       }
     }
   }
@@ -1616,13 +1616,13 @@ subview<eT>::extract(Mat<eT>& out, const subview<eT>& in)
     if( (in.aux_row1 == 0) && (n_rows == in.m.n_rows) )
       {
       arrayops::copy( out.memptr(), in.colptr(0), in.n_elem );
-      
-      return;
       }
-    
-    for(uword col=0; col < n_cols; ++col)
+    else
       {
-      arrayops::copy( out.colptr(col), in.colptr(col), n_rows );
+      for(uword col=0; col < n_cols; ++col)
+        {
+        arrayops::copy( out.colptr(col), in.colptr(col), n_rows );
+        }
       }
     }
   }
