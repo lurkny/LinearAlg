@@ -106,7 +106,8 @@ informational purposes only and do not modify the License.
 
 ### 4: Prerequisites
 
-Armadillo requires a C++ compiler with proper support for at least the C++98/C++03 standards.
+Armadillo 9.900 requires a C++ compiler with proper support for at least the C++98/C++03 standards.
+Use Armadillo 10.x if your compiler has support for the newer C++11/C++14 standards.
 
 On Linux-based systems, install the GCC C++ compiler, which is available as pre-built package.
 The package name might be `g++` or `gcc-c++` depending on your system.
@@ -382,16 +383,13 @@ The minimum recommended version of ATLAS is 3.10.
 
 ### 11: Support for C++11 / C++14 Features
 
-Armadillo works with compilers supporting the older C++98 and C++03 standards,
-as well as the newer C++11 and C++14 standards.
-
-Armadillo will enable extra features (such as move constructors)
-when a C++11/C++14 compiler is detected. You can also force Armadillo
-to make use of C++11 features by defining `ARMA_USE_CXX11` before
-`#include <armadillo>` in your code.
-
-You may need to explicitly enable C++11 mode in your compiler.
+Armadillo 9.900 will enable extra features when a C++11/C++14 compiler is detected.
+You can also force Armadillo to make use of C++11 features by defining
+ `ARMA_USE_CXX11` before `#include <armadillo>` in your code.
+Note that you may need to explicitly enable C++11 mode in your compiler.
 For example, use the `-std=c++11` or `-std=c++14` options in gcc & clang.
+
+**Caveat:** to make best use of C++11/C++14 features, upgrading to Armadillo 10.x is recommended.
 
 **Caveat:** use of the C++11 `auto` keyword is not recommended with Armadillo
 objects and expressions. Armadillo has a template meta-programming framework
