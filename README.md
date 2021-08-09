@@ -31,14 +31,15 @@ Copyright 2017-2021 Data61 / CSIRO
 
 9.  [Support for OpenBLAS and Intel MKL](#9-support-for-openblas-and-intel-mkl)
 10. [Support for ATLAS](#10-support-for-atlas)
-11. [Support for OpenMP](#11-support-for-openmp)
+11. [Caveat on use of C++11 auto Keyword](#11-caveat-on-use-of-c11-auto-keyword)
+12. [Support for OpenMP](#12-support-for-openmp)
 
-12. [Documentation of Functions and Classes](#12-documentation-of-functions-and-classes)
-13. [API Stability and Versioning](#13-api-stability-and-versioning)
-14. [Bug Reports and Frequently Asked Questions](#14-bug-reports-and-frequently-asked-questions)
+13. [Documentation of Functions and Classes](#13-documentation-of-functions-and-classes)
+14. [API Stability and Versioning](#14-api-stability-and-versioning)
+15. [Bug Reports and Frequently Asked Questions](#15-bug-reports-and-frequently-asked-questions)
 
-15. [MEX Interface to Octave/Matlab](#15-mex-interface-to-octavematlab)
-16. [Related Software Using Armadillo](#16-related-software-using-armadillo)
+16. [MEX Interface to Octave/Matlab](#16-mex-interface-to-octavematlab)
+17. [Related Software Using Armadillo](#17-related-software-using-armadillo)
 
 ---
 
@@ -370,7 +371,16 @@ The minimum recommended version of ATLAS is 3.10.
 
 ---
 
-### 11: Support for OpenMP
+### 11: Caveat on use of C++11 auto Keyword
+
+Use of the C++11 `auto` keyword is not recommended with Armadillo objects and expressions.
+
+Armadillo has a template meta-programming framework which creates lots of short lived temporaries
+that are not properly handled by `auto`.
+
+---
+
+### 12: Support for OpenMP
 
 Armadillo can use OpenMP to automatically speed up computationally
 expensive element-wise functions such as exp(), log(), cos(), etc.
@@ -381,7 +391,7 @@ For GCC and Clang compilers, use the following options to enable both C++11 and 
 
 ---
 
-### 12: Documentation of Functions and Classes
+### 13: Documentation of Functions and Classes
 
 The documentation of Armadillo functions and classes is available at:  
 http://arma.sourceforge.net/docs.html
@@ -391,7 +401,7 @@ Use a web browser to view it.
 
 ---
 
-### 13: API Stability and Versioning
+### 14: API Stability and Versioning
 
 Each release of Armadillo has its public API (functions, classes, constants)
 described in the accompanying API documentation (docs.html) specific
@@ -426,7 +436,7 @@ implementation details, and may change or be removed without notice.
 
 ---
 
-### 14: Bug Reports and Frequently Asked Questions
+### 15: Bug Reports and Frequently Asked Questions
 
 Armadillo has gone through extensive testing and has been successfully
 used in production environments. However, as with almost all software,
@@ -446,14 +456,14 @@ http://arma.sourceforge.net/faq.html
 
 ---
 
-### 15: MEX Interface to Octave/Matlab
+### 16: MEX Interface to Octave/Matlab
 
 The `mex_interface` folder contains examples of how to interface
 Octave/Matlab with C++ code that uses Armadillo matrices.
 
 ---
 
-### 16: Related Software Using Armadillo
+### 17: Related Software Using Armadillo
 
 * MLPACK: extensive library of machine learning algorithms  
   http://mlpack.org
