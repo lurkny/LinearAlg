@@ -107,9 +107,9 @@ informational purposes only and do not modify the License.
 ### 4: Prerequisites
 
 Armadillo 9.900 requires a C++ compiler with proper support for at least the C++98/C++03 standards.
-Use Armadillo 10.x if your compiler has support for the newer C++11/C++14 standards.
+Upgrading to Armadillo 10.x is recommended to make best use of C++11/C++14 features.
 
-On Linux-based systems, install the GCC C++ compiler, which is available as pre-built package.
+On Linux-based systems, install the GCC C++ compiler, which is available as a pre-built package.
 The package name might be `g++` or `gcc-c++` depending on your system.
 
 On macOS systems, a C++ compiler can be obtained by first installing Xcode (version 8 or later)
