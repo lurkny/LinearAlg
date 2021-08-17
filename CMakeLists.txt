@@ -647,5 +647,5 @@ install(FILES "${PROJECT_BINARY_DIR}/tmp/misc/armadillo.pc" DESTINATION ${CMAKE_
 if(BUILD_SMOKE_TEST)
   message(STATUS "*** configuring smoke_test")
   enable_testing()
-  add_subdirectory(smoke_test)
+  add_subdirectory(tests1)
 endif()
