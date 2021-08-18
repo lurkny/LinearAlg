@@ -14,12 +14,14 @@ main(int argc, char** argv)
   {
   cout << "Armadillo version: " << arma_version::as_string() << endl;
   
-  mat A(2,3);  // directly specify the matrix size (elements are uninitialised)
+  // construct a matrix according to given size and form of element initialisation
+  mat A(2,3,fill::zeros);
   
-  cout << "A.n_rows: " << A.n_rows << endl;  // .n_rows and .n_cols are read only
+  // .n_rows and .n_cols are read only
+  cout << "A.n_rows: " << A.n_rows << endl;
   cout << "A.n_cols: " << A.n_cols << endl;
   
-  A(1,2) = 456.0;  // directly access an element (indexing starts at 0)
+  A(1,2) = 456.0;  // access an element (indexing starts at 0)
   A.print("A:");
   
   A = 5.0;         // scalars are treated as a 1x1 matrix
@@ -27,7 +29,7 @@ main(int argc, char** argv)
   
   A.set_size(4,5); // change the size (data is not preserved)
   
-  A.fill(5.0);     // set all elements to a particular value
+  A.fill(5.0);     // set all elements to a specific value
   A.print("A:");
   
   // endr indicates "end of row"
