@@ -107,7 +107,7 @@ informational purposes only and do not modify the License.
 ### 4: Prerequisites
 
 Armadillo 9.900 requires a C++ compiler with proper support for at least the C++98/C++03 standards.
-Upgrading to Armadillo 10.x is recommended to make best use of C++11/C++14 features.
+Upgrading to Armadillo 10.6 is recommended to make best use of C++11/C++14 features.
 
 On Linux-based systems, install the GCC C++ compiler, which is available as a pre-built package.
 The package name might be `g++` or `gcc-c++` depending on your system.
@@ -389,7 +389,7 @@ You can also force Armadillo to make use of C++11 features by defining
 Note that you may need to explicitly enable C++11 mode in your compiler.
 For example, use the `-std=c++11` or `-std=c++14` options in gcc & clang.
 
-**Caveat:** to make best use of C++11/C++14 features, upgrading to Armadillo 10.x is recommended.
+**Caveat:** to make best use of C++11/C++14 features, upgrading to Armadillo 10.6 is recommended.
 
 **Caveat:** use of the C++11 `auto` keyword is not recommended with Armadillo
 objects and expressions. Armadillo has a template meta-programming framework
