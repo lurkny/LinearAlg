@@ -139,9 +139,8 @@ struct Proxy_redirect<T1, true>  { typedef Proxy_fixed<T1>   result; };
 
 
 template<typename T1>
-class Proxy : public Proxy_redirect<T1, is_Mat_fixed<T1>::value>::result
+struct Proxy : public Proxy_redirect<T1, is_Mat_fixed<T1>::value>::result
   {
-  public:
   inline Proxy(const T1& A)
     : Proxy_redirect<T1, is_Mat_fixed<T1>::value>::result(A)
     {
@@ -151,10 +150,8 @@ class Proxy : public Proxy_redirect<T1, is_Mat_fixed<T1>::value>::result
 
 
 template<typename eT>
-class Proxy< Mat<eT> >
+struct Proxy< Mat<eT> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<eT>                                  stored_type;
@@ -200,10 +197,8 @@ class Proxy< Mat<eT> >
 
 
 template<typename eT>
-class Proxy< Col<eT> >
+struct Proxy< Col<eT> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Col<eT>                                  stored_type;
@@ -249,10 +244,8 @@ class Proxy< Col<eT> >
 
 
 template<typename eT>
-class Proxy< Row<eT> >
+struct Proxy< Row<eT> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Row<eT>                                  stored_type;
@@ -298,10 +291,8 @@ class Proxy< Row<eT> >
 
 
 template<typename T1, typename gen_type>
-class Proxy< Gen<T1, gen_type> >
+struct Proxy< Gen<T1, gen_type> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Gen<T1, gen_type>                        stored_type;
@@ -347,10 +338,8 @@ class Proxy< Gen<T1, gen_type> >
 
 
 template<typename T1>
-class Proxy< Gen<T1, gen_randu> >
+struct Proxy< Gen<T1, gen_randu> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<elem_type>                           stored_type;
@@ -396,10 +385,8 @@ class Proxy< Gen<T1, gen_randu> >
 
 
 template<typename T1>
-class Proxy< Gen<T1, gen_randn> >
+struct Proxy< Gen<T1, gen_randn> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<elem_type>                           stored_type;
@@ -445,10 +432,8 @@ class Proxy< Gen<T1, gen_randn> >
 
 
 template<typename T1, typename eop_type>
-class Proxy< eOp<T1, eop_type> >
+struct Proxy< eOp<T1, eop_type> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef eOp<T1, eop_type>                        stored_type;
@@ -494,10 +479,8 @@ class Proxy< eOp<T1, eop_type> >
 
 
 template<typename T1, typename T2, typename eglue_type>
-class Proxy< eGlue<T1, T2, eglue_type> >
+struct Proxy< eGlue<T1, T2, eglue_type> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef eGlue<T1, T2, eglue_type>                stored_type;
@@ -543,10 +526,8 @@ class Proxy< eGlue<T1, T2, eglue_type> >
 
 
 template<typename T1, typename op_type>
-class Proxy< Op<T1, op_type> >
+struct Proxy< Op<T1, op_type> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<elem_type>                           stored_type;
@@ -592,10 +573,8 @@ class Proxy< Op<T1, op_type> >
 
 
 template<typename T1, typename T2, typename glue_type>
-class Proxy< Glue<T1, T2, glue_type> >
+struct Proxy< Glue<T1, T2, glue_type> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<elem_type>                           stored_type;
@@ -641,10 +620,8 @@ class Proxy< Glue<T1, T2, glue_type> >
 
 
 template<typename out_eT, typename T1, typename op_type>
-class Proxy< mtOp<out_eT, T1, op_type> >
+struct Proxy< mtOp<out_eT, T1, op_type> >
   {
-  public:
-  
   typedef          out_eT                       elem_type;
   typedef typename get_pod_type<out_eT>::result pod_type;
   typedef          Mat<out_eT>                  stored_type;
@@ -690,10 +667,8 @@ class Proxy< mtOp<out_eT, T1, op_type> >
 
 
 template<typename out_eT, typename T1, typename T2, typename glue_type>
-class Proxy< mtGlue<out_eT, T1, T2, glue_type> >
+struct Proxy< mtGlue<out_eT, T1, T2, glue_type> >
   {
-  public:
-  
   typedef          out_eT                       elem_type;
   typedef typename get_pod_type<out_eT>::result pod_type;
   typedef          Mat<out_eT>                  stored_type;
@@ -739,10 +714,8 @@ class Proxy< mtGlue<out_eT, T1, T2, glue_type> >
 
 
 template<typename T1, typename op_type>
-class Proxy< CubeToMatOp<T1, op_type> >
+struct Proxy< CubeToMatOp<T1, op_type> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<elem_type>                           stored_type;
@@ -788,10 +761,8 @@ class Proxy< CubeToMatOp<T1, op_type> >
 
 
 template<typename T1>
-class Proxy< CubeToMatOp<T1, op_vectorise_cube_col> >
+struct Proxy< CubeToMatOp<T1, op_vectorise_cube_col> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<elem_type>                           stored_type;
@@ -839,10 +810,8 @@ class Proxy< CubeToMatOp<T1, op_vectorise_cube_col> >
 
 
 template<typename T1, typename op_type>
-class Proxy< SpToDOp<T1, op_type> >
+struct Proxy< SpToDOp<T1, op_type> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<elem_type>                           stored_type;
@@ -888,10 +857,8 @@ class Proxy< SpToDOp<T1, op_type> >
 
 
 template<typename T1>
-class Proxy< SpToDOp<T1, op_nonzeros_spmat> >
+struct Proxy< SpToDOp<T1, op_nonzeros_spmat> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<elem_type>                           stored_type;
@@ -939,10 +906,8 @@ class Proxy< SpToDOp<T1, op_nonzeros_spmat> >
 
 
 template<typename eT>
-class Proxy< subview<eT> >
+struct Proxy< subview<eT> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef subview<eT>                              stored_type;
@@ -988,10 +953,8 @@ class Proxy< subview<eT> >
 
 
 template<typename eT>
-class Proxy< subview_col<eT> >
+struct Proxy< subview_col<eT> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef subview_col<eT>                          stored_type;
@@ -1037,10 +1000,8 @@ class Proxy< subview_col<eT> >
 
 
 template<typename eT>
-class Proxy< subview_row<eT> >
+struct Proxy< subview_row<eT> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef subview_row<eT>                          stored_type;
@@ -1086,10 +1047,8 @@ class Proxy< subview_row<eT> >
 
 
 template<typename eT, typename T1>
-class Proxy< subview_elem1<eT,T1> >
+struct Proxy< subview_elem1<eT,T1> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef subview_elem1<eT,T1>                     stored_type;
@@ -1142,10 +1101,8 @@ class Proxy< subview_elem1<eT,T1> >
 
 
 template<typename eT, typename T1, typename T2>
-class Proxy< subview_elem2<eT,T1,T2> >
+struct Proxy< subview_elem2<eT,T1,T2> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<eT>                                  stored_type;
@@ -1191,10 +1148,8 @@ class Proxy< subview_elem2<eT,T1,T2> >
 
 
 template<typename eT>
-class Proxy< diagview<eT> >
+struct Proxy< diagview<eT> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef diagview<eT>                             stored_type;
@@ -1240,7 +1195,7 @@ class Proxy< diagview<eT> >
 
 
 template<typename T1>
-class Proxy_diagvec_mat
+struct Proxy_diagvec_mat
   {
   inline Proxy_diagvec_mat(const T1&) {}
   };
@@ -1248,10 +1203,8 @@ class Proxy_diagvec_mat
 
 
 template<typename T1>
-class Proxy_diagvec_mat< Op<T1, op_diagvec> >
+struct Proxy_diagvec_mat< Op<T1, op_diagvec> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef diagview<elem_type>                      stored_type;
@@ -1298,7 +1251,7 @@ class Proxy_diagvec_mat< Op<T1, op_diagvec> >
 
 
 template<typename T1>
-class Proxy_diagvec_expr
+struct Proxy_diagvec_expr
   {
   inline Proxy_diagvec_expr(const T1&) {}
   };
@@ -1306,10 +1259,8 @@ class Proxy_diagvec_expr
 
 
 template<typename T1>
-class Proxy_diagvec_expr< Op<T1, op_diagvec> >
+struct Proxy_diagvec_expr< Op<T1, op_diagvec> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<elem_type>                           stored_type;
@@ -1366,11 +1317,9 @@ struct Proxy_diagvec_redirect< Op<T1, op_diagvec>, false> { typedef Proxy_diagve
 
 
 template<typename T1>
-class Proxy< Op<T1, op_diagvec> >
+struct Proxy< Op<T1, op_diagvec> >
   : public Proxy_diagvec_redirect< Op<T1, op_diagvec>, is_Mat<T1>::value >::result
   {
-  public:
-  
   typedef typename Proxy_diagvec_redirect< Op<T1, op_diagvec>, is_Mat<T1>::value >::result Proxy_diagvec;
   
   inline explicit Proxy(const Op<T1, op_diagvec>& A)
@@ -1383,10 +1332,8 @@ class Proxy< Op<T1, op_diagvec> >
 
 
 template<typename T1>
-class Proxy< Op<T1, op_diagvec2> >
+struct Proxy< Op<T1, op_diagvec2> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<elem_type>                           stored_type;
@@ -1442,8 +1389,6 @@ struct Proxy_xtrans_default
 template<typename T1>
 struct Proxy_xtrans_default< Op<T1, op_htrans> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef xtrans_mat<elem_type,true>               stored_type;
@@ -1485,8 +1430,6 @@ struct Proxy_xtrans_default< Op<T1, op_htrans> >
 template<typename T1>
 struct Proxy_xtrans_default< Op<T1, op_strans> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef xtrans_mat<elem_type,false>              stored_type;
@@ -1629,7 +1572,7 @@ struct Proxy_xtrans_redirect<T1, true>  { typedef Proxy_xtrans_vector<T1>  resul
 
 
 template<typename T1>
-class Proxy< Op<T1, op_htrans> >
+struct Proxy< Op<T1, op_htrans> >
   : public
     Proxy_xtrans_redirect
       <
@@ -1637,8 +1580,6 @@ class Proxy< Op<T1, op_htrans> >
       ((is_cx<typename T1::elem_type>::no) && ((Op<T1, op_htrans>::is_row) || (Op<T1, op_htrans>::is_col)) )
       >::result
   {
-  public:
-  
   typedef
   typename
   Proxy_xtrans_redirect
@@ -1693,7 +1634,7 @@ class Proxy< Op<T1, op_htrans> >
 
 
 template<typename T1>
-class Proxy< Op<T1, op_strans> >
+struct Proxy< Op<T1, op_strans> >
   : public
     Proxy_xtrans_redirect
       <
@@ -1701,8 +1642,6 @@ class Proxy< Op<T1, op_strans> >
       ( (Op<T1, op_strans>::is_row) || (Op<T1, op_strans>::is_col) )
       >::result
   {
-  public:
-  
   typedef
   typename
   Proxy_xtrans_redirect
@@ -1836,7 +1775,7 @@ struct Proxy_subview_row_htrans_redirect<eT, false> { typedef Proxy_subview_row_
 
 
 template<typename eT>
-class Proxy< Op<subview_row<eT>, op_htrans> >
+struct Proxy< Op<subview_row<eT>, op_htrans> >
   : public
     Proxy_subview_row_htrans_redirect
       <
@@ -1844,8 +1783,6 @@ class Proxy< Op<subview_row<eT>, op_htrans> >
       is_cx<eT>::yes
       >::result
   {
-  public:
-  
   typedef
   typename
   Proxy_subview_row_htrans_redirect
@@ -1900,10 +1837,8 @@ class Proxy< Op<subview_row<eT>, op_htrans> >
 
 
 template<typename eT>
-class Proxy< Op<subview_row<eT>, op_strans> >
+struct Proxy< Op<subview_row<eT>, op_strans> >
   {
-  public:
-  
   typedef eT                                elem_type;
   typedef typename get_pod_type<eT>::result pod_type;
   typedef subview_row_strans<eT>            stored_type;
@@ -1949,10 +1884,8 @@ class Proxy< Op<subview_row<eT>, op_strans> >
 
 
 template<typename T>
-class Proxy< Op< Row< std::complex<T> >, op_htrans> >
+struct Proxy< Op< Row< std::complex<T> >, op_htrans> >
   {
-  public:
-  
   typedef typename std::complex<T>  eT;
   
   typedef typename std::complex<T>  elem_type;
@@ -2002,10 +1935,8 @@ class Proxy< Op< Row< std::complex<T> >, op_htrans> >
 
 
 template<typename T>
-class Proxy< Op< Col< std::complex<T> >, op_htrans> >
+struct Proxy< Op< Col< std::complex<T> >, op_htrans> >
   {
-  public:
-  
   typedef typename std::complex<T>  eT;
 
   typedef typename std::complex<T>  elem_type;
@@ -2055,10 +1986,8 @@ class Proxy< Op< Col< std::complex<T> >, op_htrans> >
 
 
 template<typename T>
-class Proxy< Op< subview_col< std::complex<T> >, op_htrans> >
+struct Proxy< Op< subview_col< std::complex<T> >, op_htrans> >
   {
-  public:
-  
   typedef typename std::complex<T>  eT;
   
   typedef typename std::complex<T>  elem_type;
@@ -2108,10 +2037,8 @@ class Proxy< Op< subview_col< std::complex<T> >, op_htrans> >
 
 
 template<typename T1>
-class Proxy< Op<T1, op_htrans2> >
+struct Proxy< Op<T1, op_htrans2> >
   {
-  public:
-  
   typedef typename T1::elem_type                           elem_type;
   typedef typename get_pod_type<elem_type>::result         pod_type;
   typedef       eOp< Op<T1, op_htrans>, eop_scalar_times>  stored_type;
@@ -2160,10 +2087,8 @@ class Proxy< Op<T1, op_htrans2> >
 
 
 template<typename eT>
-class Proxy< subview_row_strans<eT> >
+struct Proxy< subview_row_strans<eT> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef subview_row_strans<eT>                   stored_type;
@@ -2209,10 +2134,8 @@ class Proxy< subview_row_strans<eT> >
 
 
 template<typename eT>
-class Proxy< subview_row_htrans<eT> >
+struct Proxy< subview_row_htrans<eT> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef subview_row_htrans<eT>                   stored_type;
@@ -2258,10 +2181,8 @@ class Proxy< subview_row_htrans<eT> >
 
 
 template<typename eT, bool do_conj>
-class Proxy< xtrans_mat<eT, do_conj> >
+struct Proxy< xtrans_mat<eT, do_conj> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<eT>                                  stored_type;
@@ -2307,10 +2228,8 @@ class Proxy< xtrans_mat<eT, do_conj> >
 
 
 template<typename eT>
-class Proxy< xvec_htrans<eT> >
+struct Proxy< xvec_htrans<eT> >
   {
-  public:
-  
   typedef eT                                       elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<eT>                                  stored_type;
@@ -2356,7 +2275,7 @@ class Proxy< xvec_htrans<eT> >
 
 
 template<typename T1>
-class Proxy_vectorise_col_mat
+struct Proxy_vectorise_col_mat
   {
   inline Proxy_vectorise_col_mat(const T1&) {}
   };
@@ -2364,10 +2283,8 @@ class Proxy_vectorise_col_mat
 
 
 template<typename T1>
-class Proxy_vectorise_col_mat< Op<T1, op_vectorise_col> >
+struct Proxy_vectorise_col_mat< Op<T1, op_vectorise_col> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef Mat<elem_type>                           stored_type;
@@ -2415,7 +2332,7 @@ class Proxy_vectorise_col_mat< Op<T1, op_vectorise_col> >
 
 
 template<typename T1>
-class Proxy_vectorise_col_expr
+struct Proxy_vectorise_col_expr
   {
   inline Proxy_vectorise_col_expr(const T1&) {}
   };
@@ -2423,10 +2340,8 @@ class Proxy_vectorise_col_expr
 
 
 template<typename T1>
-class Proxy_vectorise_col_expr< Op<T1, op_vectorise_col> >
+struct Proxy_vectorise_col_expr< Op<T1, op_vectorise_col> >
   {
-  public:
-  
   typedef typename T1::elem_type                   elem_type;
   typedef typename get_pod_type<elem_type>::result pod_type;
   typedef          Op<T1, op_vectorise_col>        stored_type;
@@ -2485,11 +2400,9 @@ struct Proxy_vectorise_col_redirect< Op<T1, op_vectorise_col>, false> { typedef 
 
 
 template<typename T1>
-class Proxy< Op<T1, op_vectorise_col> >
+struct Proxy< Op<T1, op_vectorise_col> >
   : public Proxy_vectorise_col_redirect< Op<T1, op_vectorise_col>, (Proxy<T1>::use_at) >::result
   {
-  public:
-  
   typedef typename Proxy_vectorise_col_redirect< Op<T1, op_vectorise_col>, (Proxy<T1>::use_at) >::result Proxy_vectorise_col;
   
   inline explicit Proxy(const Op<T1, op_vectorise_col>& A)
