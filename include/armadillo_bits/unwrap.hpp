@@ -386,7 +386,7 @@ struct quasi_unwrap< subview_col<eT> >
   inline
   quasi_unwrap(const subview_col<eT>& A)
     : orig( A.m )
-    , M  ( const_cast<eT*>( A.colptr(0) ), A.n_rows, false, false )
+    , M  ( const_cast<eT*>( A.colmem ), A.n_rows, false, false )
     {
     arma_extra_debug_sigprint();
     }
