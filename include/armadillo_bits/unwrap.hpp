@@ -130,6 +130,23 @@ struct unwrap< Col<eT> >
 
 
 
+template<typename eT>
+struct unwrap< subview_col<eT> >
+  {
+  typedef Col<eT> stored_type;
+
+  inline
+  unwrap(const subview_col<eT>& A)
+    : M(A.colmem, A.n_rows)
+    {
+    arma_extra_debug_sigprint();
+    }
+  
+  const Col<eT> M;
+  };
+
+
+
 template<typename out_eT, typename T1, typename T2, typename glue_type>
 struct unwrap< mtGlue<out_eT, T1, T2, glue_type> >
   {
