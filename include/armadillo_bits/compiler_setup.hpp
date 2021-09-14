@@ -136,6 +136,11 @@
 #endif
 
 
+// #if defined(ARMA_HAVE_CXX17)
+//   #define arma_warn_unused  [[nodiscard]]
+// #endif
+
+
 #if !defined(ARMA_ALLOW_FAKE_GCC)
   #if (defined(__GNUG__) || defined(__GNUC__)) && (defined(__INTEL_COMPILER) || defined(__NVCC__) || defined(__CUDACC__) || defined(__PGI) || defined(__PATHSCALE__) || defined(__ARMCC_VERSION) || defined(__IBMCPP__))
     #undef  ARMA_DETECTED_FAKE_GCC
