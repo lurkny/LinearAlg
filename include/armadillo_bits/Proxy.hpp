@@ -619,6 +619,122 @@ struct Proxy< Glue<T1, T2, glue_type> >
 
 
 
+template<typename T1, typename T2>
+struct Proxy< Glue<T1, T2, glue_min> >
+  {
+  typedef        Glue<T1, T2, glue_min>   this_Glue_type;
+  typedef Proxy< Glue<T1, T2, glue_min> > this_Proxy_type;
+  
+  typedef typename T1::elem_type                   elem_type;
+  typedef typename get_pod_type<elem_type>::result pod_type;
+  typedef this_Glue_type                           stored_type;
+  typedef const this_Proxy_type&                   ea_type;
+  typedef const this_Proxy_type&                   aligned_ea_type;
+  
+  static constexpr bool use_at      = (Proxy<T1>::use_at      || Proxy<T2>::use_at     );
+  static constexpr bool use_mp      = (Proxy<T1>::use_mp      || Proxy<T2>::use_mp     );
+  static constexpr bool has_subview = (Proxy<T1>::has_subview || Proxy<T2>::has_subview);
+  
+  static constexpr bool is_row  = this_Glue_type::is_row;
+  static constexpr bool is_col  = this_Glue_type::is_col;
+  static constexpr bool is_xvec = this_Glue_type::is_xvec;
+  
+  arma_aligned const this_Glue_type& Q;
+  arma_aligned const Proxy<T1>       P1;
+  arma_aligned const Proxy<T2>       P2;
+  
+  arma_lt_comparator<elem_type> comparator;
+  
+  inline explicit Proxy(const this_Glue_type& X)
+    : Q (X  )
+    , P1(X.A)
+    , P2(X.B)
+    {
+    arma_extra_debug_sigprint();
+    
+    arma_debug_assert_same_size(P1, P2, "element-wise min()");
+    }
+  
+  arma_inline uword get_n_rows() const { return is_row ? 1 : P1.get_n_rows(); }
+  arma_inline uword get_n_cols() const { return is_col ? 1 : P1.get_n_cols(); }
+  arma_inline uword get_n_elem() const { return P1.get_n_elem();              }
+  
+  arma_inline elem_type operator[] (const uword i)                    const { const elem_type A = P1[i];          const elem_type B = P2[i];          return comparator(A,B) ? A : B; }
+  arma_inline elem_type at         (const uword row, const uword col) const { const elem_type A = P1.at(row,col); const elem_type B = P2.at(row,col); return comparator(A,B) ? A : B; }
+  arma_inline elem_type at_alt     (const uword i)                    const { const elem_type A = P1.at_alt(i);   const elem_type B = P2.at_alt(i);   return comparator(A,B) ? A : B; }
+  
+  arma_inline         ea_type         get_ea() const { return *this; }
+  arma_inline aligned_ea_type get_aligned_ea() const { return *this; }
+  
+  template<typename eT2>
+  constexpr bool is_alias(const Mat<eT2>& X) const { return (P1.is_alias(X) || P2.is_alias(X)); }
+  
+  template<typename eT2>
+  constexpr bool has_overlap(const subview<eT2>& X) const { return (P1.has_overlap(X) || P2.has_overlap(X)); }
+  
+  arma_inline bool is_aligned() const { return (P1.is_aligned() && P2.is_aligned()); }
+  };
+
+
+
+template<typename T1, typename T2>
+struct Proxy< Glue<T1, T2, glue_max> >
+  {
+  typedef        Glue<T1, T2, glue_max>   this_Glue_type;
+  typedef Proxy< Glue<T1, T2, glue_max> > this_Proxy_type;
+  
+  typedef typename T1::elem_type                   elem_type;
+  typedef typename get_pod_type<elem_type>::result pod_type;
+  typedef this_Glue_type                           stored_type;
+  typedef const this_Proxy_type&                   ea_type;
+  typedef const this_Proxy_type&                   aligned_ea_type;
+  
+  static constexpr bool use_at      = (Proxy<T1>::use_at      || Proxy<T2>::use_at     );
+  static constexpr bool use_mp      = (Proxy<T1>::use_mp      || Proxy<T2>::use_mp     );
+  static constexpr bool has_subview = (Proxy<T1>::has_subview || Proxy<T2>::has_subview);
+  
+  static constexpr bool is_row  = this_Glue_type::is_row;
+  static constexpr bool is_col  = this_Glue_type::is_col;
+  static constexpr bool is_xvec = this_Glue_type::is_xvec;
+  
+  arma_aligned const this_Glue_type& Q;
+  arma_aligned const Proxy<T1>       P1;
+  arma_aligned const Proxy<T2>       P2;
+  
+  arma_gt_comparator<elem_type> comparator;
+  
+  inline explicit Proxy(const this_Glue_type& X)
+    : Q (X  )
+    , P1(X.A)
+    , P2(X.B)
+    {
+    arma_extra_debug_sigprint();
+    
+    arma_debug_assert_same_size(P1, P2, "element-wise max()");
+    }
+  
+  arma_inline uword get_n_rows() const { return is_row ? 1 : P1.get_n_rows(); }
+  arma_inline uword get_n_cols() const { return is_col ? 1 : P1.get_n_cols(); }
+  arma_inline uword get_n_elem() const { return P1.get_n_elem();              }
+  
+  arma_inline elem_type operator[] (const uword i)                    const { const elem_type A = P1[i];          const elem_type B = P2[i];          return comparator(A,B) ? A : B; }
+  arma_inline elem_type at         (const uword row, const uword col) const { const elem_type A = P1.at(row,col); const elem_type B = P2.at(row,col); return comparator(A,B) ? A : B; }
+  arma_inline elem_type at_alt     (const uword i)                    const { const elem_type A = P1.at_alt(i);   const elem_type B = P2.at_alt(i);   return comparator(A,B) ? A : B; }
+  
+  arma_inline         ea_type         get_ea() const { return *this; }
+  arma_inline aligned_ea_type get_aligned_ea() const { return *this; }
+  
+  template<typename eT2>
+  constexpr bool is_alias(const Mat<eT2>& X) const { return (P1.is_alias(X) || P2.is_alias(X)); }
+  
+  template<typename eT2>
+  constexpr bool has_overlap(const subview<eT2>& X) const { return (P1.has_overlap(X) || P2.has_overlap(X)); }
+  
+  arma_inline bool is_aligned() const { return (P1.is_aligned() && P2.is_aligned()); }
+  };
+
+
+
 template<typename out_eT, typename T1, typename op_type>
 struct Proxy< mtOp<out_eT, T1, op_type> >
   {
