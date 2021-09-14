@@ -102,9 +102,9 @@ struct Proxy_fixed
   arma_inline uword get_n_cols() const { return is_col ? 1 : T1::n_cols; }
   arma_inline uword get_n_elem() const { return              T1::n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -178,9 +178,9 @@ struct Proxy< Mat<eT> >
   arma_inline uword get_n_cols() const { return Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -225,9 +225,9 @@ struct Proxy< Col<eT> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q[row];      }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q[r];        }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -272,9 +272,9 @@ struct Proxy< Row<eT> >
   arma_inline uword get_n_cols() const { return Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
-  arma_inline elem_type at         (const uword, const uword col) const { return Q[col];      }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i];        }
+  arma_inline elem_type at         (const uword, const uword c) const { return Q[c];        }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -319,9 +319,9 @@ struct Proxy< Gen<T1, gen_type> >
   arma_inline uword get_n_cols() const { return (is_col ? 1 : Q.n_cols);                           }
   arma_inline uword get_n_elem() const { return (is_row ? 1 : Q.n_rows) * (is_col ? 1 : Q.n_cols); }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q[i];           }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];       }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c); }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];       }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -366,9 +366,9 @@ struct Proxy< Gen<T1, gen_randu> >
   arma_inline uword get_n_cols() const { return (is_col ? 1 : Q.n_cols);                           }
   arma_inline uword get_n_elem() const { return (is_row ? 1 : Q.n_rows) * (is_col ? 1 : Q.n_cols); }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -413,9 +413,9 @@ struct Proxy< Gen<T1, gen_randn> >
   arma_inline uword get_n_cols() const { return (is_col ? 1 : Q.n_cols);                           }
   arma_inline uword get_n_elem() const { return (is_row ? 1 : Q.n_rows) * (is_col ? 1 : Q.n_cols); }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -460,9 +460,9 @@ struct Proxy< eOp<T1, eop_type> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : Q.get_n_cols(); }
   arma_inline uword get_n_elem() const { return Q.get_n_elem();              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -507,9 +507,9 @@ struct Proxy< eGlue<T1, T2, eglue_type> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : Q.get_n_cols(); }
   arma_inline uword get_n_elem() const { return Q.get_n_elem();              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -554,9 +554,9 @@ struct Proxy< Op<T1, op_type> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem;              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -601,9 +601,9 @@ struct Proxy< Glue<T1, T2, glue_type> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem;              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -659,9 +659,9 @@ struct Proxy< Glue<T1, T2, glue_min> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : P1.get_n_cols(); }
   arma_inline uword get_n_elem() const { return P1.get_n_elem();              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { const elem_type A = P1[i];          const elem_type B = P2[i];          return comparator(A,B) ? A : B; }
-  arma_inline elem_type at         (const uword row, const uword col) const { const elem_type A = P1.at(row,col); const elem_type B = P2.at(row,col); return comparator(A,B) ? A : B; }
-  arma_inline elem_type at_alt     (const uword i)                    const { const elem_type A = P1.at_alt(i);   const elem_type B = P2.at_alt(i);   return comparator(A,B) ? A : B; }
+  arma_inline elem_type operator[] (const uword i)                const { const elem_type A = P1[i];        const elem_type B = P2[i];        return comparator(A,B) ? A : B; }
+  arma_inline elem_type at         (const uword r, const uword c) const { const elem_type A = P1.at(r,c);   const elem_type B = P2.at(r,c);   return comparator(A,B) ? A : B; }
+  arma_inline elem_type at_alt     (const uword i)                const { const elem_type A = P1.at_alt(i); const elem_type B = P2.at_alt(i); return comparator(A,B) ? A : B; }
   
   arma_inline         ea_type         get_ea() const { return *this; }
   arma_inline aligned_ea_type get_aligned_ea() const { return *this; }
@@ -717,9 +717,9 @@ struct Proxy< Glue<T1, T2, glue_max> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : P1.get_n_cols(); }
   arma_inline uword get_n_elem() const { return P1.get_n_elem();              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { const elem_type A = P1[i];          const elem_type B = P2[i];          return comparator(A,B) ? A : B; }
-  arma_inline elem_type at         (const uword row, const uword col) const { const elem_type A = P1.at(row,col); const elem_type B = P2.at(row,col); return comparator(A,B) ? A : B; }
-  arma_inline elem_type at_alt     (const uword i)                    const { const elem_type A = P1.at_alt(i);   const elem_type B = P2.at_alt(i);   return comparator(A,B) ? A : B; }
+  arma_inline elem_type operator[] (const uword i)                const { const elem_type A = P1[i];        const elem_type B = P2[i];        return comparator(A,B) ? A : B; }
+  arma_inline elem_type at         (const uword r, const uword c) const { const elem_type A = P1.at(r,c);   const elem_type B = P2.at(r,c);   return comparator(A,B) ? A : B; }
+  arma_inline elem_type at_alt     (const uword i)                const { const elem_type A = P1.at_alt(i); const elem_type B = P2.at_alt(i); return comparator(A,B) ? A : B; }
   
   arma_inline         ea_type         get_ea() const { return *this; }
   arma_inline aligned_ea_type get_aligned_ea() const { return *this; }
@@ -764,9 +764,9 @@ struct Proxy< mtOp<out_eT, T1, op_type> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem;              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];          }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row,col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);   }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r,c);   }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -811,9 +811,9 @@ struct Proxy< mtGlue<out_eT, T1, T2, glue_type> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem;              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];          }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row,col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);   }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r,c);   }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -858,9 +858,9 @@ struct Proxy< CubeToMatOp<T1, op_type> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem;              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -907,9 +907,9 @@ struct Proxy< CubeToMatOp<T1, op_vectorise_cube_col> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q[row];      }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q[r];        }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -954,9 +954,9 @@ struct Proxy< SpToDOp<T1, op_type> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem;              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -1003,9 +1003,9 @@ struct Proxy< SpToDOp<T1, op_nonzeros_spmat> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q[row];      }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q[r];        }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -1050,9 +1050,9 @@ struct Proxy< subview<eT> >
   arma_inline uword get_n_cols() const { return Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q[i];           }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];       }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c); }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];       }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -1097,9 +1097,9 @@ struct Proxy< subview_col<eT> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q[row];      }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q[r];        }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.colmem; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;        }
@@ -1144,9 +1144,9 @@ struct Proxy< subview_row<eT> >
   arma_inline uword get_n_cols() const { return Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];   }
-  arma_inline elem_type at         (const uword, const uword col) const { return Q[col]; }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];   }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i]; }
+  arma_inline elem_type at         (const uword, const uword c) const { return Q[c]; }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q[i]; }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -1198,9 +1198,9 @@ struct Proxy< subview_elem1<eT,T1> >
   constexpr   uword get_n_cols() const { return 1;              }
   arma_inline uword get_n_elem() const { return R.get_n_elem(); }
   
-  arma_inline elem_type operator[] (const uword i)                const { const uword ii = (Proxy<T1>::use_at) ? R.at(i,  0) : R[i  ]; arma_debug_check_bounds( (ii >= Q.m.n_elem), "Mat::elem(): index out of bounds" ); return Q.m[ii]; }
-  arma_inline elem_type at         (const uword row, const uword) const { const uword ii = (Proxy<T1>::use_at) ? R.at(row,0) : R[row]; arma_debug_check_bounds( (ii >= Q.m.n_elem), "Mat::elem(): index out of bounds" ); return Q.m[ii]; }
-  arma_inline elem_type at_alt     (const uword i)                const { const uword ii = (Proxy<T1>::use_at) ? R.at(i,  0) : R[i  ]; arma_debug_check_bounds( (ii >= Q.m.n_elem), "Mat::elem(): index out of bounds" ); return Q.m[ii]; }
+  arma_inline elem_type operator[] (const uword i)              const { const uword ii = (Proxy<T1>::use_at) ? R.at(i,0) : R[i]; arma_debug_check_bounds( (ii >= Q.m.n_elem), "Mat::elem(): index out of bounds" ); return Q.m[ii]; }
+  arma_inline elem_type at         (const uword r, const uword) const { const uword ii = (Proxy<T1>::use_at) ? R.at(r,0) : R[r]; arma_debug_check_bounds( (ii >= Q.m.n_elem), "Mat::elem(): index out of bounds" ); return Q.m[ii]; }
+  arma_inline elem_type at_alt     (const uword i)              const { const uword ii = (Proxy<T1>::use_at) ? R.at(i,0) : R[i]; arma_debug_check_bounds( (ii >= Q.m.n_elem), "Mat::elem(): index out of bounds" ); return Q.m[ii]; }
   
   arma_inline         ea_type         get_ea() const { return (*this); }
   arma_inline aligned_ea_type get_aligned_ea() const { return (*this); }
@@ -1245,9 +1245,9 @@ struct Proxy< subview_elem2<eT,T1,T2> >
   arma_inline uword get_n_cols() const { return Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -1292,9 +1292,9 @@ struct Proxy< diagview<eT> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];         }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q.at(row, 0); }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];         }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i];       }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q.at(r, 0); }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q[i];       }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -1348,9 +1348,9 @@ struct Proxy_diagvec_mat< Op<T1, op_diagvec> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];         }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q.at(row, 0); }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];         }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i];       }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q.at(r, 0); }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q[i];       }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -1403,9 +1403,9 @@ struct Proxy_diagvec_expr< Op<T1, op_diagvec> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];         }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q.at(row, 0); }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i);  }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q.at(r, 0);  }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -1476,9 +1476,9 @@ struct Proxy< Op<T1, op_diagvec2> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];         }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q.at(row, 0); }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i);  }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q.at(r, 0);  }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -1731,9 +1731,9 @@ struct Proxy< Op<T1, op_htrans> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem;              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Proxy_xtrans::get_ea();         }
   arma_inline aligned_ea_type get_aligned_ea() const { return Proxy_xtrans::get_aligned_ea(); }
@@ -1793,9 +1793,9 @@ struct Proxy< Op<T1, op_strans> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem;              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Proxy_xtrans::get_ea();         }
   arma_inline aligned_ea_type get_aligned_ea() const { return Proxy_xtrans::get_aligned_ea(); }
@@ -1934,9 +1934,9 @@ struct Proxy< Op<subview_row<eT>, op_htrans> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];   }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q[row]; }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];   }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i]; }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q[r]; }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q[i]; }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -1981,9 +1981,9 @@ struct Proxy< Op<subview_row<eT>, op_strans> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];   }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q[row]; }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];   }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i]; }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q[r]; }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q[i]; }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -2032,9 +2032,9 @@ struct Proxy< Op< Row< std::complex<T> >, op_htrans> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];   }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q[row]; }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];   }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i]; }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q[r]; }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q[i]; }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -2083,9 +2083,9 @@ struct Proxy< Op< Col< std::complex<T> >, op_htrans> >
   arma_inline uword get_n_cols() const { return Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];   }
-  arma_inline elem_type at         (const uword, const uword col) const { return Q[col]; }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];   }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i]; }
+  arma_inline elem_type at         (const uword, const uword c) const { return Q[c]; }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q[i]; }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -2134,9 +2134,9 @@ struct Proxy< Op< subview_col< std::complex<T> >, op_htrans> >
   arma_inline uword get_n_cols() const { return Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];   }
-  arma_inline elem_type at         (const uword, const uword col) const { return Q[col]; }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];   }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i]; }
+  arma_inline elem_type at         (const uword, const uword c) const { return Q[c]; }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q[i]; }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -2184,9 +2184,9 @@ struct Proxy< Op<T1, op_htrans2> >
   arma_inline uword get_n_cols() const { return is_col ? 1 : Q.get_n_cols(); }
   arma_inline uword get_n_elem() const { return Q.get_n_elem();              }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row, col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r, c);  }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -2231,9 +2231,9 @@ struct Proxy< subview_row_strans<eT> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];   }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q[row]; }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];   }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i]; }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q[r]; }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q[i]; }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -2278,9 +2278,9 @@ struct Proxy< subview_row_htrans<eT> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];   }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q[row]; }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q[i];   }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i]; }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q[r]; }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q[i]; }
   
   arma_inline         ea_type         get_ea() const { return Q; }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
@@ -2325,9 +2325,9 @@ struct Proxy< xtrans_mat<eT, do_conj> >
   arma_inline uword get_n_cols() const { return Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];          }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row,col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);   }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r,c);   }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -2372,9 +2372,9 @@ struct Proxy< xvec_htrans<eT> >
   arma_inline uword get_n_cols() const { return Q.n_cols; }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                    const { return Q[i];          }
-  arma_inline elem_type at         (const uword row, const uword col) const { return Q.at(row,col); }
-  arma_inline elem_type at_alt     (const uword i)                    const { return Q.at_alt(i);   }
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r,c);   }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -2429,9 +2429,9 @@ struct Proxy_vectorise_col_mat< Op<T1, op_vectorise_col> >
   constexpr   uword get_n_cols() const { return 1;        }
   arma_inline uword get_n_elem() const { return Q.n_elem; }
   
-  arma_inline elem_type operator[] (const uword i)                const { return Q[i];           }
-  arma_inline elem_type at         (const uword row, const uword) const { return Q[row];         }
-  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i);    }
+  arma_inline elem_type operator[] (const uword i)              const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword) const { return Q[r];        }
+  arma_inline elem_type at_alt     (const uword i)              const { return Q.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return Q.memptr(); }
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
@@ -2486,9 +2486,9 @@ struct Proxy_vectorise_col_expr< Op<T1, op_vectorise_col> >
   constexpr   uword get_n_cols() const { return 1;              }
   arma_inline uword get_n_elem() const { return R.get_n_elem(); }
   
-  arma_inline elem_type operator[] (const uword i)                const { return R[i];         }
-  arma_inline elem_type at         (const uword row, const uword) const { return R.at(row, 0); }
-  arma_inline elem_type at_alt     (const uword i)                const { return R.at_alt(i);  }
+  arma_inline elem_type operator[] (const uword i)              const { return R[i];        }
+  arma_inline elem_type at         (const uword r, const uword) const { return R.at(r, 0);  }
+  arma_inline elem_type at_alt     (const uword i)              const { return R.at_alt(i); }
   
   arma_inline         ea_type         get_ea() const { return R.get_ea();         }
   arma_inline aligned_ea_type get_aligned_ea() const { return R.get_aligned_ea(); }
