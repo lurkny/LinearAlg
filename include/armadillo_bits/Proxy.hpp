@@ -582,8 +582,8 @@ struct Proxy< Glue<T1, T2, glue_type> >
   typedef const Mat<elem_type>&                    aligned_ea_type;
   
   static constexpr bool use_at      = false;
-  static constexpr bool has_subview = false;
   static constexpr bool use_mp      = false;
+  static constexpr bool has_subview = false;
   
   static constexpr bool is_row  = Glue<T1, T2, glue_type>::is_row;
   static constexpr bool is_col  = Glue<T1, T2, glue_type>::is_col;
