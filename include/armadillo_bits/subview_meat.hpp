@@ -1157,24 +1157,33 @@ subview<eT>::randu()
   {
   arma_extra_debug_sigprint();
   
-  const uword local_n_rows = n_rows;
-  const uword local_n_cols = n_cols;
+  subview<eT>& s = (*this);
   
-  if(local_n_rows == 1)
+  const uword s_n_rows = s.n_rows;
+  const uword s_n_cols = s.n_cols;
+  
+  if(s_n_rows == 1)
     {
-    podarray<eT> tmp(local_n_cols);
+    podarray<eT> tmp(s_n_cols);
     
     eT* tmp_mem = tmp.memptr();
     
-    arma_rng::randu<eT>::fill( tmp_mem, local_n_cols );
+    arma_rng::randu<eT>::fill( tmp_mem, s_n_cols );
     
-    for(uword ii=0; ii < local_n_cols; ++ii)  { at(0,ii) = tmp_mem[ii]; }
+    for(uword ii=0; ii < s_n_cols; ++ii)  { at(0,ii) = tmp_mem[ii]; }
     }
   else
     {
-    for(uword ii=0; ii < local_n_cols; ++ii)
+    if( (s.aux_row1 == 0) && (s_n_rows == s.m.n_rows) )
       {
-      arma_rng::randu<eT>::fill( colptr(ii), local_n_rows );
+      arma_rng::randu<eT>::fill( s.colptr(0), s.n_elem );
+      }
+    else
+      {
+      for(uword ii=0; ii < s_n_cols; ++ii)
+        {
+        arma_rng::randu<eT>::fill( s.colptr(ii), s_n_rows );
+        }
       }
     }
   }
@@ -1188,24 +1197,33 @@ subview<eT>::randn()
   {
   arma_extra_debug_sigprint();
   
-  const uword local_n_rows = n_rows;
-  const uword local_n_cols = n_cols;
+  subview<eT>& s = (*this);
   
-  if(local_n_rows == 1)
+  const uword s_n_rows = s.n_rows;
+  const uword s_n_cols = s.n_cols;
+  
+  if(s_n_rows == 1)
     {
-    podarray<eT> tmp(local_n_cols);
+    podarray<eT> tmp(s_n_cols);
     
     eT* tmp_mem = tmp.memptr();
     
-    arma_rng::randn<eT>::fill( tmp_mem, local_n_cols );
+    arma_rng::randn<eT>::fill( tmp_mem, s_n_cols );
     
-    for(uword ii=0; ii < local_n_cols; ++ii)  { at(0,ii) = tmp_mem[ii]; }
+    for(uword ii=0; ii < s_n_cols; ++ii)  { at(0,ii) = tmp_mem[ii]; }
     }
   else
     {
-    for(uword ii=0; ii < local_n_cols; ++ii)
+    if( (s.aux_row1 == 0) && (s_n_rows == s.m.n_rows) )
       {
-      arma_rng::randn<eT>::fill( colptr(ii), local_n_rows );
+      arma_rng::randn<eT>::fill( s.colptr(0), s.n_elem );
+      }
+    else
+      {
+      for(uword ii=0; ii < s_n_cols; ++ii)
+        {
+        arma_rng::randn<eT>::fill( s.colptr(ii), s_n_rows );
+        }
       }
     }
   }
