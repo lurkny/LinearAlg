@@ -577,7 +577,7 @@ accu(const subview_col<eT>& X)
   {
   arma_extra_debug_sigprint();  
   
-  return arrayops::accumulate( X.colptr(0), X.n_rows );
+  return arrayops::accumulate( X.colmem, X.n_rows );
   }
 
 
