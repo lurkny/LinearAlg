@@ -13168,6 +13168,7 @@ the solution can be computed faster by explicitly indicating that <i>A</i> is tr
 <tr><td><code>solve_opts::no_band</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not use specialised solver for band matrices or diagonal matrices</td></tr>
 <tr><td><code>solve_opts::no_trimat</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not use specialised solver for triangular matrices</td></tr>
 <tr><td><code>solve_opts::no_sympd</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not use specialised solver for symmetric/hermitian positive definite matrices</td></tr>
+<tr><td><code>solve_opts::force_approx</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>force use of the approximate solver (<b>note:</b> use this option only if the system is known to be rank deficient)</td></tr>
 </tbody>
 </table>
 <br>
@@ -19281,8 +19282,8 @@ List of additions and changes for each version:
 <li>Version 10.7:
 <ul>
 <li>faster handling of element-wise <a href="#min_and_max">min()</a> and <a href="#min_and_max">max()</a> in compound expressions</li>
-<li>...
-</li>
+<li>expanded <a href="#solve">solve()</a> with <code>solve_opts::force_approx</code> option to force use of the approximate solver</li>
+<li>...</li>
 </ul>
 </li>
 <br>
