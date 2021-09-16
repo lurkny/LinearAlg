@@ -13177,13 +13177,10 @@ the above settings can be combined using the <code>+</code> operator; for exampl
 </li>
 <br>
 <li>
-If a rank deficient system is detected and the <i><code>solve_opts::no_approx</code></i> option is <b>not</b> enabled, a warning is emitted and an approximate solution is attempted
-<ul>
-<li>in Armadillo 10.4 and later versions, this warning can be disabled by setting <a href="#config_hpp">ARMA_WARN_LEVEL</a> to 1 before including the armadillo header:
+If a rank deficient system is detected and the <i><code>solve_opts::no_approx</code></i> option is <b>not</b> enabled, a warning is emitted and an approximate solution is attempted;
+<br>in Armadillo 10.4 and later versions, this warning can be disabled by setting <a href="#config_hpp">ARMA_WARN_LEVEL</a> to 1 before including the armadillo header:
 <br><code>#define ARMA_WARN_LEVEL 1</code>
 <br><code>#include&nbsp;&lt;armadillo&gt;</code>
-</li>
-</ul>
 </li>
 <br>
 <li>
