@@ -13188,7 +13188,7 @@ If a rank deficient system is detected and the <i><code>solve_opts::no_approx</c
 <ul>
 <li>using <i><code>solve_opts::fast</code></i> will speed up finding the solution, but for poorly conditioned systems the solution may have lower quality</li>
 <li>not all SPD matrices are automatically detected; to skip the analysis step and directly indicate that matrix <i>A</i> is likely SPD, use <code>solve_opts::likely_sympd</code></li>
-<li>using <i><code>solve_opts::force_approx</code></i> is only advised if the system is known to be rank deficient, as the approximate solver is considerably slower</li>
+<li>using <i><code>solve_opts::force_approx</code></i> is only advised if the system is known to be rank deficient; the approximate solver is considerably slower</li>
 </ul>
 </li>
 <br>
