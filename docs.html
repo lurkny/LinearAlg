@@ -13146,6 +13146,7 @@ The number of rows in <i>A</i> and <i>B</i> must be the same
 <li>
 By default, matrix <i>A</i> is analysed to automatically determine whether it is a general matrix, band matrix, diagonal matrix, or symmetric/hermitian positive definite (SPD) matrix;
 based on the detected matrix structure, a specialised solver is used for faster execution;
+if no solution is found, an approximate solver is automatically used as a fallback;
 see the <a href="armadillo_solver_2020.pdf">associated paper</a> for more details
 </li>
 <br>
@@ -13168,7 +13169,7 @@ the solution can be computed faster by explicitly indicating that <i>A</i> is tr
 <tr><td><code>solve_opts::no_band</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not use specialised solver for band matrices or diagonal matrices</td></tr>
 <tr><td><code>solve_opts::no_trimat</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not use specialised solver for triangular matrices</td></tr>
 <tr><td><code>solve_opts::no_sympd</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not use specialised solver for symmetric/hermitian positive definite matrices</td></tr>
-<tr><td><code>solve_opts::force_approx</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>force use of the approximate solver (<b>note:</b> use this option only if the system is known to be rank deficient)</td></tr>
+<tr><td><code>solve_opts::force_approx</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>skip the standard solver and directly use of the approximate solver</td></tr>
 </tbody>
 </table>
 <br>
@@ -13176,18 +13177,22 @@ the above settings can be combined using the <code>+</code> operator; for exampl
 </li>
 <br>
 <li>
-If a rank deficient system is detected and the <i><code>solve_opts::no_approx</code></i> option is <b>not</b> enabled, a warning is emitted and an approximate solution is attempted;
-<br>in Armadillo 10.4 and later versions, this warning can be disabled by setting <a href="#config_hpp">ARMA_WARN_LEVEL</a> to 1 before including the armadillo header:
+If a rank deficient system is detected and the <i><code>solve_opts::no_approx</code></i> option is <b>not</b> enabled, a warning is emitted and an approximate solution is attempted
+<ul>
+<li>in Armadillo 10.4 and later versions, this warning can be disabled by setting <a href="#config_hpp">ARMA_WARN_LEVEL</a> to 1 before including the armadillo header:
 <br><code>#define ARMA_WARN_LEVEL 1</code>
 <br><code>#include&nbsp;&lt;armadillo&gt;</code>
 </li>
-<br>
-<li>
-<b>Caveat:</b> using <i><code>solve_opts::fast</code></i> will speed up finding the solution, but for poorly conditioned systems the solution may have lower quality
+</ul>
 </li>
 <br>
 <li>
-<b>Caveat:</b> not all SPD matrices are automatically detected; to skip the analysis step and directly indicate that matrix <i>A</i> is likely SPD, use <code>solve_opts::likely_sympd</code>
+<b>Caveats:</b>
+<ul>
+<li>using <i><code>solve_opts::fast</code></i> will speed up finding the solution, but for poorly conditioned systems the solution may have lower quality</li>
+<li>not all SPD matrices are automatically detected; to skip the analysis step and directly indicate that matrix <i>A</i> is likely SPD, use <code>solve_opts::likely_sympd</code></li>
+<li>using <i><code>solve_opts::force_approx</code></i> is only advised if the system is known to be rank deficient, as the approximate solver is considerably slower</li>
+</ul>
 </li>
 <br>
 <li>
