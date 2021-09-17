@@ -569,7 +569,7 @@ struct quasi_unwrap< Op<subview_col<eT>, op_strans> >
   inline
   quasi_unwrap(const Op<subview_col<eT>, op_strans>& A)
     : orig( A.m.m )
-    , M   ( const_cast<eT*>( A.m.colptr(0) ), A.m.n_rows, false, false )
+    , M   ( const_cast<eT*>( A.m.colmem ), A.m.n_rows, false, false )
     {
     arma_extra_debug_sigprint();
     }
@@ -729,7 +729,7 @@ struct quasi_unwrap_subview_col_htrans< Op<subview_col<eT>, op_htrans> >
   inline
   quasi_unwrap_subview_col_htrans(const Op<subview_col<eT>, op_htrans>& A)
     : orig(A.m.m)
-    , M   (const_cast<eT*>(A.m.colptr(0)), A.m.n_rows, false, false)
+    , M   (const_cast<eT*>(A.m.colmem), A.m.n_rows, false, false)
     {
     arma_extra_debug_sigprint();
     }
@@ -1369,7 +1369,7 @@ struct partial_unwrap< subview_col<eT> >
   inline
   partial_unwrap(const subview_col<eT>& A)
     : orig( A.m )
-    , M   ( const_cast<eT*>( A.colptr(0) ), A.n_rows, false, false )
+    , M   ( const_cast<eT*>( A.colmem ), A.n_rows, false, false )
     {
     arma_extra_debug_sigprint();
     }
@@ -1648,7 +1648,7 @@ struct partial_unwrap< Op< subview_col<eT>, op_htrans> >
   inline
   partial_unwrap(const Op< subview_col<eT>, op_htrans>& A)
     : orig( A.m.m )
-    , M   ( const_cast<eT*>( A.m.colptr(0) ), A.m.n_rows, false, false )
+    , M   ( const_cast<eT*>( A.m.colmem ), A.m.n_rows, false, false )
     {
     arma_extra_debug_sigprint();
     }
@@ -1915,7 +1915,7 @@ struct partial_unwrap< Op< subview_col<eT>, op_htrans2> >
   partial_unwrap(const Op< subview_col<eT>, op_htrans2>& A)
     : orig( A.m.m )
     , val ( A.aux )
-    , M   ( const_cast<eT*>( A.m.colptr(0) ), A.m.n_rows, false, false )
+    , M   ( const_cast<eT*>( A.m.colmem ), A.m.n_rows, false, false )
     {
     arma_extra_debug_sigprint();
     }
@@ -2133,7 +2133,7 @@ struct partial_unwrap< eOp<subview_col<eT>, eop_scalar_times> >
   partial_unwrap(const eOp<subview_col<eT>,eop_scalar_times>& A)
     : orig( A.P.Q.m )
     , val ( A.aux   )
-    , M   ( const_cast<eT*>( A.P.Q.colptr(0) ), A.P.Q.n_rows, false, false )
+    , M   ( const_cast<eT*>( A.P.Q.colmem ), A.P.Q.n_rows, false, false )
     {
     arma_extra_debug_sigprint();
     }
@@ -2340,7 +2340,7 @@ struct partial_unwrap< eOp<subview_col<eT>, eop_neg> >
   inline
   partial_unwrap(const eOp<subview_col<eT>,eop_neg>& A)
     : orig( A.P.Q.m )
-    , M   ( const_cast<eT*>( A.P.Q.colptr(0) ), A.P.Q.n_rows, false, false )
+    , M   ( const_cast<eT*>( A.P.Q.colmem ), A.P.Q.n_rows, false, false )
     {
     arma_extra_debug_sigprint();
     }
@@ -2576,7 +2576,7 @@ struct partial_unwrap_check< subview_col<eT> >
   
   inline
   partial_unwrap_check(const subview_col<eT>& A, const Mat<eT>& B)
-    : M  ( const_cast<eT*>( A.colptr(0) ), A.n_rows, (&(A.m) == &B), false )
+    : M  ( const_cast<eT*>( A.colmem ), A.n_rows, (&(A.m) == &B), false )
     {
     arma_extra_debug_sigprint();
     }
@@ -2777,7 +2777,7 @@ struct partial_unwrap_check< Op< subview_col<eT>, op_htrans> >
   
   inline
   partial_unwrap_check(const Op< subview_col<eT>, op_htrans>& A, const Mat<eT>& B)
-    : M  ( const_cast<eT*>( A.m.colptr(0) ), A.m.n_rows, (&(A.m.m) == &B), false )
+    : M  ( const_cast<eT*>( A.m.colmem ), A.m.n_rows, (&(A.m.m) == &B), false )
     {
     arma_extra_debug_sigprint();
     }
@@ -2990,7 +2990,7 @@ struct partial_unwrap_check< Op< subview_col<eT>, op_htrans2> >
   inline
   partial_unwrap_check(const Op< subview_col<eT>, op_htrans2>& A, const Mat<eT>& B)
     : val( A.aux )
-    , M  ( const_cast<eT*>( A.m.colptr(0) ), A.m.n_rows, (&(A.m.m) == &B), false )
+    , M  ( const_cast<eT*>( A.m.colmem ), A.m.n_rows, (&(A.m.m) == &B), false )
     {
     arma_extra_debug_sigprint();
     }
@@ -3201,7 +3201,7 @@ struct partial_unwrap_check< eOp<subview_col<eT>, eop_scalar_times> >
   inline
   partial_unwrap_check(const eOp<subview_col<eT>,eop_scalar_times>& A, const Mat<eT>& B)
     : val( A.aux )
-    , M  ( const_cast<eT*>( A.P.Q.colptr(0) ), A.P.Q.n_rows, (&(A.P.Q.m) == &B), false )
+    , M  ( const_cast<eT*>( A.P.Q.colmem ), A.P.Q.n_rows, (&(A.P.Q.m) == &B), false )
     {
     arma_extra_debug_sigprint();
     }
@@ -3401,7 +3401,7 @@ struct partial_unwrap_check< eOp<subview_col<eT>, eop_neg> >
   
   inline
   partial_unwrap_check(const eOp<subview_col<eT>,eop_neg>& A, const Mat<eT>& B)
-    : M  ( const_cast<eT*>( A.P.Q.colptr(0) ), A.P.Q.n_rows, (&(A.P.Q.m) == &B), false )
+    : M  ( const_cast<eT*>( A.P.Q.colmem ), A.P.Q.n_rows, (&(A.P.Q.m) == &B), false )
     {
     arma_extra_debug_sigprint();
     }
