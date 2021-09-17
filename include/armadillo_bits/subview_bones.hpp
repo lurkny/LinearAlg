@@ -461,6 +461,9 @@ class subview_cols : public subview<eT>
   static constexpr bool is_col  = false;
   static constexpr bool is_xvec = false;
   
+  inline  subview_cols(const subview_cols&  in);
+  inline  subview_cols(      subview_cols&& in);
+  
   inline void operator= (const subview<eT>&  x);
   inline void operator= (const subview_cols& x);
   inline void operator= (const eT val);
@@ -472,9 +475,6 @@ class subview_cols : public subview<eT>
   
   template<typename T1, typename gen_type>
   inline typename enable_if2< is_same_type<typename T1::elem_type, eT>::value, void>::result operator=(const Gen<T1,gen_type>& x);
-  
-  inline  subview_cols(const subview_cols&  in);
-  inline  subview_cols(      subview_cols&& in);
   
   inline arma_warn_unused eT  at_alt    (const uword ii) const;
   
