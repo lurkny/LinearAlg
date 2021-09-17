@@ -4014,6 +4014,148 @@ subview_cols<eT>::operator= (const Gen<T1,gen_type>& in)
 
 
 
+template<typename eT>
+inline
+arma_warn_unused
+eT
+subview_cols<eT>::at_alt(const uword ii) const
+  {
+  return operator[](ii);
+  }
+
+
+
+template<typename eT>
+inline
+arma_warn_unused
+eT&
+subview_cols<eT>::operator[](const uword ii)
+  {
+  const uword index = subview<eT>::aux_col1 * subview<eT>::m.n_rows + ii;
+  
+  return access::rw( (const_cast< Mat<eT>& >(subview<eT>::m)).mem[index] );
+  }
+
+
+
+template<typename eT>
+inline
+arma_warn_unused
+eT
+subview_cols<eT>::operator[](const uword ii) const
+  {
+  const uword index = subview<eT>::aux_col1 * subview<eT>::m.n_rows + ii;
+  
+  return subview<eT>::m.mem[index];
+  }
+
+
+
+template<typename eT>
+inline
+arma_warn_unused
+eT&
+subview_cols<eT>::operator()(const uword ii)
+  {
+  arma_debug_check_bounds( (ii >= subview<eT>::n_elem), "subview::operator(): index out of bounds" );
+    
+  const uword index = subview<eT>::aux_col1 * subview<eT>::m.n_rows + ii;
+  
+  return access::rw( (const_cast< Mat<eT>& >(subview<eT>::m)).mem[index] );
+  }
+
+
+
+template<typename eT>
+inline
+arma_warn_unused
+eT
+subview_cols<eT>::operator()(const uword ii) const
+  {
+  arma_debug_check_bounds( (ii >= subview<eT>::n_elem), "subview::operator(): index out of bounds" );
+    
+  const uword index = subview<eT>::aux_col1 * subview<eT>::m.n_rows + ii;
+  
+  return subview<eT>::m.mem[index];
+  }
+
+
+
+template<typename eT>
+inline
+arma_warn_unused
+eT&
+subview_cols<eT>::operator()(const uword in_row, const uword in_col)
+  {
+  arma_debug_check_bounds( ((in_row >= subview<eT>::n_rows) || (in_col >= subview<eT>::n_cols)), "subview::operator(): index out of bounds" );
+  
+  const uword index = (in_col + subview<eT>::aux_col1) * subview<eT>::m.n_rows + in_row;
+  
+  return access::rw( (const_cast< Mat<eT>& >(subview<eT>::m)).mem[index] );
+  }
+
+
+
+template<typename eT>
+inline
+arma_warn_unused
+eT
+subview_cols<eT>::operator()(const uword in_row, const uword in_col) const
+  {
+  arma_debug_check_bounds( ((in_row >= subview<eT>::n_rows) || (in_col >= subview<eT>::n_cols)), "subview::operator(): index out of bounds" );
+  
+  const uword index = (in_col + subview<eT>::aux_col1) * subview<eT>::m.n_rows + in_row;
+  
+  return subview<eT>::m.mem[index];
+  }
+
+
+
+template<typename eT>
+inline
+arma_warn_unused
+eT&
+subview_cols<eT>::at(const uword in_row, const uword in_col)
+  {
+  const uword index = (in_col + subview<eT>::aux_col1) * subview<eT>::m.n_rows + in_row;
+  
+  return access::rw( (const_cast< Mat<eT>& >(subview<eT>::m)).mem[index] );
+  }
+
+
+
+template<typename eT>
+inline
+arma_warn_unused
+eT
+subview_cols<eT>::at(const uword in_row, const uword in_col) const
+  {
+  const uword index = (in_col + subview<eT>::aux_col1) * subview<eT>::m.n_rows + in_row;
+  
+  return subview<eT>::m.mem[index];
+  }
+
+
+
+template<typename eT>
+arma_inline
+eT*
+subview_cols<eT>::colptr(const uword in_col)
+  {
+  return & access::rw((const_cast< Mat<eT>& >(subview<eT>::m)).mem[ (in_col + subview<eT>::aux_col1) * subview<eT>::m.n_rows ]);
+  }
+
+
+
+template<typename eT>
+arma_inline
+const eT*
+subview_cols<eT>::colptr(const uword in_col) const
+  {
+  return & subview<eT>::m.mem[ (in_col + subview<eT>::aux_col1) * subview<eT>::m.n_rows ];
+  }
+
+
 
 //
 //

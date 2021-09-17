@@ -476,8 +476,22 @@ class subview_cols : public subview<eT>
   inline  subview_cols(const subview_cols&  in);
   inline  subview_cols(      subview_cols&& in);
   
-  using subview<eT>::operator[];
-  using subview<eT>::operator();
+  inline arma_warn_unused eT  at_alt    (const uword ii) const;
+  
+  inline arma_warn_unused eT& operator[](const uword ii);
+  inline arma_warn_unused eT  operator[](const uword ii) const;
+  
+  inline arma_warn_unused eT& operator()(const uword ii);
+  inline arma_warn_unused eT  operator()(const uword ii) const;
+  
+  inline arma_warn_unused eT& operator()(const uword in_row, const uword in_col);
+  inline arma_warn_unused eT  operator()(const uword in_row, const uword in_col) const;
+  
+  inline arma_warn_unused eT&         at(const uword in_row, const uword in_col);
+  inline arma_warn_unused eT          at(const uword in_row, const uword in_col) const;
+  
+  arma_inline       eT* colptr(const uword in_col);
+  arma_inline const eT* colptr(const uword in_col) const;
   
   protected:
   
