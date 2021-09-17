@@ -65,7 +65,7 @@ op_trimat::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_trimat>& in)
   
   const bool upper = (in.aux_uword_a == 0);
   
-  if(is_Mat<T1>::value || is_Mat<typename Proxy<T1>::stored_type>::value)
+  if(is_Mat<T1>::value || is_Mat<typename Proxy<T1>::stored_type>::value)  // TODO: handle subview_cols
     {
     const unwrap<T1>   tmp(in.m);
     const Mat<eT>& A = tmp.M;
