@@ -78,7 +78,7 @@ op_trimat::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_trimat>& in)
     
     const bool is_alias = P.is_alias(out);
     
-    if(is_Mat<typename Proxy<T1>::stored_type>::value || Proxy<T1>::use_mp)
+    if(is_Mat<typename Proxy<T1>::stored_type>::value || (arma_config::openmp && Proxy<T1>::use_mp))
       {
       const quasi_unwrap<typename Proxy<T1>::stored_type> U(P.Q);
       
