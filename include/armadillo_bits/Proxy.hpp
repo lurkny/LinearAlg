@@ -1116,6 +1116,56 @@ struct Proxy< subview_col<eT> >
 
 
 template<typename eT>
+struct Proxy< subview_cols<eT> >
+  {
+  typedef eT                                       elem_type;
+  typedef typename get_pod_type<elem_type>::result pod_type;
+  typedef Mat<eT>                                  stored_type;
+  typedef const eT*                                ea_type;
+  typedef const Mat<eT>&                           aligned_ea_type;
+  
+  static constexpr bool use_at      = false;
+  static constexpr bool use_mp      = false;
+  static constexpr bool has_subview = true;
+  static constexpr bool has_mem     = true;
+  
+  static constexpr bool is_row  = false;
+  static constexpr bool is_col  = false;
+  static constexpr bool is_xvec = false;
+  
+  arma_aligned const subview_cols<eT>& sv;
+  arma_aligned const Mat<eT>           Q;
+  
+  inline explicit Proxy(const subview_cols<eT>& A)
+    : sv(A)
+    , Q ( const_cast<eT*>( A.colptr(0) ), A.n_rows, A.n_cols, false, false )
+    {
+    arma_extra_debug_sigprint();
+    }
+  
+  arma_inline uword get_n_rows() const { return Q.n_rows; }
+  arma_inline uword get_n_cols() const { return Q.n_cols; }
+  arma_inline uword get_n_elem() const { return Q.n_elem; }
+  
+  arma_inline elem_type operator[] (const uword i)                const { return Q[i];        }
+  arma_inline elem_type at         (const uword r, const uword c) const { return Q.at(r,c);   }
+  arma_inline elem_type at_alt     (const uword i)                const { return Q.at_alt(i); }
+  
+  arma_inline         ea_type         get_ea() const { return Q.memptr(); }
+  arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
+  
+  template<typename eT2>
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (is_same_type<eT,eT2>::value) ? (void_ptr(&(sv.m)) == void_ptr(&X)) : false; }
+  
+  template<typename eT2>
+  arma_inline bool has_overlap(const subview<eT2>& X) const { return sv.check_overlap(X); }
+  
+  arma_inline bool is_aligned() const { return memory::is_aligned(Q.memptr()); }
+  };
+
+
+
+template<typename eT>
 struct Proxy< subview_row<eT> >
   {
   typedef eT                                       elem_type;

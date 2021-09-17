@@ -450,6 +450,47 @@ class subview_col : public subview<eT>
 
 
 template<typename eT>
+class subview_cols : public subview<eT>
+  {
+  public:
+  
+  typedef eT                                       elem_type;
+  typedef typename get_pod_type<elem_type>::result pod_type;
+  
+  static constexpr bool is_row  = false;
+  static constexpr bool is_col  = false;
+  static constexpr bool is_xvec = false;
+  
+  inline void operator= (const subview<eT>&  x);
+  inline void operator= (const subview_cols& x);
+  inline void operator= (const eT val);
+  inline void operator= (const std::initializer_list<eT>& list);
+  inline void operator= (const std::initializer_list< std::initializer_list<eT> >& list);
+  
+  template<typename T1>
+  inline void operator= (const Base<eT,T1>& x);
+  
+  template<typename T1, typename gen_type>
+  inline typename enable_if2< is_same_type<typename T1::elem_type, eT>::value, void>::result operator=(const Gen<T1,gen_type>& x);
+  
+  inline  subview_cols(const subview_cols&  in);
+  inline  subview_cols(      subview_cols&& in);
+  
+  using subview<eT>::operator[];
+  using subview<eT>::operator();
+  
+  protected:
+  
+  inline subview_cols(const Mat<eT>& in_m, const uword in_col1, const uword in_n_cols);
+  inline subview_cols() = delete;
+  
+  friend class Mat<eT>;
+  friend class subview<eT>;
+  };
+
+
+
+template<typename eT>
 class subview_row : public subview<eT>
   {
   public:

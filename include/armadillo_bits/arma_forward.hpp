@@ -35,6 +35,7 @@ template<typename eT, bool do_conj> class xtrans_mat;
 
 template<typename eT> class subview;
 template<typename eT> class subview_col;
+template<typename eT> class subview_cols;
 template<typename eT> class subview_row;
 template<typename eT> class subview_row_strans;
 template<typename eT> class subview_row_htrans;

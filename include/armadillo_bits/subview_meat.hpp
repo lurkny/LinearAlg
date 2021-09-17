@@ -3898,6 +3898,128 @@ subview_col<eT>::index_max() const
 //
 
 
+template<typename eT>
+inline
+subview_cols<eT>::subview_cols(const Mat<eT>& in_m, const uword in_col1, const uword in_n_cols)
+  : subview<eT>(in_m, 0, in_col1, in_m.n_rows, in_n_cols)
+  {
+  arma_extra_debug_sigprint();
+  }
+
+
+
+template<typename eT>
+inline
+subview_cols<eT>::subview_cols(const subview_cols<eT>& in)
+  : subview<eT>(in)   // interprets 'subview_cols' as 'subview'
+  {
+  arma_extra_debug_sigprint();
+  }
+
+
+
+template<typename eT>
+inline
+subview_cols<eT>::subview_cols(subview_cols<eT>&& in)
+  : subview<eT>(std::move(in))  // interprets 'subview_cols' as 'subview'
+  {
+  arma_extra_debug_sigprint();
+  }
+
+
+
+template<typename eT>
+inline
+void
+subview_cols<eT>::operator=(const subview<eT>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  subview<eT>::operator=(X);
+  }
+
+
+
+template<typename eT>
+inline
+void
+subview_cols<eT>::operator=(const subview_cols<eT>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  subview<eT>::operator=(X); // interprets 'subview_cols' as 'subview'
+  }
+
+
+
+template<typename eT>
+inline
+void
+subview_cols<eT>::operator=(const std::initializer_list<eT>& list)
+  {
+  arma_extra_debug_sigprint();
+  
+  subview<eT>::operator=(list);
+  }
+
+
+
+template<typename eT>
+inline
+void
+subview_cols<eT>::operator=(const std::initializer_list< std::initializer_list<eT> >& list)
+  {
+  arma_extra_debug_sigprint();
+  
+  subview<eT>::operator=(list);
+  }
+
+
+
+template<typename eT>
+inline
+void
+subview_cols<eT>::operator=(const eT val)
+  {
+  arma_extra_debug_sigprint();
+  
+  subview<eT>::operator=(val);
+  }
+
+
+
+template<typename eT>
+template<typename T1>
+inline
+void
+subview_cols<eT>::operator=(const Base<eT,T1>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  subview<eT>::operator=(X.get_ref());
+  }
+
+
+
+template<typename eT>
+template<typename T1, typename gen_type>
+inline
+typename enable_if2< is_same_type<typename T1::elem_type, eT>::value, void>::result
+subview_cols<eT>::operator= (const Gen<T1,gen_type>& in)
+  {
+  arma_extra_debug_sigprint();
+  
+  subview<eT>::operator=(in);
+  }
+
+
+
+
+//
+//
+//
+
+
 
 template<typename eT>
 inline

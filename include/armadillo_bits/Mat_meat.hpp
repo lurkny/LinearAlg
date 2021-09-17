@@ -3253,7 +3253,7 @@ Mat<eT>::rows(const uword in_row1, const uword in_row2) const
 //! creation of subview (submatrix comprised of specified column vectors)
 template<typename eT>
 arma_inline
-subview<eT>
+subview_cols<eT>
 Mat<eT>::cols(const uword in_col1, const uword in_col2)
   {
   arma_extra_debug_sigprint();
@@ -3266,7 +3266,7 @@ Mat<eT>::cols(const uword in_col1, const uword in_col2)
   
   const uword subview_n_cols = in_col2 - in_col1 + 1;
   
-  return subview<eT>(*this, 0, in_col1, n_rows, subview_n_cols);
+  return subview_cols<eT>(*this, in_col1, subview_n_cols);
   }
 
 
@@ -3274,7 +3274,7 @@ Mat<eT>::cols(const uword in_col1, const uword in_col2)
 //! creation of subview (submatrix comprised of specified column vectors)
 template<typename eT>
 arma_inline
-const subview<eT>
+const subview_cols<eT>
 Mat<eT>::cols(const uword in_col1, const uword in_col2) const
   {
   arma_extra_debug_sigprint();
@@ -3287,7 +3287,7 @@ Mat<eT>::cols(const uword in_col1, const uword in_col2) const
   
   const uword subview_n_cols = in_col2 - in_col1 + 1;
   
-  return subview<eT>(*this, 0, in_col1, n_rows, subview_n_cols);
+  return subview_cols<eT>(*this, in_col1, subview_n_cols);
   }
 
 
@@ -3351,7 +3351,7 @@ Mat<eT>::rows(const span& row_span) const
 //! creation of subview (submatrix comprised of specified column vectors)
 template<typename eT>
 arma_inline
-subview<eT>
+subview_cols<eT>
 Mat<eT>::cols(const span& col_span)
   {
   arma_extra_debug_sigprint();
@@ -3371,7 +3371,7 @@ Mat<eT>::cols(const span& col_span)
     "Mat::cols(): indices out of bounds or incorrectly used"
     );
   
-  return subview<eT>(*this, 0, in_col1, n_rows, submat_n_cols);
+  return subview_cols<eT>(*this, in_col1, submat_n_cols);
   }
 
 
@@ -3379,7 +3379,7 @@ Mat<eT>::cols(const span& col_span)
 //! creation of subview (submatrix comprised of specified column vectors)
 template<typename eT>
 arma_inline
-const subview<eT>
+const subview_cols<eT>
 Mat<eT>::cols(const span& col_span) const
   {
   arma_extra_debug_sigprint();
@@ -3399,7 +3399,7 @@ Mat<eT>::cols(const span& col_span) const
     "Mat::cols(): indices out of bounds or incorrectly used"
     );
   
-  return subview<eT>(*this, 0, in_col1, n_rows, submat_n_cols);
+  return subview_cols<eT>(*this, in_col1, submat_n_cols);
   }
 
 
