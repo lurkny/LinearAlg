@@ -160,7 +160,7 @@ op_reshape::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_reshape>& in)
   const uword in_n_cols = in.aux_uword_b;
   
   // allow detection of in-place reshape
-  if(is_Mat<T1>::value || is_Mat<typename Proxy<T1>::stored_type>::value)  // TODO: handle subview_cols
+  if(is_Mat<T1>::value)
     {
     const unwrap<T1> U(in.m);
     
@@ -170,17 +170,39 @@ op_reshape::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_reshape>& in)
     {
     const Proxy<T1> P(in.m);
     
-    if(P.is_alias(out))
+    const bool is_alias = P.is_alias(out);
+    
+    if(is_Mat<typename Proxy<T1>::stored_type>::value || Proxy<T1>::use_mp)
       {
-      Mat<eT> tmp;
+      const quasi_unwrap<typename Proxy<T1>::stored_type> U(P.Q);
       
-      op_reshape::apply_proxy(tmp, P, in_n_rows, in_n_cols);
-      
-      out.steal_mem(tmp);
+      if(is_alias)
+        {
+        Mat<eT> tmp;
+        
+        op_reshape::apply_unwrap(tmp, U.M, in_n_rows, in_n_cols);
+        
+        out.steal_mem(tmp);
+        }
+      else
+        {
+        op_reshape::apply_unwrap(out, U.M, in_n_rows, in_n_cols);
+        }
       }
     else
       {
-      op_reshape::apply_proxy(out, P, in_n_rows, in_n_cols);
+      if(is_alias)
+        {
+        Mat<eT> tmp;
+        
+        op_reshape::apply_proxy(tmp, P, in_n_rows, in_n_cols);
+        
+        out.steal_mem(tmp);
+        }
+      else
+        {
+        op_reshape::apply_proxy(out, P, in_n_rows, in_n_cols);
+        }
       }
     }
   }
