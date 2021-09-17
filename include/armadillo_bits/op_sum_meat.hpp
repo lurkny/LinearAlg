@@ -82,7 +82,7 @@ op_sum::apply_noalias_unwrap(Mat<typename T1::elem_type>& out, const Proxy<T1>& 
   
   typedef typename Proxy<T1>::stored_type P_stored_type;
   
-  const unwrap<P_stored_type> tmp(P.Q);
+  const unwrap<P_stored_type> tmp(P.Q);   // TODO: should this be quasi_unwrap ?
   
   const typename unwrap<P_stored_type>::stored_type& X = tmp.M;
   
