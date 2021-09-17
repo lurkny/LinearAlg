@@ -1614,6 +1614,33 @@ struct partial_unwrap< Op< subview<eT>, op_htrans> >
 
 
 template<typename eT>
+struct partial_unwrap< Op< subview_cols<eT>, op_htrans> >
+  {
+  typedef Mat<eT> stored_type;
+  
+  inline
+  partial_unwrap(const Op< subview_cols<eT>, op_htrans>& A)
+    : orig( A.m.m )
+    , M   ( const_cast<eT*>( A.m.colptr(0) ), A.m.n_rows, A.m.n_cols, false, false )
+    {
+    arma_extra_debug_sigprint();
+    }
+  
+  constexpr eT get_val() const { return eT(1); }
+  
+  template<typename eT2>
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&orig) == void_ptr(&X)); }
+  
+  static constexpr bool do_trans = true;
+  static constexpr bool do_times = false;
+  
+  const Mat<eT>& orig;
+  const Mat<eT>  M;
+  };
+
+
+
+template<typename eT>
 struct partial_unwrap< Op< subview_col<eT>, op_htrans> >
   {
   typedef Col<eT> stored_type;
@@ -1846,6 +1873,35 @@ struct partial_unwrap< Op< subview<eT>, op_htrans2> >
   const subview<eT>& sv;
   const eT           val;
   const Mat<eT>      M;
+  };
+
+
+
+template<typename eT>
+struct partial_unwrap< Op< subview_cols<eT>, op_htrans2> >
+  {
+  typedef Mat<eT> stored_type;
+  
+  inline
+  partial_unwrap(const Op< subview_cols<eT>, op_htrans2>& A)
+    : orig( A.m.m )
+    , val ( A.aux )
+    , M   ( const_cast<eT*>( A.m.colptr(0) ), A.m.n_rows, A.m.n_cols, false, false )
+    {
+    arma_extra_debug_sigprint();
+    }
+  
+  inline eT get_val() const { return val; }
+  
+  template<typename eT2>
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&orig) == void_ptr(&X)); }
+  
+  static constexpr bool do_trans = true;
+  static constexpr bool do_times = true;
+  
+  const Mat<eT>& orig;
+  const eT       val;
+  const Mat<eT>  M;
   };
 
 
