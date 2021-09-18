@@ -4015,6 +4015,46 @@ subview_cols<eT>::operator= (const Gen<T1,gen_type>& in)
 
 
 template<typename eT>
+arma_inline
+const Op<subview_cols<eT>,op_htrans>
+subview_cols<eT>::t() const
+  {
+  return Op<subview_cols<eT>,op_htrans>(*this);
+  }
+
+
+
+template<typename eT>
+arma_inline
+const Op<subview_cols<eT>,op_htrans>
+subview_cols<eT>::ht() const
+  {
+  return Op<subview_cols<eT>,op_htrans>(*this);
+  }
+
+
+
+template<typename eT>
+arma_inline
+const Op<subview_cols<eT>,op_strans>
+subview_cols<eT>::st() const
+  {
+  return Op<subview_cols<eT>,op_strans>(*this);
+  }
+
+
+
+template<typename eT>
+arma_inline
+const Op<subview_cols<eT>,op_vectorise_col>
+subview_cols<eT>::as_col() const
+  {
+  return Op<subview_cols<eT>,op_vectorise_col>(*this);
+  }
+
+
+
+template<typename eT>
 inline
 arma_warn_unused
 eT
