@@ -402,13 +402,13 @@ op_strans::apply_direct(Mat<typename T1::elem_type>& out, const T1& X)
         {
         Mat<eT> tmp;
         
-        op_strans::apply_mat(tmp, U.M);
+        op_strans::apply_mat_noalias(tmp, U.M);
         
         out.steal_mem(tmp);
         }
       else
         {
-        op_strans::apply_mat(out, U.M);
+        op_strans::apply_mat_noalias(out, U.M);
         }
       }
     else
