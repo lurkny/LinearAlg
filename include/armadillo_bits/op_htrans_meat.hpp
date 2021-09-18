@@ -20,7 +20,8 @@
 
 
 template<typename eT>
-arma_inline
+arma_hot
+inline
 void
 op_htrans::apply_mat_noalias(Mat<eT>& out, const Mat<eT>& A, const typename arma_not_cx<eT>::result* junk)
   {
@@ -162,7 +163,8 @@ op_htrans::apply_mat_noalias_large(Mat< std::complex<T> >& out, const Mat< std::
 
 
 template<typename eT>
-arma_inline
+arma_hot
+inline
 void
 op_htrans::apply_mat_inplace(Mat<eT>& out, const typename arma_not_cx<eT>::result* junk)
   {
@@ -219,7 +221,7 @@ op_htrans::apply_mat_inplace(Mat<eT>& out, const typename arma_cx_only<eT>::resu
 
 
 template<typename eT>
-arma_inline
+inline
 void
 op_htrans::apply_mat(Mat<eT>& out, const Mat<eT>& A, const typename arma_not_cx<eT>::result* junk)
   {
@@ -232,7 +234,6 @@ op_htrans::apply_mat(Mat<eT>& out, const Mat<eT>& A, const typename arma_not_cx<
 
 
 template<typename eT>
-arma_hot
 inline
 void
 op_htrans::apply_mat(Mat<eT>& out, const Mat<eT>& A, const typename arma_cx_only<eT>::result* junk)
@@ -253,7 +254,6 @@ op_htrans::apply_mat(Mat<eT>& out, const Mat<eT>& A, const typename arma_cx_only
 
 
 template<typename T1>
-arma_hot
 inline
 void
 op_htrans::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P)
@@ -301,7 +301,6 @@ op_htrans::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P)
 
 
 template<typename T1>
-arma_hot
 inline
 void
 op_htrans::apply_direct(Mat<typename T1::elem_type>& out, const T1& X)
@@ -361,7 +360,6 @@ op_htrans::apply_direct(Mat<typename T1::elem_type>& out, const T1& X)
 
 
 template<typename T1>
-arma_hot
 inline
 void
 op_htrans::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_htrans>& in, const typename arma_not_cx<typename T1::elem_type>::result* junk)
@@ -375,7 +373,6 @@ op_htrans::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_htrans>& in, c
 
 
 template<typename T1>
-arma_hot
 inline
 void
 op_htrans::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_htrans>& in, const typename arma_cx_only<typename T1::elem_type>::result* junk)

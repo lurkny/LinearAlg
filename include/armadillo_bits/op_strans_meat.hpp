@@ -282,7 +282,6 @@ op_strans::apply_mat_inplace(Mat<eT>& out)
 
 
 template<typename eT, typename TA>
-arma_hot
 inline
 void
 op_strans::apply_mat(Mat<eT>& out, const TA& A)
@@ -302,7 +301,6 @@ op_strans::apply_mat(Mat<eT>& out, const TA& A)
 
 
 template<typename T1>
-arma_hot
 inline
 void
 op_strans::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P)
@@ -372,7 +370,6 @@ op_strans::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P)
 
 
 template<typename T1>
-arma_hot
 inline
 void
 op_strans::apply_direct(Mat<typename T1::elem_type>& out, const T1& X)
@@ -432,7 +429,6 @@ op_strans::apply_direct(Mat<typename T1::elem_type>& out, const T1& X)
 
 
 template<typename T1>
-arma_hot
 inline
 void
 op_strans::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_strans>& in)
