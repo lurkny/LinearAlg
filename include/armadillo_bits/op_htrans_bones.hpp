@@ -65,7 +65,7 @@ class op_htrans
   //
   
   template<typename T1>
-  arma_hot inline static void apply_proxy(Mat<typename T1::elem_type>& out, const T1& X);
+  arma_hot inline static void apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P);
   
   //
   
