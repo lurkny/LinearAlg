@@ -65,10 +65,10 @@ TEST_CASE("fn_eigs_gen_odd_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.1) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.1) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.1) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.1) );
         }
       }
     }
@@ -127,10 +127,10 @@ TEST_CASE("fn_eigs_gen_even_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -190,10 +190,10 @@ TEST_CASE("fn_eigs_gen_even_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -254,10 +254,10 @@ TEST_CASE("fn_eigs_gen_odd_sigma_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.1) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.1) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.1) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.1) );
         }
       }
     }
@@ -318,10 +318,10 @@ TEST_CASE("fn_eigs_gen_even_sigma_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -383,10 +383,10 @@ TEST_CASE("fn_eigs_gen_even_sigma_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -446,10 +446,10 @@ TEST_CASE("fn_eigs_gen_odd_sm_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.1) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.1) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.1) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.1) );
         }
       }
     }
@@ -509,10 +509,10 @@ TEST_CASE("fn_eigs_gen_even_sm_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -573,10 +573,10 @@ TEST_CASE("fn_eigs_gen_even_sm_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -636,10 +636,10 @@ TEST_CASE("fn_eigs_gen_odd_float_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.001) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.001) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -699,10 +699,10 @@ TEST_CASE("fn_eigs_gen_even_float_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -763,10 +763,10 @@ TEST_CASE("fn_eigs_gen_even_float_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -828,10 +828,10 @@ TEST_CASE("fn_eigs_gen_odd_float_sigma_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.001) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.001) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -893,10 +893,10 @@ TEST_CASE("fn_eigs_gen_even_float_sigma_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -959,10 +959,10 @@ TEST_CASE("fn_eigs_gen_even_float_sigma_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1023,10 +1023,10 @@ TEST_CASE("fn_eigs_gen_odd_float_sm_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.001) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.001) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1087,10 +1087,10 @@ TEST_CASE("fn_eigs_gen_even_float_sm_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1152,10 +1152,10 @@ TEST_CASE("fn_eigs_gen_even_float_sm_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1211,10 +1211,10 @@ TEST_CASE("fn_eigs_gen_odd_complex_float_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1270,10 +1270,10 @@ TEST_CASE("fn_eigs_gen_even_complex_float_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1330,10 +1330,10 @@ TEST_CASE("fn_eigs_gen_even_complex_float_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1394,10 +1394,10 @@ TEST_CASE("fn_eigs_gen_odd_complex_float_sigma_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1458,10 +1458,10 @@ TEST_CASE("fn_eigs_gen_even_complex_float_sigma_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1523,10 +1523,10 @@ TEST_CASE("fn_eigs_gen_even_complex_float_sigma_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1586,10 +1586,10 @@ TEST_CASE("fn_eigs_gen_odd_complex_float_sm_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1649,10 +1649,10 @@ TEST_CASE("fn_eigs_gen_even_complex_float_sm_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1713,10 +1713,10 @@ TEST_CASE("fn_eigs_gen_even_complex_float_sm_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1772,10 +1772,10 @@ TEST_CASE("eigs_gen_odd_complex_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(size_t j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1831,10 +1831,10 @@ TEST_CASE("fn_eigs_gen_even_complex_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1891,10 +1891,10 @@ TEST_CASE("fn_eigs_gen_even_complex_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -1955,10 +1955,10 @@ TEST_CASE("eigs_gen_odd_complex_sigma_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(size_t j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -2019,10 +2019,10 @@ TEST_CASE("fn_eigs_gen_even_complex_sigma_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -2084,10 +2084,10 @@ TEST_CASE("fn_eigs_gen_even_complex_sigma_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -2144,10 +2144,10 @@ TEST_CASE("eigs_gen_odd_complex_sm_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(size_t j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -2204,10 +2204,10 @@ TEST_CASE("fn_eigs_gen_even_complex_sm_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }
@@ -2265,10 +2265,10 @@ TEST_CASE("fn_eigs_gen_even_complex_sm_opts_test")
 
       REQUIRE( dense_eval != n_rows + 1 );
 
-      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).epsilon(0.01) );
+      REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).epsilon(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
         }
       }
     }

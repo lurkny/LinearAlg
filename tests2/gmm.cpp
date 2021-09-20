@@ -87,16 +87,16 @@ TEST_CASE("gmm_full_1")
     for(size_t i = 0; i < gaussians; i++)
       {
       // Check weight.
-      success &= ( weights[sortRef[i]] == Approx(gmm.hefts[sortTry[i]]).epsilon(0.1) );
+      success &= ( weights[sortRef[i]] == Approx(gmm.hefts[sortTry[i]]).margin(0.1) );
       
       for(uword j = 0; j < gmm.means.n_rows; ++j)
         {
-        success &= ( means[sortRef[i]][j] == Approx(gmm.means(j, sortTry[i])).epsilon(0.1) );
+        success &= ( means[sortRef[i]][j] == Approx(gmm.means(j, sortTry[i])).margin(0.1) );
         }
       
       for(uword j = 0; j < gmm.fcovs.n_rows * gmm.fcovs.n_cols; ++j)
         {
-        success &= ( covars[sortRef[i]][j] == Approx(gmm.fcovs.slice(sortTry[i])[j]).epsilon(0.1) );
+        success &= ( covars[sortRef[i]][j] == Approx(gmm.fcovs.slice(sortTry[i])[j]).margin(0.1) );
         }
       
       if(success == false)  { continue; }
@@ -185,16 +185,16 @@ TEST_CASE("gmm_diag_1")
     for(size_t i = 0; i < gaussians; i++)
       {
       // Check weight.
-      success &= ( weights[sortRef[i]] == Approx(gmm.hefts[sortTry[i]]).epsilon(0.1) );
+      success &= ( weights[sortRef[i]] == Approx(gmm.hefts[sortTry[i]]).margin(0.1) );
       
       for(uword j = 0; j < gmm.means.n_rows; ++j)
         {
-        success &= ( means[sortRef[i]][j] == Approx(gmm.means(j, sortTry[i])).epsilon(0.1) );
+        success &= ( means[sortRef[i]][j] == Approx(gmm.means(j, sortTry[i])).margin(0.1) );
         }
       
       for(uword j = 0; j < gmm.dcovs.n_rows; ++j)
         {
-        success &= ( covars[sortRef[i]](j, j) == Approx(gmm.dcovs.col(sortTry[i])[j]).epsilon(0.1) );
+        success &= ( covars[sortRef[i]](j, j) == Approx(gmm.dcovs.col(sortTry[i])[j]).margin(0.1) );
         }
       
       if(success == false)  { continue; }

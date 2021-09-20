@@ -42,5 +42,5 @@ TEST_CASE("fn_conv_1")
      60.00000000000000
      };
   
-  REQUIRE( accu(abs(c - d)) == Approx(0.0) );
+  REQUIRE( accu(abs(c - d)) == Approx(0.0).margin(0.001) );
   }

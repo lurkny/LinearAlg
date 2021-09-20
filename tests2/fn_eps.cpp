@@ -43,5 +43,5 @@ TEST_CASE("fn_eps_1")
      2.77555756156289e-17   5.55111512312578e-17   5.55111512312578e-17   5.55111512312578e-17   5.55111512312578e-17;\
     ";
   
-  REQUIRE( accu(abs(eps(A) - B)) == Approx(0.0) );
+  REQUIRE( accu(abs(eps(A) - B)) == Approx(0.0).margin(0.001) );
   }

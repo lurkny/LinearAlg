@@ -134,9 +134,9 @@ TEST_CASE("init_misc_2")
   REQUIRE( A(1,3) == Approx( 0.53124) );
   REQUIRE( A(2,3) == Approx( 0.40163) );
   
-  REQUIRE( accu(abs(A-B)) == Approx(0.0) );
-  REQUIRE( accu(abs(A-C)) == Approx(0.0) );
-  REQUIRE( accu(abs(A-D)) == Approx(0.0) );
+  REQUIRE( accu(abs(A-B)) == Approx(0.0).margin(0.001) );
+  REQUIRE( accu(abs(A-C)) == Approx(0.0).margin(0.001) );
+  REQUIRE( accu(abs(A-D)) == Approx(0.0).margin(0.001) );
   }
 
 

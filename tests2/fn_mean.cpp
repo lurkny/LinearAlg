@@ -34,7 +34,7 @@ TEST_CASE("fn_mean_spmat_empty_test")
   REQUIRE( result2.n_cols == 1 );
 
   double r = mean(mean(m));
-  REQUIRE( r == Approx(0.0) );
+  REQUIRE( r == Approx(0.0).margin(0.001) );
 
   // Now the same with subviews.
   result = mean(m.submat(2, 2, 11, 16));
@@ -48,7 +48,7 @@ TEST_CASE("fn_mean_spmat_empty_test")
   REQUIRE( result2.n_cols == 1 );
 
   r = mean(mean(m.submat(2, 2, 11, 16)));
-  REQUIRE( r == Approx(0.0) );
+  REQUIRE( r == Approx(0.0).margin(0.001) );
 
   // And with an operation.
   result = mean(trans(m));
@@ -62,7 +62,7 @@ TEST_CASE("fn_mean_spmat_empty_test")
   REQUIRE( result2.n_cols == 1 );
 
   r = mean(mean(trans(m)));
-  REQUIRE( r == Approx(0.0) );
+  REQUIRE( r == Approx(0.0).margin(0.001) );
   }
 
 
@@ -85,8 +85,8 @@ TEST_CASE("fn_mean_spcxmat_empty_test")
 
   std::complex<double> r = mean(mean(m));
 
-  REQUIRE( real(r) == Approx(0.0) );
-  REQUIRE( imag(r) == Approx(0.0) );
+  REQUIRE( real(r) == Approx(0.0).margin(0.001) );
+  REQUIRE( imag(r) == Approx(0.0).margin(0.001) );
 
   // Now the same with subviews.
   result = mean(m.submat(2, 2, 11, 16));
@@ -100,8 +100,8 @@ TEST_CASE("fn_mean_spcxmat_empty_test")
   REQUIRE( result2.n_cols == 1 );
 
   r = mean(mean(m.submat(2, 2, 11, 16)));
-  REQUIRE( real(r) == Approx(0.0) );
-  REQUIRE( imag(r) == Approx(0.0) );
+  REQUIRE( real(r) == Approx(0.0).margin(0.001) );
+  REQUIRE( imag(r) == Approx(0.0).margin(0.001) );
 
   // And with an operation.
   result = mean(trans(m));
@@ -115,8 +115,8 @@ TEST_CASE("fn_mean_spcxmat_empty_test")
   REQUIRE( result2.n_cols == 1 );
 
   r = mean(mean(trans(m)));
-  REQUIRE( real(r) == Approx(0.0) );
-  REQUIRE( imag(r) == Approx(0.0) );
+  REQUIRE( real(r) == Approx(0.0).margin(0.001) );
+  REQUIRE( imag(r) == Approx(0.0).margin(0.001) );
   }
 
 
@@ -366,18 +366,18 @@ TEST_CASE("fn_mean_sp_vector_test")
   SpCol<double> cr = mean(c, 0);
   REQUIRE( cr.n_rows == 1 );
   REQUIRE( cr.n_cols == 1 );
-  REQUIRE( (double) cr[0] == Approx(0.0) );
+  REQUIRE( (double) cr[0] == Approx(0.0).margin(0.001) );
 
   cr = mean(c, 1);
   REQUIRE( cr.n_rows == 1000 );
   REQUIRE( cr.n_cols == 1 );
   for (uword i = 0; i < 1000; ++i)
     {
-    REQUIRE( (double) cr[i] == Approx(0.0) );
+    REQUIRE( (double) cr[i] == Approx(0.0).margin(0.001) );
     }
 
   double ddcr = mean(c);
-  REQUIRE( ddcr == Approx(0.0) );
+  REQUIRE( ddcr == Approx(0.0).margin(0.001) );
 
   c.sprandu(1000, 1, 0.3);
   vec dc(c);
@@ -441,21 +441,21 @@ TEST_CASE("fn_mean_sp_cx_vector_test")
   SpCol<std::complex<double> > cr = mean(c, 0);
   REQUIRE( cr.n_rows == 1 );
   REQUIRE( cr.n_cols == 1 );
-  REQUIRE( real((std::complex<double>) cr[0]) == Approx(0.0) );
-  REQUIRE( imag((std::complex<double>) cr[0]) == Approx(0.0) );
+  REQUIRE( real((std::complex<double>) cr[0]) == Approx(0.0).margin(0.001) );
+  REQUIRE( imag((std::complex<double>) cr[0]) == Approx(0.0).margin(0.001) );
 
   cr = mean(c, 1);
   REQUIRE( cr.n_rows == 1000 );
   REQUIRE( cr.n_cols == 1 );
   for (uword i = 0; i < 1000; ++i)
   {
-    REQUIRE( real((std::complex<double>) cr[i]) == Approx(0.0) );
-    REQUIRE( imag((std::complex<double>) cr[i]) == Approx(0.0) );
+    REQUIRE( real((std::complex<double>) cr[i]) == Approx(0.0).margin(0.001) );
+    REQUIRE( imag((std::complex<double>) cr[i]) == Approx(0.0).margin(0.001) );
   }
 
   std::complex<double> ddcr = mean(c);
-  REQUIRE( real(ddcr) == Approx(0.0) );
-  REQUIRE( imag(ddcr) == Approx(0.0) );
+  REQUIRE( real(ddcr) == Approx(0.0).margin(0.001) );
+  REQUIRE( imag(ddcr) == Approx(0.0).margin(0.001) );
 
   c.sprandu(1000, 1, 0.3);
   cx_vec dc(c);

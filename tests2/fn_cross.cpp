@@ -27,7 +27,7 @@ TEST_CASE("fn_cross_1")
   
   vec c = {-17.050, 29.150, -14.520 };
   
-  REQUIRE( accu(abs(cross(a,b) - c)) == Approx(0.0) );
+  REQUIRE( accu(abs(cross(a,b) - c)) == Approx(0.0).margin(0.001) );
   
   vec x;
   

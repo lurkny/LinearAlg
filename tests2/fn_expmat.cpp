@@ -40,7 +40,7 @@ TEST_CASE("fn_expmat_1")
      0.16726671762680370  -0.40082334719624046  -0.43832065342010318  -0.30675328534305307   0.64261934864584291;\
     ";
   
-  REQUIRE( accu(abs(expmat(A) - B)) == Approx(0.0) );
+  REQUIRE( accu(abs(expmat(A) - B)) == Approx(0.0).margin(0.001) );
   
   mat X;
   

@@ -47,12 +47,12 @@ TEST_CASE("fn_eigs_test")
     for (uword i = 0; i < 5; ++i)
       {
       // It may be pointed the wrong direction.
-      REQUIRE( sp_eigval(i) == Approx(eigval(i + 995)).epsilon(0.01) );
+      REQUIRE( sp_eigval(i) == Approx(eigval(i + 995)).margin(0.01) );
 
       for (uword j = 0; j < 1000; ++j)
         {
         REQUIRE( std::abs(sp_eigvec(j, i)) ==
-                 Approx(std::abs(eigvec(j, i + 995))).epsilon(0.01) );
+                 Approx(std::abs(eigvec(j, i + 995))).margin(0.01) );
         }
       }
     }
@@ -88,12 +88,12 @@ TEST_CASE("fn_eigs_float_test")
     for (uword i = 0; i < 5; ++i)
       {
       // It may be pointed the wrong direction.
-      REQUIRE( sp_eigval(i) == Approx(eigval(i + 95)).epsilon(0.01) );
+      REQUIRE( sp_eigval(i) == Approx(eigval(i + 95)).margin(0.01) );
 
       for (uword j = 0; j < 100; ++j)
         {
         REQUIRE(std::abs(sp_eigvec(j, i)) ==
-                Approx(std::abs(eigvec(j, i + 95))).epsilon(0.01) );
+                Approx(std::abs(eigvec(j, i + 95))).margin(0.01) );
         }
       }
     }
@@ -126,12 +126,12 @@ TEST_CASE("fn_eigs_sm_test")
     for (size_t i = 0; i < 5; ++i)
       {
       // It may be pointed the wrong direction.
-      REQUIRE( sp_eigval(i) == Approx(eigval(i)).epsilon(0.01) );
+      REQUIRE( sp_eigval(i) == Approx(eigval(i)).margin(0.01) );
 
       for (size_t j = 0; j < 100; ++j)
         {
         REQUIRE( std::abs(sp_eigvec(j, i)) ==
-                 Approx(std::abs(eigvec(j, i))).epsilon(0.01) );
+                 Approx(std::abs(eigvec(j, i))).margin(0.01) );
         }
       }
     }
@@ -170,12 +170,12 @@ TEST_CASE("fn_eigs_sigma_test")
       for(uword i = 0; i < 5; ++i)
         {
         // It may be pointed the wrong direction.
-        REQUIRE( sp_eigval(i) == Approx(eigval(i)).epsilon(0.01) );
+        REQUIRE( sp_eigval(i) == Approx(eigval(i)).margin(0.01) );
 
         for (size_t j = 0; j < 100; ++j)
           {
           REQUIRE( std::abs(sp_eigvec(j, i)) ==
-                   Approx(std::abs(eigvec(j, i))).epsilon(0.01) );
+                   Approx(std::abs(eigvec(j, i))).margin(0.01) );
           }
         }
       }

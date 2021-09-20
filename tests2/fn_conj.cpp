@@ -28,8 +28,8 @@ TEST_CASE("fn_conj_1")
   cx_vec a = cx_vec(re,im);
   cx_vec b = conj(a);
   
-  REQUIRE( accu(abs(real(b) - ( re))) == Approx(0.0) );
-  REQUIRE( accu(abs(imag(b) - (-im))) == Approx(0.0) );
+  REQUIRE( accu(abs(real(b) - ( re))) == Approx(0.0).margin(0.001) );
+  REQUIRE( accu(abs(imag(b) - (-im))) == Approx(0.0).margin(0.001) );
   }
 
 

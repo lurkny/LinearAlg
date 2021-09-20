@@ -33,11 +33,11 @@ TEST_CASE("fn_trace_1")
 
   vec diagonal = { 0.061198, 0.058956, 0.314156, -0.393139, -0.353768 };
 
-  REQUIRE( accu( trace(A) - accu(diagonal) ) == Approx(0.0) );
+  REQUIRE( accu( trace(A) - accu(diagonal) ) == Approx(0.0).margin(0.001) );
 
-  REQUIRE( accu( trace(2*A) - accu(2*diagonal) ) == Approx(0.0) );
+  REQUIRE( accu( trace(2*A) - accu(2*diagonal) ) == Approx(0.0).margin(0.001) );
 
-  REQUIRE( accu( trace(A+A) - accu(diagonal+diagonal) ) == Approx(0.0) );
+  REQUIRE( accu( trace(A+A) - accu(diagonal+diagonal) ) == Approx(0.0).margin(0.001) );
 
   // REQUIRE_THROWS(  );
   }

@@ -46,7 +46,7 @@ TEST_CASE("fn_find_unique_1")
   
   vec unique_elem = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
   
-  REQUIRE( accu(abs( A.elem(indices) - unique_elem )) == Approx(0.0) );
+  REQUIRE( accu(abs( A.elem(indices) - unique_elem )) == Approx(0.0).margin(0.001) );
   
   // REQUIRE_THROWS(  );
   }
@@ -92,7 +92,7 @@ TEST_CASE("fn_find_unique_2")
     cx_double(9,-9)
     };
   
-  REQUIRE( accu(abs( A.elem(indices) - unique_elem )) == Approx(0.0) );
+  REQUIRE( accu(abs( A.elem(indices) - unique_elem )) == Approx(0.0).margin(0.001) );
   
   // REQUIRE_THROWS(  );
   }

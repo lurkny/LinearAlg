@@ -27,8 +27,8 @@ TEST_CASE("fn_cumprod_1")
   
   colvec c = { 1.0000, 1.8000, 4.6800, 15.9120, 66.8304, 334.1520 };
   
-  REQUIRE( accu(abs(cumprod(a) - c    )) == Approx(0.0) );
-  REQUIRE( accu(abs(cumprod(b) - c.t())) == Approx(0.0) );
+  REQUIRE( accu(abs(cumprod(a) - c    )) == Approx(0.0).margin(0.001) );
+  REQUIRE( accu(abs(cumprod(b) - c.t())) == Approx(0.0).margin(0.001) );
   
   REQUIRE_THROWS( b = cumprod(a) );
   }
@@ -59,9 +59,9 @@ TEST_CASE("fn_cumprod_2")
     {  0.735730,  0.383345, -0.085344, -0.034277 }
     };
   
-  REQUIRE( accu(abs(cumprod(A)   - B)) == Approx(0.0) );
-  REQUIRE( accu(abs(cumprod(A,0) - B)) == Approx(0.0) );
-  REQUIRE( accu(abs(cumprod(A,1) - C)) == Approx(0.0) );
+  REQUIRE( accu(abs(cumprod(A)   - B)) == Approx(0.0).margin(0.001) );
+  REQUIRE( accu(abs(cumprod(A,0) - B)) == Approx(0.0).margin(0.001) );
+  REQUIRE( accu(abs(cumprod(A,1) - C)) == Approx(0.0).margin(0.001) );
   }
 
 

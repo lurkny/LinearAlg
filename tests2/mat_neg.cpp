@@ -51,7 +51,7 @@ TEST_CASE("mat_neg_1")
   REQUIRE( B(3,5) == Approx(-0.373833) );
   REQUIRE( B(4,5) == Approx(-0.258704) );
   
-  REQUIRE( accu(B + A) == Approx(0.0) );
+  REQUIRE( accu(B + A) == Approx(0.0).margin(0.001) );
   
   // REQUIRE_THROWS(  );
   }
