@@ -667,10 +667,10 @@ struct Proxy< Glue<T1, T2, glue_min> >
   arma_inline aligned_ea_type get_aligned_ea() const { return *this; }
   
   template<typename eT2>
-  constexpr bool is_alias(const Mat<eT2>& X) const { return (P1.is_alias(X) || P2.is_alias(X)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (P1.is_alias(X) || P2.is_alias(X)); }
   
   template<typename eT2>
-  constexpr bool has_overlap(const subview<eT2>& X) const { return (P1.has_overlap(X) || P2.has_overlap(X)); }
+  arma_inline bool has_overlap(const subview<eT2>& X) const { return (P1.has_overlap(X) || P2.has_overlap(X)); }
   
   arma_inline bool is_aligned() const { return (P1.is_aligned() && P2.is_aligned()); }
   };
@@ -725,10 +725,10 @@ struct Proxy< Glue<T1, T2, glue_max> >
   arma_inline aligned_ea_type get_aligned_ea() const { return *this; }
   
   template<typename eT2>
-  constexpr bool is_alias(const Mat<eT2>& X) const { return (P1.is_alias(X) || P2.is_alias(X)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (P1.is_alias(X) || P2.is_alias(X)); }
   
   template<typename eT2>
-  constexpr bool has_overlap(const subview<eT2>& X) const { return (P1.has_overlap(X) || P2.has_overlap(X)); }
+  arma_inline bool has_overlap(const subview<eT2>& X) const { return (P1.has_overlap(X) || P2.has_overlap(X)); }
   
   arma_inline bool is_aligned() const { return (P1.is_aligned() && P2.is_aligned()); }
   };
