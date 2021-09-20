@@ -516,6 +516,30 @@ struct quasi_unwrap< Op<T1, op_vectorise_col> >
 
 
 template<typename eT>
+struct quasi_unwrap< Op<subview_cols<eT>, op_vectorise_col> >
+  {
+  inline
+  quasi_unwrap(const Op<subview_cols<eT>, op_vectorise_col>& A)
+    : orig( A.m.m )
+    , M   ( const_cast<eT*>(A.m.colptr(0)), A.m.n_elem, 1, false, false )
+    {
+    arma_extra_debug_sigprint();
+    }
+  
+  const Mat<eT>& orig;
+  const Mat<eT>  M;
+  
+  static constexpr bool is_const     = true;
+  static constexpr bool has_subview  = true;
+  static constexpr bool has_orig_mem = true;
+  
+  template<typename eT2>
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&orig) == void_ptr(&X)); }
+  };
+
+
+
+template<typename eT>
 struct quasi_unwrap< Op<Col<eT>, op_strans> >
   {
   inline
