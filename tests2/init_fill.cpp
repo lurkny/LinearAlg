@@ -33,11 +33,11 @@ TEST_CASE("init_fill_1")
   REQUIRE( accu(O != 0) == 5*6 );
   REQUIRE( accu(I != 0) == 5   );
   
-  REQUIRE(   mean(vectorise(U)) == Approx(0.500).epsilon(0.05) );
-  REQUIRE( stddev(vectorise(U)) == Approx(0.288).epsilon(0.05) );
+  REQUIRE(   mean(vectorise(U)) == Approx(0.500).margin(0.05) );
+  REQUIRE( stddev(vectorise(U)) == Approx(0.288).margin(0.05) );
   
-  REQUIRE(   mean(vectorise(N)) == Approx(0.0).epsilon(0.05) );
-  REQUIRE( stddev(vectorise(N)) == Approx(1.0).epsilon(0.05) );
+  REQUIRE(   mean(vectorise(N)) == Approx(0.0).margin(0.05) );
+  REQUIRE( stddev(vectorise(N)) == Approx(1.0).margin(0.05) );
   
   mat X(5, 6, fill::none);   // only to test instantiation
   }
@@ -54,11 +54,11 @@ TEST_CASE("init_fill_2")
   REQUIRE( accu(Z != 0) == 0     );
   REQUIRE( accu(O != 0) == 5*6*2 );
   
-  REQUIRE(   mean(vectorise(U)) == Approx(0.500).epsilon(0.05) );
-  REQUIRE( stddev(vectorise(U)) == Approx(0.288).epsilon(0.05) );
+  REQUIRE(   mean(vectorise(U)) == Approx(0.500).margin(0.05) );
+  REQUIRE( stddev(vectorise(U)) == Approx(0.288).margin(0.05) );
   
-  REQUIRE(   mean(vectorise(N)) == Approx(0.0).epsilon(0.05) );
-  REQUIRE( stddev(vectorise(N)) == Approx(1.0).epsilon(0.05) );
+  REQUIRE(   mean(vectorise(N)) == Approx(0.0).margin(0.05) );
+  REQUIRE( stddev(vectorise(N)) == Approx(1.0).margin(0.05) );
   
   cube X(5, 6, 2, fill::none);   // only to test instantiation
   
