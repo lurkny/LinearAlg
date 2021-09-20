@@ -1127,7 +1127,6 @@ struct Proxy< subview_cols<eT> >
   static constexpr bool use_at      = false;
   static constexpr bool use_mp      = false;
   static constexpr bool has_subview = true;
-  static constexpr bool has_mem     = true;
   
   static constexpr bool is_row  = false;
   static constexpr bool is_col  = false;
