@@ -22,7 +22,7 @@ using namespace arma;
 // Does the matrix correctly report when it is empty?
 TEST_CASE("empty_test")
   {
-  bool testPassed = true;
+  // bool testPassed = true;
 
   sp_imat test;
   REQUIRE( test.is_empty() );
