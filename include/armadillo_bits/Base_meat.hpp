@@ -922,7 +922,8 @@ Base_eval_Mat<elem_type, derived>::eval() const
 // extra functions defined in Base_eval_expr
 
 template<typename elem_type, typename derived>
-arma_inline
+inline
+arma_warn_unused
 Mat<elem_type>
 Base_eval_expr<elem_type, derived>::eval() const
   {

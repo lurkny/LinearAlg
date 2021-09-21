@@ -58,7 +58,7 @@ struct Base_eval_Mat
 template<typename elem_type, typename derived>
 struct Base_eval_expr
   {
-  arma_inline Mat<elem_type> eval() const;   //!< force the immediate evaluation of a delayed expression
+  inline arma_warn_unused Mat<elem_type> eval() const;   //!< force the immediate evaluation of a delayed expression
   };
 
 
