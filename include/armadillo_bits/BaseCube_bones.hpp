@@ -31,7 +31,7 @@ struct BaseCube_eval_Cube
 template<typename elem_type, typename derived>
 struct BaseCube_eval_expr
   {
-  arma_inline Cube<elem_type> eval() const;   //!< force the immediate evaluation of a delayed expression
+  inline arma_warn_unused Cube<elem_type> eval() const;   //!< force the immediate evaluation of a delayed expression
   };
 
 

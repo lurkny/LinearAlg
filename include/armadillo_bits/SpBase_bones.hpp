@@ -31,7 +31,7 @@ struct SpBase_eval_SpMat
 template<typename elem_type, typename derived>
 struct SpBase_eval_expr
   {
-  inline SpMat<elem_type> eval() const;   //!< force the immediate evaluation of a delayed expression
+  inline arma_warn_unused SpMat<elem_type> eval() const;   //!< force the immediate evaluation of a delayed expression
   };
 
 

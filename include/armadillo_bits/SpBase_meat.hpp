@@ -330,6 +330,7 @@ SpBase_eval_SpMat<elem_type, derived>::eval() const
 
 template<typename elem_type, typename derived>
 inline
+arma_warn_unused
 SpMat<elem_type>
 SpBase_eval_expr<elem_type, derived>::eval() const
   {

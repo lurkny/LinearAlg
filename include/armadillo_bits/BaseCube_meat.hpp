@@ -431,7 +431,8 @@ BaseCube_eval_Cube<elem_type, derived>::eval() const
 // extra functions defined in BaseCube_eval_expr
 
 template<typename elem_type, typename derived>
-arma_inline
+inline
+arma_warn_unused
 Cube<elem_type>
 BaseCube_eval_expr<elem_type, derived>::eval() const
   {
