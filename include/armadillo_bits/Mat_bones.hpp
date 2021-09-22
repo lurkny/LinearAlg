@@ -844,9 +844,9 @@ class Mat<eT>::fixed : public Mat<eT>
     template<typename T1, typename T2, typename eglue_type> inline Mat& operator=(const eGlue<T1, T2, eglue_type>& X);
   #endif
   
-  arma_inline const Op< Mat_fixed_type, op_htrans >  t() const;
-  arma_inline const Op< Mat_fixed_type, op_htrans > ht() const;
-  arma_inline const Op< Mat_fixed_type, op_strans > st() const;
+  arma_inline arma_warn_unused const Op< Mat_fixed_type, op_htrans >  t() const;
+  arma_inline arma_warn_unused const Op< Mat_fixed_type, op_htrans > ht() const;
+  arma_inline arma_warn_unused const Op< Mat_fixed_type, op_strans > st() const;
   
   arma_inline arma_warn_unused const eT& at_alt     (const uword i) const;
   

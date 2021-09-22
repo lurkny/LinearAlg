@@ -9443,6 +9443,7 @@ Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::operator=(const fixed<fixed_n_rows, 
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols>
 arma_inline
+arma_warn_unused
 const Op< typename Mat<eT>::template fixed<fixed_n_rows, fixed_n_cols>::Mat_fixed_type, op_htrans >
 Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::t() const
   {
@@ -9454,6 +9455,7 @@ Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::t() const
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols>
 arma_inline
+arma_warn_unused
 const Op< typename Mat<eT>::template fixed<fixed_n_rows, fixed_n_cols>::Mat_fixed_type, op_htrans >
 Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::ht() const
   {
@@ -9465,6 +9467,7 @@ Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::ht() const
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols>
 arma_inline
+arma_warn_unused
 const Op< typename Mat<eT>::template fixed<fixed_n_rows, fixed_n_cols>::Mat_fixed_type, op_strans >
 Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::st() const
   {
