@@ -24,7 +24,7 @@
 template<typename elem_type, typename derived>
 struct SpBase_eval_SpMat
   {
-  inline const derived& eval() const;
+  inline arma_warn_unused const derived& eval() const;
   };
 
 

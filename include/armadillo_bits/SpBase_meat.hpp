@@ -318,6 +318,7 @@ SpBase<elem_type,derived>::brief_print(std::ostream& user_stream, const std::str
 
 template<typename elem_type, typename derived>
 inline
+arma_warn_unused
 const derived&
 SpBase_eval_SpMat<elem_type, derived>::eval() const
   {
