@@ -417,6 +417,7 @@ BaseCube<elem_type,derived>::has_nan() const
 
 template<typename elem_type, typename derived>
 arma_inline
+arma_warn_unused
 const derived&
 BaseCube_eval_Cube<elem_type, derived>::eval() const
   {

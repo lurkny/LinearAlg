@@ -24,7 +24,7 @@
 template<typename elem_type, typename derived>
 struct BaseCube_eval_Cube
   {
-  arma_inline const derived& eval() const;
+  arma_inline arma_warn_unused const derived& eval() const;
   };
 
 
