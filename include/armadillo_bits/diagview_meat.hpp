@@ -877,36 +877,6 @@ diagview<eT>::operator()(const uword row, const uword col) const
 
 
 template<typename eT>
-arma_inline
-const Op<diagview<eT>,op_htrans>
-diagview<eT>::t() const
-  {
-  return Op<diagview<eT>,op_htrans>(*this);
-  }
-
-
-
-template<typename eT>
-arma_inline
-const Op<diagview<eT>,op_htrans>
-diagview<eT>::ht() const
-  {
-  return Op<diagview<eT>,op_htrans>(*this);
-  }
-
-
-
-template<typename eT>
-arma_inline
-const Op<diagview<eT>,op_strans>
-diagview<eT>::st() const
-  {
-  return Op<diagview<eT>,op_strans>(*this);
-  }
-
-
-
-template<typename eT>
 inline
 void
 diagview<eT>::replace(const eT old_val, const eT new_val)
