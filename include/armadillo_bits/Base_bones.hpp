@@ -51,7 +51,7 @@ struct Base_extra<elem_type, derived, false> { typedef Base_extra_no<elem_type, 
 template<typename elem_type, typename derived>
 struct Base_eval_Mat
   {
-  arma_inline const derived& eval() const;
+  arma_inline arma_warn_unused const derived& eval() const;
   };
 
 
@@ -76,18 +76,18 @@ struct Base_eval<elem_type, derived, false> { typedef Base_eval_expr<elem_type, 
 template<typename derived>
 struct Base_trans_cx
   {
-  arma_inline const Op<derived,op_htrans>  t() const;
-  arma_inline const Op<derived,op_htrans> ht() const;
-  arma_inline const Op<derived,op_strans> st() const;  // simple transpose: no complex conjugates
+  arma_inline arma_warn_unused const Op<derived,op_htrans>  t() const;
+  arma_inline arma_warn_unused const Op<derived,op_htrans> ht() const;
+  arma_inline arma_warn_unused const Op<derived,op_strans> st() const;  // simple transpose: no complex conjugates
   };
 
 
 template<typename derived>
 struct Base_trans_default
   {
-  arma_inline const Op<derived,op_htrans>  t() const;
-  arma_inline const Op<derived,op_htrans> ht() const;
-  arma_inline const Op<derived,op_htrans> st() const;  // return op_htrans instead of op_strans, as it's handled better by matrix multiplication code
+  arma_inline arma_warn_unused const Op<derived,op_htrans>  t() const;
+  arma_inline arma_warn_unused const Op<derived,op_htrans> ht() const;
+  arma_inline arma_warn_unused const Op<derived,op_htrans> st() const;  // return op_htrans instead of op_strans, as it's handled better by matrix multiplication code
   };
 
 
