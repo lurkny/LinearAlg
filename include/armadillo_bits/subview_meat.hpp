@@ -3400,6 +3400,7 @@ subview_col<eT>::operator= (const Gen<T1,gen_type>& in)
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_col<eT>,op_htrans>
 subview_col<eT>::t() const
   {
@@ -3410,6 +3411,7 @@ subview_col<eT>::t() const
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_col<eT>,op_htrans>
 subview_col<eT>::ht() const
   {
@@ -3420,6 +3422,7 @@ subview_col<eT>::ht() const
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_col<eT>,op_strans>
 subview_col<eT>::st() const
   {
@@ -3430,6 +3433,7 @@ subview_col<eT>::st() const
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_col<eT>,op_strans>
 subview_col<eT>::as_row() const
   {
@@ -4018,6 +4022,7 @@ subview_cols<eT>::operator= (const Gen<T1,gen_type>& in)
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_cols<eT>,op_htrans>
 subview_cols<eT>::t() const
   {
@@ -4028,6 +4033,7 @@ subview_cols<eT>::t() const
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_cols<eT>,op_htrans>
 subview_cols<eT>::ht() const
   {
@@ -4038,6 +4044,7 @@ subview_cols<eT>::ht() const
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_cols<eT>,op_strans>
 subview_cols<eT>::st() const
   {
@@ -4048,6 +4055,7 @@ subview_cols<eT>::st() const
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_cols<eT>,op_vectorise_col>
 subview_cols<eT>::as_col() const
   {
@@ -4333,6 +4341,7 @@ subview_row<eT>::operator= (const Gen<T1,gen_type>& in)
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_row<eT>,op_htrans>
 subview_row<eT>::t() const
   {
@@ -4343,6 +4352,7 @@ subview_row<eT>::t() const
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_row<eT>,op_htrans>
 subview_row<eT>::ht() const
   {
@@ -4353,6 +4363,7 @@ subview_row<eT>::ht() const
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_row<eT>,op_strans>
 subview_row<eT>::st() const
   {
@@ -4363,6 +4374,7 @@ subview_row<eT>::st() const
 
 template<typename eT>
 arma_inline
+arma_warn_unused
 const Op<subview_row<eT>,op_strans>
 subview_row<eT>::as_col() const
   {

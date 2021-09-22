@@ -382,11 +382,11 @@ class subview_col : public subview<eT>
   template<typename T1, typename gen_type>
   inline typename enable_if2< is_same_type<typename T1::elem_type, eT>::value, void>::result operator=(const Gen<T1,gen_type>& x);
   
-  arma_inline const Op<subview_col<eT>,op_htrans>  t() const;
-  arma_inline const Op<subview_col<eT>,op_htrans> ht() const;
-  arma_inline const Op<subview_col<eT>,op_strans> st() const;
+  arma_inline arma_warn_unused const Op<subview_col<eT>,op_htrans>  t() const;
+  arma_inline arma_warn_unused const Op<subview_col<eT>,op_htrans> ht() const;
+  arma_inline arma_warn_unused const Op<subview_col<eT>,op_strans> st() const;
   
-  arma_inline const Op<subview_col<eT>,op_strans> as_row() const;
+  arma_inline arma_warn_unused const Op<subview_col<eT>,op_strans> as_row() const;
   
   inline void fill(const eT val);
   inline void zeros();
@@ -478,11 +478,11 @@ class subview_cols : public subview<eT>
   template<typename T1, typename gen_type>
   inline typename enable_if2< is_same_type<typename T1::elem_type, eT>::value, void>::result operator=(const Gen<T1,gen_type>& x);
   
-  arma_inline const Op<subview_cols<eT>,op_htrans>  t() const;
-  arma_inline const Op<subview_cols<eT>,op_htrans> ht() const;
-  arma_inline const Op<subview_cols<eT>,op_strans> st() const;
+  arma_inline arma_warn_unused const Op<subview_cols<eT>,op_htrans>  t() const;
+  arma_inline arma_warn_unused const Op<subview_cols<eT>,op_htrans> ht() const;
+  arma_inline arma_warn_unused const Op<subview_cols<eT>,op_strans> st() const;
   
-  arma_inline const Op<subview_cols<eT>,op_vectorise_col> as_col() const;
+  arma_inline arma_warn_unused const Op<subview_cols<eT>,op_vectorise_col> as_col() const;
   
   inline arma_warn_unused eT  at_alt    (const uword ii) const;
   
@@ -535,11 +535,11 @@ class subview_row : public subview<eT>
   template<typename T1, typename gen_type>
   inline typename enable_if2< is_same_type<typename T1::elem_type, eT>::value, void>::result operator=(const Gen<T1,gen_type>& x);
   
-  arma_inline const Op<subview_row<eT>,op_htrans>  t() const;
-  arma_inline const Op<subview_row<eT>,op_htrans> ht() const;
-  arma_inline const Op<subview_row<eT>,op_strans> st() const;
+  arma_inline arma_warn_unused const Op<subview_row<eT>,op_htrans>  t() const;
+  arma_inline arma_warn_unused const Op<subview_row<eT>,op_htrans> ht() const;
+  arma_inline arma_warn_unused const Op<subview_row<eT>,op_strans> st() const;
   
-  arma_inline const Op<subview_row<eT>,op_strans> as_col() const;
+  arma_inline arma_warn_unused const Op<subview_row<eT>,op_strans> as_col() const;
   
   inline eT  at_alt    (const uword i) const;
   
