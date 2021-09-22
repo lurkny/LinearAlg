@@ -43,6 +43,7 @@ SpBase<elem_type,derived>::is_alias(const SpMat<elem_type>& X) const
 
 template<typename elem_type, typename derived>
 inline
+arma_warn_unused
 const SpOp<derived, spop_htrans>
 SpBase<elem_type,derived>::t() const
   {
@@ -52,6 +53,7 @@ SpBase<elem_type,derived>::t() const
 
 template<typename elem_type, typename derived>
 inline
+arma_warn_unused
 const SpOp<derived, spop_htrans>
 SpBase<elem_type,derived>::ht() const
   {
@@ -62,6 +64,7 @@ SpBase<elem_type,derived>::ht() const
 
 template<typename elem_type, typename derived>
 inline
+arma_warn_unused
 const SpOp<derived, spop_strans>
 SpBase<elem_type,derived>::st() const
   {

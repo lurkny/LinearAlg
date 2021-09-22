@@ -54,9 +54,9 @@ struct SpBase
   
   arma_inline bool is_alias(const SpMat<elem_type>& X) const;
   
-  inline const SpOp<derived,spop_htrans>  t() const;  //!< Hermitian transpose
-  inline const SpOp<derived,spop_htrans> ht() const;  //!< Hermitian transpose
-  inline const SpOp<derived,spop_strans> st() const;  //!< simple transpose
+  inline arma_warn_unused const SpOp<derived,spop_htrans>  t() const;  //!< Hermitian transpose
+  inline arma_warn_unused const SpOp<derived,spop_htrans> ht() const;  //!< Hermitian transpose
+  inline arma_warn_unused const SpOp<derived,spop_strans> st() const;  //!< simple transpose
   
   arma_cold inline void print(                           const std::string extra_text = "") const;
   arma_cold inline void print(std::ostream& user_stream, const std::string extra_text = "") const;
