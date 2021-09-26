@@ -471,8 +471,8 @@ Octave/Matlab with C++ code that uses Armadillo matrices.
 * ensmallen: C++ library of numerical optimisation methods  
   http://ensmallen.org/
 
-* SigPack: C++ signal processing library  
-  http://sigpack.sourceforge.net
+* CARMA: bidirectional interface between Python and Armadillo  
+  https://github.com/RUrlus/carma
 
 * RcppArmadillo: integration of Armadillo with the R system and environment  
   http://dirk.eddelbuettel.com/code/rcpp.armadillo.html
