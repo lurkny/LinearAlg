@@ -1095,7 +1095,7 @@ diskio::save_pgm_binary(const Mat<eT>& x, const std::string& final_name)
 //
 // TODO:
 // add functionality to save the image in a normalised format,
-// i.e. scaled so that every value falls in the [0,255] range.
+// ie. scaled so that every value falls in the [0,255] range.
 
 //! Save a matrix as a PGM greyscale image
 template<typename eT>

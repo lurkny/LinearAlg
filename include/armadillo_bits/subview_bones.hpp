@@ -21,7 +21,7 @@
 
 
 //! Class for storing data required to construct or apply operations to a submatrix
-//! (i.e. where the submatrix starts and ends as well as a reference/pointer to the original matrix),
+//! (ie. where the submatrix starts and ends as well as a reference/pointer to the original matrix),
 template<typename eT>
 class subview : public Base< eT, subview<eT> >
   {

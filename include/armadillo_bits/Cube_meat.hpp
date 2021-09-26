@@ -2536,7 +2536,7 @@ Cube<eT>::insert_slices(const uword slice_num, const BaseCube<eT,T1>& X)
 
 
 
-//! create a cube from GenCube, i.e. run the previously delayed element generation operations
+//! create a cube from GenCube, ie. run the previously delayed element generation operations
 template<typename eT>
 template<typename gen_type>
 inline
@@ -2637,7 +2637,7 @@ Cube<eT>::operator/=(const GenCube<eT, gen_type>& X)
 
 
 
-//! create a cube from OpCube, i.e. run the previously delayed unary operations
+//! create a cube from OpCube, ie. run the previously delayed unary operations
 template<typename eT>
 template<typename T1, typename op_type>
 inline
@@ -2661,7 +2661,7 @@ Cube<eT>::Cube(const OpCube<T1, op_type>& X)
 
 
 
-//! create a cube from OpCube, i.e. run the previously delayed unary operations
+//! create a cube from OpCube, ie. run the previously delayed unary operations
 template<typename eT>
 template<typename T1, typename op_type>
 inline
@@ -2751,7 +2751,7 @@ Cube<eT>::operator/=(const OpCube<T1, op_type>& X)
 
 
 
-//! create a cube from eOpCube, i.e. run the previously delayed unary operations
+//! create a cube from eOpCube, ie. run the previously delayed unary operations
 template<typename eT>
 template<typename T1, typename eop_type>
 inline
@@ -2777,7 +2777,7 @@ Cube<eT>::Cube(const eOpCube<T1, eop_type>& X)
 
 
 
-//! create a cube from eOpCube, i.e. run the previously delayed unary operations
+//! create a cube from eOpCube, ie. run the previously delayed unary operations
 template<typename eT>
 template<typename T1, typename eop_type>
 inline
@@ -2976,7 +2976,7 @@ Cube<eT>::operator/=(const mtOpCube<eT, T1, op_type>& X)
 
 
 
-//! create a cube from GlueCube, i.e. run the previously delayed binary operations
+//! create a cube from GlueCube, ie. run the previously delayed binary operations
 template<typename eT>
 template<typename T1, typename T2, typename glue_type>
 inline
@@ -2998,7 +2998,7 @@ Cube<eT>::Cube(const GlueCube<T1, T2, glue_type>& X)
 
 
 
-//! create a cube from GlueCube, i.e. run the previously delayed binary operations
+//! create a cube from GlueCube, ie. run the previously delayed binary operations
 template<typename eT>
 template<typename T1, typename T2, typename glue_type>
 inline
@@ -3092,7 +3092,7 @@ Cube<eT>::operator/=(const GlueCube<T1, T2, glue_type>& X)
 
 
 
-//! create a cube from eGlueCube, i.e. run the previously delayed binary operations
+//! create a cube from eGlueCube, ie. run the previously delayed binary operations
 template<typename eT>
 template<typename T1, typename T2, typename eglue_type>
 inline
@@ -3119,7 +3119,7 @@ Cube<eT>::Cube(const eGlueCube<T1, T2, eglue_type>& X)
 
 
 
-//! create a cube from eGlueCube, i.e. run the previously delayed binary operations
+//! create a cube from eGlueCube, ie. run the previously delayed binary operations
 template<typename eT>
 template<typename T1, typename T2, typename eglue_type>
 inline

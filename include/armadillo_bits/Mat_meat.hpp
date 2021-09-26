@@ -4880,7 +4880,7 @@ Mat<eT>::operator/=(const Gen<T1, gen_type>& X)
 
 
 
-//! create a matrix from Op, i.e. run the previously delayed unary operations
+//! create a matrix from Op, ie. run the previously delayed unary operations
 template<typename eT>
 template<typename T1, typename op_type>
 inline
@@ -4902,7 +4902,7 @@ Mat<eT>::Mat(const Op<T1, op_type>& X)
 
 
 
-//! create a matrix from Op, i.e. run the previously delayed unary operations
+//! create a matrix from Op, ie. run the previously delayed unary operations
 template<typename eT>
 template<typename T1, typename op_type>
 inline
@@ -5010,7 +5010,7 @@ Mat<eT>::operator/=(const Op<T1, op_type>& X)
 
 
 
-//! create a matrix from eOp, i.e. run the previously delayed unary operations
+//! create a matrix from eOp, ie. run the previously delayed unary operations
 template<typename eT>
 template<typename T1, typename eop_type>
 inline
@@ -5034,7 +5034,7 @@ Mat<eT>::Mat(const eOp<T1, eop_type>& X)
 
 
 
-//! create a matrix from eOp, i.e. run the previously delayed unary operations
+//! create a matrix from eOp, ie. run the previously delayed unary operations
 template<typename eT>
 template<typename T1, typename eop_type>
 inline
@@ -5405,7 +5405,7 @@ Mat<eT>::Mat(const SpToDOp<T1, op_type>& X)
 
 
 
-//! create a matrix from an SpToDOp, i.e. run the previously delayed unary operations
+//! create a matrix from an SpToDOp, ie. run the previously delayed unary operations
 template<typename eT>
 template<typename T1, typename op_type>
 inline
@@ -5513,7 +5513,7 @@ Mat<eT>::operator/=(const SpToDOp<T1, op_type>& X)
 
 
 
-//! create a matrix from Glue, i.e. run the previously delayed binary operations
+//! create a matrix from Glue, ie. run the previously delayed binary operations
 template<typename eT>
 template<typename T1, typename T2, typename glue_type>
 inline
@@ -5536,7 +5536,7 @@ Mat<eT>::Mat(const Glue<T1, T2, glue_type>& X)
 
 
 
-//! create a matrix from Glue, i.e. run the previously delayed binary operations
+//! create a matrix from Glue, ie. run the previously delayed binary operations
 template<typename eT>
 template<typename T1, typename T2, typename glue_type>
 inline
@@ -5680,7 +5680,7 @@ Mat<eT>::operator-=(const Glue<T1, T2, glue_times>& X)
 
 
 
-//! create a matrix from eGlue, i.e. run the previously delayed binary operations
+//! create a matrix from eGlue, ie. run the previously delayed binary operations
 template<typename eT>
 template<typename T1, typename T2, typename eglue_type>
 inline
@@ -5705,7 +5705,7 @@ Mat<eT>::Mat(const eGlue<T1, T2, eglue_type>& X)
 
 
 
-//! create a matrix from eGlue, i.e. run the previously delayed binary operations
+//! create a matrix from eGlue, ie. run the previously delayed binary operations
 template<typename eT>
 template<typename T1, typename T2, typename eglue_type>
 inline

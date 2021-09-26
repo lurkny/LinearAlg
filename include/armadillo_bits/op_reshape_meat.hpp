@@ -40,7 +40,7 @@ op_reshape::apply_unwrap(Mat<eT>& out, const Mat<eT>& A, const uword in_n_rows, 
       out.set_size(in_n_rows, in_n_cols);
       arrayops::copy( out.memptr(), A.memptr(), out.n_elem );
       }
-    else  // &out == &A, i.e. inplace reshape
+    else  // &out == &A, ie. inplace reshape
       {
       out.set_size(in_n_rows, in_n_cols);
       // set_size() doesn't destroy data as long as the number of elements in the matrix remains the same
@@ -236,7 +236,7 @@ op_reshape::apply(Cube<typename T1::elem_type>& out, const OpCube<T1,op_reshape>
       out.set_size(in_n_rows, in_n_cols, in_n_slices);
       arrayops::copy( out.memptr(), A.memptr(), out.n_elem );
       }
-    else  // &out == &A, i.e. inplace resize
+    else  // &out == &A, ie. inplace resize
       {
       out.set_size(in_n_rows, in_n_cols, in_n_slices);
       // set_size() doesn't destroy data as long as the number of elements in the cube remains the same

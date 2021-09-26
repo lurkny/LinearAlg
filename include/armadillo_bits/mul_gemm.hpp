@@ -240,7 +240,7 @@ class gemm_emul
 
 //! \brief
 //! Wrapper for ATLAS/BLAS dgemm function, using template arguments to control the arguments passed to dgemm.
-//! Matrix 'C' is assumed to have been set to the correct size (i.e. taking into account transposes)
+//! Matrix 'C' is assumed to have been set to the correct size (ie. taking into account transposes)
 
 template<const bool do_trans_A=false, const bool do_trans_B=false, const bool use_alpha=false, const bool use_beta=false>
 class gemm

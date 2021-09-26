@@ -20,7 +20,7 @@
 //! @{
 
 
-//! interpret a matrix or a vector as a diagonal matrix (i.e. off-diagonal entries are zero)
+//! interpret a matrix or a vector as a diagonal matrix (ie. off-diagonal entries are zero)
 template<typename T1>
 arma_warn_unused
 arma_inline

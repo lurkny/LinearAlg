@@ -938,7 +938,7 @@ arma_assert_same_size(const ProxyCube<eT1>& A, const ProxyCube<eT2>& B, const ch
 
 
 //
-// functions for checking whether a cube or subcube can be interpreted as a matrix (i.e. single slice)
+// functions for checking whether a cube or subcube can be interpreted as a matrix (ie. single slice)
 
 
 
