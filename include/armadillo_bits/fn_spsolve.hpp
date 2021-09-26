@@ -19,7 +19,7 @@
 //! \addtogroup fn_spsolve
 //! @{
 
-//! Solve a system of linear equations, ie., A*X = B, where X is unknown,
+//! Solve a system of linear equations, A*X = B, where X is unknown,
 //! A is sparse, and B is dense.  X will be dense too.
 
 template<typename T1, typename T2>
