@@ -465,11 +465,11 @@ Octave/Matlab with C++ code that uses Armadillo matrices.
 
 ### 17: Related Software Using Armadillo
 
+* ensmallen: fast non-linear numerical optimisation library  
+  http://ensmallen.org/
+
 * MLPACK: extensive library of machine learning algorithms  
   http://mlpack.org
-
-* ensmallen: C++ library of numerical optimisation methods  
-  http://ensmallen.org/
 
 * CARMA: bidirectional interface between Python and Armadillo  
   https://github.com/RUrlus/carma
