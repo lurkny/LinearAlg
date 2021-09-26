@@ -1954,7 +1954,7 @@ Mat<eT>::Mat(const subview<eT>& X, const bool use_colmem)
 
 
 
-//! construct a matrix from subview (e.g. construct a matrix from a delayed submatrix operation)
+//! construct a matrix from subview (eg. construct a matrix from a delayed submatrix operation)
 template<typename eT>
 inline
 Mat<eT>::Mat(const subview<eT>& X)
@@ -1975,7 +1975,7 @@ Mat<eT>::Mat(const subview<eT>& X)
 
 
 
-//! construct a matrix from subview (e.g. construct a matrix from a delayed submatrix operation)
+//! construct a matrix from subview (eg. construct a matrix from a delayed submatrix operation)
 template<typename eT>
 inline
 Mat<eT>&
@@ -2268,7 +2268,7 @@ Mat<eT>::operator/=(const subview_cube<eT>& X)
 
 
 
-//! construct a matrix from diagview (e.g. construct a matrix from a delayed diag operation)
+//! construct a matrix from diagview (eg. construct a matrix from a delayed diag operation)
 template<typename eT>
 inline
 Mat<eT>::Mat(const diagview<eT>& X)
@@ -2289,7 +2289,7 @@ Mat<eT>::Mat(const diagview<eT>& X)
 
 
 
-//! construct a matrix from diagview (e.g. construct a matrix from a delayed diag operation)
+//! construct a matrix from diagview (eg. construct a matrix from a delayed diag operation)
 template<typename eT>
 inline
 Mat<eT>&

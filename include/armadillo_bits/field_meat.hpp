@@ -82,7 +82,7 @@ field<oT>::operator=(const field& x)
 
 
 
-//! construct a field from subview_field (e.g. construct a field from a delayed subfield operation)
+//! construct a field from subview_field (eg. construct a field from a delayed subfield operation)
 template<typename oT>
 inline
 field<oT>::field(const subview_field<oT>& X)
@@ -99,7 +99,7 @@ field<oT>::field(const subview_field<oT>& X)
 
 
 
-//! construct a field from subview_field (e.g. construct a field from a delayed subfield operation)
+//! construct a field from subview_field (eg. construct a field from a delayed subfield operation)
 template<typename oT>
 inline
 field<oT>&

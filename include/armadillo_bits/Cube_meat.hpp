@@ -866,7 +866,7 @@ Cube<eT>::Cube
 
 
 
-//! construct a cube from a subview_cube instance (e.g. construct a cube from a delayed subcube operation)
+//! construct a cube from a subview_cube instance (eg. construct a cube from a delayed subcube operation)
 template<typename eT>
 inline
 Cube<eT>::Cube(const subview_cube<eT>& X)
@@ -889,7 +889,7 @@ Cube<eT>::Cube(const subview_cube<eT>& X)
 
 
 
-//! construct a cube from a subview_cube instance (e.g. construct a cube from a delayed subcube operation)
+//! construct a cube from a subview_cube instance (eg. construct a cube from a delayed subcube operation)
 template<typename eT>
 inline
 Cube<eT>&
