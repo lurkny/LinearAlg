@@ -44,7 +44,7 @@ op_vectorise_col::apply_direct(Mat<typename T1::elem_type>& out, const T1& expr)
   typedef typename T1::elem_type eT;
   
   // allow detection of in-place operation
-  if(is_Mat<T1>::value)
+  if(is_Mat<T1>::value || (arma_config::openmp && Proxy<T1>::use_mp))
     {
     const unwrap<T1> U(expr);
     
@@ -85,7 +85,7 @@ op_vectorise_col::apply_direct(Mat<typename T1::elem_type>& out, const T1& expr)
     
     const bool is_alias = P.is_alias(out);
     
-    if(is_Mat<typename Proxy<T1>::stored_type>::value || (arma_config::openmp && Proxy<T1>::use_mp))
+    if(is_Mat<typename Proxy<T1>::stored_type>::value)
       {
       const quasi_unwrap<typename Proxy<T1>::stored_type> U(P.Q);
       
