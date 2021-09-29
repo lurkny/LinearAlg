@@ -379,9 +379,9 @@ op_vectorise_cube_col::apply_subview(Mat<eT>& out, const subview_cube<eT>& sv)
     out_mem += sv_nr;
     }
   }
-  
-  
-  
+
+
+
 template<typename T1>
 inline
 void
@@ -395,9 +395,9 @@ op_vectorise_cube_col::apply_unwrap(Mat<typename T1::elem_type>& out, const T1& 
   
   arrayops::copy(out.memptr(), U.M.memptr(), U.M.n_elem);
   }
-  
-  
-  
+
+
+
 template<typename T1>
 inline
 void
