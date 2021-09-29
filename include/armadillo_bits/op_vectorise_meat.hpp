@@ -363,20 +363,20 @@ op_vectorise_cube_col::apply_subview(Mat<eT>& out, const subview_cube<eT>& sv)
   {
   arma_extra_debug_sigprint();
   
-  const uword sv_n_rows   = sv.n_rows;
-  const uword sv_n_cols   = sv.n_cols;
-  const uword sv_n_slices = sv.n_slices;
+  const uword sv_nr = sv.n_rows;
+  const uword sv_nc = sv.n_cols;
+  const uword sv_ns = sv.n_slices;
   
   out.set_size(sv.n_elem, 1);
   
   eT* out_mem = out.memptr();
   
-  for(uword slice=0; slice < sv_n_slices; ++slice)
-  for(uword   col=0;   col < sv_n_cols;   ++col  )
+  for(uword s=0; s < sv_ns; ++s)
+  for(uword c=0; c < sv_nc; ++c)
     {
-    arrayops::copy(out_mem, sv.slice_colptr(slice,col), sv_n_rows);
+    arrayops::copy(out_mem, sv.slice_colptr(s,c), sv_nr);
     
-    out_mem += sv_n_rows;
+    out_mem += sv_nr;
     }
   }
   
@@ -409,51 +409,51 @@ op_vectorise_cube_col::apply_proxy(Mat<typename T1::elem_type>& out, const T1& e
   
   const ProxyCube<T1> P(expr);
   
+  if(is_Cube<typename ProxyCube<T1>::stored_type>::value)
+    {
+    op_vectorise_cube_col::apply_unwrap(out, P.Q);
+    
+    return;
+    }
+  
   const uword N = P.get_n_elem();
   
   out.set_size(N, 1);
   
-  if(is_Cube<typename ProxyCube<T1>::stored_type>::value)
+  eT* outmem = out.memptr();
+  
+  if(ProxyCube<T1>::use_at == false)
     {
-    op_vectorise_cube_col::apply_unwrap(out, P.Q);
+    typename ProxyCube<T1>::ea_type A = P.get_ea();
+    
+    uword i,j;
+    
+    for(i=0, j=1; j < N; i+=2, j+=2)
+      {
+      const eT tmp_i = A[i];
+      const eT tmp_j = A[j];
+      
+      outmem[i] = tmp_i;
+      outmem[j] = tmp_j;
+      }
+    
+    if(i < N)
+      {
+      outmem[i] = A[i];
+      }
     }
   else
     {
-    eT* outmem = out.memptr();
+    const uword nr = P.get_n_rows();
+    const uword nc = P.get_n_cols();
+    const uword ns = P.get_n_slices();
     
-    if(ProxyCube<T1>::use_at == false)
+    for(uword s=0; s < ns; ++s)
+    for(uword c=0; c < nc; ++c)
+    for(uword r=0; r < nr; ++r)
       {
-      typename ProxyCube<T1>::ea_type A = P.get_ea();
-      
-      uword i,j;
-      
-      for(i=0, j=1; j < N; i+=2, j+=2)
-        {
-        const eT tmp_i = A[i];
-        const eT tmp_j = A[j];
-        
-        outmem[i] = tmp_i;
-        outmem[j] = tmp_j;
-        }
-      
-      if(i < N)
-        {
-        outmem[i] = A[i];
-        }
-      }
-    else
-      {
-      const uword n_rows   = P.get_n_rows();
-      const uword n_cols   = P.get_n_cols();
-      const uword n_slices = P.get_n_slices();
-      
-      for(uword slice=0; slice < n_slices; ++slice)
-      for(uword   col=0;   col < n_cols;   ++col  )
-      for(uword   row=0;   row < n_rows;   ++row  )
-        {
-        *outmem = P.at(row,col,slice);
-        outmem++;
-        }
+      *outmem = P.at(r,c,s);
+      outmem++;
       }
     }
   }
