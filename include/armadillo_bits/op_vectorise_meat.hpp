@@ -343,9 +343,14 @@ op_vectorise_cube_col::apply(Mat<typename T1::elem_type>& out, const CubeToMatOp
     }
   else
     {
-    const ProxyCube<T1> P(in.m);
-    
-    op_vectorise_cube_col::apply_proxy(out, P);
+    if(is_Cube<T1>::value || (arma_config::openmp && ProxyCube<T1>::use_mp))
+      {
+      op_vectorise_cube_col::apply_unwrap(out, in.m);
+      }
+    else
+      {
+      op_vectorise_cube_col::apply_proxy(out, in.m);
+      }
     }
   }
 
@@ -380,21 +385,37 @@ op_vectorise_cube_col::apply_subview(Mat<eT>& out, const subview_cube<eT>& sv)
 template<typename T1>
 inline
 void
-op_vectorise_cube_col::apply_proxy(Mat<typename T1::elem_type>& out, const ProxyCube<T1>& P)
+op_vectorise_cube_col::apply_unwrap(Mat<typename T1::elem_type>& out, const T1& expr)
+  {
+  arma_extra_debug_sigprint();
+  
+  const unwrap_cube<T1> U(expr);
+  
+  out.set_size(U.M.n_elem, 1);
+  
+  arrayops::copy(out.memptr(), U.M.memptr(), U.M.n_elem);
+  }
+  
+  
+  
+template<typename T1>
+inline
+void
+op_vectorise_cube_col::apply_proxy(Mat<typename T1::elem_type>& out, const T1& expr)
   {
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
   
+  const ProxyCube<T1> P(expr);
+  
   const uword N = P.get_n_elem();
   
   out.set_size(N, 1);
   
-  if(is_Cube<typename ProxyCube<T1>::stored_type>::value || (arma_config::openmp && ProxyCube<T1>::use_mp))
+  if(is_Cube<typename ProxyCube<T1>::stored_type>::value)
     {
-    const unwrap_cube<typename ProxyCube<T1>::stored_type> tmp(P.Q);
-    
-    arrayops::copy(out.memptr(), tmp.M.memptr(), N);
+    op_vectorise_cube_col::apply_unwrap(out, P.Q);
     }
   else
     {
