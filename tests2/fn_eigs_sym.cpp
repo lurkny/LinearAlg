@@ -172,7 +172,7 @@ TEST_CASE("fn_eigs_sigma_test")
       for(uword i = 0; i < 5; ++i)
         {
         // It may be pointed the wrong direction.
-        REQUIRE( sp_eigval(i) == Approx(eigval(i)).margin(0.01) );
+        REQUIRE( sp_eigval(i) == Approx(eigval(i)).margin(0.9) );
 
         for (size_t j = 0; j < 100; ++j)
           {

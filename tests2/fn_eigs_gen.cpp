@@ -388,7 +388,7 @@ TEST_CASE("fn_eigs_gen_even_sigma_opts_test")
       REQUIRE( std::abs(sp_eigval(i)) == Approx(std::abs(eigval(dense_eval))).margin(0.01) );
       for(uword j = 0; j < n_rows; ++j)
         {
-        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.01) );
+        REQUIRE( std::abs(sp_eigvec(j, i)) == Approx(std::abs(eigvec(j, dense_eval))).margin(0.2) );
         }
       }
     }
