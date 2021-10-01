@@ -1065,7 +1065,7 @@ In this documentation, the <b><i>vec</i></b> and <b><i>colvec</i></b> types have
 </li>
 <br>
 <li>
-In this documentation, the types <i>vec</i> or <i>colvec</i> are used for convenience; it is possible to use other types instead, eg.&nbsp;<i>fvec</i>, <i>fcolvec</i>
+In this documentation, the types <i>vec</i> or <i>colvec</i> are used for convenience; it is possible to use other types instead, eg. <i>fvec</i>, <i>fcolvec</i>
 </li>
 <br>
 <li>
@@ -3845,7 +3845,7 @@ The aggregate set of the specified elements is treated as a column vector
 <br>
 <li>
 The function <i>.unsafe_col()</i> is provided for speed reasons and should be used only if you know what you are doing.
-It creates a seemingly independent <i>Col</i> vector object (eg.&nbsp;<i>vec</i>),
+It creates a seemingly independent <i>Col</i> vector object (eg. <i>vec</i>),
 but uses memory from the existing matrix object.
 As such, the created vector is not alias safe,
 and does not take into account that the underlying matrix memory could be freed
@@ -7004,7 +7004,7 @@ The numbers are separated by whitespace.
 The number of columns must be the same in each row.
 Cubes are loaded as one slice.
 Data which was saved in Matlab/Octave using the <i>-ascii</i> option can be read in Armadillo, except for complex numbers.
-Complex numbers are stored in standard C++ notation, which is a tuple surrounded by brackets: eg. (1.23,4.56) indicates 1.24&nbsp;+&nbsp;4.56i.
+Complex numbers are stored in standard C++ notation, which is a tuple surrounded by brackets: eg. (1.23,4.56) indicates 1.24&thinsp;+&thinsp;4.56i.
 <br>
 <br>
                         </td>
@@ -7395,7 +7395,7 @@ the values of the elements are logarithmically spaced from <i>10<sup><font size=
 </li>
 <br>
 <li>
-The argument <i>N</i> is optional; by default <i>N = 50</i>
+The argument <i>N</i> is optional; by default <i>N&thinsp;=&thinsp;50</i>
 </li>
 <br>
 <li>
@@ -7434,19 +7434,19 @@ See also:
 <ul>
 <li>
 Generate a vector with regularly spaced elements:
-<br>[&nbsp;&nbsp;<i>(start&nbsp;+&nbsp;0*delta)</i>,&nbsp;&nbsp;<i>(start&nbsp;+&nbsp;1*delta)</i>,&nbsp;&nbsp;<i>(start&nbsp;+&nbsp;2*delta)</i>,&nbsp;&nbsp;<i>&#8943;</i>,&nbsp;&nbsp;<i>(start&nbsp;+&nbsp;M*delta)</i>&nbsp;&nbsp;]
-<br>where <i>M&nbsp;=&nbsp;floor((end-start)/delta)</i>, so that <i>(start&nbsp;+&nbsp;M*delta)&thinsp;&le;&thinsp;end</i>
+<br>[&nbsp;<i>(start&thinsp;+&thinsp;0*delta)</i>,&nbsp;<i>(start&thinsp;+&thinsp;1*delta)</i>,&nbsp;<i>(start&thinsp;+&thinsp;2*delta)</i>,&nbsp;<i>&#8943;</i>,&nbsp;<i>(start&thinsp;+&thinsp;M*delta)</i>&nbsp;]
+<br>where <i>M&thinsp;=&thinsp;floor((end-start)&thinsp;/&thinsp;delta)</i>, so that <i>(start&thinsp;+&thinsp;M*delta)&thinsp;&le;&thinsp;end</i>
 </li>
 <br>
 <li>
-Similar in operation to the Matlab/Octave colon operator, ie. <i>start:end</i>&nbsp;&nbsp;and&nbsp;&nbsp;<i>start:delta:end</i>
+Similar in operation to the Matlab/Octave colon operator, ie. <i>start:end</i>&nbsp;and&nbsp;<i>start:delta:end</i>
 </li>
 <br>
 <li>
 If <i>delta</i> is not specified:
 <ul>
-<li><i>delta</i>&nbsp;=&nbsp;+1,       if <i>start&thinsp;&le;&thinsp;end</i></li>
-<li><i>delta</i>&nbsp;=&nbsp;&minus;1, if <i>start&thinsp;&gt;&thinsp;end</i> &nbsp; (<b>caveat:</b> this is different to Matlab/Octave)</li>
+<li><i>delta</i>&thinsp;=&thinsp;+1,       if <i>start&thinsp;&le;&thinsp;end</i></li>
+<li><i>delta</i>&thinsp;=&thinsp;&minus;1, if <i>start&thinsp;&gt;&thinsp;end</i> &nbsp; (<b>caveat:</b> this is different to Matlab/Octave)</li>
 </ul>
 </li>
 <br>
@@ -7455,7 +7455,7 @@ An empty vector is generated when one of the following conditions is true:
 <ul>
 <li><i>start&thinsp;&lt;&thinsp;end</i>, and <i>delta&thinsp;&lt;&thinsp;0</i></li>
 <li><i>start&thinsp;&gt;&thinsp;end</i>, and <i>delta&thinsp;&gt;&thinsp;0</i></li>
-<li><i>delta&nbsp;=&nbsp;0</i></li>
+<li><i>delta&thinsp;=&thinsp;0</i></li>
 </ul>
 </li>
 <br>
@@ -7787,18 +7787,18 @@ Generate a scalar, vector, matrix or cube with the elements set to random values
       <td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;"><i>x<sup>&thinsp;a-1</sup> exp(&thinsp;-x&thinsp;/&thinsp;b&thinsp;)</i></td>
     </tr>
     <tr>
-      <td style="vertical-align: top;"><i>p<font size=+1>(</font>x|a,b<font size=+1>)</font></i></td><td style="vertical-align: top;">&nbsp;<font size=+1>=</font>&nbsp;</td><td style="vertical-align: top;"><font size=+1><b><hr></b></font></td>
+      <td style="vertical-align: top;"><i>p<font size=+1>(</font>x&thinsp;|&thinsp;a,b<font size=+1>)</font></i></td><td style="vertical-align: top;">&nbsp;<font size=+1>=</font>&nbsp;</td><td style="vertical-align: top;"><font size=+1><b><hr></b></font></td>
     </tr>
     <tr>
-      <td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top; text-align: center;"><i>b<sup>&thinsp;a</sup>&nbsp;&Gamma;(a)</i></td>
+      <td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top; text-align: center;"><i>b<sup>&thinsp;a</sup> &Gamma;(a)</i></td>
     </tr>
   </tbody>
 </table>
 </ul>
-where <i>a</i> is the shape parameter and <i>b</i> is the scale parameter, with constraints <i>a &gt; 0</i> and <i>b &gt; 0</i>
+where <i>a</i> is the shape parameter and <i>b</i> is the scale parameter, with constraints <i>a&thinsp;&gt&thinsp;0</i> and <i>b&thinsp;&gt;&thinsp;0</i>
 </li>
 <br>
-<li>The default distribution parameters are <i>a=1</i> and <i>b=1</i>
+<li>The default distribution parameters are <i>a&thinsp;=&thinsp;1</i> and <i>b&thinsp;=&thinsp;1</i>
 </li>
 <br>
 <li>
@@ -7870,7 +7870,7 @@ mat X = randg&lt;mat&gt;(10, 10, distr_param(2,1));
 Generate a scalar, vector, matrix or cube with the elements set to random <b>integer</b> values in the [a,b] interval
 </li>
 <br>
-<li>The default distribution parameters are <i>a=0</i> and <i>b=maximum_int</i>
+<li>The default distribution parameters are <i>a&thinsp;=&thinsp;0</i> and <i>b&thinsp;=&thinsp;maximum_int</i>
 </li>
 <br>
 <li>
@@ -8260,7 +8260,7 @@ The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is 
 </li>
 <br>
 <li>
-Relational operators can be used instead of <i>V</i> or <i>X</i>, eg.&nbsp;<i>A&thinsp;&gt;&thinsp;0.5</i>
+Relational operators can be used instead of <i>V</i> or <i>X</i>, eg. <i>A&thinsp;&gt;&thinsp;0.5</i>
 </li>
 <br>
 <li>
@@ -8327,7 +8327,7 @@ The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is 
 </li>
 <br>
 <li>
-Relational operators can be used instead of <i>V</i> or <i>X</i>, eg.&nbsp;<i>A&thinsp;&gt;&thinsp;0.9</i>
+Relational operators can be used instead of <i>V</i> or <i>X</i>, eg. <i>A&thinsp;&gt;&thinsp;0.9</i>
 </li>
 <br>
 <li>
@@ -9193,7 +9193,7 @@ See also:
 <i>X</i> is interpreted as a vector, with column-by-column ordering of the elements of <i>X</i>
 </li>
 <br>
-<li>Relational operators can be used instead of <i>X</i>, eg.&nbsp;<i>A&thinsp;&gt;&thinsp;0.5</i>
+<li>Relational operators can be used instead of <i>X</i>, eg. <i>A&thinsp;&gt;&thinsp;0.5</i>
 </li>
 <br>
 <li>If <i>k&thinsp;=&thinsp;0</i> (default), return the indices of all non-zero elements, otherwise return at most <i>k</i> of their indices</li>
@@ -10247,7 +10247,7 @@ the expression <code><a href="#accu">accu</a>(X != 0)</code> is more efficient
 <li>
 for sparse matrices,
 to obtain the <b>number</b> of non-zero elements,
-the <code><a href="#attributes">.n_nonzero</a></code> attribute is more efficient, eg.&nbsp;<code>X.n_nonzero</code>
+the <code><a href="#attributes">.n_nonzero</a></code> attribute is more efficient, eg. <code>X.n_nonzero</code>
 </li>
 </ul>
 </li>
