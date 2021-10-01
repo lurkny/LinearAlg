@@ -3165,7 +3165,7 @@ Member function of <i>Mat</i>, <i>Col</i>, <i>Row</i>, <i>Cube</i> and <i>SpMat<
 <b>Caveats:</b>
 <ul>
 <li>floating point numbers (<i>float</i> and <i>double</i>) are approximations due to their <a href="https://en.wikipedia.org/wiki/Floating_point">necessarily limited precision</a></li>
-<li>for sparse matrices (<i>SpMat</i>), replacement is not done when <i>old_value = 0</i></li>
+<li>for sparse matrices (<i>SpMat</i>), replacement is not done when <i>old_value&thinsp;=&thinsp;0</i></li>
 </ul>
 </li>
 <br>
@@ -3209,7 +3209,7 @@ Member function of <i>Mat</i>, <i>Col</i>, <i>Row</i>, <i>Cube</i> and <i>SpMat<
 </li>
 <br>
 <li>
-Clamp each element to the [<i>min_val</i>,&nbsp;<i>max_val</i>] interval;
+Clamp each element to the [<i>min_val</i>,&thinsp;<i>max_val</i>] interval;
 <br>any value lower than <i>min_val</i> will be set to <i>min_val</i>, and any value higher than <i>max_val</i> will be set to <i>max_val</i>
 </li>
 <br>
@@ -4132,11 +4132,11 @@ Member function of <i>Mat</i> and <i>SpMat</i>
 Read/write access to a diagonal in a matrix
 </li>
 <br>
-<li>The argument <i>k</i> is optional; by default the main diagonal is accessed (<i>k=0</i>)</li>
+<li>The argument <i>k</i> is optional; by default the main diagonal is accessed (<i>k&thinsp;=&thinsp;0</i>)</li>
 <br>
-<li>For <i>k &gt; 0</i>, the <i>k</i>-th super-diagonal is accessed (top-right corner)</li>
+<li>For <i>k&thinsp;&gt;&thinsp;0</i>, the <i>k</i>-th super-diagonal is accessed (top-right corner)</li>
 <br>
-<li>For <i>k &lt; 0</i>, the <i>k</i>-th sub-diagonal is accessed (bottom-left corner)</li>
+<li>For <i>k&thinsp;&lt;&thinsp;0</i>, the <i>k</i>-th sub-diagonal is accessed (bottom-left corner)</li>
 <br>
 <li>The diagonal is interpreted as a column vector within expressions</li>
 <br>
@@ -6247,7 +6247,7 @@ If the object is a vector, return a <i>bool</i> indicating whether the elements 
 </li>
 <br>
 <li>
-If the object is a matrix, return a <i>bool</i> indicating whether the elements are sorted in each column (<i>dim=0</i>), or each row (<i>dim=1</i>)
+If the object is a matrix, return a <i>bool</i> indicating whether the elements are sorted in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
@@ -6265,7 +6265,7 @@ The <i>sort_direction</i> argument is optional; <i>sort_direction</i> is one of:
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
@@ -7435,7 +7435,7 @@ See also:
 <li>
 Generate a vector with regularly spaced elements:
 <br>[&nbsp;&nbsp;<i>(start&nbsp;+&nbsp;0*delta)</i>,&nbsp;&nbsp;<i>(start&nbsp;+&nbsp;1*delta)</i>,&nbsp;&nbsp;<i>(start&nbsp;+&nbsp;2*delta)</i>,&nbsp;&nbsp;<i>&#8943;</i>,&nbsp;&nbsp;<i>(start&nbsp;+&nbsp;M*delta)</i>&nbsp;&nbsp;]
-<br>where <i>M&nbsp;=&nbsp;floor((end-start)/delta)</i>, so that <i>(start&nbsp;+&nbsp;M*delta)&nbsp;&le;&nbsp;end</i>
+<br>where <i>M&nbsp;=&nbsp;floor((end-start)/delta)</i>, so that <i>(start&nbsp;+&nbsp;M*delta)&thinsp;&le;&thinsp;end</i>
 </li>
 <br>
 <li>
@@ -7445,16 +7445,16 @@ Similar in operation to the Matlab/Octave colon operator, ie. <i>start:end</i>&n
 <li>
 If <i>delta</i> is not specified:
 <ul>
-<li><i>delta</i>&nbsp;=&nbsp;+1,       if <i>start&nbsp;&le;&nbsp;end</i></li>
-<li><i>delta</i>&nbsp;=&nbsp;&minus;1, if <i>start&nbsp;&gt;&nbsp;end</i> &nbsp; (<b>caveat:</b> this is different to Matlab/Octave)</li>
+<li><i>delta</i>&nbsp;=&nbsp;+1,       if <i>start&thinsp;&le;&thinsp;end</i></li>
+<li><i>delta</i>&nbsp;=&nbsp;&minus;1, if <i>start&thinsp;&gt;&thinsp;end</i> &nbsp; (<b>caveat:</b> this is different to Matlab/Octave)</li>
 </ul>
 </li>
 <br>
 <li>
 An empty vector is generated when one of the following conditions is true:
 <ul>
-<li><i>start&nbsp;&lt;&nbsp;end</i>, and <i>delta&nbsp;&lt;&nbsp;0</i></li>
-<li><i>start&nbsp;&gt;&nbsp;end</i>, and <i>delta&nbsp;&gt;&nbsp;0</i></li>
+<li><i>start&thinsp;&lt;&thinsp;end</i>, and <i>delta&thinsp;&lt;&thinsp;0</i></li>
+<li><i>start&thinsp;&gt;&thinsp;end</i>, and <i>delta&thinsp;&gt;&thinsp;0</i></li>
 <li><i>delta&nbsp;=&nbsp;0</i></li>
 </ul>
 </li>
@@ -8247,20 +8247,20 @@ See also:
 For matrix <i>X</i> and
 <ul>
 <li>
-<i>dim=0</i>, return a row vector (of type <a href="#Row">urowvec</a> or <a href="#Mat">umat</a>),
+<i>dim&thinsp;=&thinsp;0</i>, return a row vector (of type <a href="#Row">urowvec</a> or <a href="#Mat">umat</a>),
 with each element (0 or 1) indicating whether the corresponding column of <i>X</i> has all non-zero elements</li>
 <li>
-<i>dim=1</i>, return a column vector (of type <a href="#Col">ucolvec</a> or <a href="#Mat">umat</a>),
+<i>dim&thinsp;=&thinsp;1</i>, return a column vector (of type <a href="#Col">ucolvec</a> or <a href="#Mat">umat</a>),
 with each element (0 or 1) indicating whether the corresponding row of <i>X</i> has all non-zero elements</li>
 </ul>
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
-Relational operators can be used instead of <i>V</i> or <i>X</i>, eg.&nbsp;<i>A&nbsp;&gt;&nbsp;0.5</i>
+Relational operators can be used instead of <i>V</i> or <i>X</i>, eg.&nbsp;<i>A&thinsp;&gt;&thinsp;0.5</i>
 </li>
 <br>
 <li>
@@ -8314,20 +8314,20 @@ See also:
 For matrix <i>X</i> and
 <ul>
 <li>
-<i>dim=0</i>, return a row vector (of type <a href="#Row">urowvec</a> or <a href="#Mat">umat</a>),
+<i>dim&thinsp;=&thinsp;0</i>, return a row vector (of type <a href="#Row">urowvec</a> or <a href="#Mat">umat</a>),
 with each element (0 or 1) indicating whether the corresponding column of <i>X</i> has any non-zero elements</li>
 <li>
-<i>dim=1</i>, return a column vector (of type <a href="#Col">ucolvec</a> or <a href="#Mat">umat</a>),
+<i>dim&thinsp;=&thinsp;1</i>, return a column vector (of type <a href="#Col">ucolvec</a> or <a href="#Mat">umat</a>),
 with each element (0 or 1) indicating whether the corresponding row of <i>X</i> has any non-zero elements</li>
 </ul>
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
-Relational operators can be used instead of <i>V</i> or <i>X</i>, eg.&nbsp;<i>A&nbsp;&gt;&nbsp;0.9</i>
+Relational operators can be used instead of <i>V</i> or <i>X</i>, eg.&nbsp;<i>A&thinsp;&gt;&thinsp;0.9</i>
 </li>
 <br>
 <li>
@@ -8386,9 +8386,9 @@ The argument <i>method</i> controls how the approximate equality is determined; 
 <ul>
 <table>
 <tbody>
-<tr><td><code>"absdiff"</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>scalars <i>x</i> and <i>y</i> are considered equal if <i>|x&nbsp;&minus;&nbsp;y|&nbsp;&le;&nbsp;tol</i></td></tr>
-<tr><td><code>"reldiff"</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>scalars <i>x</i> and <i>y</i> are considered equal if <i>|x&nbsp;&minus;&nbsp;y|&nbsp;/&nbsp;max(&nbsp;|x|,&nbsp;|y|&nbsp;)&nbsp;&le;&nbsp;tol</i></td></tr>
-<tr><td><code>"both"</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>scalars <i>x</i> and <i>y</i> are considered equal if <i>|x&nbsp;&minus;&nbsp;y|&nbsp;&le;&nbsp;abs_tol</i>&nbsp;&nbsp;<b>or</b>&nbsp;&nbsp;<i>|x&nbsp;&minus;&nbsp;y|&nbsp;/&nbsp;max(&nbsp;|x|,&nbsp;|y|&nbsp;)&nbsp;&le;&nbsp;rel_tol</i></td></tr>
+<tr><td><code>"absdiff"</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>scalars <i>x</i> and <i>y</i> are considered equal if <i>|x&thinsp;&minus;&thinsp;y|&thinsp;&thinsp;&le;&thinsp;&thinsp;tol</i></td></tr>
+<tr><td><code>"reldiff"</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>scalars <i>x</i> and <i>y</i> are considered equal if <i>|x&thinsp;&minus;&thinsp;y|&thinsp;/&thinsp;max(&thinsp;|x|,&thinsp;|y|&thinsp;)&thinsp;&thinsp;&le;&thinsp;&thinsp;tol</i></td></tr>
+<tr><td><code>"both"</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>scalars <i>x</i> and <i>y</i> are considered equal if <i>|x&thinsp;&minus;&thinsp;y|&thinsp;&thinsp;&le;&thinsp;&thinsp;abs_tol</i>&nbsp;<b>or</b>&nbsp;<i>|x&thinsp;&minus;&thinsp;y|&thinsp;/&thinsp;max(&thinsp;|x|,&thinsp;|y|&thinsp;)&thinsp;&thinsp;&le;&thinsp;&thinsp;rel_tol</i></td></tr>
 </tbody>
 </table>
 </ul>
@@ -8526,7 +8526,7 @@ See also:
 <b>clamp( X, min_val, max_val )</b>
 <ul>
 <li>
-Create a copy of <i>X</i> with each element clamped to the [<i>min_val</i>,&nbsp;<i>max_val</i>] interval;
+Create a copy of <i>X</i> with each element clamped to the [<i>min_val</i>,&thinsp;<i>max_val</i>] interval;
 <br>any value lower than <i>min_val</i> will be set to <i>min_val</i>, and any value higher than <i>max_val</i> will be set to <i>max_val</i>
 </li>
 <br>
@@ -8728,11 +8728,11 @@ For vector <i>V</i>, return a vector of the same orientation, containing the cum
 </li>
 <br>
 <li>
-For matrix <i>X</i>, return a matrix containing the cumulative sum of elements in each column (<i>dim=0</i>), or each row (<i>dim=1</i>)
+For matrix <i>X</i>, return a matrix containing the cumulative sum of elements in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
@@ -8772,11 +8772,11 @@ For vector <i>V</i>, return a vector of the same orientation, containing the cum
 </li>
 <br>
 <li>
-For matrix <i>X</i>, return a matrix containing the cumulative product of elements in each column (<i>dim=0</i>), or each row (<i>dim=1</i>)
+For matrix <i>X</i>, return a matrix containing the cumulative product of elements in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
@@ -8864,15 +8864,15 @@ Given matrix <i>X</i>, generate a matrix with the <i>k</i>-th diagonal containin
 </li>
 <br>
 <li>
-The argument <i>k</i> is optional; by default the main diagonal is used (<i>k=0</i>)
+The argument <i>k</i> is optional; by default the main diagonal is used (<i>k&thinsp;=&thinsp;0</i>)
 </li>
 <br>
 <li>
-For <i>k &gt; 0</i>, the <i>k</i>-th super-diagonal is used (above main diagonal, towards top-right corner)
+For <i>k&thinsp;&gt;&thinsp;0</i>, the <i>k</i>-th super-diagonal is used (above main diagonal, towards top-right corner)
 </li>
 <br>
 <li>
-For <i>k &lt; 0</i>, the <i>k</i>-th sub-diagonal is used (below main diagonal, towards bottom-left corner)
+For <i>k&thinsp;&lt;&thinsp;0</i>, the <i>k</i>-th sub-diagonal is used (below main diagonal, towards bottom-left corner)
 </li>
 <br>
 <li>
@@ -8916,12 +8916,12 @@ Extract the <i>k</i>-th diagonal from matrix <i>A</i>
 </li>
 <br>
 <li>
-The argument <i>k</i> is optional; by default the main diagonal is extracted (<i>k=0</i>)
+The argument <i>k</i> is optional; by default the main diagonal is extracted (<i>k&thinsp;=&thinsp;0</i>)
 </li>
 <br>
-<li>For <i>k &gt; 0</i>, the <i>k</i>-th super-diagonal is extracted (top-right corner)</li>
+<li>For <i>k&thinsp;&gt;&thinsp;0</i>, the <i>k</i>-th super-diagonal is extracted (top-right corner)</li>
 <br>
-<li>For <i>k &lt; 0</i>, the <i>k</i>-th sub-diagonal is extracted (bottom-left corner)</li>
+<li>For <i>k&thinsp;&lt;&thinsp;0</i>, the <i>k</i>-th sub-diagonal is extracted (bottom-left corner)</li>
 <br>
 <li>
 The extracted diagonal is interpreted as a column vector
@@ -8963,19 +8963,19 @@ For vector <i>V</i>, return a vector of the same orientation, containing the dif
 </li>
 <br>
 <li>
-For matrix <i>X</i>, return a matrix containing the differences between consecutive elements in each column (<i>dim=0</i>), or each row (<i>dim=1</i>)
+For matrix <i>X</i>, return a matrix containing the differences between consecutive elements in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
-The optional argument <i>k</i> indicates that the differences are calculated recursively <i>k</i> times; by default <i>k=1</i> is used
+The optional argument <i>k</i> indicates that the differences are calculated recursively <i>k</i> times; by default <i>k&thinsp;=&thinsp;1</i> is used
 </li>
 <br>
 <li>
-The resulting number of differences is <i>n - k</i>, where <i>n</i> is the number of elements; if <i>n &le; k</i>, the number of differences is zero (ie. an empty vector/matrix is returned)
+The resulting number of differences is <i>n&thinsp;&minus;&thinsp;k</i>, where <i>n</i> is the number of elements; if <i>n&thinsp;&le;&thinsp;k</i>, the number of differences is zero (ie. an empty vector/matrix is returned)
 </li>
 <br>
 <li>
-The argument <i>dim</i> is optional; by default <i>dim=0</i>
+The argument <i>dim</i> is optional; by default <i>dim&thinsp;=&thinsp;0</i>
 </li>
 <br>
 <li>
@@ -9014,7 +9014,7 @@ vec b = diff(a);
 </li>
 <br>
 <li>
-<i>norm_dot(A,B)</i>: normalised dot product; equivalent to <i>dot(A,B)&nbsp;/&nbsp;(&#8741;A&#8741;&#8226;&#8741;B&#8741;)</i>
+<i>norm_dot(A,B)</i>: normalised dot product; equivalent to <i>dot(A,B)&thinsp;/&thinsp;(&#8741;A&#8741;&#8226;&#8741;B&#8741;)</i>
 </li>
 <br>
 <li>
@@ -9193,15 +9193,15 @@ See also:
 <i>X</i> is interpreted as a vector, with column-by-column ordering of the elements of <i>X</i>
 </li>
 <br>
-<li>Relational operators can be used instead of <i>X</i>, eg.&nbsp;<i>A&nbsp;&gt;&nbsp;0.5</i>
+<li>Relational operators can be used instead of <i>X</i>, eg.&nbsp;<i>A&thinsp;&gt;&thinsp;0.5</i>
 </li>
 <br>
-<li>If <i>k=0</i> (default), return the indices of all non-zero elements, otherwise return at most <i>k</i> of their indices</li>
+<li>If <i>k&thinsp;=&thinsp;0</i> (default), return the indices of all non-zero elements, otherwise return at most <i>k</i> of their indices</li>
 <br>
-<li>If <i>s="first"</i> (default), return at most the first <i>k</i> indices of the non-zero elements
+<li>If <i>s&thinsp;=&thinsp;"first"</i> (default), return at most the first <i>k</i> indices of the non-zero elements
 </li>
 <br>
-<li>If <i>s="last"</i>, return at most the last <i>k</i> indices of the non-zero elements
+<li>If <i>s&thinsp;=&thinsp;"last"</i>, return at most the last <i>k</i> indices of the non-zero elements
 </li>
 <br>
 <li>
@@ -9480,7 +9480,7 @@ Convert a linear index, or a vector of indices, to subscript notation
 </li>
 <br>
 <li>
-The argument <i><b>size(</b>X<b>)</b></i> can be replaced with <i><b>size(</b>n_rows<b>,</b>&nbsp;n_cols<b>)</b></i> or <i><b>size(</b>n_rows<b>,</b>&nbsp;n_cols<b>,</b>&nbsp;n_slices<b>)</b></i>
+The argument <i><b>size(</b>X<b>)</b></i> can be replaced with <i><b>size(</b>n_rows<b>,</b>&thinsp;n_cols<b>)</b></i> or <i><b>size(</b>n_rows<b>,</b>&thinsp;n_cols<b>,</b>&thinsp;n_slices<b>)</b></i>
 </li>
 <br>
 <li>
@@ -9566,18 +9566,18 @@ For vector <i>V</i>, return the linear index of the extremum value; the returned
 For matrix <i>M</i> and:
 <ul>
 <li>
-<i>dim=0</i>, return a row vector (of type <a href="#Row">urowvec</a> or <a href="#Mat">umat</a>), 
+<i>dim&thinsp;=&thinsp;0</i>, return a row vector (of type <a href="#Row">urowvec</a> or <a href="#Mat">umat</a>), 
 with each column containing the index of the extremum value in the corresponding column of <i>M</i>
 </li>
 <li>
-<i>dim=1</i>, return a column vector (of type <a href="#Col">uvec</a> or <a href="#Mat">umat</a>),
+<i>dim&thinsp;=&thinsp;1</i>, return a column vector (of type <a href="#Col">uvec</a> or <a href="#Mat">umat</a>),
 with each row containing the index of the extremum value in the corresponding row of <i>M</i>
 </li>
 </ul>
 </li>
 <br>
 <li>
-For cube <i>Q</i>, return a cube (of type <a href="#Cube">ucube</a>) containing the indices of extremum values of elements along dimension <i>dim</i>, where <i>dim</i> &isin; {&nbsp;0,&nbsp;1,&nbsp;2&nbsp;}
+For cube <i>Q</i>, return a cube (of type <a href="#Cube">ucube</a>) containing the indices of extremum values of elements along dimension <i>dim</i>, where <i>dim</i>&thinsp;&isin;&thinsp;{&thinsp;0,&thinsp;1,&thinsp;2&thinsp;}
 </li>
 <br>
 <li>
@@ -9585,7 +9585,7 @@ For each column, row, or slice, the index starts at zero
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
@@ -10169,15 +10169,15 @@ For vector <i>V</i>, return the extremum value
 </li>
 <br>
 <li>
-For matrix <i>M</i>, return the extremum value for each column (<i>dim=0</i>), or each row (<i>dim=1</i>)
+For matrix <i>M</i>, return the extremum value for each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
-For cube <i>Q</i>, return the extremum values of elements along dimension <i>dim</i>, where <i>dim</i> &isin; {&nbsp;0,&nbsp;1,&nbsp;2&nbsp;}
+For cube <i>Q</i>, return the extremum values of elements along dimension <i>dim</i>, where <i>dim</i>&thinsp;&isin;&thinsp;{&thinsp;0,&thinsp;1,&thinsp;2&thinsp;}
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
@@ -10287,7 +10287,7 @@ Compute the <i>p</i>-norm of <i>X</i>, where <i>X</i> can be a vector or matrix
 </li>
 <br>
 <li>
-For vectors, <i>p</i> is an integer &ge;1, or one of: <code>"-inf"</code>, <code>"inf"</code>, <code>"fro"</code>
+For vectors, <i>p</i> is an integer &ge;&thinsp;1, or one of: <code>"-inf"</code>, <code>"inf"</code>, <code>"fro"</code>
 </li>
 <br>
 <li>
@@ -10299,11 +10299,11 @@ For matrices, <i>p</i> is one of: 1, 2, <code>"inf"</code>, <code>"fro"</code>; 
 </li>
 <br>
 <li>
-The argument <i>p</i> is optional; by default <i>p=2</i> is used
+The argument <i>p</i> is optional; by default <i>p&thinsp;=&thinsp;2</i> is used
 </li>
 <br>
 <li>
-For vector norm with <i>p=2</i> and matrix norm with <i>p="fro"</i>, a robust algorithm is used to reduce the likelihood of underflows and overflows
+For vector norm with <i>p&thinsp;=&thinsp;2</i> and matrix norm with <i>p&thinsp;=&thinsp;"fro"</i>, a robust algorithm is used to reduce the likelihood of underflows and overflows
 </li>
 <br>
 <li>
@@ -10350,14 +10350,14 @@ See also:
 <li>For vector <i>V</i>, return its normalised version (ie. having unit <i>p</i>-norm)</li>
 <br>
 <li>
-For matrix <i>X</i>, return its normalised version, where each column (<i>dim=0</i>) or row (<i>dim=1</i>) has been normalised to have unit <i>p</i>-norm</li>
+For matrix <i>X</i>, return its normalised version, where each column (<i>dim&thinsp;=&thinsp;0</i>) or row (<i>dim&thinsp;=&thinsp;1</i>) has been normalised to have unit <i>p</i>-norm</li>
 <br>
 <li>
-The <i>p</i> argument is optional; by default <i>p=2</i> is used
+The <i>p</i> argument is optional; by default <i>p&thinsp;=&thinsp;2</i> is used
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
@@ -10398,11 +10398,11 @@ For vector <i>V</i>, return the product of all elements
 </li>
 <br>
 <li>
-For matrix <i>M</i>, return the product of elements in each column (<i>dim=0</i>), or each row (<i>dim=1</i>)
+For matrix <i>M</i>, return the product of elements in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
@@ -10440,7 +10440,7 @@ See also:
 <br>
 <li>If <i>n</i> has the type <i>double</i>, the resultant matrix <i>B</i> always has complex elements</li>
 <br>
-<li>For <i>n&nbsp;=&nbsp;0</i>, an identity matrix is generated</li>
+<li>For <i>n&thinsp;=&thinsp;0</i>, an identity matrix is generated</li>
 <br>
 <!--
 <li>For <i>n&nbsp;&leq;&nbsp;-1</i>, inverse of <i>A</i> is raised to the power of <i>abs(n)</i></li>
@@ -10500,7 +10500,7 @@ See also:
 <li>Any singular values less than <i>tolerance</i> are treated as zero</li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&middot;max_sv&middot;datum::eps</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;datum::eps</i>, where:
 <ul>
 <li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>X</i></li>
 <li><i>max_sv</i> = maximal singular value of <i>X</i></li>
@@ -10800,11 +10800,11 @@ For vector <i>V</i>, generate a copy of the vector with the order of elements re
 </li>
 <br>
 <li>
-For matrix <i>X</i>, generate a copy of the matrix with the order of elements reversed in each column (<i>dim=0</i>), or each row (<i>dim=1</i>)
+For matrix <i>X</i>, generate a copy of the matrix with the order of elements reversed in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
@@ -10898,7 +10898,7 @@ For vector <i>V</i>, generate a copy of the vector with the elements shifted by 
 </li>
 <br>
 <li>
-For matrix <i>X</i>, generate a copy of the matrix with the elements shifted by <i>N</i> positions in each column (<i>dim=0</i>), or each row (<i>dim=1</i>)
+For matrix <i>X</i>, generate a copy of the matrix with the elements shifted by <i>N</i> positions in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
@@ -10906,7 +10906,7 @@ For matrix <i>X</i>, generate a copy of the matrix with the elements shifted by 
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
@@ -10942,11 +10942,11 @@ For vector <i>V</i>, generate a copy of the vector with the elements shuffled
 </li>
 <br>
 <li>
-For matrix <i>X</i>, generate a copy of the matrix with the elements shuffled in each column (<i>dim=0</i>), or each row (<i>dim=1</i>)
+For matrix <i>X</i>, generate a copy of the matrix with the elements shuffled in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
@@ -11052,10 +11052,10 @@ See also:
 <ul>
 <li>For vector <i>V</i>, return a vector which is a sorted version of the input vector</li>
 <br>
-<li>For matrix <i>X</i>, return a matrix with the elements of the input matrix sorted in each column (<i>dim=0</i>), or each row (<i>dim=1</i>)</li>
+<li>For matrix <i>X</i>, return a matrix with the elements of the input matrix sorted in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)</li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>The <i>sort_direction</i> argument is optional; <i>sort_direction</i> is either <code>"ascend"</code> or <code>"descend"</code>; by default <code>"ascend"</code> is used</li>
@@ -11244,16 +11244,16 @@ For vector <i>V</i>, return the sum of all elements
 </li>
 <br>
 <li>
-For matrix <i>M</i>, return the sum of elements in each column (<i>dim=0</i>), or each row (<i>dim=1</i>)
+For matrix <i>M</i>, return the sum of elements in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
-For cube <i>Q</i>, return the sums of elements along dimension <i>dim</i>, where <i>dim</i> &isin; {&nbsp;0,&nbsp;1,&nbsp;2&nbsp;};
-for example, <i>dim=0</i> indicates the sum of elements in each column within each slice
+For cube <i>Q</i>, return the sums of elements along dimension <i>dim</i>, where <i>dim</i> &isin; {&thinsp;0,&thinsp;1,&thinsp;2&thinsp;};
+for example, <i>dim&thinsp;=&thinsp;0</i> indicates the sum of elements in each column within each slice
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
@@ -11313,8 +11313,8 @@ The argument <i><b>size(</b>X<b>)</b></i> can be replaced with <i><b>size(</b>n_
 </li>
 <br>
 <li>
-For the <i>matrix_of_subscripts</i> argument, the subscripts must be stored in each column of an <i>m&nbsp;x&nbsp;n</i> matrix of type <a href="#Mat">umat</a>;
-<i>m=2</i> for matrix subscripts, while <i>m=3</i> for cube subscripts
+For the <i>matrix_of_subscripts</i> argument, the subscripts must be stored in each column of an <i>m&thinsp;x&thinsp;n</i> matrix of type <a href="#Mat">umat</a>;
+<i>m&thinsp;=&thinsp;2</i> for matrix subscripts, while <i>m&thinsp;=&thinsp;3</i> for cube subscripts
 </li>
 <br>
 <li>
@@ -11481,11 +11481,11 @@ mat C = A.t();    // equivalent to trans(A), but more compact
 <br><b>trapz( Y, dim )</b>
 <ul>
 <li>
-Compute the trapezoidal integral of <i>Y</i> with respect to spacing in <i>X</i>, in each column (<i>dim=0</i>) or each row (<i>dim=1</i>) of <i>Y</i>
+Compute the trapezoidal integral of <i>Y</i> with respect to spacing in <i>X</i>, in each column (<i>dim&thinsp;=&thinsp;0</i>) or each row (<i>dim&thinsp;=&thinsp;1</i>) of <i>Y</i>
 </li>
 <br>
 <li>
-<i>X</i> must be a vector; its length must equal either the number of rows in <i>Y</i> (when <i>dim=0</i>), or the number of columns in <i>Y</i> (when <i>dim=1</i>)
+<i>X</i> must be a vector; its length must equal either the number of rows in <i>Y</i> (when <i>dim&thinsp;=&thinsp;0</i>), or the number of columns in <i>Y</i> (when <i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
@@ -11493,7 +11493,7 @@ If <i>X</i> is not specified, unit spacing is used
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i>
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i>
 </li>
 <br>
 <li>
@@ -11541,16 +11541,16 @@ Create a new matrix by copying either the upper or lower triangular part from sq
 The argument <i>k</i> specifies the diagonal which inclusively delineates the boundary of the triangular part
 <ul>
 <li>
-for <i>k &gt; 0</i>, the <i>k</i>-th super-diagonal is used (above main diagonal, towards top-right corner)
+for <i>k&thinsp;&gt;&thinsp;0</i>, the <i>k</i>-th super-diagonal is used (above main diagonal, towards top-right corner)
 </li>
 <li>
-for <i>k &lt; 0</i>, the <i>k</i>-th sub-diagonal is used (below main diagonal, towards bottom-left corner)
+for <i>k&thinsp;&lt;&thinsp;0</i>, the <i>k</i>-th sub-diagonal is used (below main diagonal, towards bottom-left corner)
 </li>
 </ul>
 </li>
 <br>
 <li>
-The argument <i>k</i> is optional; by default the main diagonal is used (<i>k=0</i>)
+The argument <i>k</i> is optional; by default the main diagonal is used (<i>k&thinsp;=&thinsp;0</i>)
 </li>
 <br>
 <li>
@@ -11611,16 +11611,16 @@ Return a column vector containing the indices of elements that form the upper or
 The argument <i>k</i> specifies the diagonal which inclusively delineates the boundary of the triangular part
 <ul>
 <li>
-for <i>k &gt; 0</i>, the <i>k</i>-th super-diagonal is used (above main diagonal, towards top-right corner)
+for <i>k&thinsp;&gt;&thinsp;0</i>, the <i>k</i>-th super-diagonal is used (above main diagonal, towards top-right corner)
 </li>
 <li>
-for <i>k &lt; 0</i>, the <i>k</i>-th sub-diagonal is used (below main diagonal, towards bottom-left corner)
+for <i>k&thinsp;&lt;&thinsp;0</i>, the <i>k</i>-th sub-diagonal is used (below main diagonal, towards bottom-left corner)
 </li>
 </ul>
 </li>
 <br>
 <li>
-The argument <i>k</i> is optional; by default the main diagonal is used (<i>k=0</i>)
+The argument <i>k</i> is optional; by default the main diagonal is used (<i>k&thinsp;=&thinsp;0</i>)
 </li>
 <br>
 <li>
@@ -11707,15 +11707,15 @@ Generate a flattened version of matrix <i>X</i> or cube <i>Q</i>
 </li>
 <br>
 <li>
-The argument <i>dim</i> is optional; by default <i>dim=0</i> is used
+The argument <i>dim</i> is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
-For <i>dim=0</i>, the elements are copied from <i>X</i> column-wise, resulting in a column vector; equivalent to concatenating all the columns of <i>X</i>
+For <i>dim&thinsp;=&thinsp;0</i>, the elements are copied from <i>X</i> column-wise, resulting in a column vector; equivalent to concatenating all the columns of <i>X</i>
 </li>
 <br>
 <li>
-For <i>dim=1</i>, the elements are copied from <i>X</i> row-wise, resulting in a row vector; equivalent to concatenating all the rows of <i>X</i>
+For <i>dim&thinsp;=&thinsp;1</i>, the elements are copied from <i>X</i> row-wise, resulting in a row vector; equivalent to concatenating all the rows of <i>X</i>
 </li>
 <br>
 <li>
@@ -11771,11 +11771,8 @@ Apply a function to each element
 <li>
 Usage:
 <ul>
-<li>B = fn(A)</li>
-<li>A and B must have the same matrix type or cube type, such as <i>mat</i> or <i>cube</i></li>
-<li>
-fn(A) is one of:
-<br>
+<li><i>B&thinsp;=&thinsp;fn(A)</i>, where <i>fn(A)</i> is one of the functions below</li>
+<li><i>A</i> and <i>B</i> must have the same matrix type or cube type, such as <i>mat</i> or <i>cube</i></li>
 <br>
 <table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
 <tbody>
@@ -11787,7 +11784,7 @@ fn(A) is one of:
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-      base-e exponential: <i>e<sup>&nbsp;x</sup></i>
+      base-e exponential: <i>e<sup>&thinsp;x</sup></i>
     </td>
   </tr>
   <tr style="background-color: #F5F5F5;">
@@ -11798,7 +11795,7 @@ fn(A) is one of:
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-      base-2 exponential: <i>2<sup>&nbsp;x</sup></i>
+      base-2 exponential: <i>2<sup>&thinsp;x</sup></i>
     </td>
   </tr>
   <tr style="background-color: #F5F5F5;">
@@ -11809,7 +11806,7 @@ fn(A) is one of:
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-      base-10 exponential: <i>10<sup>&nbsp;x</sup></i>
+      base-10 exponential: <i>10<sup>&thinsp;x</sup></i>
     </td>
   </tr>
   <tr style="background-color: #F5F5F5;">
@@ -11843,7 +11840,7 @@ fn(A) is one of:
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-      natural log: <i>log<sub>e</sub>&nbsp;x</i>
+      natural log: <i>log<sub>e</sub>&thinsp;x</i>
     </td>
   </tr>
   <tr>
@@ -11854,7 +11851,7 @@ fn(A) is one of:
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-      base-2 log: <i>log<sub><small>2</small></sub>&nbsp;x</i>
+      base-2 log: <i>log<sub><small>2</small></sub>&thinsp;x</i>
     </td>
   </tr>
   <tr>
@@ -11865,7 +11862,7 @@ fn(A) is one of:
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-      base-10 log: <i>log<sub><small>10</small></sub>&nbsp;x</i>
+      base-10 log: <i>log<sub><small>10</small></sub>&thinsp;x</i>
     </td>
   </tr>
   <tr>
@@ -11893,35 +11890,35 @@ fn(A) is one of:
   </tr>
   <tr style="background-color: #F5F5F5;">
     <td style="vertical-align: top; text-align: right;">
-       <code>pow(A, p)</code><sup>&nbsp;</sup>
+       <code>pow(A, p)</code>
     </td>
     <td style="vertical-align: top;">
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-      raise to the power of p: <i>x<sup><small>&nbsp;p</small></sup></i>
+      raise to the power of p: <i>x<sup><small>&thinsp;p</small></sup></i>
     </td>
   </tr>
   <tr style="background-color: #F5F5F5;">
     <td style="vertical-align: top; text-align: right;">
-      <code>square(A)</code><sup>&nbsp;</sup>
+      <code>square(A)</code>
     </td>
     <td style="vertical-align: top;">
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-      square: <i>x<sup><small>&nbsp;2</small></sup></i>
+      square: <i>x<sup><small>&thinsp;2</small></sup></i>
     </td>
   </tr>
   <tr style="background-color: #F5F5F5;">
     <td style="vertical-align: top; text-align: right;">
-       <code>sqrt(A)</code><sup>&nbsp;</sup>
+       <code>sqrt(A)</code>
     </td>
     <td style="vertical-align: top;">
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-      square root: <i>x<sup>&nbsp;&frac12;</sup></i>
+      square root: <i>&radic;x</i>
     </td>
   </tr>
   <tr>
@@ -12099,7 +12096,7 @@ For single argument functions, <i>B = trig_fn(A)</i>, where <i>trig_fn</i> is ap
 <i>tan</i>, <i>atan</i>, <i>tanh</i>, <i>atanh</i>
 </li>
 <li>
-<i>sinc</i>, defined as sinc(x) = sin(&pi;x)&nbsp;/&nbsp;(&pi;x) for x&nbsp;&ne;&nbsp;0, and sinc(x) = 1 for x&nbsp;=&nbsp;0
+<i>sinc</i>, defined as sinc(x) = sin(&pi;x)&thinsp;/&thinsp;(&pi;x) for x&thinsp;&ne;&thinsp;0, and sinc(x)&thinsp;=&thinsp;1 for x&thinsp;=&thinsp;0
 </li>
 </ul>
 </li>
@@ -12417,7 +12414,7 @@ See also:
 <ul>
 <li>
 Eigen decomposition for pair of general <b>dense</b> square matrices <i>A</i> and <i>B</i> of the same size,
-such that <i>A*eigvec&nbsp;=&nbsp;B*eigvec*diagmat(eigval)</i>
+such that <i>A*eigvec&thinsp;=&thinsp;B*eigvec*diagmat(eigval)</i>
 </li>
 <br>
 <li>The eigenvalues and corresponding right eigenvectors are stored in <i>eigval</i> and <i>eigvec</i>, respectively</li>
@@ -12543,9 +12540,9 @@ If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown
 <b>Caveats:</b>
 <ul>
 <li>if matrix <i>A</i> is know to be symmetric positive definite, using <a href="#inv_sympd">inv_sympd()</a> is faster</li>
-<li>if matrix <i>A</i> is know to be diagonal, use <i>inv(&nbsp;diagmat(A)&nbsp;)</i></li>
-<li>if matrix <i>A</i> is know to be triangular, use <i>inv(&nbsp;trimatu(A)&nbsp;)</i> or <i>inv(&nbsp;trimatl(A)&nbsp;)</i></li>
-<li>to solve a system of linear equations, such as <i>Z&nbsp;=&nbsp;inv(X)*Y</i>, using <a href="#solve">solve()</a> can be faster and/or more accurate</li>
+<li>if matrix <i>A</i> is know to be diagonal, use <i>inv(&thinsp;diagmat(A)&thinsp;)</i></li>
+<li>if matrix <i>A</i> is know to be triangular, use <i>inv(&thinsp;trimatu(A)&thinsp;)</i> or <i>inv(&thinsp;trimatl(A)&thinsp;)</i></li>
+<li>to solve a system of linear equations, such as <i>Z&thinsp;=&thinsp;inv(X)*Y</i>, using <a href="#solve">solve()</a> can be faster and/or more accurate</li>
 </ul>
 </li>
 <br>
@@ -12711,7 +12708,7 @@ The dimension of the range space is the number of singular values of <i>A</i> no
 </li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&middot;max_sv&middot;datum::eps</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;datum::eps</i>, where:
 <ul>
 <li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>A</i></li>
 <li><i>max_sv</i> = maximal singular value of <i>A</i></li>
@@ -12765,7 +12762,7 @@ See also:
 <ul>
 <li>
 Find the orthonormal basis of the range space of matrix <i>A</i>,
-so that <i>B.t()*B&nbsp;&asymp;&nbsp;eye(r,r)</i>, where <i>r&nbsp;=&nbsp;rank(A)</i>
+so that <i>B.t()*B&thinsp;&asymp;&thinsp;eye(r,r)</i>, where <i>r&thinsp;=&thinsp;rank(A)</i>
 </li>
 <br>
 <li>
@@ -12773,7 +12770,7 @@ The dimension of the range space is the number of singular values of <i>A</i> gr
 </li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&middot;max_sv&middot;datum::eps</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;datum::eps</i>, where:
 <ul>
 <li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>A</i></li>
 <li><i>max_sv</i> = maximal singular value of <i>A</i></li>
@@ -12832,7 +12829,7 @@ The computation is based on singular value decomposition
 <br>
 <li>The <i>tolerance</i> argument is optional</li>
 <br>
-<li>The default tolerance is <i>max(m,n)&middot;max_sv&middot;datum::eps</i>, where:
+<li>The default tolerance is <i>max(m,n)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;datum::eps</i>, where:
 <ul>
 <li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>A</i></li>
 <li><i>max_sv</i> = maximal singular value of <i>A</i></li>
@@ -13010,7 +13007,7 @@ See also:
 <ul>
 <li>
 Generalised Schur decomposition for pair of general square matrices <i>A</i> and <i>B</i> of the same size,
-<br>such that <i>A&nbsp;=&nbsp;Q.t()*AA*Z.t()</i> and <i>B&nbsp;=&nbsp;Q.t()*BB*Z.t()</i>
+<br>such that <i>A&thinsp;=&thinsp;Q.t()*AA*Z.t()</i> and <i>B&thinsp;=&thinsp;Q.t()*BB*Z.t()</i>
 </li>
 <br>
 <li>The <i>select</i> argument is optional and specifies the ordering of the top left of the Schur form; it is one of the following:
@@ -13129,7 +13126,7 @@ See also:
 <br><b>solve( X, A, B, settings )</b>
 <ul>
 <li>Solve a <b>dense</b> system of linear equations, <i>A*X = B</i>, where <i>X</i> is unknown;
-similar functionality to the \ operator in Matlab/Octave, ie. <i>X&nbsp;=&nbsp;A&nbsp;\&nbsp;B</i>
+similar functionality to the \ operator in Matlab/Octave, ie. <i>X&thinsp;=&thinsp;A&thinsp;\&thinsp;B</i>
 </li>
 <br>
 <li><i>A</i> can be square sized (critically determined system), or non-square (under/over-determined system); <i>A</i> can be rank deficient
@@ -13523,7 +13520,7 @@ struct eigs_opts
 <ul>
 <li><i>tol</i> specifies the tolerance for convergence</li>
 <li><i>maxiter</i> specifies the maximum number of Arnoldi iterations</li>
-<li><i>subdim</i> specifies the dimension of the Krylov subspace, with the constraint <code>k &lt; subdim &le; X.n_rows</code>; recommended value is <code>subdim &ge; 2*k</code></li>
+<li><i>subdim</i> specifies the dimension of the Krylov subspace, with the constraint <code>k&thinsp;&lt;&thinsp;subdim&thinsp;&le;&thinsp;X.n_rows</code>; recommended value is <code>subdim&thinsp;&ge;&thinsp;2*k</code></li>
 </ul>
 </li>
 <br>
@@ -13649,7 +13646,7 @@ struct eigs_opts
 <ul>
 <li><i>tol</i> specifies the tolerance for convergence</li>
 <li><i>maxiter</i> specifies the maximum number of Arnoldi iterations</li>
-<li><i>subdim</i> specifies the dimension of the Krylov subspace, with the constraint <code>k + 2 &lt; subdim &le; X.n_rows</code>; recommended value is <code>subdim &ge; 2*k + 1</code></li>
+<li><i>subdim</i> specifies the dimension of the Krylov subspace, with the constraint <code>k&thinsp;+&thinsp;2&thinsp;&lt;&thinsp;subdim&thinsp;&le;&thinsp;X.n_rows</code>; recommended value is <code>subdim&thinsp;&ge;&thinsp;2*k&thinsp;+&thinsp;1</code></li>
 </ul>
 </li>
 <br>
@@ -13904,7 +13901,7 @@ The singular values are in descending order
 <br>
 <li>
 The argument <i>tol</i> is optional; it specifies the tolerance for convergence;
-it is passed as <i>(tol&nbsp;&divide;&nbsp;&radic;2)</i> to <a href="#eigs_sym">eigs_sym()</a>
+it is passed as <i>(tol&thinsp;&divide;&thinsp;&radic;2)</i> to <a href="#eigs_sym">eigs_sym()</a>
 </li>
 <br>
 <li>
@@ -13989,7 +13986,7 @@ The <i>shape</i> argument is optional; it is one of:
 <ul>
 <table>
 <tbody>
-<tr><td style="text-align: right;"><code>"full"</code></td><td>&nbsp;=&nbsp;</td><td>return the full convolution (<b>default setting</b>), with the size equal to <i>A.n_elem&nbsp;+&nbsp;B.n_elem&nbsp;-&nbsp;1</i></td></tr>
+<tr><td style="text-align: right;"><code>"full"</code></td><td>&nbsp;=&nbsp;</td><td>return the full convolution (<b>default setting</b>), with the size equal to <i>A.n_elem&thinsp;+&thinsp;B.n_elem&thinsp;-&thinsp;1</i></td></tr>
 <tr><td style="text-align: right;"><code>"same"</code></td><td>&nbsp;=&nbsp;</td><td>return the central part of the convolution, with the same size as vector <i>A</i></td></tr>
 </tbody>
 </table>
@@ -14046,7 +14043,7 @@ The <i>shape</i> argument is optional; it is one of:
 <ul>
 <table>
 <tbody>
-<tr><td style="text-align: right;"><code>"full"</code></td><td>&nbsp;=&nbsp;</td><td>return the full convolution (<b>default setting</b>), with the size equal to <i>size(A)&nbsp;+&nbsp;size(B)&nbsp;-&nbsp;1</i></td></tr>
+<tr><td style="text-align: right;"><code>"full"</code></td><td>&nbsp;=&nbsp;</td><td>return the full convolution (<b>default setting</b>), with the size equal to <i>size(A)&thinsp;+&thinsp;size(B)&thinsp;-&thinsp;1</i></td></tr>
 <tr><td style="text-align: right;"><code>"same"</code></td><td>&nbsp;=&nbsp;</td><td>return the central part of the convolution, with the same size as matrix <i>A</i></td></tr>
 </tbody>
 </table>
@@ -14274,9 +14271,9 @@ Given a 2D function specified by matrix <i>Z</i> with coordinates given by vecto
 </li>
 <br>
 <li>
-The vector pairs <i>(X,&nbsp;Y)</i> and <i>(XI,&nbsp;YI)</i> define 2D coordinates in a grid;
+The vector pairs <i>(X,&thinsp;Y)</i> and <i>(XI,&thinsp;YI)</i> define 2D coordinates in a grid;
 <br>for example, <i>X</i> defines the horizontal coordinates and <i>Y</i> defines the corresponding vertical coordinates,
-<br>so that (&nbsp;<i>X(m)</i>,&nbsp;<i>Y(n)&nbsp;)</i> is the 2D coordinate of element <i>Z(n,m)</i>
+<br>so that (&thinsp;<i>X(m)</i>,&thinsp;<i>Y(n)&thinsp;)</i> is the 2D coordinate of element <i>Z(n,m)</i>
 </li>
 <br>
 <li>
@@ -14304,7 +14301,7 @@ The <i>method</i> argument is optional; it is one of:
 </li>
 <br>
 <li>
-If a coordinate in the 2D grid specified by <i>(XI,&nbsp;YI)</i> is outside the domain of the 2D grid specified by <i>(X,&nbsp;Y)</i>,
+If a coordinate in the 2D grid specified by <i>(XI,&thinsp;YI)</i> is outside the domain of the 2D grid specified by <i>(X,&thinsp;Y)</i>,
 <br>the corresponding value in <i>ZI</i> is set to <i>extrapolation_value</i>
 </li>
 <br>
@@ -14589,26 +14586,26 @@ For vector <i>V</i>, return the statistic calculated using all the elements of t
 </li>
 <br>
 <li>
-For matrix <i>M</i>, find the statistic for each column (<i>dim=0</i>), or each row (<i>dim=1</i>)
+For matrix <i>M</i>, find the statistic for each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
-For cube <i>Q</i>, find the statistics of elements along dimension <i>dim</i>, where <i>dim</i> &isin; {&nbsp;0,&nbsp;1,&nbsp;2&nbsp;}
+For cube <i>Q</i>, find the statistics of elements along dimension <i>dim</i>, where <i>dim</i>&thinsp;&isin;&thinsp;{&thinsp;0,&thinsp;1,&thinsp;2&thinsp;}
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i> is used
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
-The <i>norm_type</i> argument is optional; by default <i>norm_type=0</i> is used
+The <i>norm_type</i> argument is optional; by default <i>norm_type&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
 For the <i>var()</i> and <i>stddev()</i> functions:
 <ul>
-<li>the default <i>norm_type=0</i> performs normalisation using <i>N-1</i> (where <i>N</i> is the number of samples), providing the best unbiased estimator</li>
-<li>using <i>norm_type=1</i> performs normalisation using <i>N</i>, which provides the second moment around the mean</li>
+<li>the default <i>norm_type&thinsp;=&thinsp;0</i> performs normalisation using <i>N-1</i> (where <i>N</i> is the number of samples), providing the best unbiased estimator</li>
+<li>using <i>norm_type&thinsp;=&thinsp;1</i> performs normalisation using <i>N</i>, which provides the second moment around the mean</li>
 </ul>
 </li>
 <br>
@@ -14684,9 +14681,9 @@ For vectors, <i>X</i> and <i>Y</i> must have the same number of elements
 </li>
 <br>
 <li>
-The default <i>norm_type=0</i> performs normalisation using <i>N-1</i> (where <i>N</i> is the number of observations),
+The default <i>norm_type&thinsp;=&thinsp;0</i> performs normalisation using <i>N-1</i> (where <i>N</i> is the number of observations),
 providing the best unbiased estimation of the covariance matrix (if the observations are from a normal distribution).
-Using <i>norm_type=1</i> causes normalisation to be done using <i>N</i>, which provides the second moment matrix of the observations about their mean
+Using <i>norm_type&thinsp;=&thinsp;1</i> causes normalisation to be done using <i>N</i>, which provides the second moment matrix of the observations about their mean
 </li>
 <br>
 <li>
@@ -14745,8 +14742,8 @@ For vectors, <i>X</i> and <i>Y</i> must have the same number of elements
 </li>
 <br>
 <li>
-The default <i>norm_type=0</i> performs normalisation of the correlation matrix using <i>N-1</i> (where <i>N</i> is the number of observations).
-Using <i>norm_type=1</i> causes normalisation to be done using <i>N</i>
+The default <i>norm_type&thinsp;=&thinsp;0</i> performs normalisation of the correlation matrix using <i>N-1</i> (where <i>N</i> is the number of observations).
+Using <i>norm_type&thinsp;=&thinsp;1</i> causes normalisation to be done using <i>N</i>
 </li>
 <br>
 <li>
@@ -14794,9 +14791,9 @@ that represents a histogram of counts
 <li>
 For matrix <i>X</i>,
 produce a <a href="#Mat">umat</a> matrix containing either
-column histogram counts (for <i>dim=0</i>, default),
+column histogram counts (for <i>dim&thinsp;=&thinsp;0</i>, default),
 or
-row histogram counts (for <i>dim=1</i>)
+row histogram counts (for <i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
@@ -14847,9 +14844,9 @@ that contains the counts of the number of values that fall between the elements 
 <li>
 For matrix <i>X</i>,
 produce a <i>umat</i> matrix containing either
-column histogram counts (for <i>dim=0</i>, default),
+column histogram counts (for <i>dim&thinsp;=&thinsp;0</i>, default),
 or
-row histogram counts (for <i>dim=1</i>)
+row histogram counts (for <i>dim&thinsp;=&thinsp;1</i>)
 </li>
 <br>
 <li>
@@ -14893,11 +14890,11 @@ For vector <i>V</i>, produce a vector with the same orientation as <i>V</i> and 
 </li>
 <br>
 <li>
-For matrix <i>X</i>, produce a matrix with the quantiles for each column vector (<i>dim=0</i>) or each row vector (<i>dim=0</i>)
+For matrix <i>X</i>, produce a matrix with the quantiles for each column vector (<i>dim&thinsp;=&thinsp;0</i>) or each row vector (<i>dim&thinsp;=&thinsp;0</i>)
 </li>
 <br>
 <li>
-The <i>dim</i> argument is optional; by default <i>dim=0</i>
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i>
 </li>
 <br>
 <li>
@@ -15553,14 +15550,14 @@ For an instance of <i>running_stat</i> named as <i>X</i>, the member functions a
 </li>
 <br>
 <li>
-The <i>norm_type</i> argument is optional; by default <i>norm_type=0</i> is used
+The <i>norm_type</i> argument is optional; by default <i>norm_type&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
-For the <i>.var()</i> and <i>.stddev()</i> functions, the default <i>norm_type=0</i> performs normalisation using <i>N-1</i>
+For the <i>.var()</i> and <i>.stddev()</i> functions, the default <i>norm_type&thinsp;=&thinsp;0</i> performs normalisation using <i>N-1</i>
 (where <i>N</i> is the number of samples so far),
 providing the best unbiased estimator;
-using <i>norm_type=1</i> causes normalisation to be done using <i>N</i>, which provides the second moment around the mean
+using <i>norm_type&thinsp;=&thinsp;1</i> causes normalisation to be done using <i>N</i>, which provides the second moment around the mean
 </li>
 <br>
 <li>
@@ -15737,14 +15734,14 @@ to enable the covariance matrix, use <i>calc_cov=true</i> during construction; f
 </li>
 <br>
 <li>
-The <i>norm_type</i> argument is optional; by default <i>norm_type=0</i> is used
+The <i>norm_type</i> argument is optional; by default <i>norm_type&thinsp;=&thinsp;0</i> is used
 </li>
 <br>
 <li>
-For the <i>.var()</i> and <i>.stddev()</i> functions, the default <i>norm_type=0</i> performs normalisation using <i>N-1</i>
+For the <i>.var()</i> and <i>.stddev()</i> functions, the default <i>norm_type&thinsp;=&thinsp;0</i> performs normalisation using <i>N-1</i>
 (where <i>N</i> is the number of samples so far),
 providing the best unbiased estimator;
-using <i>norm_type=1</i> causes normalisation to be done using <i>N</i>, which provides the second moment around the mean
+using <i>norm_type&thinsp;=&thinsp;1</i> causes normalisation to be done using <i>N</i>, which provides the second moment around the mean
 </li>
 <br>
 <li>
@@ -15945,7 +15942,7 @@ Data is modelled as:
     </tr>
     <tr>
       <td style="vertical-align: top;"><i>p<font size=+1>(</font>x<font size=+1>)</font></i></td><td style="vertical-align: top;">&nbsp;<font size=+1>=</font>&nbsp;</td><td style="vertical-align: top;"><i><font size=+1><b>&sum;</b></font></i></td>
-      <td style="vertical-align: top;"><i>h<sub>g</sub></i>&nbsp;&nbsp;<font size=+1>N(</font><small>&nbsp;</small><i>x</i><small>&nbsp;</small>|<small>&nbsp;</small><i>m<sub>g</sub></i><small>&nbsp;</small>,&nbsp;<i>C<sub>g</sub></i><small>&nbsp;</small><font size=+1>)</font></td>
+      <td style="vertical-align: top;"><i>h<sub>g</sub></i>&nbsp;&nbsp;<font size=+1>N(</font><small>&thinsp;</small><i>x</i><small>&thinsp;</small>|<small>&thinsp;</small><i>m<sub>g</sub></i><small>&thinsp;</small>,&thinsp;<i>C<sub>g</sub></i><small>&thinsp;</small><font size=+1>)</font></td>
     </tr>
     <tr>
       <td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;"><i><sup>g=0</sup></i></td><td style="vertical-align: top;">&nbsp;</td>
@@ -15954,11 +15951,11 @@ Data is modelled as:
 </table>
 where:
 <ul>
-<li><i>n_gaus</i> is the number of Gaussians; <i>n_gaus</i>&nbsp;&geq;1</li>
+<li><i>n_gaus</i> is the number of Gaussians; <i>n_gaus</i>&thinsp;&geq;&thinsp;1</li>
 <li>N(<small>&nbsp;</small><i>x</i><small>&nbsp;</small>|<small>&nbsp;</small><i>m<sub>g</sub></i><small>&nbsp;</small>,&nbsp;<i>C<sub>g</sub></i><small>&nbsp;</small>) represents a Gaussian (normal) distribution</li>
 <li>each Gaussian <i>g</i> has the following parameters:
 <ul>
-<li><i>h<sub>g</sub></i> is the heft (weight), with constraints <i>h<sub>g</sub></i>&nbsp;&ge;&nbsp;0 and &sum;<i>h<sub>g</sub></i> = 1</li>
+<li><i>h<sub>g</sub></i> is the heft (weight), with constraints <i>h<sub>g</sub></i>&thinsp;&ge;&thinsp;0 and &sum;<i>h<sub>g</sub></i>&thinsp;=&thinsp;1</li>
 <li><i>m<sub>g</sub></i> is the mean vector (centroid) with dimensionality <i>n_dims</i></li>
 <li><i>C<sub>g</sub></i> is the covariance matrix (either diagonal or full)</li>
 </ul>
@@ -19019,7 +19016,7 @@ This is mainly useful for debugging the library.
 The number of pre-allocated elements used by matrices and vectors.
 Must be always enabled and set to an integer that is at least&nbsp;1.
 By default set to 16.
-If you mainly use lots of very small vectors (eg.&nbsp;&le;&nbsp;4&nbsp;elements), change the number to the size of your vectors.
+If you mainly use lots of very small vectors (eg.&thinsp;&le;&thinsp;4&nbsp;elements), change the number to the size of your vectors.
     </td>
   </tr>
   <tr>
