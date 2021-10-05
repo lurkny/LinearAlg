@@ -1079,7 +1079,7 @@ inline
 bool
 SpSubview<eT>::check_overlap(const SpSubview<eT>& x) const
   {
-  const subview<eT>& t = *this;
+  const SpSubview<eT>& t = *this;
   
   if(&t.m != &x.m)
     {
