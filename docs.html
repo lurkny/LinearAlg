@@ -3996,11 +3996,11 @@ An individual slice, accessed via <i>.slice()</i>, is an instance of the <i>Mat<
 </li>
 <br>
 <li>
-All <i>.tube()</i> forms are variants of <i>.subcube()</i>, using <i>first_slice&nbsp;=&nbsp;0</i> and <i>last_slice&nbsp;=&nbsp;Q.n_slices-1</i>
+All <i>.tube()</i> forms are variants of <i>.subcube()</i>, using <i>first_slice&thinsp;=&thinsp;0</i> and <i>last_slice&thinsp;=&thinsp;Q.n_slices-1</i>
 </li>
 <br>
 <li>
-The <i>.tube(row,col)</i> form uses <i>row&nbsp;=&nbsp;first_row&nbsp;=&nbsp;last_row</i>, and <i>col&nbsp;=&nbsp;first_col&nbsp;=&nbsp;last_col</i>  
+The <i>.tube(row,col)</i> form uses <i>row&thinsp;=&thinsp;first_row&thinsp;=&thinsp;last_row</i>, and <i>col&thinsp;=&thinsp;first_col&thinsp;=&thinsp;last_col</i>  
 </li>
 <br>
 <li>
@@ -4218,7 +4218,7 @@ Supported operations for <i>.each_col()&nbsp;/&nbsp;.each_row()</i> and <i>.each
 <ul>
 <table>
 <tr><td><code><b>+</b></code></td><td>&nbsp;</td><td>addition</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><code><b>+=</b></code></td><td>&nbsp;</td><td>in-place addition</td></tr>
-<tr><td><code><b>-</b></code></td><td>&nbsp;</td><td>subtraction</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><code><b>-=</b></code></td><td>&nbsp;</td><td>in-place subtraction</td></tr>
+<tr><td><code><b>&minus;</b></code></td><td>&nbsp;</td><td>subtraction</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><code><b>&minus;=</b></code></td><td>&nbsp;</td><td>in-place subtraction</td></tr>
 <tr><td><code><b>%</b></code></td><td>&nbsp;</td><td>element-wise multiplication</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><code><b>%=</b></code></td><td>&nbsp;</td><td>in-place element-wise multiplication</td></tr>
 <tr><td><code><b>/</b></code></td><td>&nbsp;</td><td>element-wise division</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><code><b>/=</b></code></td><td>&nbsp;</td><td>in-place element-wise division</td></tr>
 <tr><td><code><b>=</b></code></td><td>&nbsp;</td><td>assignment (copy)</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -4310,7 +4310,7 @@ Supported operations for form 1:
 <ul>
 <table>
 <tr><td><code><b>+</b></code></td><td>&nbsp;</td><td>addition</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><code><b>+=</b></code></td><td>&nbsp;</td><td>in-place addition</td></tr>
-<tr><td><code><b>-</b></code></td><td>&nbsp;</td><td>subtraction</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><code><b>-=</b></code></td><td>&nbsp;</td><td>in-place subtraction</td></tr>
+<tr><td><code><b>&minus;</b></code></td><td>&nbsp;</td><td>subtraction</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><code><b>&minus;=</b></code></td><td>&nbsp;</td><td>in-place subtraction</td></tr>
 <tr><td><code><b>%</b></code></td><td>&nbsp;</td><td>element-wise multiplication</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><code><b>%=</b></code></td><td>&nbsp;</td><td>in-place element-wise multiplication</td></tr>
 <tr><td><code><b>/</b></code></td><td>&nbsp;</td><td>element-wise division</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><code><b>/=</b></code></td><td>&nbsp;</td><td>in-place element-wise division</td></tr>
 <tr><td><code><b>*</b></code></td><td>&nbsp;</td><td>matrix multiplication</td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><code><b>*=</b></code></td><td>&nbsp;</td><td>in-place matrix multiplication</td></tr>
@@ -7795,7 +7795,7 @@ Generate a scalar, vector, matrix or cube with the elements set to random values
   </tbody>
 </table>
 </ul>
-where <i>a</i> is the shape parameter and <i>b</i> is the scale parameter, with constraints <i>a&thinsp;&gt&thinsp;0</i> and <i>b&thinsp;&gt;&thinsp;0</i>
+where <i>a</i> is the shape parameter and <i>b</i> is the scale parameter, with constraints <i>a&thinsp;&gt;&thinsp;0</i> and <i>b&thinsp;&gt;&thinsp;0</i>
 </li>
 <br>
 <li>The default distribution parameters are <i>a&thinsp;=&thinsp;1</i> and <i>b&thinsp;=&thinsp;1</i>
@@ -15950,7 +15950,7 @@ Data is modelled as:
 where:
 <ul>
 <li><i>n_gaus</i> is the number of Gaussians; <i>n_gaus</i>&thinsp;&geq;&thinsp;1</li>
-<li>N(<small>&nbsp;</small><i>x</i><small>&nbsp;</small>|<small>&nbsp;</small><i>m<sub>g</sub></i><small>&nbsp;</small>,&nbsp;<i>C<sub>g</sub></i><small>&nbsp;</small>) represents a Gaussian (normal) distribution</li>
+<li>N(<small>&thinsp;</small><i>x</i><small>&thinsp;</small>|<small>&thinsp;</small><i>m<sub>g</sub></i><small>&thinsp;</small>,&thinsp;<i>C<sub>g</sub></i><small>&thinsp;</small>) represents a Gaussian (normal) distribution</li>
 <li>each Gaussian <i>g</i> has the following parameters:
 <ul>
 <li><i>h<sub>g</sub></i> is the heft (weight), with constraints <i>h<sub>g</sub></i>&thinsp;&ge;&thinsp;0 and &sum;<i>h<sub>g</sub></i>&thinsp;=&thinsp;1</li>
