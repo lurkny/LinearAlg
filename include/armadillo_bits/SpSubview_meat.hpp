@@ -407,16 +407,18 @@ SpSubview<eT>::operator_equ_common(const SpBase<eT, T1>& in)
   
   const unwrap_spmat<T1> U(in.get_ref());
   
+  arma_debug_assert_same_size(n_rows, n_cols, U.M.n_rows, U.M.n_cols, "insertion into sparse submatrix");
+  
   if(U.is_alias(m))
     {
     const SpMat<eT> tmp(U.M);
     
-    return (*this).operator_equ_common(tmp);
+    spglue_merge::subview_merge(*this, tmp);
     }
-  
-  arma_debug_assert_same_size(n_rows, n_cols, U.M.n_rows, U.M.n_cols, "insertion into sparse submatrix");
-  
-  spglue_merge::subview_merge(*this, U.M);
+  else
+    {
+    spglue_merge::subview_merge(*this, U.M);
+    }
   
   return *this;
   }
