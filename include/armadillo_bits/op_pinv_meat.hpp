@@ -80,6 +80,8 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     
     out = A;
     
+    // TODO: handle out.is_diagmat() ?  need to calculate rcond specific to diagonal matrices
+    
     const T rcond_threshold = T((std::max)(uword(100), uword(A.n_rows))) * std::numeric_limits<T>::epsilon();
     
     const bool status = auxlib::inv_sympd_rcond(out, rcond_threshold);
