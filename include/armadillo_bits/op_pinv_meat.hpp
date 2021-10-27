@@ -68,6 +68,8 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
   
   if(A.is_empty())  { out.set_size(n_cols,n_rows); return true; }
   
+  // TODO: optimised path for handling (A.is_square() && A.is_diagmat());  for calculating tol, take max_sv as max(abs(diagvec(A)))
+    
   #if defined(ARMA_OPTIMISE_SYMPD)
     const bool try_sympd = (auxlib::crippled_lapack(A) == false) && (tol == T(0)) && (method_id == uword(0)) && sympd_helper::guess_sympd_anysize(A);
   #else
@@ -79,8 +81,6 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     arma_extra_debug_print("op_pinv: attempting sympd optimisation");
     
     out = A;
-    
-    // TODO: handle out.is_diagmat() ?  need to calculate rcond specific to diagonal matrices
     
     const T rcond_threshold = T((std::max)(uword(100), uword(A.n_rows))) * std::numeric_limits<T>::epsilon();
     
