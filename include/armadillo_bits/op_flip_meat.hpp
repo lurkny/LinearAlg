@@ -32,6 +32,8 @@ op_flipud::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_flipud>& in)
   
   if(is_Mat<T1>::value)
     {
+    // allow detection of in-place operation
+    
     const unwrap<T1> U(in.m);
     
     op_flipud::apply_direct(out, U.M);
@@ -185,6 +187,8 @@ op_fliplr::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_fliplr>& in)
   
   if(is_Mat<T1>::value)
     {
+    // allow detection of in-place operation
+    
     const unwrap<T1> U(in.m);
     
     op_fliplr::apply_direct(out, U.M);
