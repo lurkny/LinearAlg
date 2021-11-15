@@ -61,17 +61,6 @@ set(ARMA_USE_ARPACK     false)
 set(ARMA_USE_EXTERN_RNG false)
 set(ARMA_USE_SUPERLU    false)  # Caveat: only SuperLU version 5.x can be used!
 
-## NOTE: OpenBLAS appears to have its own LAPACK functions,
-## NOTE: but on some systems the installed version of OpenBLAS
-## NOTE: has been modified not to include LAPACK functions.
-## NOTE: As the presence of LAPACK functions in OpenBLAS can't be guaranteed,
-## NOTE: this installer script requires LAPACK to be present on the system
-## NOTE: in order to enable the use of LAPACK functions by Armadillo.
-## NOTE: This installer will link with OpenBLAS first,
-## NOTE: so if a full version of OpenBLAS is actually present on the system,
-## NOTE: the linker should make use of LAPACK functions from OpenBLAS
-## NOTE: instead of standard LAPACK.
-
 
 ## extract version from sources
 
@@ -209,6 +198,12 @@ option(DETECT_HDF5 "Detect HDF5 and include HDF5 support, if found" ON)
 ## you can also disable HDF5 detection directly on the command line:
 ## cmake -D DETECT_HDF5=false .
 
+option(OPENBLAS_PROVIDES_LAPACK "Assume that OpenBLAS provides LAPACK functions" OFF)
+## Example use on the command line:
+## cmake -D OPENBLAS_PROVIDES_LAPACK=true .
+## make
+## ctest
+
 option(ALLOW_FLEXIBLAS_LINUX "Allow detection of FlexiBLAS on Linux" ON)
 # set(ALLOW_FLEXIBLAS_LINUX false)
 ## uncomment the above line to disable the detection of FlexiBLAS;
@@ -250,8 +245,10 @@ message(STATUS "CMAKE_SYSTEM_NAME          = ${CMAKE_SYSTEM_NAME}"         )
 message(STATUS "CMAKE_CXX_COMPILER_ID      = ${CMAKE_CXX_COMPILER_ID}"     )
 message(STATUS "CMAKE_CXX_COMPILER_VERSION = ${CMAKE_CXX_COMPILER_VERSION}")
 message(STATUS "CMAKE_COMPILER_IS_GNUCXX   = ${CMAKE_COMPILER_IS_GNUCXX}"  )
+message(STATUS ""                                                          )
 message(STATUS "BUILD_SHARED_LIBS          = ${BUILD_SHARED_LIBS}"         )
 message(STATUS "DETECT_HDF5                = ${DETECT_HDF5}"               )
+message(STATUS "OPENBLAS_PROVIDES_LAPACK   = ${OPENBLAS_PROVIDES_LAPACK}"  )
 message(STATUS "ALLOW_FLEXIBLAS_LINUX      = ${ALLOW_FLEXIBLAS_LINUX}"     )
 message(STATUS "ALLOW_OPENBLAS_MACOS       = ${ALLOW_OPENBLAS_MACOS}"      )
 message(STATUS "ALLOW_BLAS_LAPACK_MACOS    = ${ALLOW_BLAS_LAPACK_MACOS}"   )
@@ -399,6 +396,10 @@ else()
       set(ARMA_USE_BLAS true)
       set(ARMA_LIBS ${ARMA_LIBS} ${OpenBLAS_LIBRARIES})
       
+      if(OPENBLAS_PROVIDES_LAPACK)
+        set(ARMA_USE_LAPACK true)
+      endif()
+      
       message(STATUS "")
       message(STATUS "*** If the OpenBLAS library is installed in")
       message(STATUS "*** /usr/local/lib or /usr/local/lib64")
@@ -510,10 +511,9 @@ if(NOT ARMA_USE_LAPACK)
     message(STATUS "*** NOTE: OpenBLAS found but LAPACK not found.")
     message(STATUS "*** NOTE: OpenBLAS may have been built without LAPACK functions,")
     message(STATUS "*** NOTE: so cannot assume that LAPACK functions are available.")
-    message(STATUS "*** NOTE: LAPACK _must_ be present to enable use of LAPACK functions.")
-    message(STATUS "*** NOTE: If OpenBLAS has been built with LAPACK functions,")
-    message(STATUS "*** NOTE: the linker wil make use of LAPACK functions from OpenBLAS")
-    message(STATUS "*** NOTE: instead of standard LAPACK.")
+    message(STATUS "*** NOTE: To assume that OpenBLAS provides LAPACK functions,")
+    message(STATUS "*** NOTE: rerun cmake with the OPENBLAS_PROVIDES_LAPACK option enabled:")
+    message(STATUS "*** NOTE: cmake -D OPENBLAS_PROVIDES_LAPACK=true .")
   endif()
 endif()
 
