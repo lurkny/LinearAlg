@@ -124,6 +124,8 @@ as well as ARPACK and SuperLU (for sparse matrices).
 Caveat: only SuperLU versions 5.2.x can be used.
 On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
 
+Use of OpenBLAS is strongly recommended on all systems.
+
 ---
 
 ### 5: Linux and macOS: Installation
