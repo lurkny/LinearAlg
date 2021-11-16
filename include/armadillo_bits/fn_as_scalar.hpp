@@ -294,7 +294,7 @@ as_scalar_diag(const Glue< Glue<T1, T2, glue_times_diag>, T3, glue_times >& X)
 
 template<typename T1, typename T2>
 arma_warn_unused
-arma_inline
+inline
 typename T1::elem_type
 as_scalar(const Glue<T1, T2, glue_times>& X, const typename arma_not_cx<typename T1::elem_type>::result* junk = nullptr)
   {
