@@ -21,7 +21,7 @@ Copyright 2017-2021 Data61 / CSIRO
 2.  [Citation Details](#2-citation-details)
 3.  [Distribution License](#3-distribution-license)
 
-4.  [Prerequisites](#4-prerequisites)
+4.  [Prerequisites and Dependencies](#4-prerequisites-and-dependencies)
 
 5.  [Linux and macOS: Installation](#5-linux-and-macos-installation)
 6.  [Linux and macOS: Compiling and Linking](#6-linux-and-macos-compiling-and-linking)
@@ -103,7 +103,7 @@ informational purposes only and do not modify the License.
 
 ---
 
-### 4: Prerequisites
+### 4: Prerequisites and Dependencies
 
 Armadillo 10.x requires a C++ compiler that supports at least the C++11 standard.
 Use Armadillo 9.900 if your compiler only supports the old C++98/C++03 standards.
