@@ -124,11 +124,6 @@ as well as ARPACK and SuperLU (for sparse matrices).
 Caveat: only SuperLU versions 5.2.x can be used.
 On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
 
-Armadillo can work without the above libraries, but its functionality will be reduced.
-Basic functionality will be available (eg. matrix addition and multiplication),
-but operations such as eigen decomposition and system solvers will not be.
-Matrix multiplication may not be as fast (mainly for large matrices).
-
 ---
 
 ### 5: Linux and macOS: Installation
