@@ -463,6 +463,17 @@ diskio::convert_token(eT& val, const std::string& token)
       {
       // signed integer
       
+      if((str[0] == '.') && (N >= 2))
+        {
+        const char* str_offset1 = &(str[1]);
+        
+        std::strtoll(str_offset1, &endptr, 10);
+        
+        if(str_offset1 == endptr)  { return false; }
+        
+        val = eT(0);  return true;
+        }
+      
       val = eT( std::strtoll(str, &endptr, 10) );
       }
     else
