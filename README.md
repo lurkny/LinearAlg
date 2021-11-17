@@ -105,6 +105,13 @@ informational purposes only and do not modify the License.
 
 ### 4: Prerequisites and Dependencies
 
+The functionality of Armadillo is partly dependent on other libraries:
+OpenBLAS (or standard BLAS) and LAPACK (for dense matrices),
+as well as ARPACK and SuperLU (for sparse matrices).
+Caveat: only SuperLU versions 5.2.x can be used.
+On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
+Use of OpenBLAS is strongly recommended on all systems.
+
 Armadillo 10.x requires a C++ compiler that supports at least the C++11 standard.
 Use Armadillo 9.900 if your compiler only supports the old C++98/C++03 standards.
 
@@ -117,13 +124,6 @@ and then running the following command in a terminal window:
     xcode-select --install
 
 On Windows systems, the MinGW toolset or Visual Studio C++ 2019 (MSVC) can be used.
-
-The functionality of Armadillo is partly dependent on other libraries:
-OpenBLAS (or standard BLAS) and LAPACK (for dense matrices),
-as well as ARPACK and SuperLU (for sparse matrices).
-Caveat: only SuperLU versions 5.2.x can be used.
-On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
-Use of OpenBLAS is strongly recommended on all systems.
 
 ---
 
