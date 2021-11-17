@@ -471,13 +471,15 @@ diskio::convert_token(eT& val, const std::string& token)
       
       if((str[0] == '-') && (N >= 2))
         {
+        val = eT(0);  
+        
         const char* str_offset1 = &(str[1]);
         
         std::strtoull(str_offset1, &endptr, 10);
         
         if(str_offset1 == endptr)  { return false; }
         
-        val = eT(0);  return true;
+        return true;
         }
       
       val = eT( std::strtoull(str, &endptr, 10) );
