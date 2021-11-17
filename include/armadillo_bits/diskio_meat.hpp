@@ -469,7 +469,7 @@ diskio::convert_token(eT& val, const std::string& token)
       {
       // unsigned integer
       
-      if((str[0] == '-') && (N >= 2))
+      if(((str[0] == '-') || (str[0] == '.')) && (N >= 2))
         {
         const char* str_offset1 = &(str[1]);
         
