@@ -473,6 +473,8 @@ diskio::convert_token(eT& val, const std::string& token)
         {
         val = eT(0);  
         
+        if((str[1] == '-') || (str[1] == '+')) { return false; }
+        
         const char* str_offset1 = &(str[1]);
         
         std::strtoull(str_offset1, &endptr, 10);
