@@ -306,6 +306,7 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
+  typedef typename T1::pod_type   T;
   
   out = expr.get_ref();
   
@@ -327,6 +328,23 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
     
     // fallthrough if optimisation failed
     }
+  
+  // if((is_cx<eT>::no) && (out.is_diagmat()))
+  //   {
+  //   const uword N = (std::min)(out.n_rows, out.n_cols);
+  //   
+  //   for(uword i=0; i<N; ++i)
+  //     {
+  //           eT&      out_ii = out.at(i,i);
+  //     const  T  real_out_ii = access::tmp_real(out_ii);
+  //     
+  //     if(real_out_ii <= T(0))  { return false; }
+  //     
+  //     out_ii = eT(T(1) / real_out_ii);
+  //     }
+  //     
+  //   return true;
+  //   }
   
   return auxlib::inv_sympd(out);
   }
