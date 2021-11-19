@@ -318,6 +318,9 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
     if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
     }
   
+  // TODO: for complex matrices, warn if imaginary components of diagonal are greater than eps?
+  // TODO: however, this may be inconsistent with the check in Base::is_sympd(), which uses data derived threshold
+  
   if((out.n_rows <= 4) && is_cx<eT>::no)
     {
     Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
