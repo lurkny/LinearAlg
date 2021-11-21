@@ -329,7 +329,7 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
     // fallthrough if optimisation failed
     }
   
-  if((is_cx<eT>::no) && (out.is_diagmat()))
+  if((is_cx<eT>::no) && (is_op_diagmat<T1>::value || out.is_diagmat()))
     {
     // specialised handling of real matrices only;
     // currently auxlib::inv_sympd() does not enforce that 
