@@ -331,6 +331,8 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
   
   if((is_cx<eT>::no) && (is_op_diagmat<T1>::value || out.is_diagmat()))
     {
+    arma_extra_debug_print("op_inv_sympd: detected diagonal matrix");
+    
     // specialised handling of real matrices only;
     // currently auxlib::inv_sympd() does not enforce that 
     // imaginary components of diagonal elements must be zero;
