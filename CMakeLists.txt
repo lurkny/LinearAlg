@@ -201,8 +201,6 @@ option(DETECT_HDF5 "Detect HDF5 and include HDF5 support, if found" ON)
 option(OPENBLAS_PROVIDES_LAPACK "Assume that OpenBLAS provides LAPACK functions" OFF)
 ## Example use on the command line:
 ## cmake -D OPENBLAS_PROVIDES_LAPACK=true .
-## make
-## ctest
 
 option(ALLOW_FLEXIBLAS_LINUX "Allow detection of FlexiBLAS on Linux" ON)
 # set(ALLOW_FLEXIBLAS_LINUX false)
