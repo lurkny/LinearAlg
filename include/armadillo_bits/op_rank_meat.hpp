@@ -25,7 +25,7 @@
 template<typename T1>
 inline
 bool
-op_rank::apply(uword& out, const Base<typename T1::elem_type,T1>& expr, typename T1::pod_type tol)
+op_rank::apply(uword& out, const Base<typename T1::elem_type,T1>& expr, const typename T1::pod_type tol)
   {
   arma_extra_debug_sigprint();
   
