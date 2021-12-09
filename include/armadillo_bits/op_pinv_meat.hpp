@@ -129,8 +129,65 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     // auxlib::inv_sympd_rcond() will fail if A isn't really positive definite or its rcond is below rcond_threshold
     }
   
-  // TODO: detect symmetric matrix and use eig_sym() based decomposition;
-  // TODO: for detecting symmetric matrix: (a) detect if T1 is an expression like X.t()*X, X*X.t(), symmatu(X), symmatl(X); (b) reuse bool try_sympd; (c) use A.is_symmetric()
+  if((is_real<eT>::yes) && (try_sympd || A.is_symmetric()))  // TODO: also detect if T1 is an expression like X.t()*X, X*X.t(), symmatu(X), symmatl(X)
+    {
+    arma_extra_debug_print("op_pinv: detected symmetric matrix");
+    
+    Col< T> eigval;
+    Mat<eT> eigvec;
+    
+    const bool status = auxlib::eig_sym_dc(eigval, eigvec, A);
+    
+    if(status == false)  { return false; }
+    
+    if(eigval.n_elem == 0)  { out.zeros(n_cols, n_rows); return true; }
+    
+    Col<T> abs_eigval = arma::abs(eigval);
+    
+    const uvec indices = sort_index(abs_eigval, "descend");
+    
+    bool regular_indices = true;
+    
+    for(uword i=0; i < indices.n_elem; ++i)  { if(indices[i] != i)  { regular_indices = false; break; } }
+    
+    if(regular_indices == false)
+      {
+      arma_extra_debug_print("op_pinv: reordering eigenvalues");
+      
+      abs_eigval = abs_eigval.elem(indices);
+          eigval =     eigval.elem(indices);
+          eigvec =     eigvec.cols(indices);
+      }
+    
+    // set tolerance to default if it hasn't been specified
+    if(tol == T(0))  { tol = (std::max)(n_rows, n_cols) * abs_eigval[0] * std::numeric_limits<T>::epsilon(); }
+    
+    uword count = 0;
+    
+    for(uword i=0; i < abs_eigval.n_elem; ++i)  { count += (abs_eigval[i] >= tol) ? uword(1) : uword(0); }
+    
+    if(count == 0)  { out.zeros(n_cols, n_rows); return true; }
+    
+    Col<T> eigval2(count, arma_nozeros_indicator());
+    
+    uword count2 = 0;
+    
+    for(uword i=0; i < eigval.n_elem; ++i)
+      {
+      const T abs_val = abs_eigval[i];
+      const T     val =     eigval[i];
+      
+      if(abs_val >= tol)  { eigval2[count2] = (val != T(0)) ? T(T(1) / val) : T(0); ++count2; }
+      }
+    
+    const Mat<eT> eigvec_use(eigvec.memptr(), eigvec.n_rows, count, false);
+    
+    const Mat<eT> tmp = eigvec_use * diagmat(eigval2);
+    
+    out = tmp * eigvec_use.t();
+    
+    return true;
+    }
   
   // economical SVD decomposition 
   Mat<eT> U;
