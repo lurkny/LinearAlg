@@ -275,4 +275,58 @@ op_symmatl_cx::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_symmatl_cx
 
 
 
+//
+
+
+
+template<typename T1>
+inline
+bool
+symmat_helper::evaluates_to_symmat(const Base<typename T1::elem_type,T1>&)
+  {
+  return false;
+  }
+
+
+
+template<typename eT>
+inline
+bool
+symmat_helper::evaluates_to_symmat(const Op<Mat<eT>,op_symmatu>&)
+  {
+  return true;
+  }
+
+
+
+template<typename eT>
+inline
+bool
+symmat_helper::evaluates_to_symmat(const Op<Mat<eT>,op_symmatl>&)
+  {
+  return true;
+  }
+
+
+
+template<typename eT>
+inline
+bool
+symmat_helper::evaluates_to_symmat(const Glue< Mat<eT>, Op<Mat<eT>,op_htrans>, glue_times >& expr)
+  {
+  return &(expr.A) == &(expr.B.m);
+  }
+
+
+
+template<typename eT>
+inline
+bool
+symmat_helper::evaluates_to_symmat(const Glue< Op<Mat<eT>,op_htrans>, Mat<eT>, glue_times >& expr)
+  {
+  return &(expr.A.m) == &(expr.B);
+  }
+
+
+
 //! @}

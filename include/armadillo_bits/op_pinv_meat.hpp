@@ -106,7 +106,9 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     
     return true;
     }
-    
+  
+  const bool expr_evaluates_to_symmat = symmat_helper::evaluates_to_symmat(expr.get_ref());
+  
   #if defined(ARMA_OPTIMISE_SYMPD)
     const bool try_sympd = (auxlib::crippled_lapack(A) == false) && (tol == T(0)) && (method_id == uword(0)) && sympd_helper::guess_sympd_anysize(A);
   #else
@@ -129,7 +131,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     // auxlib::inv_sympd_rcond() will fail if A isn't really positive definite or its rcond is below rcond_threshold
     }
   
-  if((is_real<eT>::yes) && (try_sympd || A.is_symmetric()))  // TODO: also detect if T1 is an expression like X.t()*X, X*X.t(), symmatu(X), symmatl(X)
+  if((is_real<eT>::yes) && (expr_evaluates_to_symmat || try_sympd || A.is_symmetric()))
     {
     arma_extra_debug_print("op_pinv: detected symmetric matrix");
     

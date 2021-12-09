@@ -65,4 +65,17 @@ class op_symmatl_cx
 
 
 
+class symmat_helper
+  {
+  public:
+  
+  template<typename T1> inline static bool evaluates_to_symmat(const Base<typename T1::elem_type,T1>&);
+  template<typename eT> inline static bool evaluates_to_symmat(const Op<Mat<eT>,op_symmatu>&);
+  template<typename eT> inline static bool evaluates_to_symmat(const Op<Mat<eT>,op_symmatl>&);
+  template<typename eT> inline static bool evaluates_to_symmat(const Glue< Mat<eT>, Op<Mat<eT>,op_htrans>, glue_times >& expr);
+  template<typename eT> inline static bool evaluates_to_symmat(const Glue< Op<Mat<eT>,op_htrans>, Mat<eT>, glue_times >& expr);
+  };
+
+
+
 //! @}
