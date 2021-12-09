@@ -33,7 +33,7 @@ class op_pinv
   
   template<typename eT> inline static bool apply_diag(Mat<eT>& out, const Mat<eT>& A, typename get_pod_type<eT>::result tol);
   
-  template<typename eT> inline static bool apply_sym (Mat<eT>& out, const Mat<eT>& A, typename get_pod_type<eT>::result tol);
+  template<typename eT> inline static bool apply_sym (Mat<eT>& out, const Mat<eT>& A, typename get_pod_type<eT>::result tol, const uword method_id);
   };
 
 

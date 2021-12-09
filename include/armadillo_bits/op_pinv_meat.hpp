@@ -102,7 +102,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     {
     arma_extra_debug_print("op_pinv: detected symmetric matrix");
     
-    return op_pinv::apply_sym(out, A, tol);
+    return op_pinv::apply_sym(out, A, tol, method_id);
     }
   
   // economical SVD decomposition 
@@ -212,7 +212,7 @@ op_pinv::apply_diag(Mat<eT>& out, const Mat<eT>& A, typename get_pod_type<eT>::r
 template<typename eT>
 inline
 bool
-op_pinv::apply_sym(Mat<eT>& out, const Mat<eT>& A, typename get_pod_type<eT>::result tol)
+op_pinv::apply_sym(Mat<eT>& out, const Mat<eT>& A, typename get_pod_type<eT>::result tol, const uword method_id)
   {
   arma_extra_debug_sigprint();
   
@@ -221,7 +221,7 @@ op_pinv::apply_sym(Mat<eT>& out, const Mat<eT>& A, typename get_pod_type<eT>::re
   Col< T> eigval;
   Mat<eT> eigvec;
   
-  const bool status = auxlib::eig_sym_dc(eigval, eigvec, A);
+  const bool status = ((method_id == uword(0)) || (method_id == uword(2))) ? auxlib::eig_sym_dc(eigval, eigvec, A) : auxlib::eig_sym(eigval, eigvec, A);
   
   if(status == false)  { return false; }
   
