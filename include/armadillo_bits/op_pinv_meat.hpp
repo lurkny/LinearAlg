@@ -184,9 +184,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     
     const Mat<eT> eigvec_use(eigvec.memptr(), eigvec.n_rows, count, false);
     
-    const Mat<eT> tmp = eigvec_use * diagmat(eigval2);
-    
-    out = tmp * eigvec_use.t();
+    out = (eigvec_use * diagmat(eigval2)).eval() * eigvec_use.t();
     
     return true;
     }
@@ -222,26 +220,26 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     if(val >= tol)  { s2[count2] = (val > T(0)) ? T(T(1) / val) : T(0); ++count2; }
     }
   
-  const Mat<eT> Vuse(V.memptr(), V.n_rows, count, false);
-  const Mat<eT> Uuse(U.memptr(), U.n_rows, count, false);
-    
+  const Mat<eT> U_use(U.memptr(), U.n_rows, count, false);
+  const Mat<eT> V_use(V.memptr(), V.n_rows, count, false);
+  
   Mat<eT> tmp;
-    
+  
   if(n_rows >= n_cols)
     {
     // out = ( (V.n_cols > count) ? V.cols(0,count-1) : V ) * diagmat(s2) * trans( (U.n_cols > count) ? U.cols(0,count-1) : U );
     
-    tmp = Vuse * diagmat(s2);
+    tmp = V_use * diagmat(s2);
     
-    out = tmp * trans(Uuse);
+    out = tmp * trans(U_use);
     }
   else
     {
     // out = ( (U.n_cols > count) ? U.cols(0,count-1) : U ) * diagmat(s2) * trans( (V.n_cols > count) ? V.cols(0,count-1) : V );
     
-    tmp = Uuse * diagmat(s2);
+    tmp = U_use * diagmat(s2);
     
-    out = tmp * trans(Vuse);
+    out = tmp * trans(V_use);
     }
   
   return true;
