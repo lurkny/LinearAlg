@@ -129,6 +129,9 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     // auxlib::inv_sympd_rcond() will fail if A isn't really positive definite or its rcond is below rcond_threshold
     }
   
+  // TODO: detect symmetric matrix and use eig_sym() based decomposition;
+  // TODO: for detecting symmetric matrix: (a) detect if T1 is an expression like X.t()*X, X*X.t(), symmatu(X), symmatl(X); (b) reuse bool try_sympd; (c) use A.is_symmetric()
+  
   // economical SVD decomposition 
   Mat<eT> U;
   Col< T> s;
