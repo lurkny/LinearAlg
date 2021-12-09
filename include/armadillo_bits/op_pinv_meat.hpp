@@ -227,52 +227,26 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     if(val >= tol)  { s2_mem[count2] = (val > T(0)) ? T(T(1) / val) : T(0); ++count2; }
     }
   
-  
+  const Mat<eT> Vuse(V.memptr(), V.n_rows, count, false);
+  const Mat<eT> Uuse(U.memptr(), U.n_rows, count, false);
+    
   Mat<eT> tmp;
     
   if(n_rows >= n_cols)
     {
     // out = ( (V.n_cols > count) ? V.cols(0,count-1) : V ) * diagmat(s2) * trans( (U.n_cols > count) ? U.cols(0,count-1) : U );
     
-    if(count < V.n_cols)
-      {
-      tmp = V.cols(0,count-1) * diagmat(s2);
-      }
-    else
-      {
-      tmp = V * diagmat(s2);
-      }
+    tmp = Vuse * diagmat(s2);
     
-    if(count < U.n_cols)
-      {
-      out = tmp * trans(U.cols(0,count-1));
-      }
-    else
-      {
-      out = tmp * trans(U);
-      }
+    out = tmp * trans(Uuse);
     }
   else
     {
     // out = ( (U.n_cols > count) ? U.cols(0,count-1) : U ) * diagmat(s2) * trans( (V.n_cols > count) ? V.cols(0,count-1) : V );
     
-    if(count < U.n_cols)
-      {
-      tmp = U.cols(0,count-1) * diagmat(s2);
-      }
-    else
-      {
-      tmp = U * diagmat(s2);
-      }
+    tmp = Uuse * diagmat(s2);
     
-    if(count < V.n_cols)
-      {
-      out = tmp * trans(V.cols(0,count-1));
-      }
-    else
-      {
-      out = tmp * trans(V);
-      }
+    out = tmp * trans(Vuse);
     }
   
   return true;
