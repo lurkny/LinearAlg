@@ -97,6 +97,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     // auxlib::inv_sympd_rcond() will fail if A isn't really positive definite or its rcond is below rcond_threshold
     }
   
+  // if(try_sympd || (is_real<eT>::yes && A.is_symmetric()) || (is_cx<eT>::yes && A.is_hermitian()))
   if((is_real<eT>::yes) && (try_sympd || A.is_symmetric()))
     {
     arma_extra_debug_print("op_pinv: detected symmetric matrix");
