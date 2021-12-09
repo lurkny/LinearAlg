@@ -147,11 +147,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
   const T*    s_mem    = s.memptr();
   
   // set tolerance to default if it hasn't been specified
-  if( (tol == T(0)) && (s_n_elem > 0) )
-    {
-    tol = (std::max)(n_rows, n_cols) * s_mem[0] * std::numeric_limits<T>::epsilon();
-    }
-  
+  if( (tol == T(0)) && (s_n_elem > 0) )  { tol = (std::max)(n_rows, n_cols) * s_mem[0] * std::numeric_limits<T>::epsilon(); }
   
   uword count = 0;
   
