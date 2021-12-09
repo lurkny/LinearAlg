@@ -124,6 +124,8 @@ op_rank::apply_sym(uword& out, Mat<eT>& A, typename get_pod_type<eT>::result tol
   
   if(v_n_elem == 0)  { out = uword(0); return true; }
   
+  // TODO: eigenvalues can be negative, so need to pre-process v with std::abs()
+  
   // set tolerance to default if it hasn't been specified
   if(tol == T(0))  { tol = (std::max)(A.n_rows, A.n_cols) * v_mem[v_n_elem-1] * std::numeric_limits<T>::epsilon(); }
   
