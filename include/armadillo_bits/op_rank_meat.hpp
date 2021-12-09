@@ -120,14 +120,16 @@ op_rank::apply_sym(uword& out, Mat<eT>& A, typename get_pod_type<eT>::result tol
   if(status == false)  { out = uword(0); return false; }
   
   const uword v_n_elem = v.n_elem;
-  const T*    v_mem    = v.memptr();
+        T*    v_mem    = v.memptr();
   
   if(v_n_elem == 0)  { out = uword(0); return true; }
   
-  // TODO: eigenvalues can be negative, so need to pre-process v with std::abs()
+  T max_abs_v = T(0);
+  
+  for(uword i=0; i < v_n_elem; ++i)  { const T val = std::abs(v_mem[i]); v_mem[i] = val; if(val > max_abs_v) { max_abs_v = val; } }
   
   // set tolerance to default if it hasn't been specified
-  if(tol == T(0))  { tol = (std::max)(A.n_rows, A.n_cols) * v_mem[v_n_elem-1] * std::numeric_limits<T>::epsilon(); }
+  if(tol == T(0))  { tol = (std::max)(A.n_rows, A.n_cols) * max_abs_v * std::numeric_limits<T>::epsilon(); }
   
   uword count = 0;
   
