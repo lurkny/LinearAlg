@@ -49,12 +49,12 @@ op_rank::apply(uword& out, const Base<typename T1::elem_type,T1>& expr, const ty
     return op_rank::apply_sym(out, A, tol);
     }
   
-  if(is_cx<eT>::yes && A.is_hermitian())
-    {
-    arma_extra_debug_print("op_rank::apply(): detected hermitian matrix");
-    
-    return op_rank::apply_sym(out, A, tol);
-    }
+  // if(is_cx<eT>::yes && A.is_hermitian())
+  //   {
+  //   arma_extra_debug_print("op_rank::apply(): detected hermitian matrix");
+  //   
+  //   return op_rank::apply_sym(out, A, tol);
+  //   }
   
   return op_rank::apply_gen(out, A, tol);
   }
