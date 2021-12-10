@@ -231,18 +231,9 @@ op_pinv::apply_sym(Mat<eT>& out, const Mat<eT>& A, typename get_pod_type<eT>::re
   
   const uvec indices = sort_index(abs_eigval, "descend");
   
-  bool regular_indices = true;
-  
-  for(uword i=0; i < indices.n_elem; ++i)  { if(indices[i] != i)  { regular_indices = false; break; } }
-  
-  if(regular_indices == false)
-    {
-    arma_extra_debug_print("op_pinv: reordering eigenvalues");
-    
-    abs_eigval = abs_eigval.elem(indices);
-        eigval =     eigval.elem(indices);
-        eigvec =     eigvec.cols(indices);
-    }
+  abs_eigval = abs_eigval.elem(indices);
+      eigval =     eigval.elem(indices);
+      eigvec =     eigvec.cols(indices);
   
   // set tolerance to default if it hasn't been specified
   if(tol == T(0))  { tol = (std::max)(A.n_rows, A.n_cols) * abs_eigval[0] * std::numeric_limits<T>::epsilon(); }
