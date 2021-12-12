@@ -134,9 +134,10 @@ norm
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  const Mat<double> tmp = conv_to< Mat<double> >::from(X);
+  if(resolves_to_colvector<T1>::value)  { return norm(conv_to< Col<double> >::from(X), k); }
+  if(resolves_to_rowvector<T1>::value)  { return norm(conv_to< Row<double> >::from(X), k); }
   
-  return norm(tmp, k);
+  return norm(conv_to< Mat<double> >::from(X), k);
   }
 
 
@@ -155,9 +156,10 @@ norm
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  const Mat<double> tmp = conv_to< Mat<double> >::from(X);
+  if(resolves_to_colvector<T1>::value)  { return norm(conv_to< Col<double> >::from(X), method); }
+  if(resolves_to_rowvector<T1>::value)  { return norm(conv_to< Row<double> >::from(X), method); }
   
-  return norm(tmp, method);
+  return norm(conv_to< Mat<double> >::from(X), method);
   }
 
 
