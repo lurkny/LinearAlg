@@ -10499,7 +10499,7 @@ See also:
 <br>
 <b>rank( X, tolerance )</b>
 <ul>
-<li>Return the rank of matrix <i>X</i></li>
+<li>Return the rank of matrix <i>X</i>, based on on singular value decomposition</li>
 <br>
 <li>Any singular values less than <i>tolerance</i> are treated as zero</li>
 <br>
@@ -10512,8 +10512,7 @@ The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max
 </ul>
 </li>
 <br>
-<li>The computation is based on singular value decomposition;
-if the decomposition fails, a <i>std::runtime_error</i> exception is thrown</li>
+<li>If the decomposition fails, a <i>std::runtime_error</i> exception is thrown</li>
 <br>
 <li>
 <b>Caveat:</b> to confirm whether a matrix is singular, use <a href="#rcond">rcond()</a> or <a href="#cond">cond()</a>
