@@ -4667,6 +4667,7 @@ X.swap_rows(0,4);
 <li>
 See also:
 <ul>
+<li><a href="#reverse">reverse()</a></li>
 <li><a href="#flip">fliplr() &amp; flipud()</a></li>
 <li><a href="#swap">.swap()</a></li>
 </ul>
@@ -5768,15 +5769,15 @@ Member functions of any matrix or vector expression
 For real (non-complex) matrix:
 <ul>
 <li><i>.t()</i> provides a transposed copy of the matrix</li>
-<li><i>.st()</i> not applicable</li>
+<li><i>.st()</i> is not applicable</li>
 </ul>
 </li>
 <br>
 <li>
 For complex matrix:
 <ul>
-<li><i>.t()</i> provides a Hermitian transpose (ie. the conjugate of the elements is taken during the transpose)</li>
-<li><i>.st()</i> provides a transposed copy without taking the conjugate of the elements</li>
+<li><i>.t()</i> provides a Hermitian (conjugate) transposed copy (ie. signs of imaginary components are flipped)</li>
+<li><i>.st()</i> provides a simple transposed copy (ie. signs of imaginary components are not flipped)</li>
 </ul>
 </li>
 <br>
@@ -5794,9 +5795,12 @@ mat B = A.t();
 See also:
 <ul>
 <li><a href="#trans">trans()</a></li>
-<li><a href="#flip">fliplr() &amp; flipud()</a></li>
 <li><a href="#reverse">reverse()</a></li>
 <li><a href="#as_col_row">.as_col()&nbsp;/&nbsp;.as_row()</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Transpose">transpose in Wikipedia</a></li>
+<li><a href="https://mathworld.wolfram.com/Transpose.html">transpose in MathWorld</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Conjugate_transpose">conjugate transpose in Wikipedia</a></li>
+<li><a href="https://mathworld.wolfram.com/ConjugateTranspose.html">conjugate transpose in MathWorld</a></li>
 </ul>
 </li>
 <br>
@@ -10827,8 +10831,9 @@ See also:
 <li><a href="#flip">fliplr() &amp; flipud()</a></li>
 <li><a href="#shift">shift()</a></li>
 <li><a href="#sort">sort()</a></li>
-<li><a href="#swap_rows">.swap_rows() &amp; .swap_cols()</a></li>
+<li><a href="#trans">trans()</a></li>
 <li><a href="#t_st_members">.t()</a></li>
+<li><a href="#swap_rows">.swap_rows() &amp; .swap_cols()</a></li>
 </ul>
 </li>
 <br>
@@ -11439,15 +11444,15 @@ See also:
 For real (non-complex) matrix:
 <ul>
 <li><i>trans()</i> provides a transposed copy of the matrix</li>
-<li><i>strans()</i> not applicable</li>
+<li><i>strans()</i> is not applicable</li>
 </ul>
 </li>
 <br>
 <li>
 For complex matrix:
 <ul>
-<li><i>trans()</i> provides a Hermitian transpose (ie. the conjugate of the elements is taken during the transpose)</li>
-<li><i>strans()</i> provides a transposed copy without taking the conjugate of the elements</li>
+<li><i>trans()</i> provides a Hermitian (conjugate) transposed copy (ie. signs of imaginary components are flipped)</li>
+<li><i>strans()</i> provides a simple transposed copy (ie. signs of imaginary components are not flipped)</li>
 </ul>
 </li>
 <br>
@@ -11467,6 +11472,11 @@ mat C = A.t();    // equivalent to trans(A), but more compact
 <ul>
 <li><a href="#t_st_members">.t()</a></li>
 <li><a href="#inplace_trans">inplace_trans()</a></li>
+<li><a href="#reverse">reverse()</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Transpose">transpose in Wikipedia</a></li>
+<li><a href="https://mathworld.wolfram.com/Transpose.html">transpose in MathWorld</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Conjugate_transpose">conjugate transpose in Wikipedia</a></li>
+<li><a href="https://mathworld.wolfram.com/ConjugateTranspose.html">conjugate transpose in MathWorld</a></li>
 </ul>
 </li>
 <br>
