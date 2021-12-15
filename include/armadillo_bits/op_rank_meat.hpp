@@ -30,6 +30,7 @@ op_rank::apply(uword& out, const Base<typename T1::elem_type,T1>& expr, const ty
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
+  typedef typename T1::pod_type   T;
   
   Mat<eT> A(expr.get_ref());
   
@@ -42,14 +43,20 @@ op_rank::apply(uword& out, const Base<typename T1::elem_type,T1>& expr, const ty
     return op_rank::apply_diag(out, A, tol);
     }
   
-  if(is_cx<eT>::no && A.is_symmetric())
+  #if defined(ARMA_OPTIMISE_SYMPD)
+    const bool try_sympd = (auxlib::crippled_lapack(A) == false) && (tol == T(0)) && sympd_helper::guess_sympd_anysize(A);
+  #else
+    const bool try_sympd = false;
+  #endif
+  
+  if(is_cx<eT>::no && (try_sympd || A.is_symmetric()))
     {
     arma_extra_debug_print("op_rank::apply(): detected symmetric matrix");
     
     return op_rank::apply_sym(out, A, tol);
     }
   
-  // if(is_cx<eT>::yes && A.is_hermitian())
+  // if(is_cx<eT>::yes && (try_sympd || A.is_hermitian()))
   //   {
   //   arma_extra_debug_print("op_rank::apply(): detected hermitian matrix");
   //   
