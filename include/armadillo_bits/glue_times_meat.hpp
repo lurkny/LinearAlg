@@ -929,10 +929,7 @@ glue_times_diag::apply(Mat<typename T1::elem_type>& actual_out, const Glue<T1, T
             eT* out_coldata = out.colptr(col);
       const eT*   B_coldata =   B.colptr(col);
       
-      for(uword i=0; i < A_length; ++i)
-        {
-        out_coldata[i] = A[i] * B_coldata[i];
-        }
+      for(uword i=0; i < A_length; ++i)  { out_coldata[i] = A[i] * B_coldata[i]; }
       }
     
     if(is_alias)  { actual_out.steal_mem(tmp); }
@@ -972,10 +969,7 @@ glue_times_diag::apply(Mat<typename T1::elem_type>& actual_out, const Glue<T1, T
             eT* out_coldata = out.colptr(col);
       const eT*   A_coldata =   A.colptr(col);
       
-      for(uword i=0; i < A_n_rows; ++i)
-        {
-        out_coldata[i] = A_coldata[i] * val;
-        }
+      for(uword i=0; i < A_n_rows; ++i)  { out_coldata[i] = A_coldata[i] * val; }
       }
     
     if(is_alias)  { actual_out.steal_mem(tmp); }
@@ -1004,10 +998,7 @@ glue_times_diag::apply(Mat<typename T1::elem_type>& actual_out, const Glue<T1, T
     
     const uword N = (std::min)(A_length, B_length);
     
-    for(uword i=0; i < N; ++i)
-      {
-      out.at(i,i) = A[i] * B[i];
-      }
+    for(uword i=0; i < N; ++i)  { out.at(i,i) = A[i] * B[i]; }
     
     if(is_alias)  { actual_out.steal_mem(tmp); }
     }
