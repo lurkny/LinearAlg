@@ -885,7 +885,7 @@ template<typename T1, typename T2>
 arma_hot
 inline
 void
-glue_times_diag::apply(Mat<typename T1::elem_type>& out, const Glue<T1, T2, glue_times_diag>& X)
+glue_times_diag::apply(Mat<typename T1::elem_type>& actual_out, const Glue<T1, T2, glue_times_diag>& X)
   {
   arma_extra_debug_sigprint();
   
@@ -901,10 +901,10 @@ glue_times_diag::apply(Mat<typename T1::elem_type>& out, const Glue<T1, T2, glue
     {
     arma_extra_debug_print("glue_times_diag::apply(): diagmat(A) * B");
     
-    const diagmat_proxy_check<T1_stripped> A(S1.M, out);
+    const diagmat_proxy<T1_stripped> A(S1.M);
     
-    const unwrap_check<T2> tmp(X.B, out);
-    const Mat<eT>& B     = tmp.M;
+    const quasi_unwrap<T2> UB(X.B);
+    const Mat<eT>& B     = UB.M;
     
     const uword A_n_rows = A.n_rows;
     const uword A_n_cols = A.n_cols;
@@ -914,6 +914,13 @@ glue_times_diag::apply(Mat<typename T1::elem_type>& out, const Glue<T1, T2, glue
     const uword B_n_cols = B.n_cols;
     
     arma_debug_assert_mul_size(A_n_rows, A_n_cols, B_n_rows, B_n_cols, "matrix multiplication");
+    
+    const bool is_alias = (A.is_alias(actual_out) || UB.is_alias(actual_out));
+    
+    if(is_alias)  { arma_extra_debug_print("glue_times_diag::apply(): aliasing detected"); }
+    
+    Mat<eT>  tmp;
+    Mat<eT>& out = (is_alias) ? tmp : actual_out;
     
     out.zeros(A_n_rows, B_n_cols);
     
@@ -927,16 +934,18 @@ glue_times_diag::apply(Mat<typename T1::elem_type>& out, const Glue<T1, T2, glue
         out_coldata[i] = A[i] * B_coldata[i];
         }
       }
+    
+    if(is_alias)  { actual_out.steal_mem(tmp); }
     }
   else
   if( (strip_diagmat<T1>::do_diagmat == false) && (strip_diagmat<T2>::do_diagmat == true) )
     {
     arma_extra_debug_print("glue_times_diag::apply(): A * diagmat(B)");
     
-    const unwrap_check<T1> tmp(X.A, out);
-    const Mat<eT>& A     = tmp.M;
+    const quasi_unwrap<T1> UA(X.A);
+    const Mat<eT>& A     = UA.M;
     
-    const diagmat_proxy_check<T2_stripped> B(S2.M, out);
+    const diagmat_proxy<T2_stripped> B(S2.M);
     
     const uword A_n_rows = A.n_rows;
     const uword A_n_cols = A.n_cols;
@@ -946,6 +955,13 @@ glue_times_diag::apply(Mat<typename T1::elem_type>& out, const Glue<T1, T2, glue
     const uword B_length = (std::min)(B_n_rows, B_n_cols);
     
     arma_debug_assert_mul_size(A_n_rows, A_n_cols, B_n_rows, B_n_cols, "matrix multiplication");
+    
+    const bool is_alias = (UA.is_alias(actual_out) || B.is_alias(actual_out));
+    
+    if(is_alias)  { arma_extra_debug_print("glue_times_diag::apply(): aliasing detected"); }
+    
+    Mat<eT>  tmp;
+    Mat<eT>& out = (is_alias) ? tmp : actual_out;
     
     out.zeros(A_n_rows, B_n_cols);
     
@@ -961,16 +977,25 @@ glue_times_diag::apply(Mat<typename T1::elem_type>& out, const Glue<T1, T2, glue
         out_coldata[i] = A_coldata[i] * val;
         }
       }
+    
+    if(is_alias)  { actual_out.steal_mem(tmp); }
     }
   else
   if( (strip_diagmat<T1>::do_diagmat == true) && (strip_diagmat<T2>::do_diagmat == true) )
     {
     arma_extra_debug_print("glue_times_diag::apply(): diagmat(A) * diagmat(B)");
     
-    const diagmat_proxy_check<T1_stripped> A(S1.M, out);
-    const diagmat_proxy_check<T2_stripped> B(S2.M, out);
+    const diagmat_proxy<T1_stripped> A(S1.M);
+    const diagmat_proxy<T2_stripped> B(S2.M);
     
     arma_debug_assert_mul_size(A.n_rows, A.n_cols, B.n_rows, B.n_cols, "matrix multiplication");
+    
+    const bool is_alias = (A.is_alias(actual_out) || B.is_alias(actual_out));
+    
+    if(is_alias)  { arma_extra_debug_print("glue_times_diag::apply(): aliasing detected"); }
+    
+    Mat<eT>  tmp;
+    Mat<eT>& out = (is_alias) ? tmp : actual_out;
     
     out.zeros(A.n_rows, B.n_cols);
     
@@ -983,6 +1008,8 @@ glue_times_diag::apply(Mat<typename T1::elem_type>& out, const Glue<T1, T2, glue
       {
       out.at(i,i) = A[i] * B[i];
       }
+    
+    if(is_alias)  { actual_out.steal_mem(tmp); }
     }
   }
 
