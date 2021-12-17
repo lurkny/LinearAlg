@@ -143,7 +143,12 @@ op_reshape::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, co
       nested_loop_end: ;
       }
     
-    for(uword i=n_elem_to_copy; i < out_n_elem; ++i)  { out_mem[i] = eT(0); }
+    if(n_elem_to_copy < out_n_elem)
+      {
+      const uword n_elem_leftover = out_n_elem - n_elem_to_copy;
+      
+      arrayops::fill_zeros(&(out_mem[n_elem_to_copy]), n_elem_leftover);
+      }
     }
   }
 
