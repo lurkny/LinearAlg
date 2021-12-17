@@ -214,14 +214,16 @@ op_reshape::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_reshape>& in)
 template<typename T1>
 inline
 void
-op_reshape::apply(Cube<typename T1::elem_type>& out, const OpCube<T1,op_reshape>& in)
+op_reshape::apply(Cube<typename T1::elem_type>& actual_out, const OpCube<T1,op_reshape>& in)
   {
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
   
-  const unwrap_cube<T1> A_tmp(in.m);
-  const Cube<eT>& A   = A_tmp.M;
+  const unwrap_cube<T1> U(in.m);
+  const Cube<eT>& A   = U.M;
+  
+  const bool is_alias = (&actual_out == &A);
   
   const uword new_n_rows   = in.aux_uword_a;
   const uword new_n_cols   = in.aux_uword_b;
@@ -231,31 +233,31 @@ op_reshape::apply(Cube<typename T1::elem_type>& out, const OpCube<T1,op_reshape>
   
   if(A.n_elem == out_n_elem)
     {
-    if(&out != &A)
-      {
-      out.set_size(new_n_rows, new_n_cols, new_n_slices);
-      arrayops::copy( out.memptr(), A.memptr(), out.n_elem );
-      }
-    else  // &out == &A, ie. inplace resize
-      {
-      out.set_size(new_n_rows, new_n_cols, new_n_slices);
-      // set_size() doesn't destroy data as long as the number of elements in the cube remains the same
-      }
+    actual_out.set_size(new_n_rows, new_n_cols, new_n_slices);  // set_size() doesn't destroy data as long as the number of elements in the cube remains the same
+    
+    if(is_alias == false)  { arrayops::copy( actual_out.memptr(), A.memptr(), actual_out.n_elem ); }
     }
   else
     {
-    const unwrap_cube_check< Cube<eT> > B_tmp(A, out);
-    const Cube<eT>& B                 = B_tmp.M;
+    Cube<eT>  tmp;
+    Cube<eT>& out = (is_alias) ? tmp : actual_out;
     
-    const uword n_elem_to_copy = (std::min)(B.n_elem, out_n_elem);
+    const uword n_elem_to_copy = (std::min)(A.n_elem, out_n_elem);
     
     out.set_size(new_n_rows, new_n_cols, new_n_slices);
     
     eT* out_mem = out.memptr();
     
-    arrayops::copy( out_mem, B.memptr(), n_elem_to_copy );
+    arrayops::copy( out_mem, A.memptr(), n_elem_to_copy );
     
-    for(uword i=n_elem_to_copy; i < out_n_elem; ++i)  { out_mem[i] = eT(0); }
+    if(n_elem_to_copy < out_n_elem)
+      {
+      const uword n_elem_leftover = out_n_elem - n_elem_to_copy;
+      
+      arrayops::fill_zeros(&(out_mem[n_elem_to_copy]), n_elem_leftover);
+      }
+    
+    if(is_alias)  { actual_out.steal_mem(tmp); }
     }
   }
 
