@@ -27,9 +27,9 @@ class op_reshape
   {
   public:
   
-  template<typename eT> inline static void apply_unwrap(Mat<eT>&                     out, const Mat<eT>&   A, const uword in_n_rows, const uword in_n_cols);
+  template<typename eT> inline static void apply_unwrap(Mat<eT>&                     out, const Mat<eT>&   A, const uword new_n_rows, const uword new_n_cols);
   
-  template<typename T1> inline static void apply_proxy (Mat<typename T1::elem_type>& out, const Proxy<T1>& P, const uword in_n_rows, const uword in_n_cols);
+  template<typename T1> inline static void apply_proxy (Mat<typename T1::elem_type>& out, const Proxy<T1>& P, const uword new_n_rows, const uword new_n_cols);
   
   template<typename T1> inline static void apply       (Mat<typename T1::elem_type>& out, const Op<T1,op_reshape>& in);
   

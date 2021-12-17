@@ -68,17 +68,17 @@ op_reshape::apply_unwrap(Mat<eT>& actual_out, const Mat<eT>& A, const uword new_
 template<typename T1>
 inline
 void
-op_reshape::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, const uword in_n_rows, const uword in_n_cols)
+op_reshape::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, const uword new_n_rows, const uword new_n_cols)
   {
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
   
-  out.set_size(in_n_rows, in_n_cols);
+  out.set_size(new_n_rows, new_n_cols);
   
   eT* out_mem = out.memptr();
   
-  const uword in_n_elem = in_n_rows * in_n_cols;
+  const uword in_n_elem = new_n_rows * new_n_cols;
   
   if(P.get_n_elem() == in_n_elem)
     {
@@ -158,15 +158,15 @@ op_reshape::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_reshape>& in)
   
   typedef typename T1::elem_type eT;
   
-  const uword in_n_rows = in.aux_uword_a;
-  const uword in_n_cols = in.aux_uword_b;
+  const uword new_n_rows = in.aux_uword_a;
+  const uword new_n_cols = in.aux_uword_b;
   
   // allow detection of in-place reshape
   if(is_Mat<T1>::value || (arma_config::openmp && Proxy<T1>::use_mp))
     {
     const unwrap<T1> U(in.m);
     
-    op_reshape::apply_unwrap(out, U.M, in_n_rows, in_n_cols);
+    op_reshape::apply_unwrap(out, U.M, new_n_rows, new_n_cols);
     }
   else
     {
@@ -182,13 +182,13 @@ op_reshape::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_reshape>& in)
         {
         Mat<eT> tmp;
         
-        op_reshape::apply_unwrap(tmp, U.M, in_n_rows, in_n_cols);
+        op_reshape::apply_unwrap(tmp, U.M, new_n_rows, new_n_cols);
         
         out.steal_mem(tmp);
         }
       else
         {
-        op_reshape::apply_unwrap(out, U.M, in_n_rows, in_n_cols);
+        op_reshape::apply_unwrap(out, U.M, new_n_rows, new_n_cols);
         }
       }
     else
@@ -197,13 +197,13 @@ op_reshape::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_reshape>& in)
         {
         Mat<eT> tmp;
         
-        op_reshape::apply_proxy(tmp, P, in_n_rows, in_n_cols);
+        op_reshape::apply_proxy(tmp, P, new_n_rows, new_n_cols);
         
         out.steal_mem(tmp);
         }
       else
         {
-        op_reshape::apply_proxy(out, P, in_n_rows, in_n_cols);
+        op_reshape::apply_proxy(out, P, new_n_rows, new_n_cols);
         }
       }
     }
@@ -223,22 +223,22 @@ op_reshape::apply(Cube<typename T1::elem_type>& out, const OpCube<T1,op_reshape>
   const unwrap_cube<T1> A_tmp(in.m);
   const Cube<eT>& A   = A_tmp.M;
   
-  const uword in_n_rows   = in.aux_uword_a;
-  const uword in_n_cols   = in.aux_uword_b;
-  const uword in_n_slices = in.aux_uword_c;
+  const uword new_n_rows   = in.aux_uword_a;
+  const uword new_n_cols   = in.aux_uword_b;
+  const uword new_n_slices = in.aux_uword_c;
   
-  const uword in_n_elem = in_n_rows * in_n_cols * in_n_slices;
+  const uword in_n_elem = new_n_rows * new_n_cols * new_n_slices;
   
   if(A.n_elem == in_n_elem)
     {
     if(&out != &A)
       {
-      out.set_size(in_n_rows, in_n_cols, in_n_slices);
+      out.set_size(new_n_rows, new_n_cols, new_n_slices);
       arrayops::copy( out.memptr(), A.memptr(), out.n_elem );
       }
     else  // &out == &A, ie. inplace resize
       {
-      out.set_size(in_n_rows, in_n_cols, in_n_slices);
+      out.set_size(new_n_rows, new_n_cols, new_n_slices);
       // set_size() doesn't destroy data as long as the number of elements in the cube remains the same
       }
     }
@@ -249,7 +249,7 @@ op_reshape::apply(Cube<typename T1::elem_type>& out, const OpCube<T1,op_reshape>
     
     const uword n_elem_to_copy = (std::min)(B.n_elem, in_n_elem);
     
-    out.set_size(in_n_rows, in_n_cols, in_n_slices);
+    out.set_size(new_n_rows, new_n_cols, new_n_slices);
     
     eT* out_mem = out.memptr();
     
@@ -270,20 +270,20 @@ op_reshape_old::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_reshape_o
   {
   arma_extra_debug_sigprint();
   
-  const uword in_n_rows = in.aux_uword_a;
-  const uword in_n_cols = in.aux_uword_b;
-  const uword in_dim    = in.aux_uword_c;
+  const uword new_n_rows = in.aux_uword_a;
+  const uword new_n_cols = in.aux_uword_b;
+  const uword dim        = in.aux_uword_c;
   
-  if(in_dim == 0)
+  if(dim == 0)
     {
-    out = reshape(in.m, in_n_rows, in_n_cols);
+    out = reshape(in.m, new_n_rows, new_n_cols);
     }
   else
-  if(in_dim == 1)
+  if(dim == 1)
     {
     const unwrap<T1> U(in.m);
     
-    out = reshape(strans(U.M), in_n_rows, in_n_cols);
+    out = reshape(strans(U.M), new_n_rows, new_n_cols);
     }
   }
 
