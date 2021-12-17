@@ -47,7 +47,6 @@ op_reshape::apply_unwrap(Mat<eT>& actual_out, const Mat<eT>& A, const uword in_n
     const uword n_elem_to_copy = (std::min)(A.n_elem, in_n_elem);
     
     out.set_size(in_n_rows, in_n_cols);
-    out.fill(datum::nan);
     
     eT* out_mem = out.memptr();
     
