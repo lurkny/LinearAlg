@@ -78,15 +78,15 @@ op_reshape::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, co
   
   eT* out_mem = out.memptr();
   
-  const uword in_n_elem = new_n_rows * new_n_cols;
+  const uword out_n_elem = new_n_rows * new_n_cols;
   
-  if(P.get_n_elem() == in_n_elem)
+  if(P.get_n_elem() == out_n_elem)
     {
     if(Proxy<T1>::use_at == false)
       {
       typename Proxy<T1>::ea_type Pea = P.get_ea();
       
-      for(uword i=0; i < in_n_elem; ++i)  { out_mem[i] = Pea[i]; }
+      for(uword i=0; i < out_n_elem; ++i)  { out_mem[i] = Pea[i]; }
       }
     else
       {
@@ -115,7 +115,7 @@ op_reshape::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, co
     }
   else
     {
-    const uword n_elem_to_copy = (std::min)(P.get_n_elem(), in_n_elem);
+    const uword n_elem_to_copy = (std::min)(P.get_n_elem(), out_n_elem);
     
     if(Proxy<T1>::use_at == false)
       {
@@ -143,7 +143,7 @@ op_reshape::apply_proxy(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, co
       nested_loop_end: ;
       }
     
-    for(uword i=n_elem_to_copy; i < in_n_elem; ++i)  { out_mem[i] = eT(0); }
+    for(uword i=n_elem_to_copy; i < out_n_elem; ++i)  { out_mem[i] = eT(0); }
     }
   }
 
@@ -227,9 +227,9 @@ op_reshape::apply(Cube<typename T1::elem_type>& out, const OpCube<T1,op_reshape>
   const uword new_n_cols   = in.aux_uword_b;
   const uword new_n_slices = in.aux_uword_c;
   
-  const uword in_n_elem = new_n_rows * new_n_cols * new_n_slices;
+  const uword out_n_elem = new_n_rows * new_n_cols * new_n_slices;
   
-  if(A.n_elem == in_n_elem)
+  if(A.n_elem == out_n_elem)
     {
     if(&out != &A)
       {
@@ -247,7 +247,7 @@ op_reshape::apply(Cube<typename T1::elem_type>& out, const OpCube<T1,op_reshape>
     const unwrap_cube_check< Cube<eT> > B_tmp(A, out);
     const Cube<eT>& B                 = B_tmp.M;
     
-    const uword n_elem_to_copy = (std::min)(B.n_elem, in_n_elem);
+    const uword n_elem_to_copy = (std::min)(B.n_elem, out_n_elem);
     
     out.set_size(new_n_rows, new_n_cols, new_n_slices);
     
@@ -255,7 +255,7 @@ op_reshape::apply(Cube<typename T1::elem_type>& out, const OpCube<T1,op_reshape>
     
     arrayops::copy( out_mem, B.memptr(), n_elem_to_copy );
     
-    for(uword i=n_elem_to_copy; i < in_n_elem; ++i)  { out_mem[i] = eT(0); }
+    for(uword i=n_elem_to_copy; i < out_n_elem; ++i)  { out_mem[i] = eT(0); }
     }
   }
 
