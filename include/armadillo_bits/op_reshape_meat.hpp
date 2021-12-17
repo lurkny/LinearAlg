@@ -25,17 +25,17 @@
 template<typename eT>
 inline
 void
-op_reshape::apply_unwrap(Mat<eT>& actual_out, const Mat<eT>& A, const uword in_n_rows, const uword in_n_cols)
+op_reshape::apply_unwrap(Mat<eT>& actual_out, const Mat<eT>& A, const uword new_n_rows, const uword new_n_cols)
   {
   arma_extra_debug_sigprint();
   
   const bool is_alias = (&actual_out == &A);
   
-  const uword in_n_elem = in_n_rows * in_n_cols;
+  const uword out_n_elem = new_n_rows * new_n_cols;
   
-  if(A.n_elem == in_n_elem)
+  if(A.n_elem == out_n_elem)
     {
-    actual_out.set_size(in_n_rows, in_n_cols);  // set_size() doesn't destroy data as long as the number of elements in the matrix remains the same
+    actual_out.set_size(new_n_rows, new_n_cols);  // set_size() doesn't destroy data as long as the number of elements in the matrix remains the same
     
     if(is_alias == false)  { arrayops::copy( actual_out.memptr(), A.memptr(), actual_out.n_elem ); }
     }
@@ -44,17 +44,17 @@ op_reshape::apply_unwrap(Mat<eT>& actual_out, const Mat<eT>& A, const uword in_n
     Mat<eT>  tmp;
     Mat<eT>& out = (is_alias) ? tmp : actual_out;
     
-    const uword n_elem_to_copy = (std::min)(A.n_elem, in_n_elem);
+    const uword n_elem_to_copy = (std::min)(A.n_elem, out_n_elem);
     
-    out.set_size(in_n_rows, in_n_cols);
+    out.set_size(new_n_rows, new_n_cols);
     
     eT* out_mem = out.memptr();
     
     arrayops::copy( out_mem, A.memptr(), n_elem_to_copy );
     
-    if(n_elem_to_copy < in_n_elem)
+    if(n_elem_to_copy < out_n_elem)
       {
-      const uword n_elem_leftover = in_n_elem - n_elem_to_copy;
+      const uword n_elem_leftover = out_n_elem - n_elem_to_copy;
       
       arrayops::fill_zeros(&(out_mem[n_elem_to_copy]), n_elem_leftover);
       }
