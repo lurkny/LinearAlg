@@ -6687,11 +6687,11 @@ Mat<eT>::resize(const SizeMat& s)
 template<typename eT>
 inline
 void
-Mat<eT>::reshape(const uword in_rows, const uword in_cols)
+Mat<eT>::reshape(const uword new_n_rows, const uword new_n_cols)
   {
   arma_extra_debug_sigprint();
   
-  *this = arma::reshape(*this, in_rows, in_cols);
+  op_reshape::apply_mat_inplace((*this), new_n_rows, new_n_cols);
   }
 
 
@@ -6703,7 +6703,7 @@ Mat<eT>::reshape(const SizeMat& s)
   {
   arma_extra_debug_sigprint();
   
-  *this = arma::reshape(*this, s.n_rows, s.n_cols);
+  op_reshape::apply_mat_inplace((*this), s.n_rows, s.n_cols);
   }
 
 
@@ -6713,7 +6713,7 @@ template<typename eT>
 arma_deprecated
 inline
 void
-Mat<eT>::reshape(const uword in_rows, const uword in_cols, const uword dim)
+Mat<eT>::reshape(const uword new_n_rows, const uword new_n_cols, const uword dim)
   {
   arma_extra_debug_sigprint();
   
@@ -6723,12 +6723,12 @@ Mat<eT>::reshape(const uword in_rows, const uword in_cols, const uword dim)
   
   if(dim == 0)
     {
-    *this = arma::reshape(*this, in_rows, in_cols);
+    op_reshape::apply_mat_inplace((*this), new_n_rows, new_n_cols);
     }
   else
   if(dim == 1)
     {
-    *this = arma::reshape(strans(*this), in_rows, in_cols);
+    (*this) = arma::reshape(strans(*this), new_n_rows, new_n_cols);
     }
   }
 
