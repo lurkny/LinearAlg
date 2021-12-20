@@ -85,22 +85,11 @@ op_reshape::apply_mat_inplace(Mat<eT>& A, const uword new_n_rows, const uword ne
   
   if(A.n_elem == new_n_elem)  { A.set_size(new_n_rows, new_n_cols); return; }
   
-  const uword n_elem_to_copy = (std::min)(A.n_elem, new_n_elem);
+  Mat<eT> B;
   
-  Mat<eT> tmp(new_n_rows, new_n_cols, arma_nozeros_indicator());
+  op_reshape::apply_mat_noalias(B, A, new_n_rows, new_n_cols);
   
-  eT* tmp_mem = tmp.memptr();
-  
-  arrayops::copy( tmp_mem, A.memptr(), n_elem_to_copy );
-  
-  if(n_elem_to_copy < new_n_elem)
-    {
-    const uword n_elem_leftover = new_n_elem - n_elem_to_copy;
-    
-    arrayops::fill_zeros(&(tmp_mem[n_elem_to_copy]), n_elem_leftover);
-    }
-  
-  A.steal_mem(tmp);
+  A.steal_mem(B);
   }
 
 
@@ -220,22 +209,11 @@ op_reshape::apply_cube_inplace(Cube<eT>& A, const uword new_n_rows, const uword 
   
   if(A.n_elem == new_n_elem)  { A.set_size(new_n_rows, new_n_cols, new_n_slices); return; }
   
-  const uword n_elem_to_copy = (std::min)(A.n_elem, new_n_elem);
+  Cube<eT> B;
   
-  Cube<eT> tmp(new_n_rows, new_n_cols, new_n_slices);
+  op_reshape::apply_cube_noalias(B, A, new_n_rows, new_n_cols, new_n_slices);
   
-  eT* tmp_mem = tmp.memptr();
-  
-  arrayops::copy( tmp_mem, A.memptr(), n_elem_to_copy );
-  
-  if(n_elem_to_copy < new_n_elem)
-    {
-    const uword n_elem_leftover = new_n_elem - n_elem_to_copy;
-    
-    arrayops::fill_zeros(&(tmp_mem[n_elem_to_copy]), n_elem_leftover);
-    }
-  
-  A.steal_mem(tmp);
+  A.steal_mem(B);
   }
 
 
@@ -292,7 +270,7 @@ op_reshape_old::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_reshape_o
     }
   else
     {
-    op_reshape_old::apply_mat_noalias(out, new_n_rows, new_n_cols, dim);
+    op_reshape_old::apply_mat_noalias(out, A, new_n_rows, new_n_cols, dim);
     }
   }
 
@@ -342,7 +320,7 @@ op_reshape_old::apply_mat_noalias(Mat<eT>& out, const Mat<eT>& A, const uword ne
     
     op_strans::apply_mat_noalias(tmp, A);
     
-    op_reshape::apply_mat_noalias(A, tmp, new_n_rows, new_n_cols);
+    op_reshape::apply_mat_noalias(out, tmp, new_n_rows, new_n_cols);
     }
   }
 
