@@ -4057,11 +4057,11 @@ Cube<eT>::zeros()
 template<typename eT>
 inline
 const Cube<eT>&
-Cube<eT>::zeros(const uword in_rows, const uword in_cols, const uword in_slices)
+Cube<eT>::zeros(const uword new_n_rows, const uword new_n_cols, const uword new_n_slices)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_rows, in_cols, in_slices);
+  set_size(new_n_rows, new_n_cols, new_n_slices);
   
   return (*this).zeros();
   }
@@ -4095,11 +4095,11 @@ Cube<eT>::ones()
 template<typename eT>
 inline
 const Cube<eT>&
-Cube<eT>::ones(const uword in_rows, const uword in_cols, const uword in_slices)
+Cube<eT>::ones(const uword new_n_rows, const uword new_n_cols, const uword new_n_slices)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_rows, in_cols, in_slices);
+  set_size(new_n_rows, new_n_cols, new_n_slices);
   
   return (*this).fill(eT(1));
   }
@@ -4135,11 +4135,11 @@ Cube<eT>::randu()
 template<typename eT>
 inline
 const Cube<eT>&
-Cube<eT>::randu(const uword in_rows, const uword in_cols, const uword in_slices)
+Cube<eT>::randu(const uword new_n_rows, const uword new_n_cols, const uword new_n_slices)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_rows, in_cols, in_slices);
+  set_size(new_n_rows, new_n_cols, new_n_slices);
   
   return (*this).randu();
   }
@@ -4175,11 +4175,11 @@ Cube<eT>::randn()
 template<typename eT>
 inline
 const Cube<eT>&
-Cube<eT>::randn(const uword in_rows, const uword in_cols, const uword in_slices)
+Cube<eT>::randn(const uword new_n_rows, const uword new_n_cols, const uword new_n_slices)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_rows, in_cols, in_slices);
+  set_size(new_n_rows, new_n_cols, new_n_slices);
   
   return (*this).randn();
   }
