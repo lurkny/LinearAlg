@@ -3782,11 +3782,11 @@ Cube<eT>::reshape(const uword new_n_rows, const uword new_n_cols, const uword ne
 template<typename eT>
 inline
 void
-Cube<eT>::resize(const uword in_rows, const uword in_cols, const uword in_slices)
+Cube<eT>::resize(const uword new_n_rows, const uword new_n_cols, const uword new_n_slices)
   {
   arma_extra_debug_sigprint();
   
-  *this = arma::resize(*this, in_rows, in_cols, in_slices);
+  op_resize::apply_cube_inplace((*this), new_n_rows, new_n_cols, new_n_slices);
   }
 
 
@@ -3822,7 +3822,7 @@ Cube<eT>::resize(const SizeCube& s)
   {
   arma_extra_debug_sigprint();
   
-  *this = arma::resize(*this, s.n_rows, s.n_cols, s.n_slices);
+  op_resize::apply_cube_inplace((*this), s.n_rows, s.n_cols, s.n_slices);
   }
 
 

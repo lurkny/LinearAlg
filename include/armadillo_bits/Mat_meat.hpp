@@ -6666,7 +6666,7 @@ Mat<eT>::resize(const uword new_n_rows, const uword new_n_cols)
   {
   arma_extra_debug_sigprint();
   
-  op_resize::apply_inplace((*this), new_n_rows, new_n_cols);
+  op_resize::apply_mat_inplace((*this), new_n_rows, new_n_cols);
   }
 
 
@@ -6678,7 +6678,7 @@ Mat<eT>::resize(const SizeMat& s)
   {
   arma_extra_debug_sigprint();
   
-  op_resize::apply_inplace((*this), s.n_rows, s.n_cols);
+  op_resize::apply_mat_inplace((*this), s.n_rows, s.n_cols);
   }
 
 
