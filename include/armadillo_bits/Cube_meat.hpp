@@ -3756,11 +3756,11 @@ Cube<eT>::slice_colptr(const uword uslice, const uword col) const
 template<typename eT>
 inline
 void
-Cube<eT>::set_size(const uword in_n_rows, const uword in_n_cols, const uword in_n_slices)
+Cube<eT>::set_size(const uword new_n_rows, const uword new_n_cols, const uword new_n_slices)
   {
   arma_extra_debug_sigprint();
   
-  init_warm(in_n_rows, in_n_cols, in_n_slices);
+  init_warm(new_n_rows, new_n_cols, new_n_slices);
   }
 
 

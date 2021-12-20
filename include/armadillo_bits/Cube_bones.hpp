@@ -306,13 +306,13 @@ class Cube : public BaseCube< eT, Cube<eT> >
   arma_inline arma_warn_unused       eT* slice_colptr(const uword in_slice, const uword in_col);
   arma_inline arma_warn_unused const eT* slice_colptr(const uword in_slice, const uword in_col) const;
   
-  inline void set_size(const uword in_rows, const uword in_cols, const uword in_slices);
+  inline void set_size(const uword new_n_rows, const uword new_n_cols, const uword new_n_slices);
   inline void set_size(const SizeCube& s);
   
-  inline void reshape(const uword in_rows, const uword in_cols, const uword in_slices);
+  inline void reshape(const uword new_n_rows, const uword new_n_cols, const uword new_n_slices);
   inline void reshape(const SizeCube& s);
                   
-  inline void resize(const uword in_rows, const uword in_cols, const uword in_slices);
+  inline void resize(const uword new_n_rows, const uword new_n_cols, const uword new_n_slices);
   inline void resize(const SizeCube& s);
   
   
