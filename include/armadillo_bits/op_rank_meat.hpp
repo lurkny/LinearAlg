@@ -44,7 +44,8 @@ op_rank::apply(uword& out, const Base<typename T1::elem_type,T1>& expr, const ty
     }
   
   #if defined(ARMA_OPTIMISE_SYMPD)
-    const bool try_sympd = (auxlib::crippled_lapack(A) == false) && (tol == T(0)) && sympd_helper::guess_sympd_anysize(A);
+    // const bool try_sympd = (auxlib::crippled_lapack(A) == false) && (tol == T(0)) && sympd_helper::guess_sympd_anysize(A);
+    const bool try_sympd = (is_cx<eT>::no) && (auxlib::crippled_lapack(A) == false) && (tol == T(0)) && sympd_helper::guess_sympd_anysize(A);
   #else
     const bool try_sympd = false;
   #endif
