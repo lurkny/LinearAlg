@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: Apache-2.0
 // 
 // Copyright 2008-2016 Conrad Sanderson (http://conradsanderson.id.au)
