@@ -265,7 +265,10 @@ op_reshape::apply_cube_noalias(Cube<eT>& out, const Cube<eT>& A, const uword new
 
 
 
-//! NOTE: deprecated
+//
+
+
+
 template<typename T1>
 arma_cold
 inline
@@ -274,20 +277,72 @@ op_reshape_old::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_reshape_o
   {
   arma_extra_debug_sigprint();
   
+  typedef typename T1::elem_type eT;
+  
   const uword new_n_rows = in.aux_uword_a;
   const uword new_n_cols = in.aux_uword_b;
   const uword dim        = in.aux_uword_c;
   
+  const unwrap<T1>   U(in.m);
+  const Mat<eT>& A = U.M;
+  
+  if(&out == &A)
+    {
+    op_reshape_old::apply_mat_inplace(out, new_n_rows, new_n_cols, dim);
+    }
+  else
+    {
+    op_reshape_old::apply_mat_noalias(out, new_n_rows, new_n_cols, dim);
+    }
+  }
+
+
+
+template<typename eT>
+arma_cold
+inline
+void
+op_reshape_old::apply_mat_inplace(Mat<eT>& A, const uword new_n_rows, const uword new_n_cols, const uword dim)
+  {
+  arma_extra_debug_sigprint();
+  
   if(dim == 0)
     {
-    out = reshape(in.m, new_n_rows, new_n_cols);
+    op_reshape::apply_mat_inplace(A, new_n_rows, new_n_cols);
     }
   else
   if(dim == 1)
     {
-    const unwrap<T1> U(in.m);
+    Mat<eT> tmp;
     
-    out = reshape(strans(U.M), new_n_rows, new_n_cols);
+    op_strans::apply_mat_noalias(tmp, A);
+    
+    op_reshape::apply_mat_noalias(A, tmp, new_n_rows, new_n_cols);
+    }
+  }
+
+
+
+template<typename eT>
+arma_cold
+inline
+void
+op_reshape_old::apply_mat_noalias(Mat<eT>& out, const Mat<eT>& A, const uword new_n_rows, const uword new_n_cols, const uword dim)
+  {
+  arma_extra_debug_sigprint();
+  
+  if(dim == 0)
+    {
+    op_reshape::apply_mat_noalias(out, A, new_n_rows, new_n_cols);
+    }
+  else
+  if(dim == 1)
+    {
+    Mat<eT> tmp;
+    
+    op_strans::apply_mat_noalias(tmp, A);
+    
+    op_reshape::apply_mat_noalias(A, tmp, new_n_rows, new_n_cols);
     }
   }
 

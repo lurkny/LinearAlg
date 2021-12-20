@@ -6721,15 +6721,7 @@ Mat<eT>::reshape(const uword new_n_rows, const uword new_n_cols, const uword dim
   
   arma_debug_check( (dim > 1), "reshape(): parameter 'dim' must be 0 or 1" );
   
-  if(dim == 0)
-    {
-    op_reshape::apply_mat_inplace((*this), new_n_rows, new_n_cols);
-    }
-  else
-  if(dim == 1)
-    {
-    (*this) = arma::reshape(strans(*this), new_n_rows, new_n_cols);
-    }
+  op_reshape_old::apply_mat_inplace((*this), new_n_rows, new_n_cols, dim);
   }
 
 

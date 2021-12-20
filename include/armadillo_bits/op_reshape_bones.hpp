@@ -53,6 +53,10 @@ class op_reshape_old
   public:
   
   template<typename T1> arma_cold inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_reshape_old>& in);
+  
+  template<typename eT> arma_cold inline static void apply_mat_inplace(Mat<eT>& A, const uword new_n_rows, const uword new_n_cols, const uword dim);
+  
+  template<typename eT> arma_cold inline static void apply_mat_noalias(Mat<eT>& out, const Mat<eT>& A, const uword new_n_rows, const uword new_n_cols, const uword dim);
   };
 
 
