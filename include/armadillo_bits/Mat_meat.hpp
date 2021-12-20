@@ -6583,7 +6583,7 @@ Mat<eT>::memptr() const
 template<typename eT>
 inline
 void
-Mat<eT>::set_size(const uword in_elem)
+Mat<eT>::set_size(const uword new_n_elem)
   {
   arma_extra_debug_sigprint();
   
@@ -6592,11 +6592,11 @@ Mat<eT>::set_size(const uword in_elem)
     case 0:
       // fallthrough
     case 1:
-      init_warm(in_elem, 1);
+      init_warm(new_n_elem, 1);
       break;
     
     case 2:
-      init_warm(1, in_elem);
+      init_warm(1, new_n_elem);
       break;
       
     default:
@@ -6610,11 +6610,11 @@ Mat<eT>::set_size(const uword in_elem)
 template<typename eT>
 inline
 void
-Mat<eT>::set_size(const uword in_rows, const uword in_cols)
+Mat<eT>::set_size(const uword new_n_rows, const uword new_n_cols)
   {
   arma_extra_debug_sigprint();
   
-  init_warm(in_rows, in_cols);
+  init_warm(new_n_rows, new_n_cols);
   }
 
 
@@ -6635,7 +6635,7 @@ Mat<eT>::set_size(const SizeMat& s)
 template<typename eT>
 inline
 void
-Mat<eT>::resize(const uword in_elem)
+Mat<eT>::resize(const uword new_n_elem)
   {
   arma_extra_debug_sigprint();
   
@@ -6644,11 +6644,11 @@ Mat<eT>::resize(const uword in_elem)
     case 0:
       // fallthrough
     case 1:
-      (*this).resize(in_elem, 1);
+      (*this).resize(new_n_elem, 1);
       break;
     
     case 2:
-      (*this).resize(1, in_elem);
+      (*this).resize(1, new_n_elem);
       break;
       
     default:
@@ -6981,11 +6981,11 @@ Mat<eT>::zeros()
 template<typename eT>
 inline
 const Mat<eT>&
-Mat<eT>::zeros(const uword in_elem)
+Mat<eT>::zeros(const uword new_n_elem)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_elem);
+  set_size(new_n_elem);
   
   return (*this).zeros();
   }
@@ -6995,11 +6995,11 @@ Mat<eT>::zeros(const uword in_elem)
 template<typename eT>
 inline
 const Mat<eT>&
-Mat<eT>::zeros(const uword in_n_rows, const uword in_n_cols)
+Mat<eT>::zeros(const uword new_n_rows, const uword new_n_cols)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_n_rows, in_n_cols);
+  set_size(new_n_rows, new_n_cols);
   
   return (*this).zeros();
   }
@@ -7033,11 +7033,11 @@ Mat<eT>::ones()
 template<typename eT>
 inline
 const Mat<eT>&
-Mat<eT>::ones(const uword in_elem)
+Mat<eT>::ones(const uword new_n_elem)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_elem);
+  set_size(new_n_elem);
   
   return fill(eT(1));
   }
@@ -7047,11 +7047,11 @@ Mat<eT>::ones(const uword in_elem)
 template<typename eT>
 inline
 const Mat<eT>&
-Mat<eT>::ones(const uword in_rows, const uword in_cols)
+Mat<eT>::ones(const uword new_n_rows, const uword new_n_cols)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_rows, in_cols);
+  set_size(new_n_rows, new_n_cols);
   
   return fill(eT(1));
   }
@@ -7087,11 +7087,11 @@ Mat<eT>::randu()
 template<typename eT>
 inline
 const Mat<eT>&
-Mat<eT>::randu(const uword in_elem)
+Mat<eT>::randu(const uword new_n_elem)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_elem);
+  set_size(new_n_elem);
   
   return (*this).randu();
   }
@@ -7101,11 +7101,11 @@ Mat<eT>::randu(const uword in_elem)
 template<typename eT>
 inline
 const Mat<eT>&
-Mat<eT>::randu(const uword in_rows, const uword in_cols)
+Mat<eT>::randu(const uword new_n_rows, const uword new_n_cols)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_rows, in_cols);
+  set_size(new_n_rows, new_n_cols);
   
   return (*this).randu();
   }
@@ -7141,11 +7141,11 @@ Mat<eT>::randn()
 template<typename eT>
 inline
 const Mat<eT>&
-Mat<eT>::randn(const uword in_elem)
+Mat<eT>::randn(const uword new_n_elem)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_elem);
+  set_size(new_n_elem);
   
   return (*this).randn();
   }
@@ -7155,11 +7155,11 @@ Mat<eT>::randn(const uword in_elem)
 template<typename eT>
 inline
 const Mat<eT>&
-Mat<eT>::randn(const uword in_rows, const uword in_cols)
+Mat<eT>::randn(const uword new_n_rows, const uword new_n_cols)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_rows, in_cols);
+  set_size(new_n_rows, new_n_cols);
   
   return (*this).randn();
   }
@@ -7199,11 +7199,11 @@ Mat<eT>::eye()
 template<typename eT>
 inline
 const Mat<eT>&
-Mat<eT>::eye(const uword in_rows, const uword in_cols)
+Mat<eT>::eye(const uword new_n_rows, const uword new_n_cols)
   {
   arma_extra_debug_sigprint();
   
-  set_size(in_rows, in_cols);
+  set_size(new_n_rows, new_n_cols);
   
   return (*this).eye();
   }
