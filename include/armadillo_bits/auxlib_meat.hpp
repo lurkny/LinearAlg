@@ -2188,9 +2188,9 @@ auxlib::eig_sym(Col<eT>& eigval, Mat<eT>& eigvec, const Mat<eT>& X)
   
   #if defined(ARMA_USE_LAPACK)
     {
-    eigvec = X;
+    arma_debug_check( (X.is_square() == false), "eig_sym(): given matrix must be square sized" );
     
-    arma_debug_check( (eigvec.is_square() == false), "eig_sym(): given matrix must be square sized" );
+    eigvec = X;
     
     if(eigvec.is_empty())
       {
@@ -2242,9 +2242,9 @@ auxlib::eig_sym(Col<T>& eigval, Mat< std::complex<T> >& eigvec, const Mat< std::
     {
     typedef typename std::complex<T> eT;
     
-    eigvec = X;
+    arma_debug_check( (X.is_square() == false), "eig_sym(): given matrix must be square sized" );
     
-    arma_debug_check( (eigvec.is_square() == false), "eig_sym(): given matrix must be square sized" );
+    eigvec = X;
     
     if(eigvec.is_empty())
       {
@@ -2295,9 +2295,9 @@ auxlib::eig_sym_dc(Col<eT>& eigval, Mat<eT>& eigvec, const Mat<eT>& X)
   
   #if defined(ARMA_USE_LAPACK)
     {
-    eigvec = X;
+    arma_debug_check( (X.is_square() == false), "eig_sym(): given matrix must be square sized" );
     
-    arma_debug_check( (eigvec.is_square() == false), "eig_sym(): given matrix must be square sized" );
+    eigvec = X;
     
     if(eigvec.is_empty())
       {
@@ -2374,9 +2374,9 @@ auxlib::eig_sym_dc(Col<T>& eigval, Mat< std::complex<T> >& eigvec, const Mat< st
     {
     typedef typename std::complex<T> eT;
     
-    eigvec = X;
+    arma_debug_check( (X.is_square() == false), "eig_sym(): given matrix must be square sized" );
     
-    arma_debug_check( (eigvec.is_square() == false), "eig_sym(): given matrix must be square sized" );
+    eigvec = X;
     
     if(eigvec.is_empty())
       {
