@@ -23,8 +23,8 @@
 
 #define ARMA_VERSION_MAJOR 10
 #define ARMA_VERSION_MINOR 7
-#define ARMA_VERSION_PATCH 900
-#define ARMA_VERSION_NAME  "unstable"
+#define ARMA_VERSION_PATCH 91
+#define ARMA_VERSION_NAME  "10.8-RC1"
 
 
 
