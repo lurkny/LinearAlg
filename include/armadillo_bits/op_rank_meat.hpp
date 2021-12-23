@@ -60,7 +60,7 @@ op_rank::apply(uword& out, const Base<typename T1::elem_type,T1>& expr, const ty
   
   if(do_sym)
     {
-    arma_extra_debug_print("op_rank::apply(): detected symmetric matrix");
+    arma_extra_debug_print("op_rank::apply(): symmetric/hermitian optimisation");
     
     return op_rank::apply_sym(out, A, tol);
     }
