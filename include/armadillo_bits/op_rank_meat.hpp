@@ -52,7 +52,7 @@ op_rank::apply(uword& out, const Base<typename T1::elem_type,T1>& expr, const ty
       
       sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
       
-      do_sym = is_approx_sym;
+      do_sym = (is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd);
       }
   #else
     const bool do_sym = false;

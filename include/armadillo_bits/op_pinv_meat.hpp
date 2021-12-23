@@ -86,7 +86,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
       
       sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
       
-      do_sym   = is_approx_sym;
+      do_sym   = (is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd);
       do_sympd = is_approx_sympd && (tol == T(0)) && (method_id == uword(0));
       }
   #else
@@ -113,6 +113,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
   if(do_sym)
     {
     arma_extra_debug_print("op_pinv: detected symmetric matrix");
+    
     
     return op_pinv::apply_sym(out, A, tol, method_id);
     }
