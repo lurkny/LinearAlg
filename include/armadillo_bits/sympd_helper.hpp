@@ -215,9 +215,9 @@ inline
 bool
 guess_sympd(const Mat<eT>& A)
   {
-  // analyse matrices with size >= 16x16
+  // analyse matrices with size >= 4x4
   
-  if((A.n_rows != A.n_cols) || (A.n_rows < uword(16)))  { return false; }
+  if((A.n_rows != A.n_cols) || (A.n_rows < uword(4)))  { return false; }
   
   return guess_sympd_worker(A);
   }
@@ -227,11 +227,9 @@ guess_sympd(const Mat<eT>& A)
 template<typename eT>
 inline
 bool
-guess_sympd_anysize(const Mat<eT>& A)
+guess_sympd(const Mat<eT>& A, const uword min_n_rows)
   {
-  // analyse matrices with size >= 2x2
-  
-  if((A.n_rows != A.n_cols) || (A.n_rows < uword(2)))  { return false; }
+  if((A.n_rows != A.n_cols) || (A.n_rows < min_n_rows))  { return false; }
   
   return guess_sympd_worker(A);
   }
@@ -431,7 +429,7 @@ analyse_matrix(bool& is_approx_sym, bool& is_approx_sympd, const Mat<eT>& A)
   {
   arma_extra_debug_sigprint();
   
-  if((A.n_rows != A.n_cols) || (A.n_rows < uword(2)))
+  if((A.n_rows != A.n_cols) || (A.n_rows < uword(4)))
     {
     is_approx_sym   = false;
     is_approx_sympd = false;
