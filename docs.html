@@ -16636,7 +16636,7 @@ model.save("my_model.gmm");
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-      &tau;, the ratio of any circle's circumference to its radius (equivalent to 2&pi;)
+      &tau;, the ratio of any circle's circumference to its radius (replacement of 2&pi;)
     </td>
   </tr>
   <tr>
@@ -16688,6 +16688,7 @@ model.save("my_model.gmm");
       square root of 2
     </td>
   </tr>
+  <!--
   <tr>
     <td style="vertical-align: top;">
       <code>datum::sqrt2pi</code>
@@ -16699,6 +16700,7 @@ model.save("my_model.gmm");
       square root of 2&pi;
     </td>
   </tr>
+  -->
   <tr>
     <td style="vertical-align: top;">
       <code>datum::eps</code>
@@ -19307,6 +19309,7 @@ List of additions and changes for each version:
 <li>faster handling of symmetric matrices by <a href="#pinv">pinv()</a> and <a href="#rank">rank()</a></li>
 <li>faster handling of diagonal matrices by <a href="#inv_sympd">inv_sympd()</a>, <a href="#pinv">pinv()</a>, <a href="#rank">rank()</a></li>
 <li>expanded <a href="#norm">norm()</a> to handle integer vectors and matrices</li>
+<li>added <a href="#constants">datum::tau</a> to replace 2&pi;</li>
 </ul>
 </li>
 <br>
