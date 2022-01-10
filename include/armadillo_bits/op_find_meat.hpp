@@ -93,6 +93,11 @@ op_find::helper
   
   const eT val = X.aux;
   
+  if(arma_config::debug && arma_isnan(val))
+    {
+    arma_debug_warn_level(1, "find(): NaN is not comparable to any value, even other NaN values");
+    }
+  
   const Proxy<T1> A(X.m);
   
   const uword n_elem = A.get_n_elem();
