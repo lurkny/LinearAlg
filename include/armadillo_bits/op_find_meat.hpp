@@ -93,9 +93,9 @@ op_find::helper
   
   const eT val = X.aux;
   
-  if(arma_config::debug && arma_isnan(val))
+  if((is_same_type<op_type, op_rel_eq>::yes || is_same_type<op_type, op_rel_noteq>::yes) && arma_config::debug && arma_isnan(val))
     {
-    arma_debug_warn_level(1, "find(): NaN is not comparable to any value, even other NaN values");
+    arma_debug_warn_level(1, "find(): NaN is not equal to anything; suggest to use find_nonfinite() instead");
     }
   
   const Proxy<T1> A(X.m);
@@ -225,6 +225,11 @@ op_find::helper
   typedef typename Proxy<T1>::ea_type ea_type;
   
   const eT val = X.aux;
+  
+  if((is_same_type<op_type, op_rel_eq>::yes || is_same_type<op_type, op_rel_noteq>::yes) && arma_config::debug && arma_isnan(val))
+    {
+    arma_debug_warn_level(1, "find(): NaN is not equal to anything; suggest to use find_nonfinite() instead");
+    }
   
   const Proxy<T1> A(X.m);
   
