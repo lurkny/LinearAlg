@@ -233,7 +233,6 @@ op_find::helper
   
   const Proxy<T1> A(X.m);
   
-  ea_type     PA     = A.get_ea();
   const uword n_elem = A.get_n_elem();
   
   indices.set_size(n_elem, 1);
@@ -244,6 +243,8 @@ op_find::helper
   
   if(Proxy<T1>::use_at == false)
     {
+    ea_type PA = A.get_ea();
+    
     for(uword i=0; i<n_elem; ++i)
       {
       const eT tmp = PA[i];
@@ -314,10 +315,7 @@ op_find::helper
   
   arma_debug_assert_same_size(A, B, "relational operator");
   
-  ea_type1 PA = A.get_ea();
-  ea_type2 PB = B.get_ea();
-  
-  const uword n_elem = B.get_n_elem();
+  const uword n_elem = A.get_n_elem();
   
   indices.set_size(n_elem, 1);
   
@@ -326,6 +324,9 @@ op_find::helper
   
   if((Proxy<T1>::use_at == false) && (Proxy<T2>::use_at == false))
     {
+    ea_type1 PA = A.get_ea();
+    ea_type2 PB = B.get_ea();
+    
     for(uword i=0; i<n_elem; ++i)
       {
       const eT1 tmp1 = PA[i];
@@ -407,19 +408,18 @@ op_find::helper
   
   arma_debug_assert_same_size(A, B, "relational operator");
   
-  ea_type1 PA = A.get_ea();
-  ea_type2 PB = B.get_ea();
-  
-  const uword n_elem = B.get_n_elem();
+  const uword n_elem = A.get_n_elem();
   
   indices.set_size(n_elem, 1);
   
   uword* indices_mem = indices.memptr();
   uword  n_nz        = 0;
   
-  
   if((Proxy<T1>::use_at == false) && (Proxy<T2>::use_at == false))
     {
+    ea_type1 PA = A.get_ea();
+    ea_type2 PB = B.get_ea();
+    
     for(uword i=0; i<n_elem; ++i)
       {
       bool not_zero;
