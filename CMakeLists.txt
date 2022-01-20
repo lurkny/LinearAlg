@@ -381,12 +381,12 @@ else()
     
     if(OpenBLAS_FOUND AND ATLAS_FOUND)
       message(STATUS "")
-      message(STATUS "*** WARNING: found both OpenBLAS and ATLAS; ATLAS will not be used")
+      message(STATUS "*** NOTE: found both OpenBLAS and ATLAS; ATLAS will not be used")
     endif()
     
     if(OpenBLAS_FOUND AND BLAS_FOUND)
       message(STATUS "")
-      message(STATUS "*** WARNING: found both OpenBLAS and BLAS; BLAS will not be used")
+      message(STATUS "*** NOTE: found both OpenBLAS and BLAS; BLAS will not be used")
     endif()
     
     if(OpenBLAS_FOUND)
@@ -396,6 +396,11 @@ else()
       
       if(OPENBLAS_PROVIDES_LAPACK)
         set(ARMA_USE_LAPACK true)
+      else()
+        message(STATUS "")
+        message(STATUS "*** NOTE: if OpenBLAS is known to provide LAPACK functions,")
+        message(STATUS "*** NOTE: recommend to re-run the CMake installer")
+        message(STATUS "*** NOTE: with the OPENBLAS_PROVIDES_LAPACK option enabled.")
       endif()
       
       message(STATUS "")
@@ -424,10 +429,17 @@ else()
     endif()
     
     if(LAPACK_FOUND)
-      set(ARMA_USE_LAPACK true)
-      set(ARMA_LIBS ${ARMA_LIBS} ${LAPACK_LIBRARIES})
+      if(OpenBLAS_FOUND AND OPENBLAS_PROVIDES_LAPACK)
+        message(STATUS "*** NOTE: found both OpenBLAS and LAPACK;")
+        message(STATUS "*** NOTE: option OPENBLAS_PROVIDES_LAPACK is enabled,")
+        message(STATUS "*** NOTE: so will not link with plain LAPACK.")
+        message(STATUS "")
+      else()
+        set(ARMA_USE_LAPACK true)
+        set(ARMA_LIBS ${ARMA_LIBS} ${LAPACK_LIBRARIES})
+      endif()
     endif()
-      
+    
   endif()
   
 endif()
