@@ -1,9 +1,9 @@
 ### Armadillo: C++ Library for Linear Algebra & Scientific Computing  
 http://arma.sourceforge.net
 
-Copyright 2008-2021 Conrad Sanderson (http://conradsanderson.id.au)  
+Copyright 2008-2022 Conrad Sanderson (http://conradsanderson.id.au)  
 Copyright 2008-2016 National ICT Australia (NICTA)  
-Copyright 2017-2021 Data61 / CSIRO  
+Copyright 2017-2022 Data61 / CSIRO  
 
 ---
 
