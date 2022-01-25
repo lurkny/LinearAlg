@@ -110,7 +110,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     // auxlib::inv_sympd_rcond() will fail if A isn't really positive definite or its rcond is below rcond_threshold
     }
   
-  if(do_sym && (n_rows > uword(40)))
+  if(do_sym && (n_rows > (is_cx<eT>::yes ? uword(20) : uword(40))))
     {
     arma_extra_debug_print("op_pinv: symmetric/hermitian optimisation");
     
