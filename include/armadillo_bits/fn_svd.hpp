@@ -157,7 +157,7 @@ svd_econ
     U.soft_reset();
     S.soft_reset();
     V.soft_reset();
-    arma_debug_warn("svd(): decomposition failed");
+    arma_debug_warn("svd_econ(): decomposition failed");
     }
   
   return status;
