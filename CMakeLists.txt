@@ -99,6 +99,9 @@ endif()
 # NOTE: for Linux, this is available with gcc 4.8.3 onwards
 # NOTE: for macOS, thread_local is supoported in Xcode 8 (mid 2016 onwards) in C++11 mode
 
+# NOTE: thread_local appears broken again on macOS 11 (Big Sur) and/or AppleClang 12.0
+# NOTE: see comments in include/armadillo_bits/arma_rng.hpp
+
 if(DEFINED CMAKE_CXX_COMPILER_ID AND DEFINED CMAKE_CXX_COMPILER_VERSION)
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     if(NOT (${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.8.3))
