@@ -8920,6 +8920,7 @@ Mat<eT>::size() const
 
 template<typename eT>
 inline
+arma_warn_unused
 eT&
 Mat<eT>::front()
   {
@@ -8932,6 +8933,7 @@ Mat<eT>::front()
 
 template<typename eT>
 inline
+arma_warn_unused
 const eT&
 Mat<eT>::front() const
   {
@@ -8944,6 +8946,7 @@ Mat<eT>::front() const
 
 template<typename eT>
 inline
+arma_warn_unused
 eT&
 Mat<eT>::back()
   {
@@ -8956,6 +8959,7 @@ Mat<eT>::back()
 
 template<typename eT>
 inline
+arma_warn_unused
 const eT&
 Mat<eT>::back() const
   {

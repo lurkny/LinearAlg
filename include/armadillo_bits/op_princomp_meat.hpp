@@ -302,7 +302,12 @@ op_princomp::apply
   {
   arma_extra_debug_sigprint();
   
-  const bool status = op_princomp::direct_princomp(out, in.m);
+  typedef typename T1::elem_type eT;
+  
+  const unwrap_check<T1> tmp(in.m, out);
+  const Mat<eT>& A     = tmp.M;
+  
+  const bool status = op_princomp::direct_princomp(out, A);
   
   if(status == false)
     {

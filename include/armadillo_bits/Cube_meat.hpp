@@ -4845,6 +4845,7 @@ Cube<eT>::size() const
 
 template<typename eT>
 inline
+arma_warn_unused
 eT&
 Cube<eT>::front()
   {
@@ -4857,6 +4858,7 @@ Cube<eT>::front()
 
 template<typename eT>
 inline
+arma_warn_unused
 const eT&
 Cube<eT>::front() const
   {
@@ -4869,6 +4871,7 @@ Cube<eT>::front() const
 
 template<typename eT>
 inline
+arma_warn_unused
 eT&
 Cube<eT>::back()
   {
@@ -4881,6 +4884,7 @@ Cube<eT>::back()
 
 template<typename eT>
 inline
+arma_warn_unused
 const eT&
 Cube<eT>::back() const
   {
