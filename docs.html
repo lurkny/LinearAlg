@@ -17192,7 +17192,37 @@ See also:
 <b>wall_clock</b>
 <ul>
 <li>
-Simple wall clock timer class for measuring the number of elapsed seconds
+A simple timer class for measuring the number of elapsed seconds
+</li>
+<br>
+<li>
+An instance of the class has two member functions:
+<br>
+<br>
+<table style="text-align: left;" border="0" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <b><code>.tic()</code></b>
+      </td>
+      <td style="vertical-align: top;">&nbsp;<br>
+      </td>
+      <td style="vertical-align: top;">
+      start the timer
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+      <b><code>.toc()</code></b>
+      </td>
+      <td style="vertical-align: top;">&nbsp;<br>
+      </td>
+      <td style="vertical-align: top;">
+      return the number of seconds since the last call to <code>.tic()</code>
+      </td>
+    </tr>
+  </tbody>
+</table>
 </li>
 <br>
 <li>
@@ -17201,21 +17231,20 @@ Examples:
 <pre>
 wall_clock timer;
 
-mat A(100, 100, fill::randu);
-mat B(100, 100, fill::randu);
-mat C;
-
 timer.tic();
 
-for(uword i=0; i&lt;100000; ++i)
-  {
-  C = A + B + A + B;
-  }
+// ... do something ...
 
 double n = timer.toc();
 
 cout &lt;&lt; "number of seconds: " &lt;&lt; n &lt;&lt; endl;
 </pre>
+</ul>
+</li>
+<li>
+See also:
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Elapsed_real_time">elapsed real time</a> in Wikipedia</li>
 </ul>
 </li>
 </ul>
