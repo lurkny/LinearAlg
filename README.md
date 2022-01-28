@@ -21,7 +21,7 @@ Copyright 2017-2021 Data61 / CSIRO
 2.  [Citation Details](#2-citation-details)
 3.  [Distribution License](#3-distribution-license)
 
-4.  [Prerequisites](#4-prerequisites)
+4.  [Prerequisites and Dependencies](#4-prerequisites-and-dependencies)
 
 5.  [Linux and macOS: Installation](#5-linux-and-macos-installation)
 6.  [Linux and macOS: Compiling and Linking](#6-linux-and-macos-compiling-and-linking)
@@ -103,7 +103,14 @@ informational purposes only and do not modify the License.
 
 ---
 
-### 4: Prerequisites
+### 4: Prerequisites and Dependencies
+
+The functionality of Armadillo is partly dependent on other libraries:
+OpenBLAS (or standard BLAS) and LAPACK (for dense matrices),
+as well as ARPACK and SuperLU (for sparse matrices).
+Caveat: only SuperLU versions 5.2.x can be used.
+On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
+Use of OpenBLAS is strongly recommended on all systems.
 
 Armadillo 10.x requires a C++ compiler that supports at least the C++11 standard.
 Use Armadillo 9.900 if your compiler only supports the old C++98/C++03 standards.
@@ -117,17 +124,6 @@ and then running the following command in a terminal window:
     xcode-select --install
 
 On Windows systems, the MinGW toolset or Visual Studio C++ 2019 (MSVC) can be used.
-
-The functionality of Armadillo is partly dependent on other libraries:
-OpenBLAS (or standard BLAS) and LAPACK (for dense matrices),
-as well as ARPACK and SuperLU (for sparse matrices).
-Caveat: only SuperLU versions 5.2.x can be used.
-On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
-
-Armadillo can work without the above libraries, but its functionality will be reduced.
-Basic functionality will be available (eg. matrix addition and multiplication),
-but operations such as eigen decomposition and system solvers will not be.
-Matrix multiplication may not be as fast (mainly for large matrices).
 
 ---
 
@@ -465,18 +461,18 @@ Octave/Matlab with C++ code that uses Armadillo matrices.
 
 ### 17: Related Software Using Armadillo
 
+* ensmallen: fast non-linear numerical optimisation library  
+  http://ensmallen.org/
+
 * MLPACK: extensive library of machine learning algorithms  
   http://mlpack.org
 
-* ensmallen: C++ library of numerical optimisation methods  
-  http://ensmallen.org/
-
-* SigPack: C++ signal processing library  
-  http://sigpack.sourceforge.net
+* CARMA: bidirectional interface between Python and Armadillo  
+  https://github.com/RUrlus/carma
 
 * RcppArmadillo: integration of Armadillo with the R system and environment  
   http://dirk.eddelbuettel.com/code/rcpp.armadillo.html
 
-* PyArmadillo: linear algebra library for Python  
+* PyArmadillo: streamlined linear algebra library for Python  
   https://pyarma.sourceforge.io
 
