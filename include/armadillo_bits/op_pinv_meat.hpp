@@ -79,7 +79,9 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     bool do_sym   = false;
     bool do_sympd = false;
     
-    if(auxlib::crippled_lapack(A) == false)
+    const bool have_default_args = ((tol == T(0)) && (method_id == uword(0)));
+    
+    if( (auxlib::crippled_lapack(A) == false) && (have_default_args || (n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)))) )
       {
       bool is_approx_sym   = false;
       bool is_approx_sympd = false;
@@ -87,7 +89,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
       sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
       
       do_sym   = (is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd);
-      do_sympd = is_approx_sympd && (tol == T(0)) && (method_id == uword(0));
+      do_sympd = is_approx_sympd && have_default_args;
       }
   #else
     const bool do_sym   = false;
@@ -110,7 +112,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     // auxlib::inv_sympd_rcond() will fail if A isn't really positive definite or its rcond is below rcond_threshold
     }
   
-  if(do_sym && (n_rows > (is_cx<eT>::yes ? uword(20) : uword(40))))
+  if(do_sym)
     {
     arma_extra_debug_print("op_pinv: symmetric/hermitian optimisation");
     
