@@ -79,17 +79,18 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     bool do_sym   = false;
     bool do_sympd = false;
     
-    const bool have_default_args = ((tol == T(0)) && (method_id == uword(0)));
+    const bool is_sym_size_ok = (n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)));
+    const bool is_arg_default = ((tol == T(0)) && (method_id == uword(0)));
     
-    if( (auxlib::crippled_lapack(A) == false) && (have_default_args || (n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)))) )
+    if( (auxlib::crippled_lapack(A) == false) && (is_arg_default || is_sym_size_ok) )
       {
       bool is_approx_sym   = false;
       bool is_approx_sympd = false;
       
       sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
       
-      do_sym   = (is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd);
-      do_sympd = is_approx_sympd && have_default_args;
+      do_sym   = is_sym_size_ok && ((is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd));
+      do_sympd = is_arg_default && is_approx_sympd;
       }
   #else
     const bool do_sym   = false;
