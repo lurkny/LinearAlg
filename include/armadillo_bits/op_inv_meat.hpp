@@ -322,6 +322,13 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
     if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
     }
   
+  // TODO: the tinymatrix optimisation currently does not care if the given matrix is not sympd;
+  // TODO: need to print a warning if the matrix is not sympd based on fast rudimentary checks,
+  // TODO: ie. diagonal values are > 0, and max value is on the diagonal.
+  // 
+  // TODO: when the major version is bumped:
+  // TODO: either rework the tinymatrix optimisation to be reliably more strict, or remove it entirely
+  
   if((out.n_rows <= 4) && is_cx<eT>::no)
     {
     arma_extra_debug_print("op_inv_sympd: attempting tinymatrix optimisation");
