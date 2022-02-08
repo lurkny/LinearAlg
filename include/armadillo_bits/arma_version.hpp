@@ -23,8 +23,8 @@
 
 #define ARMA_VERSION_MAJOR 10
 #define ARMA_VERSION_MINOR 8
-#define ARMA_VERSION_PATCH 2
-#define ARMA_VERSION_NAME  "Realm Raider"
+#define ARMA_VERSION_PATCH 900
+#define ARMA_VERSION_NAME  "unstable"
 
 
 
