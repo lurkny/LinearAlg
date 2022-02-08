@@ -22,6 +22,40 @@
 
 
 //
+// glue_solve_gen_default
+
+
+template<typename T1, typename T2>
+inline
+void
+glue_solve_gen_default::apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_solve_gen_default>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  const bool status = glue_solve_gen_default::apply(out, X.A, X.B);
+  
+  if(status == false)
+    {
+    out.soft_reset();
+    arma_stop_runtime_error("solve(): solution not found");
+    }
+  }
+
+
+
+template<typename eT, typename T1, typename T2>
+inline
+bool
+glue_solve_gen_default::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>& B_expr)
+  {
+  arma_extra_debug_sigprint();
+  
+  return glue_solve_gen::apply<eT,T1,T2,false>( out, A_expr, B_expr, uword(0));
+  }
+
+
+
+//
 // glue_solve_gen
 
 
@@ -43,7 +77,7 @@ glue_solve_gen::apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_so
 
 
 
-template<typename eT, typename T1, typename T2>
+template<typename eT, typename T1, typename T2, const bool has_user_flags>
 inline
 bool
 glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>& B_expr, const uword flags)
@@ -52,16 +86,19 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   
   typedef typename get_pod_type<eT>::result T;
   
-  const bool fast         = bool(flags & solve_opts::flag_fast        );
-  const bool equilibrate  = bool(flags & solve_opts::flag_equilibrate );
-  const bool no_approx    = bool(flags & solve_opts::flag_no_approx   );
-  const bool no_band      = bool(flags & solve_opts::flag_no_band     );
-  const bool no_sympd     = bool(flags & solve_opts::flag_no_sympd    );
-  const bool allow_ugly   = bool(flags & solve_opts::flag_allow_ugly  );
-  const bool likely_sympd = bool(flags & solve_opts::flag_likely_sympd);
-  const bool refine       = bool(flags & solve_opts::flag_refine      );
-  const bool no_trimat    = bool(flags & solve_opts::flag_no_trimat   );
-  const bool force_approx = bool(flags & solve_opts::flag_force_approx);
+  if(has_user_flags == true )  { arma_extra_debug_print("glue_solve_gen::apply(): has_user_flags == true");  }
+  if(has_user_flags == false)  { arma_extra_debug_print("glue_solve_gen::apply(): has_user_flags == false"); }
+  
+  const bool fast         = has_user_flags && bool(flags & solve_opts::flag_fast        );
+  const bool equilibrate  = has_user_flags && bool(flags & solve_opts::flag_equilibrate );
+  const bool no_approx    = has_user_flags && bool(flags & solve_opts::flag_no_approx   );
+  const bool no_band      = has_user_flags && bool(flags & solve_opts::flag_no_band     );
+  const bool no_sympd     = has_user_flags && bool(flags & solve_opts::flag_no_sympd    );
+  const bool allow_ugly   = has_user_flags && bool(flags & solve_opts::flag_allow_ugly  );
+  const bool likely_sympd = has_user_flags && bool(flags & solve_opts::flag_likely_sympd);
+  const bool refine       = has_user_flags && bool(flags & solve_opts::flag_refine      );
+  const bool no_trimat    = has_user_flags && bool(flags & solve_opts::flag_no_trimat   );
+  const bool force_approx = has_user_flags && bool(flags & solve_opts::flag_force_approx);
   
   arma_extra_debug_print("glue_solve_gen::apply(): enabled flags:");
   
