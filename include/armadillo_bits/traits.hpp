@@ -1225,19 +1225,19 @@ struct has_op_inv_gen_default< Glue<T1, Op<T2,op_inv_gen_default>, glue_times> >
 
 
 template<typename T1>
-struct has_op_inv_sympd
+struct has_op_inv_spd_default
   { static constexpr bool value = false; };
 
 template<typename T1>
-struct has_op_inv_sympd< Op<T1,op_inv_sympd> >
+struct has_op_inv_spd_default< Op<T1,op_inv_spd_default> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>
-struct has_op_inv_sympd< Glue<Op<T1,op_inv_sympd>, T2, glue_times> >
+struct has_op_inv_spd_default< Glue<Op<T1,op_inv_spd_default>, T2, glue_times> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>
-struct has_op_inv_sympd< Glue<T1, Op<T2,op_inv_sympd>, glue_times> >
+struct has_op_inv_spd_default< Glue<T1, Op<T2,op_inv_spd_default>, glue_times> >
   { static constexpr bool value = true;  };
 
 

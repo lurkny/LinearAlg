@@ -287,11 +287,11 @@ op_inv_gen_default::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
 template<typename T1>
 inline
 void
-op_inv_sympd::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_sympd>& X)
+op_inv_spd_default::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_spd_default>& X)
   {
   arma_extra_debug_sigprint();
   
-  const bool status = op_inv_sympd::apply_direct(out, X.m);
+  const bool status = op_inv_spd_default::apply_direct(out, X.m);
   
   if(status == false)
     {
@@ -305,7 +305,7 @@ op_inv_sympd::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_sympd>&
 template<typename T1>
 inline
 bool
-op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr)
+op_inv_spd_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr)
   {
   arma_extra_debug_sigprint();
   
@@ -331,7 +331,7 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
   
   if((out.n_rows <= 4) && is_cx<eT>::no)
     {
-    arma_extra_debug_print("op_inv_sympd: attempting tinymatrix optimisation");
+    arma_extra_debug_print("op_inv_spd_default: attempting tinymatrix optimisation");
     
     Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
     
@@ -339,14 +339,14 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
     
     if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
     
-    arma_extra_debug_print("op_inv_sympd: tinymatrix optimisation failed");
+    arma_extra_debug_print("op_inv_spd_default: tinymatrix optimisation failed");
     
     // fallthrough if optimisation failed
     }
   
   if((is_cx<eT>::no) && (is_op_diagmat<T1>::value || out.is_diagmat()))
     {
-    arma_extra_debug_print("op_inv_sympd: detected diagonal matrix");
+    arma_extra_debug_print("op_inv_spd_default: detected diagonal matrix");
     
     // specialised handling of real matrices only;
     // currently auxlib::inv_sympd() does not enforce that 

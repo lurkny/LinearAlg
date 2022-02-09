@@ -100,12 +100,12 @@ struct strip_inv< Op<T1, op_inv_gen_default> >
 
 
 template<typename T1>
-struct strip_inv< Op<T1, op_inv_sympd> >
+struct strip_inv< Op<T1, op_inv_spd_default> >
   {
   typedef T1 stored_type;
   
   inline
-  strip_inv(const Op<T1, op_inv_sympd>& X)
+  strip_inv(const Op<T1, op_inv_spd_default>& X)
     : M(X.m)
     {
     arma_extra_debug_sigprint();

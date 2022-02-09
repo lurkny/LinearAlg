@@ -141,10 +141,10 @@ glue_times_redirect2_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     {
     if(strip_inv<T2>::do_inv_sympd)
       {
-      // replace A*inv_sympd(B) with trans( solve(trans(B),trans(A)) )
+      // replace A*inv_spd_default(B) with trans( solve(trans(B),trans(A)) )
       // transpose of B is avoided as B is explicitly marked as symmetric
       
-      arma_extra_debug_print("glue_times_redirect<2>::apply(): detected A*inv_sympd(B)");
+      arma_extra_debug_print("glue_times_redirect<2>::apply(): detected A*inv_spd_default(B)");
       
       const Mat<eT> At = trans(X.A);
       
@@ -556,7 +556,7 @@ glue_times::apply_inplace_plus(Mat<typename T1::elem_type>& out, const Glue<T1, 
   typedef typename T1::elem_type            eT;
   typedef typename get_pod_type<eT>::result  T;
   
-  if( (is_outer_product<T1>::value) || (has_op_inv_gen_default<T1>::value) || (has_op_inv_gen_default<T2>::value) || (has_op_inv_sympd<T1>::value) || (has_op_inv_sympd<T2>::value) )
+  if( (is_outer_product<T1>::value) || (has_op_inv_gen_default<T1>::value) || (has_op_inv_gen_default<T2>::value) || (has_op_inv_spd_default<T1>::value) || (has_op_inv_spd_default<T2>::value) )
     {
     // partial workaround for corner cases
     
