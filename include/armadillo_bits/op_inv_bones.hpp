@@ -26,6 +26,23 @@ class op_inv_gen_default
   {
   public:
   
+  template<typename T1>
+  inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_gen_default>& in);
+  
+  template<typename T1>
+  inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig);
+  
+  template<typename T1>
+  inline static bool apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X, const char* caller_sig);
+  };
+
+
+
+class op_inv_gen
+  : public traits_op_default
+  {
+  public:
+  
   template<const uword row, const uword col>
   struct pos
     {
@@ -35,13 +52,10 @@ class op_inv_gen_default
     };
   
   template<typename T1>
-  inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_gen_default>& in);
+  inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_gen>& in);
   
   template<typename T1>
-  inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig);
-  
-  template<typename T1>
-  inline static bool apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X, const char* caller_sig);
+  inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const uword flags);
   
   template<typename eT>
   arma_cold inline static bool apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X);
