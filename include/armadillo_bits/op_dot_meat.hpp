@@ -114,13 +114,7 @@ op_dot::direct_dot(const uword n_elem, const eT* const A, const eT* const B)
     }
   else
     {
-    #if defined(ARMA_USE_ATLAS)
-      {
-      arma_extra_debug_print("atlas::cblas_dot()");
-      
-      return atlas::cblas_dot(n_elem, A, B);
-      }
-    #elif defined(ARMA_USE_BLAS)
+    #if defined(ARMA_USE_BLAS)
       {
       arma_extra_debug_print("blas::dot()");
       
@@ -149,13 +143,7 @@ op_dot::direct_dot(const uword n_elem, const eT* const A, const eT* const B)
     }
   else
     {
-    #if defined(ARMA_USE_ATLAS)
-      {
-      arma_extra_debug_print("atlas::cblas_cx_dot()");
-      
-      return atlas::cblas_cx_dot(n_elem, A, B);
-      }
-    #elif defined(ARMA_USE_BLAS)
+    #if defined(ARMA_USE_BLAS)
       {
       arma_extra_debug_print("blas::dot()");
       
@@ -450,12 +438,6 @@ op_cdot::direct_cdot(const uword n_elem, const eT* const A, const eT* const B)
       blas::gemv(&trans, &m, &n, &alpha, A, &m, B, &inc, &beta, &result[0], &inc);
       
       return result[0];
-      }
-    #elif defined(ARMA_USE_ATLAS)
-      {
-      // TODO: use dedicated atlas functions cblas_cdotc_sub() and cblas_zdotc_sub() and retune threshold
-
-      return op_cdot::direct_cdot_arma(n_elem, A, B);
       }
     #else
       {

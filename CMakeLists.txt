@@ -55,7 +55,6 @@ set(ARMA_USE_WRAPPER true)
 
 set(ARMA_USE_LAPACK     false)
 set(ARMA_USE_BLAS       false)
-set(ARMA_USE_ATLAS      false)
 set(ARMA_USE_HDF5_ALT   false)
 set(ARMA_USE_ARPACK     false)
 set(ARMA_USE_EXTERN_RNG false)
@@ -326,7 +325,6 @@ else()
   
   include(ARMA_FindMKL)
   include(ARMA_FindOpenBLAS)
-  include(ARMA_FindATLAS)
   include(ARMA_FindBLAS)
   include(ARMA_FindLAPACK)
   
@@ -336,7 +334,6 @@ else()
   
   message(STATUS "      MKL_FOUND = ${MKL_FOUND}"       )
   message(STATUS " OpenBLAS_FOUND = ${OpenBLAS_FOUND}"  )
-  message(STATUS "    ATLAS_FOUND = ${ATLAS_FOUND}"     )
   message(STATUS "     BLAS_FOUND = ${BLAS_FOUND}"      )
   message(STATUS "   LAPACK_FOUND = ${LAPACK_FOUND}"    )
   
@@ -379,11 +376,6 @@ else()
     
   else()
     
-    if(OpenBLAS_FOUND AND ATLAS_FOUND)
-      message(STATUS "")
-      message(STATUS "*** NOTE: found both OpenBLAS and ATLAS; ATLAS will not be used")
-    endif()
-    
     if(OpenBLAS_FOUND AND BLAS_FOUND)
       message(STATUS "")
       message(STATUS "*** NOTE: found both OpenBLAS and BLAS; BLAS will not be used")
@@ -412,14 +404,6 @@ else()
       message(STATUS "")
       
     else()
-      
-      if(ATLAS_FOUND)
-        set(ARMA_USE_ATLAS true)
-        set(ARMA_ATLAS_INCLUDE_DIR ${ATLAS_INCLUDE_DIR})
-        set(ARMA_LIBS ${ARMA_LIBS} ${ATLAS_LIBRARIES})
-        
-        message(STATUS "ATLAS_INCLUDE_DIR = ${ATLAS_INCLUDE_DIR}")
-      endif()
       
       if(BLAS_FOUND)
         set(ARMA_USE_BLAS true)
@@ -533,7 +517,6 @@ message(STATUS "*** Result of configuration:")
 message(STATUS "*** ARMA_USE_WRAPPER    = ${ARMA_USE_WRAPPER}")
 message(STATUS "*** ARMA_USE_LAPACK     = ${ARMA_USE_LAPACK}")
 message(STATUS "*** ARMA_USE_BLAS       = ${ARMA_USE_BLAS}")
-message(STATUS "*** ARMA_USE_ATLAS      = ${ARMA_USE_ATLAS}")
 message(STATUS "*** ARMA_USE_HDF5_ALT   = ${ARMA_USE_HDF5_ALT}")
 message(STATUS "*** ARMA_USE_ARPACK     = ${ARMA_USE_ARPACK}")
 message(STATUS "*** ARMA_USE_EXTERN_RNG = ${ARMA_USE_EXTERN_RNG}")

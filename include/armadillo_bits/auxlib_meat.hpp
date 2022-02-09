@@ -30,25 +30,7 @@ auxlib::inv(Mat<eT>& A)
   
   if(A.is_empty())  { return true; }
   
-  #if defined(ARMA_USE_ATLAS)
-    {
-    arma_debug_assert_atlas_size(A);
-    
-    podarray<int> ipiv(A.n_rows);
-    
-    int info = 0;
-    
-    arma_extra_debug_print("atlas::clapack_getrf()");
-    info = atlas::clapack_getrf(atlas::CblasColMajor, A.n_rows, A.n_cols, A.memptr(), A.n_rows, ipiv.memptr());
-    
-    if(info != 0)  { return false; }
-    
-    arma_extra_debug_print("atlas::clapack_getri()");
-    info = atlas::clapack_getri(atlas::CblasColMajor, A.n_rows, A.memptr(), A.n_rows, ipiv.memptr());
-    
-    return (info == 0);
-    }
-  #elif defined(ARMA_USE_LAPACK)
+  #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(A);
     
@@ -89,7 +71,7 @@ auxlib::inv(Mat<eT>& A)
   #else
     {
     arma_ignore(A);
-    arma_stop_logic_error("inv(): use of ATLAS or LAPACK must be enabled");
+    arma_stop_logic_error("inv(): use of LAPACK must be enabled");
     return false;
     }
   #endif
@@ -166,27 +148,7 @@ auxlib::inv_sympd(Mat<eT>& A)
   
   if(A.is_empty())  { return true; }
   
-  #if defined(ARMA_USE_ATLAS)
-    {
-    arma_debug_assert_atlas_size(A);
-    
-    int info = 0;
-    
-    arma_extra_debug_print("atlas::clapack_potrf()");
-    info = atlas::clapack_potrf(atlas::CblasColMajor, atlas::CblasLower, A.n_rows, A.memptr(), A.n_rows);
-    
-    if(info != 0)  { return false; }
-    
-    arma_extra_debug_print("atlas::clapack_potri()");
-    info = atlas::clapack_potri(atlas::CblasColMajor, atlas::CblasLower, A.n_rows, A.memptr(), A.n_rows);
-    
-    if(info != 0)  { return false; }
-    
-    A = symmatl(A);
-    
-    return true;
-    }
-  #elif defined(ARMA_USE_LAPACK)
+  #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(A);
     
@@ -213,7 +175,7 @@ auxlib::inv_sympd(Mat<eT>& A)
   #else
     {
     arma_ignore(A);
-    arma_stop_logic_error("inv_sympd(): use of ATLAS or LAPACK must be enabled");
+    arma_stop_logic_error("inv_sympd(): use of LAPACK must be enabled");
     return false;
     }
   #endif
@@ -361,33 +323,7 @@ auxlib::det(eT& out_val, Mat<eT>& A)
   
   if(A.is_empty())  { out_val = eT(1); return true; }
   
-  #if defined(ARMA_USE_ATLAS)
-    {
-    arma_debug_assert_atlas_size(A);
-    
-    podarray<int> ipiv(A.n_rows);
-    
-    arma_extra_debug_print("atlas::clapack_getrf()");
-    const int info = atlas::clapack_getrf(atlas::CblasColMajor, A.n_rows, A.n_cols, A.memptr(), A.n_rows, ipiv.memptr());
-    
-    if(info < 0)  { return false; }
-    
-    // on output A appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
-    eT val = A.at(0,0);
-    for(uword i=1; i < A.n_rows; ++i)  { val *= A.at(i,i); }
-    
-    int sign = +1;
-    for(uword i=0; i < A.n_rows; ++i)
-      {
-      // NOTE: no adjustment required, as the clapack version of getrf() assumes counting from 0
-      if( int(i) != ipiv.mem[i] )  { sign *= -1; }
-      }
-    
-    out_val = (sign < 0) ? eT(-val) : eT(val);
-    
-    return true;
-    }
-  #elif defined(ARMA_USE_LAPACK)
+  #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(A);
     
@@ -421,7 +357,7 @@ auxlib::det(eT& out_val, Mat<eT>& A)
     {
     arma_ignore(out_val);
     arma_ignore(A);
-    arma_stop_logic_error("det(): use of ATLAS or LAPACK must be enabled");
+    arma_stop_logic_error("det(): use of LAPACK must be enabled");
     return false;
     }
   #endif
@@ -446,44 +382,7 @@ auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, Mat<eT
     return true;
     }
     
-  #if defined(ARMA_USE_ATLAS)
-    {
-    arma_debug_assert_atlas_size(A);
-    
-    podarray<int> ipiv(A.n_rows);
-    
-    arma_extra_debug_print("atlas::clapack_getrf()");
-    const int info = atlas::clapack_getrf(atlas::CblasColMajor, A.n_rows, A.n_cols, A.memptr(), A.n_rows, ipiv.memptr());
-    
-    if(info < 0)  { return false; }
-    
-    // on output A appears to be L+U_alt, where U_alt is U with the main diagonal set to zero
-    
-    sword sign = (is_cx<eT>::no) ? ( (access::tmp_real( A.at(0,0) ) < T(0)) ? -1 : +1 ) : +1;
-    eT    val  = (is_cx<eT>::no) ? std::log( (access::tmp_real( A.at(0,0) ) < T(0)) ? A.at(0,0)*T(-1) : A.at(0,0) ) : std::log( A.at(0,0) );
-    
-    for(uword i=1; i < A.n_rows; ++i)
-      {
-      const eT x = A.at(i,i);
-      
-      sign *= (is_cx<eT>::no) ? ( (access::tmp_real(x) < T(0)) ? -1 : +1 ) : +1;
-      val  += (is_cx<eT>::no) ? std::log( (access::tmp_real(x) < T(0)) ? x*T(-1) : x ) : std::log(x);
-      }
-    
-    for(uword i=0; i < A.n_rows; ++i)
-      {
-      if( int(i) != ipiv.mem[i] )  // NOTE: no adjustment required, as the clapack version of getrf() assumes counting from 0
-        {
-        sign *= -1;
-        }
-      }
-    
-    out_val  = val;
-    out_sign = T(sign);
-    
-    return true;
-    }
-  #elif defined(ARMA_USE_LAPACK)
+  #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(A);
     
@@ -529,7 +428,7 @@ auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, Mat<eT
     arma_ignore(A);
     arma_ignore(out_val);
     arma_ignore(out_sign);
-    arma_stop_logic_error("log_det(): use of ATLAS or LAPACK must be enabled");
+    arma_stop_logic_error("log_det(): use of LAPACK must be enabled");
     return false;
     }
   #endif
@@ -548,26 +447,7 @@ auxlib::log_det_sympd(typename get_pod_type<eT>::result& out_val, Mat<eT>& A)
   
   if(A.is_empty())  { out_val = T(0); return true; }
   
-  #if defined(ARMA_USE_ATLAS)
-    {
-    arma_debug_assert_atlas_size(A);
-    
-    int info = 0;
-    
-    arma_extra_debug_print("atlas::clapack_potrf()");
-    info = atlas::clapack_potrf(atlas::CblasColMajor, atlas::CblasLower, A.n_rows, A.memptr(), A.n_rows);
-    
-    if(info != 0)  { return false; }
-    
-    T val = std::log( access::tmp_real(A.at(0,0)) );
-    
-    for(uword i=1; i < A.n_rows; ++i)  { val += std::log( access::tmp_real(A.at(i,i)) ); }
-    
-    out_val = T(2) * val;
-    
-    return true;
-    }
-  #elif defined(ARMA_USE_LAPACK)
+  #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(A);
     
@@ -592,7 +472,7 @@ auxlib::log_det_sympd(typename get_pod_type<eT>::result& out_val, Mat<eT>& A)
     {
     arma_ignore(out_val);
     arma_ignore(A);
-    arma_stop_logic_error("det(): use of ATLAS or LAPACK must be enabled");
+    arma_stop_logic_error("det(): use of LAPACK must be enabled");
     return false;
     }
   #endif
@@ -621,39 +501,24 @@ auxlib::lu(Mat<eT>& L, Mat<eT>& U, podarray<blas_int>& ipiv, const Base<eT,T1>& 
     return true;
     }
   
-  #if defined(ARMA_USE_ATLAS) || defined(ARMA_USE_LAPACK)
+  #if defined(ARMA_USE_LAPACK)
     {
-    #if defined(ARMA_USE_ATLAS)
-      {
-      arma_debug_assert_atlas_size(U);
-      
-      ipiv.set_size( (std::min)(U_n_rows, U_n_cols) );
-      
-      arma_extra_debug_print("atlas::clapack_getrf()");
-      int info = atlas::clapack_getrf(atlas::CblasColMajor, U_n_rows, U_n_cols, U.memptr(), U_n_rows, ipiv.memptr());
-      
-      if(info < 0)  { return false; }
-      }
-    #elif defined(ARMA_USE_LAPACK)
-      {
-      arma_debug_assert_blas_size(U);
-      
-      ipiv.set_size( (std::min)(U_n_rows, U_n_cols) );
-      
-      blas_int info = 0;
-      
-      blas_int n_rows = blas_int(U_n_rows);
-      blas_int n_cols = blas_int(U_n_cols);
-      
-      arma_extra_debug_print("lapack::getrf()");
-      lapack::getrf(&n_rows, &n_cols, U.memptr(), &n_rows, ipiv.memptr(), &info);
-      
-      if(info < 0)  { return false; }
-      
-      // take into account that Fortran counts from 1
-      arrayops::inplace_minus(ipiv.memptr(), blas_int(1), ipiv.n_elem);
-      }
-    #endif
+    arma_debug_assert_blas_size(U);
+    
+    ipiv.set_size( (std::min)(U_n_rows, U_n_cols) );
+    
+    blas_int info = 0;
+    
+    blas_int n_rows = blas_int(U_n_rows);
+    blas_int n_cols = blas_int(U_n_cols);
+    
+    arma_extra_debug_print("lapack::getrf()");
+    lapack::getrf(&n_rows, &n_cols, U.memptr(), &n_rows, ipiv.memptr(), &info);
+    
+    if(info < 0)  { return false; }
+    
+    // take into account that Fortran counts from 1
+    arrayops::inplace_minus(ipiv.memptr(), blas_int(1), ipiv.n_elem);
     
     L.copy_size(U);
     
@@ -680,7 +545,7 @@ auxlib::lu(Mat<eT>& L, Mat<eT>& U, podarray<blas_int>& ipiv, const Base<eT,T1>& 
     }
   #else
     {
-    arma_stop_logic_error("lu(): use of ATLAS or LAPACK must be enabled");
+    arma_stop_logic_error("lu(): use of LAPACK must be enabled");
     return false;
     }
   #endif
@@ -2455,18 +2320,7 @@ auxlib::chol_simple(Mat<eT>& X)
   {
   arma_extra_debug_sigprint();
   
-  #if defined(ARMA_USE_ATLAS)
-    {
-    arma_debug_assert_atlas_size(X);
-    
-    int info = 0;
-    
-    arma_extra_debug_print("atlas::clapack_potrf()");
-    info = atlas::clapack_potrf(atlas::CblasColMajor, atlas::CblasUpper, X.n_rows, X.memptr(), X.n_rows);
-    
-    return (info == 0);
-    }
-  #elif defined(ARMA_USE_LAPACK)
+  #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(X);
     
@@ -2483,7 +2337,7 @@ auxlib::chol_simple(Mat<eT>& X)
     {
     arma_ignore(X);
     
-    arma_stop_logic_error("chol(): use of ATLAS or LAPACK must be enabled");
+    arma_stop_logic_error("chol(): use of LAPACK must be enabled");
     return false;
     }
   #endif
@@ -2498,22 +2352,7 @@ auxlib::chol(Mat<eT>& X, const uword layout)
   {
   arma_extra_debug_sigprint();
   
-  #if defined(ARMA_USE_ATLAS)
-    {
-    arma_debug_assert_atlas_size(X);
-    
-    int info = 0;
-    
-    arma_extra_debug_print("atlas::clapack_potrf()");
-    info = atlas::clapack_potrf(atlas::CblasColMajor, ((layout == 0) ? atlas::CblasUpper : atlas::CblasLower), X.n_rows, X.memptr(), X.n_rows);
-    
-    if(info != 0)  { return false; }
-    
-    X = (layout == 0) ? trimatu(X) : trimatl(X);  // trimatu() and trimatl() return the same type
-    
-    return true;
-    }
-  #elif defined(ARMA_USE_LAPACK)
+  #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(X);
     
@@ -2535,7 +2374,7 @@ auxlib::chol(Mat<eT>& X, const uword layout)
     arma_ignore(X);
     arma_ignore(layout);
     
-    arma_stop_logic_error("chol(): use of ATLAS or LAPACK must be enabled");
+    arma_stop_logic_error("chol(): use of LAPACK must be enabled");
     return false;
     }
   #endif
@@ -4208,18 +4047,7 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
     return true;
     }
   
-  #if defined(ARMA_USE_ATLAS)
-    {
-    arma_debug_assert_atlas_size(A);
-    
-    podarray<int> ipiv(A_n_rows + 2);  // +2 for paranoia: old versions of Atlas might be trashing memory
-    
-    arma_extra_debug_print("atlas::clapack_gesv()");
-    int info = atlas::clapack_gesv<eT>(atlas::CblasColMajor, A_n_rows, B_n_cols, A.memptr(), A_n_rows, ipiv.memptr(), out.memptr(), A_n_rows);
-    
-    return (info == 0);
-    }
-  #elif defined(ARMA_USE_LAPACK)
+  #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(A);
     
@@ -4238,7 +4066,7 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
     }
   #else
     {
-    arma_stop_logic_error("solve(): use of ATLAS or LAPACK must be enabled");
+    arma_stop_logic_error("solve(): use of LAPACK must be enabled");
     return false;
     }
   #endif
@@ -4578,18 +4406,7 @@ auxlib::solve_sympd_fast_common(Mat<typename T1::elem_type>& out, Mat<typename T
     return true;
     }
   
-  #if defined(ARMA_USE_ATLAS)
-    {
-    arma_debug_assert_atlas_size(A, out);
-    
-    int info = 0;
-    
-    arma_extra_debug_print("atlas::clapack_posv()");
-    info = atlas::clapack_posv<eT>(atlas::CblasColMajor, atlas::CblasLower, A_n_rows, B_n_cols, A.memptr(), A_n_rows, out.memptr(), B_n_rows);
-    
-    return (info == 0);
-    }
-  #elif defined(ARMA_USE_LAPACK)
+  #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(A, out);
     
@@ -4610,7 +4427,7 @@ auxlib::solve_sympd_fast_common(Mat<typename T1::elem_type>& out, Mat<typename T
     arma_ignore(out);
     arma_ignore(A);
     arma_ignore(B_expr);
-    arma_stop_logic_error("solve(): use of ATLAS or LAPACK must be enabled");
+    arma_stop_logic_error("solve(): use of LAPACK must be enabled");
     return false;
     }
   #endif

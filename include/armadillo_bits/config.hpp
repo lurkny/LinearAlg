@@ -111,12 +111,6 @@
 //// You may also need to enable or disable the following options:
 //// ARMA_BLAS_LONG, ARMA_BLAS_LONG_LONG, ARMA_USE_FORTRAN_HIDDEN_ARGS
 
-// #define ARMA_USE_ATLAS
-// #define ARMA_ATLAS_INCLUDE_DIR /usr/include/
-//// If you're using ATLAS and the compiler can't find cblas.h and/or clapack.h
-//// uncomment the above define and specify the appropriate include directory.
-//// Make sure the directory has a trailing /
-
 #if !defined(ARMA_USE_OPENMP)
 // #define ARMA_USE_OPENMP
 //// Uncomment the above line to forcefully enable use of OpenMP for parallelisation.
@@ -247,11 +241,6 @@
 #if defined(ARMA_DONT_USE_SUPERLU)
   #undef ARMA_USE_SUPERLU
   #undef ARMA_SUPERLU_INCLUDE_DIR
-#endif
-
-#if defined(ARMA_DONT_USE_ATLAS)
-  #undef ARMA_USE_ATLAS
-  #undef ARMA_ATLAS_INCLUDE_DIR
 #endif
 
 #if defined(ARMA_DONT_USE_WRAPPER)

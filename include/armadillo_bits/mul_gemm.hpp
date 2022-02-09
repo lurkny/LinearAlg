@@ -239,7 +239,7 @@ class gemm_emul
 
 
 //! \brief
-//! Wrapper for ATLAS/BLAS dgemm function, using template arguments to control the arguments passed to dgemm.
+//! Wrapper for BLAS dgemm function, using template arguments to control the arguments passed to dgemm.
 //! Matrix 'C' is assumed to have been set to the correct size (ie. taking into account transposes)
 
 template<const bool do_trans_A=false, const bool do_trans_B=false, const bool use_alpha=false, const bool use_beta=false>
@@ -272,31 +272,7 @@ class gemm
       }
     else
       {
-      #if defined(ARMA_USE_ATLAS)
-        {
-        arma_extra_debug_print("atlas::cblas_gemm()");
-        
-        arma_debug_assert_atlas_size(A,B);
-        
-        atlas::cblas_gemm<eT>
-          (
-          atlas::CblasColMajor,
-          (do_trans_A) ? ( is_cx<eT>::yes ? CblasConjTrans : atlas::CblasTrans ) : atlas::CblasNoTrans,
-          (do_trans_B) ? ( is_cx<eT>::yes ? CblasConjTrans : atlas::CblasTrans ) : atlas::CblasNoTrans,
-          C.n_rows,
-          C.n_cols,
-          (do_trans_A) ? A.n_rows : A.n_cols,
-          (use_alpha) ? alpha : eT(1),
-          A.mem,
-          (do_trans_A) ? A.n_rows : C.n_rows,
-          B.mem,
-          (do_trans_B) ? C.n_cols : ( (do_trans_A) ? A.n_rows : A.n_cols ),
-          (use_beta) ? beta : eT(0),
-          C.memptr(),
-          C.n_rows
-          );
-        }
-      #elif defined(ARMA_USE_BLAS)
+      #if defined(ARMA_USE_BLAS)
         {
         arma_extra_debug_print("blas::gemm()");
         

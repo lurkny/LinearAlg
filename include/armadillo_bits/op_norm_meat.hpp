@@ -233,11 +233,7 @@ op_norm::vec_norm_1_direct_std(const Mat<eT>& X)
     }
   else
     {
-    #if defined(ARMA_USE_ATLAS)
-      {
-      return atlas::cblas_asum(N,A);
-      }
-    #elif defined(ARMA_USE_BLAS)
+    #if defined(ARMA_USE_BLAS)
       {
       return blas::asum(N,A);
       }
@@ -534,11 +530,7 @@ op_norm::vec_norm_2_direct_std(const Mat<eT>& X)
     }
   else
     {
-    #if defined(ARMA_USE_ATLAS)
-      {
-      result = atlas::cblas_nrm2(N,A);
-      }
-    #elif defined(ARMA_USE_BLAS)
+    #if defined(ARMA_USE_BLAS)
       {
       result = blas::nrm2(N,A);
       }
