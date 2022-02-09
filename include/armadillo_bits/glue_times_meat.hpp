@@ -141,10 +141,10 @@ glue_times_redirect2_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     {
     if(strip_inv<T2>::do_inv_sympd)
       {
-      // replace A*inv_spd_default(B) with trans( solve(trans(B),trans(A)) )
+      // replace A*inv_sympd(B) with trans( solve(trans(B),trans(A)) )
       // transpose of B is avoided as B is explicitly marked as symmetric
       
-      arma_extra_debug_print("glue_times_redirect<2>::apply(): detected A*inv_spd_default(B)");
+      arma_extra_debug_print("glue_times_redirect<2>::apply(): detected A*inv_sympd(B)");
       
       const Mat<eT> At = trans(X.A);
       
