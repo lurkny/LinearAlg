@@ -590,11 +590,7 @@ glue_times::apply_inplace_plus(Mat<typename T1::elem_type>& out, const Glue<T1, 
   
   arma_debug_assert_same_size(out.n_rows, out.n_cols, result_n_rows, result_n_cols, ( (sign > sword(0)) ? "addition" : "subtraction" ) );
   
-  if(out.n_elem == 0)
-    {
-    return;
-    }
-  
+  if(out.n_elem == 0)  { return; }
   
   if( (do_trans_A == false) && (do_trans_B == false) && (use_alpha == false) )
     {
@@ -704,12 +700,7 @@ glue_times::apply
   
   out.set_size(final_n_rows, final_n_cols);
   
-  if( (A.n_elem == 0) || (B.n_elem == 0) )
-    {
-    out.zeros();
-    return;
-    }
-  
+  if( (A.n_elem == 0) || (B.n_elem == 0) )  { out.zeros(); return; }
   
   if( (do_trans_A == false) && (do_trans_B == false) && (use_alpha == false) )
     {
