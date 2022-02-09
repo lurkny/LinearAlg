@@ -370,9 +370,8 @@ op_logmat_cx::apply_common(Mat< std::complex<T> >& out, Mat< std::complex<T> >& 
   
   if(schur_ok == false)  { arma_extra_debug_print("logmat(): schur decomposition failed"); return false; }
   
-//double theta[] = { 1.10e-5, 1.82e-3, 1.62e-2,               5.39e-2,               1.14e-1,               1.87e-1,               2.64e-1              };
-  double theta[] = { 0.0,     0.0,     1.6206284795015624e-2, 5.3873532631381171e-2, 1.1352802267628681e-1, 1.8662860613541288e-1, 2.642960831111435e-1 };
-  // theta[0] and theta[1] not really used
+  // NOTE: theta[0] and theta[1] not really used
+  double theta[] = { 1.10e-5, 1.82e-3, 1.6206284795015624e-2, 5.3873532631381171e-2, 1.1352802267628681e-1, 1.8662860613541288e-1, 2.642960831111435e-1 };
   
   const uword N = S.n_rows;
   
