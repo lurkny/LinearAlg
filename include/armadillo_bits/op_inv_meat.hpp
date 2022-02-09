@@ -24,11 +24,11 @@
 template<typename T1>
 inline
 void
-op_inv::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv>& X)
+op_inv_gen_default::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_gen_default>& X)
   {
   arma_extra_debug_sigprint();
   
-  const bool status = op_inv::apply_direct(out, X.m, "inv()");
+  const bool status = op_inv_gen_default::apply_direct(out, X.m, "inv()");
   
   if(status == false)
     {
@@ -42,7 +42,7 @@ op_inv::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv>& X)
 template<typename T1>
 inline
 bool
-op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig)
+op_inv_gen_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig)
   {
   arma_extra_debug_sigprint();
   
@@ -52,7 +52,7 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
     {
     const strip_diagmat<T1> strip(expr.get_ref());
     
-    return op_inv::apply_diagmat(out, strip.M, caller_sig);
+    return op_inv_gen_default::apply_diagmat(out, strip.M, caller_sig);
     }
   
   if(strip_trimat<T1>::do_trimat)
@@ -76,7 +76,7 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
     
     Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
     
-    const bool status = op_inv::apply_tiny_noalias(tmp, out);
+    const bool status = op_inv_gen_default::apply_tiny_noalias(tmp, out);
     
     if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
     
@@ -85,7 +85,7 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
     // fallthrough if optimisation failed
     }
   
-  if(out.is_diagmat())  { return op_inv::apply_diagmat(out, out, caller_sig); }
+  if(out.is_diagmat())  { return op_inv_gen_default::apply_diagmat(out, out, caller_sig); }
   
   const bool is_triu =                     trimat_helper::is_triu(out);
   const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(out);
@@ -121,7 +121,7 @@ op_inv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::e
 template<typename T1>
 inline
 bool
-op_inv::apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X, const char* caller_sig)
+op_inv_gen_default::apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X, const char* caller_sig)
   {
   arma_extra_debug_sigprint();
   
@@ -173,7 +173,7 @@ template<typename eT>
 arma_cold
 inline
 bool
-op_inv::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
+op_inv_gen_default::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
   {
   arma_extra_debug_sigprint();
   
@@ -335,7 +335,7 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
     
     Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
     
-    const bool status = op_inv::apply_tiny_noalias(tmp, out);
+    const bool status = op_inv_gen_default::apply_tiny_noalias(tmp, out);
     
     if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
     

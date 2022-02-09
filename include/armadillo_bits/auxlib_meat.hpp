@@ -4138,7 +4138,7 @@ auxlib::solve_square_tiny(Mat<typename T1::elem_type>& out, const Mat<typename T
   
   Mat<eT> A_inv(A_n_rows, A_n_rows, arma_nozeros_indicator());
   
-  const bool status = op_inv::apply_tiny_noalias(A_inv, A);
+  const bool status = op_inv_gen_default::apply_tiny_noalias(A_inv, A);
   
   if(status == false)  { return false; }
   

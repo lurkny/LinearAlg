@@ -1207,19 +1207,19 @@ struct is_outer_product< Glue<T1,T2,glue_times> >
 
 
 template<typename T1>
-struct has_op_inv
+struct has_op_inv_gen_default
   { static constexpr bool value = false; };
 
 template<typename T1>
-struct has_op_inv< Op<T1,op_inv> >
+struct has_op_inv_gen_default< Op<T1,op_inv_gen_default> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>
-struct has_op_inv< Glue<Op<T1,op_inv>, T2, glue_times> >
+struct has_op_inv_gen_default< Glue<Op<T1,op_inv_gen_default>, T2, glue_times> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>
-struct has_op_inv< Glue<T1, Op<T2,op_inv>, glue_times> >
+struct has_op_inv_gen_default< Glue<T1, Op<T2,op_inv_gen_default>, glue_times> >
   { static constexpr bool value = true;  };
 
 

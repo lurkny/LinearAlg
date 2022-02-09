@@ -24,7 +24,7 @@
 template<typename T1>
 arma_warn_unused
 arma_inline
-typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, const Op<T1, op_inv> >::result
+typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, const Op<T1, op_inv_gen_default> >::result
 inv
   (
   const Base<typename T1::elem_type,T1>& X
@@ -32,7 +32,7 @@ inv
   {
   arma_extra_debug_sigprint();
   
-  return Op<T1, op_inv>(X.get_ref());
+  return Op<T1, op_inv_gen_default>(X.get_ref());
   }
 
 
@@ -48,7 +48,7 @@ inv
   {
   arma_extra_debug_sigprint();
   
-  const bool status = op_inv::apply_direct(out, X.get_ref(), "inv()");
+  const bool status = op_inv_gen_default::apply_direct(out, X.get_ref(), "inv()");
   
   if(status == false)
     {

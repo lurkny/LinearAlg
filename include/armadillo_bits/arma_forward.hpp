@@ -83,7 +83,7 @@ class diskio;
 class op_strans;
 class op_htrans;
 class op_htrans2;
-class op_inv;
+class op_inv_gen_default;
 class op_inv_sympd;
 class op_diagmat;
 class op_trimat;

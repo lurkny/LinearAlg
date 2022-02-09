@@ -55,13 +55,13 @@ op_powmat::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1
     {
     if(y == uword(1))
       {
-      return op_inv::apply_direct(out, X.get_ref(), "powmat()");
+      return op_inv_gen_default::apply_direct(out, X.get_ref(), "powmat()");
       }
     else
       {
       Mat<eT> X_inv;
       
-      const bool inv_status = op_inv::apply_direct(X_inv, X.get_ref(), "powmat()");
+      const bool inv_status = op_inv_gen_default::apply_direct(X_inv, X.get_ref(), "powmat()");
       
       if(inv_status == false)  { return false; }
       
