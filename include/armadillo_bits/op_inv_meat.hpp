@@ -366,8 +366,60 @@ op_inv_spd_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<ty
   {
   arma_extra_debug_sigprint();
   
+  return op_inv_spd::apply_direct<T1,false>(out, expr, uword(0));
+  }
+
+
+
+//
+
+
+
+template<typename T1>
+inline
+void
+op_inv_spd::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_spd>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  const uword flags = X.in_aux_uword_a;
+  
+  const bool status = op_inv_spd::apply_direct(out, X.m, flags);
+  
+  if(status == false)
+    {
+    out.soft_reset();
+    arma_stop_runtime_error("inv_sympd(): matrix is singular or not positive definite");
+    }
+  }
+
+
+
+template<typename T1, const bool has_user_flags>
+inline
+bool
+op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const uword flags)
+  {
+  arma_extra_debug_sigprint();
+  
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
+  
+  if(has_user_flags == true )  { arma_extra_debug_print("op_inv_spd: has_user_flags == true");  }
+  if(has_user_flags == false)  { arma_extra_debug_print("op_inv_spd: has_user_flags == false"); }
+  
+  const bool fast         = has_user_flags && bool(flags & inv_opts::flag_fast        );
+  const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
+  const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
+  
+  arma_extra_debug_print("op_inv_gen: enabled flags:");
+  
+  if(fast        )  { arma_extra_debug_print("fast");         }
+  if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
+  if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
+  
+  if(likely_sympd)  { arma_debug_warn_level(1, "inv_sympd(): option 'likely_sympd' ignored" ); }
+  if(no_sympd)      { arma_debug_warn_level(1, "inv_sympd(): option 'no_sympd' ignored" );     }
   
   out = expr.get_ref();
   
@@ -386,9 +438,9 @@ op_inv_spd_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<ty
   // TODO: when the major version is bumped:
   // TODO: either rework the tinymatrix optimisation to be reliably more strict, or remove it entirely
   
-  if((out.n_rows <= 4) && is_cx<eT>::no)
+  if( (fast) && (out.n_rows <= 4) && is_cx<eT>::no)
     {
-    arma_extra_debug_print("op_inv_spd_default: attempting tinymatrix optimisation");
+    arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
     
     Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
     
@@ -396,14 +448,14 @@ op_inv_spd_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<ty
     
     if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
     
-    arma_extra_debug_print("op_inv_spd_default: tinymatrix optimisation failed");
+    arma_extra_debug_print("op_inv_spd: tinymatrix optimisation failed");
     
     // fallthrough if optimisation failed
     }
   
   if((is_cx<eT>::no) && (is_op_diagmat<T1>::value || out.is_diagmat()))
     {
-    arma_extra_debug_print("op_inv_spd_default: detected diagonal matrix");
+    arma_extra_debug_print("op_inv_spd: detected diagonal matrix");
     
     // specialised handling of real matrices only;
     // currently auxlib::inv_sympd() does not enforce that 

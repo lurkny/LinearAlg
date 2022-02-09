@@ -103,6 +103,10 @@ inv
 
 
 
+//
+
+
+
 template<typename T1>
 arma_warn_unused
 arma_inline
@@ -131,6 +135,48 @@ inv_sympd
   arma_extra_debug_sigprint();
   
   const bool status = op_inv_spd_default::apply_direct(out, X.get_ref());
+  
+  if(status == false)
+    {
+    out.soft_reset();
+    arma_debug_warn_level(3, "inv_sympd(): matrix is singular or not positive definite");
+    }
+  
+  return status;
+  }
+
+
+
+template<typename T1>
+arma_warn_unused
+arma_inline
+typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, const Op<T1, op_inv_spd_default> >::result
+inv_sympd
+  (
+  const Base<typename T1::elem_type, T1>& X,
+  const inv_opts::opts&                   opts
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  return Op<T1, op_inv_spd>(X.get_ref(), opts.flags, uword(0));
+  }
+
+
+
+template<typename T1>
+inline
+typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, bool >::result
+inv_sympd
+  (
+         Mat<typename T1::elem_type>&    out,
+  const Base<typename T1::elem_type,T1>& X,
+  const inv_opts::opts&                  opts
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  const bool status = op_inv_spd::apply_direct(out, X.get_ref(), opts.flags);
   
   if(status == false)
     {
