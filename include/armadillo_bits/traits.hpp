@@ -1207,38 +1207,57 @@ struct is_outer_product< Glue<T1,T2,glue_times> >
 
 
 template<typename T1>
-struct has_op_inv_gen_default
+struct has_op_inv_any
   { static constexpr bool value = false; };
 
 template<typename T1>
-struct has_op_inv_gen_default< Op<T1,op_inv_gen_default> >
+struct has_op_inv_any< Op<T1,op_inv_gen> >
   { static constexpr bool value = true;  };
-
-template<typename T1, typename T2>
-struct has_op_inv_gen_default< Glue<Op<T1,op_inv_gen_default>, T2, glue_times> >
-  { static constexpr bool value = true;  };
-
-template<typename T1, typename T2>
-struct has_op_inv_gen_default< Glue<T1, Op<T2,op_inv_gen_default>, glue_times> >
-  { static constexpr bool value = true;  };
-
-
 
 template<typename T1>
-struct has_op_inv_spd_default
-  { static constexpr bool value = false; };
+struct has_op_inv_any< Op<T1,op_inv_spd> >
+  { static constexpr bool value = true;  };
 
 template<typename T1>
-struct has_op_inv_spd_default< Op<T1,op_inv_spd_default> >
+struct has_op_inv_any< Op<T1,op_inv_gen_default> >
+  { static constexpr bool value = true;  };
+
+template<typename T1>
+struct has_op_inv_any< Op<T1,op_inv_spd_default> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>
-struct has_op_inv_spd_default< Glue<Op<T1,op_inv_spd_default>, T2, glue_times> >
+struct has_op_inv_any< Glue<Op<T1,op_inv_gen>, T2, glue_times> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>
-struct has_op_inv_spd_default< Glue<T1, Op<T2,op_inv_spd_default>, glue_times> >
+struct has_op_inv_any< Glue<Op<T1,op_inv_spd>, T2, glue_times> >
   { static constexpr bool value = true;  };
+
+template<typename T1, typename T2>
+struct has_op_inv_any< Glue<Op<T1,op_inv_gen_default>, T2, glue_times> >
+  { static constexpr bool value = true;  };
+
+template<typename T1, typename T2>
+struct has_op_inv_any< Glue<Op<T1,op_inv_spd_default>, T2, glue_times> >
+  { static constexpr bool value = true;  };
+
+template<typename T1, typename T2>
+struct has_op_inv_any< Glue<T1, Op<T2,op_inv_gen>, glue_times> >
+  { static constexpr bool value = true;  };
+
+template<typename T1, typename T2>
+struct has_op_inv_any< Glue<T1, Op<T2,op_inv_spd>, glue_times> >
+  { static constexpr bool value = true;  };
+
+template<typename T1, typename T2>
+struct has_op_inv_any< Glue<T1, Op<T2,op_inv_gen_default>, glue_times> >
+  { static constexpr bool value = true;  };
+
+template<typename T1, typename T2>
+struct has_op_inv_any< Glue<T1, Op<T2,op_inv_spd_default>, glue_times> >
+  { static constexpr bool value = true;  };
+
 
 
 
