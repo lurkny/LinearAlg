@@ -431,6 +431,8 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
     }
   
+  const uword N = (std::min)(out.n_rows, out.n_cols);
+  
   if((is_cx<eT>::no) && (is_op_diagmat<T1>::value || out.is_diagmat()))
     {
     arma_extra_debug_print("op_inv_spd: detected diagonal matrix");
@@ -439,8 +441,6 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     // currently auxlib::inv_sympd() does not enforce that 
     // imaginary components of diagonal elements must be zero;
     // strictly enforcing this constraint may break existing user software.
-    
-    const uword N = (std::min)(out.n_rows, out.n_cols);
     
     for(uword i=0; i<N; ++i)
       {
@@ -462,9 +462,39 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   // TODO: when the major version is bumped:
   // TODO: either rework the tinymatrix optimisation to be reliably more strict, or remove it entirely
   
-  if( (fast) && (out.n_rows <= 4) && is_cx<eT>::no)
+  if((is_cx<eT>::no) && (N <= 4) && (fast))
     {
     arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
+    
+    T max_diag = T(0);
+    
+    const eT* colmem = out.memptr();
+    
+    for(uword i=0; i<N; ++i)
+      {
+      const eT&      out_ii = colmem[i];
+      const  T  real_out_ii = access::tmp_real(out_ii);
+      
+      if(real_out_ii <= T(0))  { return false; }
+      
+      max_diag = (real_out_ii > max_diag) ? real_out_ii : max_diag;
+      
+      colmem += N;
+      }
+    
+    colmem = out.memptr();
+    
+    for(uword c=0; c < N; ++c)
+      {
+      for(uword r=c; r < N; ++r)
+        {
+        const T abs_val = std::abs(colmem[r]);
+        
+        if(abs_val > max_diag)  { return false; }
+        }
+      
+      colmem += N;
+      }
     
     Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
     

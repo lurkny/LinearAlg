@@ -90,7 +90,7 @@ inv
   {
   arma_extra_debug_sigprint();
   
-  const bool status = op_inv_gen::apply_direct(out, X.get_ref(), opts.flags);
+  const bool status = op_inv_gen::apply_direct(out, X.get_ref(), "inv()", opts.flags);
   
   if(status == false)
     {
