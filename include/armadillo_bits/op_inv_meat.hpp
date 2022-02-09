@@ -431,28 +431,6 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
     }
   
-  // TODO: the tinymatrix optimisation currently does not care if the given matrix is not sympd;
-  // TODO: need to print a warning if the matrix is not sympd based on fast rudimentary checks,
-  // TODO: ie. diagonal values are > 0, and max value is on the diagonal.
-  // 
-  // TODO: when the major version is bumped:
-  // TODO: either rework the tinymatrix optimisation to be reliably more strict, or remove it entirely
-  
-  if( (fast) && (out.n_rows <= 4) && is_cx<eT>::no)
-    {
-    arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
-    
-    Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
-    
-    const bool status = op_inv_gen::apply_tiny_noalias(tmp, out);
-    
-    if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
-    
-    arma_extra_debug_print("op_inv_spd: tinymatrix optimisation failed");
-    
-    // fallthrough if optimisation failed
-    }
-  
   if((is_cx<eT>::no) && (is_op_diagmat<T1>::value || out.is_diagmat()))
     {
     arma_extra_debug_print("op_inv_spd: detected diagonal matrix");
@@ -475,6 +453,28 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
       }
       
     return true;
+    }
+  
+  // TODO: the tinymatrix optimisation currently does not care if the given matrix is not sympd;
+  // TODO: need to print a warning if the matrix is not sympd based on fast rudimentary checks,
+  // TODO: ie. diagonal values are > 0, and max value is on the diagonal.
+  // 
+  // TODO: when the major version is bumped:
+  // TODO: either rework the tinymatrix optimisation to be reliably more strict, or remove it entirely
+  
+  if( (fast) && (out.n_rows <= 4) && is_cx<eT>::no)
+    {
+    arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
+    
+    Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
+    
+    const bool status = op_inv_gen::apply_tiny_noalias(tmp, out);
+    
+    if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
+    
+    arma_extra_debug_print("op_inv_spd: tinymatrix optimisation failed");
+    
+    // fallthrough if optimisation failed
     }
   
   return auxlib::inv_sympd(out);
