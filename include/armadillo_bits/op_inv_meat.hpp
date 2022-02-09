@@ -46,16 +46,69 @@ op_inv_gen_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<ty
   {
   arma_extra_debug_sigprint();
   
+  return op_inv_gen::apply_direct<T1,false>(out, expr, caller_sig, uword(0));
+  }
+
+
+
+//
+
+
+
+template<typename T1>
+inline
+void
+op_inv_gen::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_gen>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  const uword flags = X.in_aux_uword_a;
+  
+  const bool status = op_inv_gen::apply_direct(out, X.m, "inv()", flags);
+  
+  if(status == false)
+    {
+    out.soft_reset();
+    arma_stop_runtime_error("inv(): matrix is singular");
+    }
+  }
+
+
+
+template<typename T1, const bool has_user_flags>
+inline
+bool
+op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig, const uword flags)
+  {
+  arma_extra_debug_sigprint();
+  
   typedef typename T1::elem_type eT;
+  
+  if(has_user_flags == true )  { arma_extra_debug_print("op_inv_gen: has_user_flags == true");  }
+  if(has_user_flags == false)  { arma_extra_debug_print("op_inv_gen: has_user_flags == false"); }
+  
+  const bool fast         = has_user_flags && bool(flags & inv_opts::flag_fast        );
+  const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
+  const bool no_trimat    = has_user_flags && bool(flags & inv_opts::flag_no_trimat   );
+  const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
+  
+  arma_extra_debug_print("op_inv_gen: enabled flags:");
+  
+  if(fast        )  { arma_extra_debug_print("fast");         }
+  if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
+  if(no_trimat   )  { arma_extra_debug_print("no_trimat");    }
+  if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
+  
+  arma_debug_check( (no_sympd && likely_sympd), "inv(): options 'no_sympd' and 'likely_sympd' are mutually exclusive" );
   
   if(strip_diagmat<T1>::do_diagmat)
     {
     const strip_diagmat<T1> strip(expr.get_ref());
     
-    return op_inv_gen_default::apply_diagmat(out, strip.M, caller_sig);
+    return op_inv_gen::apply_diagmat(out, strip.M, caller_sig);
     }
   
-  if(strip_trimat<T1>::do_trimat)
+  if( (no_trimat == false) && (strip_trimat<T1>::do_trimat) )
     {
     const strip_trimat<T1> strip(expr.get_ref());
     
@@ -70,15 +123,30 @@ op_inv_gen_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<ty
   
   arma_debug_check( (out.is_square() == false), caller_sig, ": given matrix must be square sized" );
   
-  if(out.is_diagmat())  { return op_inv_gen_default::apply_diagmat(out, out, caller_sig); }
+  if( fast && (out.n_rows <= 4) && is_cx<eT>::no)
+    {
+    arma_extra_debug_print("op_inv_gen: attempting tinymatrix optimisation");
+    
+    Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
+    
+    const bool status = op_inv_gen::apply_tiny_noalias(tmp, out);
+    
+    if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
+    
+    arma_extra_debug_print("op_inv_gen: tinymatrix optimisation failed");
+    
+    // fallthrough if optimisation failed
+    }
   
-  const bool is_triu =                     trimat_helper::is_triu(out);
-  const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(out);
+  if(out.is_diagmat())  { return op_inv_gen::apply_diagmat(out, out, caller_sig); }
+  
+  const bool is_triu = (no_trimat) ? false : (                    trimat_helper::is_triu(out));
+  const bool is_tril = (no_trimat) ? false : ((is_triu) ? false : trimat_helper::is_tril(out));
   
   if(is_triu || is_tril)  { return auxlib::inv_tr(out, ((is_triu) ? uword(0) : uword(1))); }
-
+  
   #if defined(ARMA_OPTIMISE_SYMPD)
-    const bool try_sympd = sympd_helper::guess_sympd(out);
+    const bool try_sympd = (no_sympd) ? false : (likely_sympd ? true : sympd_helper::guess_sympd(out));
   #else
     const bool try_sympd = false;
   #endif
@@ -106,7 +174,7 @@ op_inv_gen_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<ty
 template<typename T1>
 inline
 bool
-op_inv_gen_default::apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X, const char* caller_sig)
+op_inv_gen::apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X, const char* caller_sig)
   {
   arma_extra_debug_sigprint();
   
@@ -150,130 +218,6 @@ op_inv_gen_default::apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X,
     }
   
   return status;
-  }
-
-
-
-//
-
-
-
-template<typename T1>
-inline
-void
-op_inv_gen::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_gen>& X)
-  {
-  arma_extra_debug_sigprint();
-  
-  const uword flags = X.in_aux_uword_a;
-  
-  const bool status = op_inv_gen::apply_direct(out, X.m, flags);
-  
-  if(status == false)
-    {
-    out.soft_reset();
-    arma_stop_runtime_error("inv(): matrix is singular");
-    }
-  }
-
-
-
-template<typename T1>
-inline
-bool
-op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const uword flags)
-  {
-  arma_extra_debug_sigprint();
-  
-  typedef typename T1::elem_type eT;
-  
-  const char* caller_sig = "inv()";
-  
-  const bool has_user_flags = true;  // TODO: use template based arg as per glue_solve
-  
-  if(has_user_flags == true )  { arma_extra_debug_print("glue_solve_gen::apply(): has_user_flags == true");  }
-  if(has_user_flags == false)  { arma_extra_debug_print("glue_solve_gen::apply(): has_user_flags == false"); }
-  
-  const bool fast         = has_user_flags && bool(flags & inv_opts::flag_fast        );
-  const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
-  const bool no_trimat    = has_user_flags && bool(flags & inv_opts::flag_no_trimat   );
-  const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
-  
-  arma_extra_debug_print("op_inv_gen: enabled flags:");
-  
-  if(fast        )  { arma_extra_debug_print("fast");         }
-  if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
-  if(no_trimat   )  { arma_extra_debug_print("no_trimat");    }
-  if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
-  
-  arma_debug_check( (no_sympd && likely_sympd), "inv(): options 'no_sympd' and 'likely_sympd' are mutually exclusive" );
-  
-  if(strip_diagmat<T1>::do_diagmat)
-    {
-    const strip_diagmat<T1> strip(expr.get_ref());
-    
-    return op_inv_gen_default::apply_diagmat(out, strip.M, caller_sig);
-    }
-  
-  if( (no_trimat == false) && (strip_trimat<T1>::do_trimat) )
-    {
-    const strip_trimat<T1> strip(expr.get_ref());
-    
-    out = strip.M;
-    
-    arma_debug_check( (out.is_square() == false), caller_sig, ": given matrix must be square sized" );
-    
-    return auxlib::inv_tr(out, (strip.do_triu ? uword(0) : uword(1)));
-    }
-  
-  out = expr.get_ref();
-  
-  arma_debug_check( (out.is_square() == false), caller_sig, ": given matrix must be square sized" );
-  
-  if( fast && (out.n_rows <= 4) && is_cx<eT>::no)
-    {
-    arma_extra_debug_print("op_inv_gen: attempting tinymatrix optimisation");
-    
-    Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
-    
-    const bool status = op_inv_gen::apply_tiny_noalias(tmp, out);
-    
-    if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
-    
-    arma_extra_debug_print("op_inv_gen: tinymatrix optimisation failed");
-    
-    // fallthrough if optimisation failed
-    }
-  
-  if(out.is_diagmat())  { return op_inv_gen_default::apply_diagmat(out, out, caller_sig); }
-  
-  const bool is_triu =                     (no_trimat == false) && trimat_helper::is_triu(out);
-  const bool is_tril = (is_triu) ? false : (no_trimat == false) && trimat_helper::is_tril(out);
-  
-  if(is_triu || is_tril)  { return auxlib::inv_tr(out, ((is_triu) ? uword(0) : uword(1))); }
-  
-  #if defined(ARMA_OPTIMISE_SYMPD)
-    const bool try_sympd = (no_sympd) ? false : (likely_sympd ? true : sympd_helper::guess_sympd(out));
-  #else
-    const bool try_sympd = false;
-  #endif
-  
-  if(try_sympd)
-    {
-    arma_extra_debug_print("op_inv: attempting sympd optimisation");
-    
-    Mat<eT> tmp = out;
-    
-    const bool status = auxlib::inv_sympd(tmp);
-    
-    if(status)  { out.steal_mem(tmp); return true; }
-    
-    arma_extra_debug_print("op_inv: sympd optimisation failed");
-    
-    // fallthrough if optimisation failed
-    }
-  
-  return auxlib::inv(out);
   }
 
 
