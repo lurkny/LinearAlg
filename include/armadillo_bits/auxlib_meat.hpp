@@ -3960,61 +3960,6 @@ auxlib::svd_dc_econ(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >
 
 
 
-//! solve a system of linear equations via explicit inverse (tiny matrices)
-template<typename T1>
-arma_cold
-inline
-bool
-auxlib::solve_square_tiny(Mat<typename T1::elem_type>& out, const Mat<typename T1::elem_type>& A, const Base<typename T1::elem_type,T1>& B_expr)
-  {
-  arma_extra_debug_sigprint();
-  
-  // NOTE: assuming A has size <= 4x4
-  
-  typedef typename T1::elem_type eT;
-  
-  const uword A_n_rows = A.n_rows;
-  
-  Mat<eT> A_inv(A_n_rows, A_n_rows, arma_nozeros_indicator());
-  
-  const bool status = op_inv_gen::apply_tiny_noalias(A_inv, A);
-  
-  if(status == false)  { return false; }
-  
-  const quasi_unwrap<T1> UB(B_expr.get_ref());
-  const Mat<eT>& B     = UB.M;
-  
-  const uword B_n_rows = B.n_rows;
-  const uword B_n_cols = B.n_cols;
-  
-  arma_debug_check( (A_n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
-  
-  if(A.is_empty() || B.is_empty())
-    {
-    out.zeros(A.n_cols, B_n_cols);
-    return true;
-    }
-  
-  if(UB.is_alias(out))
-    {
-    Mat<eT> tmp(A_n_rows, B_n_cols, arma_nozeros_indicator());
-    
-    gemm_emul<false,false,false,false>::apply(tmp, A_inv, B);
-    
-    out.steal_mem(tmp);
-    }
-  else
-    {
-    out.set_size(A_n_rows, B_n_cols);
-    
-    gemm_emul<false,false,false,false>::apply(out, A_inv, B);
-    }
-  
-  return true;
-  }
-
-
-
 //! solve a system of linear equations via LU decomposition
 template<typename T1>
 inline
@@ -4026,13 +3971,6 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
   typedef typename T1::elem_type eT;
   
   const uword A_n_rows = A.n_rows;
-  
-  if((A_n_rows <= 4) && is_cx<eT>::no)
-    {
-    const bool status = auxlib::solve_square_tiny(out, A, B_expr.get_ref());
-    
-    if(status)  { return true; }
-    }
   
   out = B_expr.get_ref();
   
@@ -4385,13 +4323,6 @@ auxlib::solve_sympd_fast_common(Mat<typename T1::elem_type>& out, Mat<typename T
   typedef typename T1::elem_type eT;
   
   const uword A_n_rows = A.n_rows;
-  
-  if((A_n_rows <= 4) && is_cx<eT>::no)
-    {
-    const bool status = auxlib::solve_square_tiny(out, A, B_expr.get_ref());
-    
-    if(status)  { return true; }
-    }
   
   out = B_expr.get_ref();
   
