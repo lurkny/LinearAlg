@@ -121,26 +121,17 @@ namespace inv_opts
   
   static constexpr uword flag_none         = uword(0       );
   static constexpr uword flag_fast         = uword(1u <<  0);
-  static constexpr uword flag_triu         = uword(1u <<  1);
-  static constexpr uword flag_tril         = uword(1u <<  2);
-  static constexpr uword flag_likely_sympd = uword(1u <<  3);
-  static constexpr uword flag_no_trimat    = uword(1u <<  4);
-  static constexpr uword flag_no_sympd     = uword(1u <<  5);
+  static constexpr uword flag_likely_sympd = uword(1u <<  1);
+  static constexpr uword flag_no_sympd     = uword(1u <<  2);
   
   struct opts_none         : public opts { inline opts_none()         : opts(flag_none        ) {} };
   struct opts_fast         : public opts { inline opts_fast()         : opts(flag_fast        ) {} };
-  struct opts_triu         : public opts { inline opts_triu()         : opts(flag_triu        ) {} };
-  struct opts_tril         : public opts { inline opts_tril()         : opts(flag_tril        ) {} };
   struct opts_likely_sympd : public opts { inline opts_likely_sympd() : opts(flag_likely_sympd) {} };
-  struct opts_no_trimat    : public opts { inline opts_no_trimat()    : opts(flag_no_trimat   ) {} };
   struct opts_no_sympd     : public opts { inline opts_no_sympd()     : opts(flag_no_sympd    ) {} };
   
   static const opts_none         none;
   static const opts_fast         fast;
-  static const opts_triu         triu;
-  static const opts_tril         tril;
   static const opts_likely_sympd likely_sympd;
-  static const opts_no_trimat    no_trimat;
   static const opts_no_sympd     no_sympd;
   }
 
