@@ -200,7 +200,7 @@ auxlib::inv_sympd(Mat<eT>& out, const Mat<eT>& X)
 template<typename eT>
 inline
 bool
-auxlib::inv_sympd_rcond(Mat<eT>& A, const eT rcond_threshold)
+auxlib::inv_sympd_conditional(Mat<eT>& A, const eT rcond_threshold)
   {
   arma_extra_debug_sigprint();
   
@@ -245,7 +245,7 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, const eT rcond_threshold)
     {
     arma_ignore(A);
     arma_ignore(rcond_threshold);
-    arma_stop_logic_error("inv_sympd_rcond(): use LAPACK must be enabled");
+    arma_stop_logic_error("inv_sympd_conditional(): use LAPACK must be enabled");
     return false;
     }
   #endif
@@ -256,7 +256,7 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, const eT rcond_threshold)
 template<typename T>
 inline
 bool
-auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, const T rcond_threshold)
+auxlib::inv_sympd_conditional(Mat< std::complex<T> >& A, const T rcond_threshold)
   {
   arma_extra_debug_sigprint();
   
@@ -305,7 +305,7 @@ auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, const T rcond_threshold)
     {
     arma_ignore(A);
     arma_ignore(rcond_threshold);
-    arma_stop_logic_error("inv_sympd_rcond(): use LAPACK must be enabled");
+    arma_stop_logic_error("inv_sympd_conditional(): use LAPACK must be enabled");
     return false;
     }
   #endif
