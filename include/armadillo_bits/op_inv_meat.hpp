@@ -89,14 +89,12 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   const bool fast         = has_user_flags && bool(flags & inv_opts::flag_fast        );
   const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
-  const bool no_trimat    = has_user_flags && bool(flags & inv_opts::flag_no_trimat   );
   const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
   
   arma_extra_debug_print("op_inv_gen: enabled flags:");
   
   if(fast        )  { arma_extra_debug_print("fast");         }
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
-  if(no_trimat   )  { arma_extra_debug_print("no_trimat");    }
   if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
   
   arma_debug_check( (no_sympd && likely_sympd), "inv(): options 'no_sympd' and 'likely_sympd' are mutually exclusive" );
@@ -108,7 +106,7 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     return op_inv_gen::apply_diagmat(out, strip.M, caller_sig);
     }
   
-  if( (no_trimat == false) && (strip_trimat<T1>::do_trimat) )
+  if(strip_trimat<T1>::do_trimat)
     {
     const strip_trimat<T1> strip(expr.get_ref());
     
@@ -140,8 +138,8 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   if(out.is_diagmat())  { return op_inv_gen::apply_diagmat(out, out, caller_sig); }
   
-  const bool is_triu = (no_trimat) ? false : (                    trimat_helper::is_triu(out));
-  const bool is_tril = (no_trimat) ? false : ((is_triu) ? false : trimat_helper::is_tril(out));
+  const bool is_triu =                     trimat_helper::is_triu(out);
+  const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(out);
   
   if(is_triu || is_tril)  { return auxlib::inv_tr(out, ((is_triu) ? uword(0) : uword(1))); }
   
