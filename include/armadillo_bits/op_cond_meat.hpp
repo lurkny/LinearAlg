@@ -31,6 +31,8 @@ op_cond::cond(const Base<typename T1::elem_type, T1>& X)
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
+  // TODO: implement speed up for symmetric matrices, similar to op_pinv::apply_sym()
+  
   Mat<eT> A(X.get_ref());
   
   Col<T> S;
