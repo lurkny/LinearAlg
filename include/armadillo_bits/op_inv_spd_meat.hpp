@@ -85,8 +85,8 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  if(has_user_flags == true )  { arma_extra_debug_print("op_inv_spd: has_user_flags == true");  }
-  if(has_user_flags == false)  { arma_extra_debug_print("op_inv_spd: has_user_flags == false"); }
+  if(has_user_flags == true )  { arma_extra_debug_print("op_inv_spd: has_user_flags = true");  }
+  if(has_user_flags == false)  { arma_extra_debug_print("op_inv_spd: has_user_flags = false"); }
   
   const bool fast         = has_user_flags && bool(flags & inv_opts::flag_fast        );
   const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
@@ -122,29 +122,37 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     // imaginary components of diagonal elements must be zero;
     // strictly enforcing this constraint may break existing user software.
     
+    bool print_warning = false;
+    
     for(uword i=0; i<N; ++i)
       {
             eT&      out_ii = out.at(i,i);
       const  T  real_out_ii = access::tmp_real(out_ii);
       
-      if(real_out_ii <= T(0))  { return false; }
+      if(fast == false)
+        {
+        if(real_out_ii <= T(0))  { return false; }
+        }
+      else
+        {
+        if(real_out_ii == T(0))  { return false; }
+        
+        print_warning = (real_out_ii < T(0)) ? true : print_warning;
+        }
       
       out_ii = eT(T(1) / real_out_ii);
       }
-      
+    
+    if(fast && print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
+    
     return true;
     }
   
-  // TODO: the tinymatrix optimisation currently does not care if the given matrix is not sympd;
-  // TODO: need to print a warning if the matrix is not sympd based on fast rudimentary checks,
-  // TODO: ie. diagonal values are > 0, and max value is on the diagonal.
-  // 
-  // TODO: when the major version is bumped:
-  // TODO: either rework the tinymatrix optimisation to be reliably more strict, or remove it entirely
-  
-  if((is_cx<eT>::no) && (N <= 4) && (fast))
+  if(fast && (is_cx<eT>::no) && (N <= 4))
     {
     arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
+    
+    bool print_warning = false;
     
     T max_diag = T(0);
     
@@ -155,7 +163,7 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
       const eT&      out_ii = colmem[i];
       const  T  real_out_ii = access::tmp_real(out_ii);
       
-      if(real_out_ii <= T(0))  { return false; }
+      print_warning = (real_out_ii <= T(0)) ? true : print_warning;
       
       max_diag = (real_out_ii > max_diag) ? real_out_ii : max_diag;
       
@@ -170,11 +178,13 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
         {
         const T abs_val = std::abs(colmem[r]);
         
-        if(abs_val > max_diag)  { return false; }
+        print_warning = (abs_val > max_diag) ? true : print_warning;
         }
       
       colmem += N;
       }
+    
+    if(print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
     
     Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
     
