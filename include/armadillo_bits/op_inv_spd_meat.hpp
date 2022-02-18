@@ -113,43 +113,6 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   const uword N = (std::min)(out.n_rows, out.n_cols);
   
-  if((is_cx<eT>::no) && (is_op_diagmat<T1>::value || out.is_diagmat()))
-    {
-    arma_extra_debug_print("op_inv_spd: detected diagonal matrix");
-    
-    // specialised handling of real matrices only;
-    // currently auxlib::inv_sympd() does not enforce that 
-    // imaginary components of diagonal elements must be zero;
-    // strictly enforcing this constraint may break existing user software.
-    
-    bool print_warning = false;
-    
-    for(uword i=0; i<N; ++i)
-      {
-            eT&      out_ii = out.at(i,i);
-      const  T  real_out_ii = access::tmp_real(out_ii);
-      
-      if(tiny == false)
-        {
-        if(real_out_ii <= T(0))  { return false; }
-        }
-      else
-        {
-        if(real_out_ii == T(0))  { return false; }
-        
-        // NOTE: inv_opts::tiny is used as a workaround for broken user software
-        
-        print_warning = (real_out_ii < T(0)) ? true : print_warning;
-        }
-      
-      out_ii = eT(T(1) / real_out_ii);
-      }
-    
-    if(tiny && print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
-    
-    return true;
-    }
-  
   if(tiny && (is_cx<eT>::no) && (N <= 4))
     {
     arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
@@ -167,7 +130,7 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
         const eT&      out_ii = colmem[i];
         const  T  real_out_ii = access::tmp_real(out_ii);
         
-        // NOTE: inv_opts::tiny is used as a workaround for broken user software
+        // NOTE: inv_opts::tiny is also used as a workaround for broken user software
           
         print_warning = (real_out_ii <= T(0)) ? true : print_warning;
         
@@ -202,6 +165,28 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     arma_extra_debug_print("op_inv_spd: tinymatrix optimisation failed");
     
     // fallthrough if optimisation failed
+    }
+  
+  if((is_cx<eT>::no) && (is_op_diagmat<T1>::value || out.is_diagmat()))
+    {
+    arma_extra_debug_print("op_inv_spd: detected diagonal matrix");
+    
+    // specialised handling of real matrices only;
+    // currently auxlib::inv_sympd() does not enforce that 
+    // imaginary components of diagonal elements must be zero;
+    // strictly enforcing this constraint may break existing user software.
+    
+    for(uword i=0; i<N; ++i)
+      {
+            eT&      out_ii = out.at(i,i);
+      const  T  real_out_ii = access::tmp_real(out_ii);
+      
+      if(real_out_ii <= T(0))  { return false; }
+      
+      out_ii = eT(T(1) / real_out_ii);
+      }
+    
+    return true;
     }
   
   return auxlib::inv_sympd(out);
