@@ -88,13 +88,13 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   if(has_user_flags == true )  { arma_extra_debug_print("op_inv_spd: has_user_flags = true");  }
   if(has_user_flags == false)  { arma_extra_debug_print("op_inv_spd: has_user_flags = false"); }
   
-  const bool fast         = has_user_flags && bool(flags & inv_opts::flag_fast        );
+  const bool tiny         = has_user_flags && bool(flags & inv_opts::flag_tiny        );
   const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
   const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
   
   arma_extra_debug_print("op_inv_gen: enabled flags:");
   
-  if(fast        )  { arma_extra_debug_print("fast");         }
+  if(tiny        )  { arma_extra_debug_print("tiny");         }
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
   if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
   
@@ -129,7 +129,7 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
             eT&      out_ii = out.at(i,i);
       const  T  real_out_ii = access::tmp_real(out_ii);
       
-      if(fast == false)
+      if(tiny == false)
         {
         if(real_out_ii <= T(0))  { return false; }
         }
@@ -137,7 +137,7 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
         {
         if(real_out_ii == T(0))  { return false; }
         
-        // NOTE: inv_opts::fast is used as a workaround for broken user software
+        // NOTE: inv_opts::tiny is used as a workaround for broken user software
         
         print_warning = (real_out_ii < T(0)) ? true : print_warning;
         }
@@ -145,12 +145,12 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
       out_ii = eT(T(1) / real_out_ii);
       }
     
-    if(fast && print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
+    if(tiny && print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
     
     return true;
     }
   
-  if(fast && (is_cx<eT>::no) && (N <= 4))
+  if(tiny && (is_cx<eT>::no) && (N <= 4))
     {
     arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
     
@@ -167,7 +167,7 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
         const eT&      out_ii = colmem[i];
         const  T  real_out_ii = access::tmp_real(out_ii);
         
-        // NOTE: inv_opts::fast is used as a workaround for broken user software
+        // NOTE: inv_opts::tiny is used as a workaround for broken user software
           
         print_warning = (real_out_ii <= T(0)) ? true : print_warning;
         

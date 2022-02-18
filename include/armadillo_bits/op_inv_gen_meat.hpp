@@ -84,16 +84,16 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   typedef typename T1::elem_type eT;
   
-  if(has_user_flags == true )  { arma_extra_debug_print("op_inv_gen: has_user_flags == true");  }
-  if(has_user_flags == false)  { arma_extra_debug_print("op_inv_gen: has_user_flags == false"); }
+  if(has_user_flags == true )  { arma_extra_debug_print("op_inv_gen: has_user_flags = true");  }
+  if(has_user_flags == false)  { arma_extra_debug_print("op_inv_gen: has_user_flags = false"); }
   
-  const bool fast         = has_user_flags && bool(flags & inv_opts::flag_fast        );
+  const bool tiny         = has_user_flags && bool(flags & inv_opts::flag_tiny        );
   const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
   const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
   
   arma_extra_debug_print("op_inv_gen: enabled flags:");
   
-  if(fast        )  { arma_extra_debug_print("fast");         }
+  if(tiny        )  { arma_extra_debug_print("tiny");         }
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
   if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
   
@@ -121,7 +121,7 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   arma_debug_check( (out.is_square() == false), caller_sig, ": given matrix must be square sized" );
   
-  if( fast && (out.n_rows <= 4) && is_cx<eT>::no)
+  if( tiny && (out.n_rows <= 4) && is_cx<eT>::no)
     {
     arma_extra_debug_print("op_inv_gen: attempting tinymatrix optimisation");
     
