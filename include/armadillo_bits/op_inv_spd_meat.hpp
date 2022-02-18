@@ -137,6 +137,8 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
         {
         if(real_out_ii == T(0))  { return false; }
         
+        // NOTE: inv_opts::fast is used as a workaround for broken user software
+        
         print_warning = (real_out_ii < T(0)) ? true : print_warning;
         }
       
@@ -152,39 +154,44 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     {
     arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
     
-    bool print_warning = false;
-    
-    T max_diag = T(0);
-    
-    const eT* colmem = out.memptr();
-    
-    for(uword i=0; i<N; ++i)
+    if(arma_config::debug)
       {
-      const eT&      out_ii = colmem[i];
-      const  T  real_out_ii = access::tmp_real(out_ii);
+      bool print_warning = false;
       
-      print_warning = (real_out_ii <= T(0)) ? true : print_warning;
+      T max_diag = T(0);
       
-      max_diag = (real_out_ii > max_diag) ? real_out_ii : max_diag;
+      const eT* colmem = out.memptr();
       
-      colmem += N;
-      }
-    
-    colmem = out.memptr();
-    
-    for(uword c=0; c < N; ++c)
-      {
-      for(uword r=c; r < N; ++r)
+      for(uword i=0; i<N; ++i)
         {
-        const T abs_val = std::abs(colmem[r]);
+        const eT&      out_ii = colmem[i];
+        const  T  real_out_ii = access::tmp_real(out_ii);
         
-        print_warning = (abs_val > max_diag) ? true : print_warning;
+        // NOTE: inv_opts::fast is used as a workaround for broken user software
+          
+        print_warning = (real_out_ii <= T(0)) ? true : print_warning;
+        
+        max_diag = (real_out_ii > max_diag) ? real_out_ii : max_diag;
+        
+        colmem += N;
         }
       
-      colmem += N;
+      colmem = out.memptr();
+      
+      for(uword c=0; c < N; ++c)
+        {
+        for(uword r=c; r < N; ++r)
+          {
+          const T abs_val = std::abs(colmem[r]);
+          
+          print_warning = (abs_val > max_diag) ? true : print_warning;
+          }
+        
+        colmem += N;
+        }
+      
+      if(print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
       }
-    
-    if(print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
     
     Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
     
