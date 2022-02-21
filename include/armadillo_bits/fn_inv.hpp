@@ -189,4 +189,29 @@ inv_sympd
 
 
 
+template<typename T1>
+inline
+typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, bool >::result
+inv_sympd
+  (
+         Mat<typename T1::elem_type>&    out_inv,
+             typename T1::pod_type&      out_rcond,
+  const Base<typename T1::elem_type,T1>& X
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  const bool status = op_inv_spd::apply_direct_rcond(out_inv, out_rcond, X.get_ref());
+  
+  if(status == false)
+    {
+    out_inv.soft_reset();
+    arma_debug_warn_level(3, "inv_sympd(): matrix is singular or not positive definite");
+    }
+  
+  return status;
+  }
+
+
+
 //! @}

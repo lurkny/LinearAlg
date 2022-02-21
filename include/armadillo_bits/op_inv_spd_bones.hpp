@@ -45,6 +45,9 @@ class op_inv_spd
   
   template<typename T1, const bool has_user_flags = true>
   inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const uword flags);
+  
+  template<typename T1>
+  inline static bool apply_direct_rcond(Mat<typename T1::elem_type>& out_inv, typename T1::pod_type& out_rcond, const Base<typename T1::elem_type,T1>& expr);
   };
 
 
