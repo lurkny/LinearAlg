@@ -201,7 +201,7 @@ inv_sympd
   {
   arma_extra_debug_sigprint();
   
-  const bool status = op_inv_spd::apply_direct_rcond(out_inv, out_rcond, X.get_ref());
+  const bool status = op_inv_rcond::apply_direct_spd(out_inv, out_rcond, X.get_ref());
   
   if(status == false)
     {

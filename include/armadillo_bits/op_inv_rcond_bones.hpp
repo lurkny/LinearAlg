@@ -16,35 +16,21 @@
 // ------------------------------------------------------------------------
 
 
-//! \addtogroup op_inv_spd
+//! \addtogroup op_inv_rcond
 //! @{
 
 
 
-class op_inv_spd_default
+class op_inv_rcond
   : public traits_op_default
   {
   public:
   
   template<typename T1>
-  inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_spd_default>& in);
+  inline static bool apply_direct_gen(Mat<typename T1::elem_type>& out_inv, typename T1::pod_type& out_rcond, const Base<typename T1::elem_type,T1>& expr);
   
   template<typename T1>
-  inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr);
-  };
-
-
-
-class op_inv_spd
-  : public traits_op_default
-  {
-  public:
-  
-  template<typename T1>
-  inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_spd>& in);
-  
-  template<typename T1, const bool has_user_flags = true>
-  inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const uword flags);
+  inline static bool apply_direct_spd(Mat<typename T1::elem_type>& out_inv, typename T1::pod_type& out_rcond, const Base<typename T1::elem_type,T1>& expr);
   };
 
 
