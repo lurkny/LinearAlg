@@ -113,6 +113,8 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   const uword N = (std::min)(out.n_rows, out.n_cols);
   
+  // TODO: for complex matrices, check if imaginary components of diagonal elements are approximately zero, say within 100*eps ?
+  
   if(tiny && (is_cx<eT>::no) && (N <= 4))
     {
     arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
@@ -175,6 +177,8 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     // currently auxlib::inv_sympd() does not enforce that 
     // imaginary components of diagonal elements must be zero;
     // strictly enforcing this constraint may break existing user software.
+    
+    // TODO: allow this speedup for complex matrices, since imaginary components of diagonal elements will be checked above
     
     for(uword i=0; i<N; ++i)
       {
