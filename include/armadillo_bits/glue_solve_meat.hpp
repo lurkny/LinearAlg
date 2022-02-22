@@ -86,8 +86,8 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
   
   typedef typename get_pod_type<eT>::result T;
   
-  if(has_user_flags == true )  { arma_extra_debug_print("glue_solve_gen::apply(): has_user_flags == true");  }
-  if(has_user_flags == false)  { arma_extra_debug_print("glue_solve_gen::apply(): has_user_flags == false"); }
+  if(has_user_flags == true )  { arma_extra_debug_print("glue_solve_gen::apply(): has_user_flags = true" ); }
+  if(has_user_flags == false)  { arma_extra_debug_print("glue_solve_gen::apply(): has_user_flags = false"); }
   
   const bool fast         = has_user_flags && bool(flags & solve_opts::flag_fast        );
   const bool equilibrate  = has_user_flags && bool(flags & solve_opts::flag_equilibrate );
