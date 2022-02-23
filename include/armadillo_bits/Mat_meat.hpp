@@ -6090,6 +6090,34 @@ Mat<eT>::at(const uword in_row, const uword in_col) const
 
 
 
+#if defined(__cpp_multidimensional_subscript)
+  
+  //! element accessor; no bounds check
+  template<typename eT>
+  arma_inline
+  arma_warn_unused
+  eT&
+  Mat<eT>::operator[] (const uword in_row, const uword in_col)
+    {
+    return access::rw( mem[in_row + in_col*n_rows] );
+    }
+  
+  
+  
+  //! element accessor; no bounds check
+  template<typename eT>
+  arma_inline
+  arma_warn_unused
+  const eT&
+  Mat<eT>::operator[] (const uword in_row, const uword in_col) const
+    {
+    return mem[in_row + in_col*n_rows];
+    }
+  
+#endif
+
+
+
 //! prefix ++
 template<typename eT>
 arma_inline
@@ -9563,6 +9591,38 @@ Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::operator() (const uword ii) const
   
   return (use_extra) ? mem_local_extra[ii] : mem_local[ii];
   }
+
+
+
+#if defined(__cpp_multidimensional_subscript)
+  
+  template<typename eT>
+  template<uword fixed_n_rows, uword fixed_n_cols>
+  arma_inline
+  arma_warn_unused
+  eT&
+  Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::operator[] (const uword in_row, const uword in_col)
+    {
+    const uword iq = in_row + in_col*fixed_n_rows;
+    
+    return (use_extra) ? mem_local_extra[iq] : mem_local[iq];
+    }
+  
+  
+  
+  template<typename eT>
+  template<uword fixed_n_rows, uword fixed_n_cols>
+  arma_inline
+  arma_warn_unused
+  const eT&
+  Mat<eT>::fixed<fixed_n_rows, fixed_n_cols>::operator[] (const uword in_row, const uword in_col) const
+    {
+    const uword iq = in_row + in_col*fixed_n_rows;
+    
+    return (use_extra) ? mem_local_extra[iq] : mem_local[iq];
+    }
+  
+#endif
 
 
 

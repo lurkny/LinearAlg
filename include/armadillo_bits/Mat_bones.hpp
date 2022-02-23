@@ -400,6 +400,11 @@ class Mat : public Base< eT, Mat<eT> >
   arma_inline arma_warn_unused       eT& operator() (const uword ii);
   arma_inline arma_warn_unused const eT& operator() (const uword ii) const;
   
+  #if defined(__cpp_multidimensional_subscript)
+  arma_inline arma_warn_unused       eT& operator[] (const uword in_row, const uword in_col);
+  arma_inline arma_warn_unused const eT& operator[] (const uword in_row, const uword in_col) const;
+  #endif
+  
   arma_inline arma_warn_unused       eT& at         (const uword in_row, const uword in_col);
   arma_inline arma_warn_unused const eT& at         (const uword in_row, const uword in_col) const;
   arma_inline arma_warn_unused       eT& operator() (const uword in_row, const uword in_col);
@@ -856,6 +861,11 @@ class Mat<eT>::fixed : public Mat<eT>
   arma_inline arma_warn_unused const eT& at         (const uword i) const;
   arma_inline arma_warn_unused       eT& operator() (const uword i);
   arma_inline arma_warn_unused const eT& operator() (const uword i) const;
+  
+  #if defined(__cpp_multidimensional_subscript)
+  arma_inline arma_warn_unused       eT& operator[] (const uword in_row, const uword in_col);
+  arma_inline arma_warn_unused const eT& operator[] (const uword in_row, const uword in_col) const;
+  #endif
   
   arma_inline arma_warn_unused       eT& at         (const uword in_row, const uword in_col);
   arma_inline arma_warn_unused const eT& at         (const uword in_row, const uword in_col) const;
