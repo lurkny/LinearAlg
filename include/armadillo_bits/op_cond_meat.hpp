@@ -80,6 +80,8 @@ op_cond::rcond(const Base<typename T1::elem_type, T1>& X)
   
   if(A.is_empty()) { return Datum<T>::inf; }
   
+  // TODO: optimisation for diagonal matrices
+  
   const bool is_triu =                     trimat_helper::is_triu(A);
   const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(A);
   
