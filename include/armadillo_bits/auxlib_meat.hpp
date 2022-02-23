@@ -226,11 +226,11 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, eT& out_rcond, const eT rcond_threshold)
     arma_extra_debug_print("lapack::potrf()");
     lapack::potrf(&uplo, &n, A.memptr(), &n, &info);
     
-    if(info != 0)  { return false; }
+    if(info != 0)  { out_rcond = eT(0); return false; }
     
     out_rcond = auxlib::lu_rcond_sympd<T>(A, norm_val);
     
-    if( (rcond_threshold > eT(0)) && (rcond < rcond_threshold) )  { return false; }
+    if( (rcond_threshold > eT(0)) && (out_rcond < rcond_threshold) )  { return false; }
     
     arma_extra_debug_print("lapack::potri()");
     lapack::potri(&uplo, &n, A.memptr(), &n, &info);
@@ -287,7 +287,7 @@ auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, T& out_rcond, const T rcond_t
     arma_extra_debug_print("lapack::potrf()");
     lapack::potrf(&uplo, &n, A.memptr(), &n, &info);
     
-    if(info != 0)  { return false; }
+    if(info != 0)  { out_rcond = T(0); return false; }
     
     out_rcond = auxlib::lu_rcond_sympd<T>(A, norm_val);
     

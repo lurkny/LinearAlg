@@ -56,7 +56,7 @@ op_inv_rcond::apply_direct_gen(Mat<typename T1::elem_type>& out_inv, typename T1
 template<typename T1>
 inline
 bool
-op_inv_rcond::apply_direct_spd(Mat<typename T1::elem_type>& out_inv, typename T1::pod_type& out_rcond, const Base<typename T1::elem_type,T1>& expr)
+op_inv_rcond::apply_direct_spd(Mat<typename T1::elem_type>& out, typename T1::pod_type& out_rcond, const Base<typename T1::elem_type,T1>& expr)
   {
   arma_extra_debug_sigprint();
   
@@ -65,22 +65,40 @@ op_inv_rcond::apply_direct_spd(Mat<typename T1::elem_type>& out_inv, typename T1
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  const Mat<eT> A = expr.get_ref();
+  out = expr.get_ref();
   
-  arma_debug_check( (A.is_square() == false), "inv_sympd(): given matrix must be square sized" );
+  arma_debug_check( (out.is_square() == false), "inv_sympd(): given matrix must be square sized" );
   
-  const bool status = op_inv_spd::apply_direct<T1,false>(out_inv, A, uword(0));
-  
-  if(status)
+  if((arma_config::debug) && (auxlib::rudimentary_sym_check(out) == false))
     {
-    out_rcond = op_cond::rcond(expr.get_ref());
-    }
-  else
-    {
-    out_rcond = T(0);
+    if(is_cx<eT>::no )  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not symmetric"); }
+    if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
     }
   
-  return status;
+  const uword N = out.n_rows;
+  
+  if(is_cx<eT>::yes)
+    {
+    arma_extra_debug_print("op_inv_spd: checking imaginary components of diagonal elements");
+    
+    const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
+    
+    const eT* colmem = out.memptr();
+    
+    for(uword i=0; i<N; ++i)
+      {
+      const eT& out_ii      = colmem[i];
+      const  T  out_ii_imag = access::tmp_imag(out_ii);
+      
+      if(std::abs(out_ii_imag) > tol)  { return false; }
+      
+      colmem += N;
+      }
+    }
+  
+  // TODO: optimisation for diagonal matrices
+  
+  return auxlib::inv_sympd_rcond(out, out_rcond, T(-1));
   }
 
 

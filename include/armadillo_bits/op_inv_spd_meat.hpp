@@ -149,7 +149,7 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     {
     arma_extra_debug_print("op_inv_spd: detected diagonal matrix");
     
-    const eT* colmem = out.memptr();
+    eT* colmem = out.memptr();
     
     for(uword i=0; i<N; ++i)
       {
