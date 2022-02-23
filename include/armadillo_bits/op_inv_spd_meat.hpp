@@ -113,8 +113,6 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   const uword N = (std::min)(out.n_rows, out.n_cols);
   
-  // TODO: for complex matrices, check if imaginary components of diagonal elements are approximately zero, say within 100*eps ?
-  
   if(tiny && (is_cx<eT>::no) && (N <= 4))
     {
     arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
@@ -169,25 +167,41 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     // fallthrough if optimisation failed
     }
   
-  if((is_cx<eT>::no) && (is_op_diagmat<T1>::value || out.is_diagmat()))
+  if(is_cx<eT>::yes)
     {
-    arma_extra_debug_print("op_inv_spd: detected diagonal matrix");
+    arma_extra_debug_print("op_inv_spd: checking imaginary components of diagonal elements");
     
-    // specialised handling of real matrices only;
-    // currently auxlib::inv_sympd() does not enforce that 
-    // imaginary components of diagonal elements must be zero;
-    // strictly enforcing this constraint may break existing user software.
+    const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
     
-    // TODO: allow this speedup for complex matrices, since imaginary components of diagonal elements will be checked above
+    const eT* colmem = out.memptr();
     
     for(uword i=0; i<N; ++i)
       {
-            eT&      out_ii = out.at(i,i);
-      const  T  real_out_ii = access::tmp_real(out_ii);
+      const eT& out_ii      = colmem[i];
+      const  T  out_ii_imag = access::tmp_imag(out_ii);
       
-      if(real_out_ii <= T(0))  { return false; }
+      if(std::abs(out_ii_imag) > tol)  { return false; }
       
-      out_ii = eT(T(1) / real_out_ii);
+      colmem += N;
+      }
+    }
+  
+  if(is_op_diagmat<T1>::value || out.is_diagmat())
+    {
+    arma_extra_debug_print("op_inv_spd: detected diagonal matrix");
+    
+    const eT* colmem = out.memptr();
+    
+    for(uword i=0; i<N; ++i)
+      {
+            eT& out_ii      = colmem[i];
+      const  T  out_ii_real = access::tmp_real(out_ii);
+      
+      if(out_ii_real <= T(0))  { return false; }
+      
+      out_ii = eT(T(1) / out_ii_real);
+      
+      colmem += N;
       }
     
     return true;
