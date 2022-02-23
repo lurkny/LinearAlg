@@ -113,54 +113,13 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   const uword N = (std::min)(out.n_rows, out.n_cols);
   
-  if(tiny && (is_cx<eT>::no) && (N <= 4))
+  if(tiny && (N <= 4) && (is_cx<eT>::no))
     {
     arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
     
-    if(arma_config::debug)
-      {
-      bool print_warning = false;
-      
-      T max_diag = T(0);
-      
-      const eT* colmem = out.memptr();
-      
-      for(uword i=0; i<N; ++i)
-        {
-        const eT& out_ii      = colmem[i];
-        const  T  out_ii_real = access::tmp_real(out_ii);
-        
-        // NOTE: inv_opts::tiny is also used as a workaround for broken user software
-          
-        print_warning = (out_ii_real <= T(0)) ? true : print_warning;
-        
-        max_diag = (out_ii_real > max_diag) ? out_ii_real : max_diag;
-        
-        colmem += N;
-        }
-      
-      colmem = out.memptr();
-      
-      for(uword c=0; c < N; ++c)
-        {
-        for(uword r=(c+1); r < N; ++r)
-          {
-          const T abs_val = std::abs(colmem[r]);
-          
-          print_warning = (abs_val > max_diag) ? true : print_warning;
-          }
-        
-        colmem += N;
-        }
-      
-      if(print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
-      }
+    const bool status = op_inv_spd::apply_direct_tiny(out);
     
-    Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
-    
-    const bool status = op_inv_gen::apply_tiny_noalias(tmp, out);
-    
-    if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
+    if(status)  { return true; }
     
     arma_extra_debug_print("op_inv_spd: tinymatrix optimisation failed");
     
@@ -208,6 +167,67 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     }
   
   return auxlib::inv_sympd(out);
+  }
+
+
+
+template<typename eT>
+inline
+bool
+op_inv_spd::apply_direct_tiny(Mat<eT>& out)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename get_pod_type<eT>::result T;
+  
+  const uword N = out.n_rows;
+  
+  if(arma_config::debug)
+    {
+    bool print_warning = false;
+    
+    T max_diag = T(0);
+    
+    const eT* colmem = out.memptr();
+    
+    for(uword i=0; i<N; ++i)
+      {
+      const eT& out_ii      = colmem[i];
+      const  T  out_ii_real = access::tmp_real(out_ii);
+      
+      // NOTE: inv_opts::tiny is also used as a workaround for broken user software
+        
+      print_warning = (out_ii_real <= T(0)) ? true : print_warning;
+      
+      max_diag = (out_ii_real > max_diag) ? out_ii_real : max_diag;
+      
+      colmem += N;
+      }
+    
+    colmem = out.memptr();
+    
+    for(uword c=0; c < N; ++c)
+      {
+      for(uword r=(c+1); r < N; ++r)
+        {
+        const T abs_val = std::abs(colmem[r]);
+        
+        print_warning = (abs_val > max_diag) ? true : print_warning;
+        }
+      
+      colmem += N;
+      }
+    
+    if(print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
+    }
+  
+  Mat<eT> tmp(N, N, arma_nozeros_indicator());
+  
+  const bool status = op_inv_gen::apply_tiny_noalias(tmp, out);
+  
+  if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
+  
+  return false;
   }
 
 
