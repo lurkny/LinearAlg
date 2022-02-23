@@ -200,7 +200,7 @@ auxlib::inv_sympd(Mat<eT>& out, const Mat<eT>& X)
 template<typename eT>
 inline
 bool
-auxlib::inv_sympd_rcond(Mat<eT>& A, const eT rcond_threshold)
+auxlib::inv_sympd_rcond(Mat<eT>& A, eT& out_rcond, const eT rcond_threshold)
   {
   arma_extra_debug_sigprint();
   
@@ -228,9 +228,9 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, const eT rcond_threshold)
     
     if(info != 0)  { return false; }
     
-    const T rcond = auxlib::lu_rcond_sympd<T>(A, norm_val);
+    out_rcond = auxlib::lu_rcond_sympd<T>(A, norm_val);
     
-    if(rcond < rcond_threshold)  { return false; }
+    if( (rcond_threshold > eT(0)) && (rcond < rcond_threshold) )  { return false; }
     
     arma_extra_debug_print("lapack::potri()");
     lapack::potri(&uplo, &n, A.memptr(), &n, &info);
@@ -244,6 +244,7 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, const eT rcond_threshold)
   #else
     {
     arma_ignore(A);
+    arma_ignore(out_rcond);
     arma_ignore(rcond_threshold);
     arma_stop_logic_error("inv_sympd_rcond(): use LAPACK must be enabled");
     return false;
@@ -256,7 +257,7 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, const eT rcond_threshold)
 template<typename T>
 inline
 bool
-auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, const T rcond_threshold)
+auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, T& out_rcond, const T rcond_threshold)
   {
   arma_extra_debug_sigprint();
   
@@ -288,9 +289,9 @@ auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, const T rcond_threshold)
     
     if(info != 0)  { return false; }
     
-    const T rcond = auxlib::lu_rcond_sympd<T>(A, norm_val);
+    out_rcond = auxlib::lu_rcond_sympd<T>(A, norm_val);
     
-    if(rcond < rcond_threshold)  { return false; }
+    if( (rcond_threshold > T(0)) && (out_rcond < rcond_threshold) )  { return false; }
     
     arma_extra_debug_print("lapack::potri()");
     lapack::potri(&uplo, &n, A.memptr(), &n, &info);
@@ -304,6 +305,7 @@ auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, const T rcond_threshold)
   #else
     {
     arma_ignore(A);
+    arma_ignore(out_rcond);
     arma_ignore(rcond_threshold);
     arma_stop_logic_error("inv_sympd_rcond(): use LAPACK must be enabled");
     return false;
