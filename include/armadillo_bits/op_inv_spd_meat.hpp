@@ -127,14 +127,14 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
       
       for(uword i=0; i<N; ++i)
         {
-        const eT&      out_ii = colmem[i];
-        const  T  real_out_ii = access::tmp_real(out_ii);
+        const eT& out_ii      = colmem[i];
+        const  T  out_ii_real = access::tmp_real(out_ii);
         
         // NOTE: inv_opts::tiny is also used as a workaround for broken user software
           
-        print_warning = (real_out_ii <= T(0)) ? true : print_warning;
+        print_warning = (out_ii_real <= T(0)) ? true : print_warning;
         
-        max_diag = (real_out_ii > max_diag) ? real_out_ii : max_diag;
+        max_diag = (out_ii_real > max_diag) ? out_ii_real : max_diag;
         
         colmem += N;
         }
@@ -143,7 +143,7 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
       
       for(uword c=0; c < N; ++c)
         {
-        for(uword r=c; r < N; ++r)
+        for(uword r=(c+1); r < N; ++r)
           {
           const T abs_val = std::abs(colmem[r]);
           
