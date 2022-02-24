@@ -60,12 +60,11 @@ op_inv_rcond::apply_direct_spd(Mat<typename T1::elem_type>& out, typename T1::po
   {
   arma_extra_debug_sigprint();
   
-  // NOTE: this is a temporary and rudimentary implementation
-  
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  out = expr.get_ref();
+  out       = expr.get_ref();
+  out_rcond = T(0);
   
   arma_debug_check( (out.is_square() == false), "inv_sympd(): given matrix must be square sized" );
   
@@ -79,7 +78,7 @@ op_inv_rcond::apply_direct_spd(Mat<typename T1::elem_type>& out, typename T1::po
   
   if(is_cx<eT>::yes)
     {
-    arma_extra_debug_print("op_inv_spd: checking imaginary components of diagonal elements");
+    arma_extra_debug_print("op_inv_rcond: checking imaginary components of diagonal elements");
     
     const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
     
@@ -96,7 +95,39 @@ op_inv_rcond::apply_direct_spd(Mat<typename T1::elem_type>& out, typename T1::po
       }
     }
   
-  // TODO: optimisation for diagonal matrices
+  if(is_op_diagmat<T1>::value || out.is_diagmat())
+    {
+    arma_extra_debug_print("op_inv_rcond: detected diagonal matrix");
+    
+    eT* colmem = out.memptr();
+    
+    T max_abs_src_val = T(0);
+    T max_abs_out_val = T(0);
+    
+    for(uword i=0; i<N; ++i)
+      {
+      eT& out_ii = colmem[i];
+      
+      const eT src_val = out_ii;
+      const eT out_val = eT(1) / src_val;
+      
+      if( (src_val == eT(0)) || (access::tmp_real(src_val) <= T(0)) )  { return false; }
+      
+      out_ii = out_val;
+      
+      const T abs_src_val = std::abs(src_val);
+      const T abs_out_val = std::abs(out_val);
+      
+      max_abs_src_val = (abs_src_val > max_abs_src_val) ? abs_src_val : max_abs_src_val;
+      max_abs_out_val = (abs_out_val > max_abs_out_val) ? abs_out_val : max_abs_out_val;
+      
+      colmem += N;
+      }
+    
+    out_rcond = T(1) / (max_abs_src_val * max_abs_out_val);
+    
+    return true;
+    }
   
   return auxlib::inv_sympd_rcond(out, out_rcond, T(-1));
   }
