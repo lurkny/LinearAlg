@@ -102,29 +102,29 @@ op_inv_rcond::apply_direct_spd(Mat<typename T1::elem_type>& out, typename T1::po
     eT* colmem = out.memptr();
     
     T max_abs_src_val = T(0);
-    T max_abs_out_val = T(0);
+    T max_abs_inv_val = T(0);
     
     for(uword i=0; i<N; ++i)
       {
       eT& out_ii = colmem[i];
       
       const eT src_val = out_ii;
-      const eT out_val = eT(1) / src_val;
+      const eT inv_val = eT(1) / src_val;
       
       if( (src_val == eT(0)) || (access::tmp_real(src_val) <= T(0)) )  { return false; }
       
-      out_ii = out_val;
+      out_ii = inv_val;
       
       const T abs_src_val = std::abs(src_val);
-      const T abs_out_val = std::abs(out_val);
+      const T abs_inv_val = std::abs(inv_val);
       
       max_abs_src_val = (abs_src_val > max_abs_src_val) ? abs_src_val : max_abs_src_val;
-      max_abs_out_val = (abs_out_val > max_abs_out_val) ? abs_out_val : max_abs_out_val;
+      max_abs_inv_val = (abs_inv_val > max_abs_inv_val) ? abs_inv_val : max_abs_inv_val;
       
       colmem += N;
       }
     
-    out_rcond = T(1) / (max_abs_src_val * max_abs_out_val);
+    out_rcond = T(1) / (max_abs_src_val * max_abs_inv_val);
     
     return true;
     }
