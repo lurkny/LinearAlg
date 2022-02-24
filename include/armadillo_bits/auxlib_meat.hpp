@@ -96,6 +96,76 @@ auxlib::inv(Mat<eT>& out, const Mat<eT>& X)
 template<typename eT>
 inline
 bool
+auxlib::inv_rcond(Mat<eT>& A, typename get_pod_type<eT>::result& out_rcond)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename get_pod_type<eT>::result T;
+  
+  out_rcond = T(0);
+  
+  if(A.is_empty())  { return true; }
+  
+  #if defined(ARMA_USE_LAPACK)
+    {
+    arma_debug_assert_blas_size(A);
+    
+    char     norm_id  = '1';
+    blas_int n        = blas_int(A.n_rows);
+    blas_int lda      = blas_int(A.n_rows);
+    blas_int lwork    = (std::max)(blas_int(podarray_prealloc_n_elem::val), n);
+    blas_int info     = 0;
+    T        norm_val = T(0);
+    
+    podarray<T>        junk(1);
+    podarray<blas_int> ipiv(A.n_rows);
+    
+    arma_extra_debug_print("lapack::lange()");
+    norm_val = lapack::lange<eT>(&norm_id, &n, &n, A.memptr(), &lda, junk.memptr());
+    
+    arma_extra_debug_print("lapack::getrf()");
+    lapack::getrf(&n, &n, A.memptr(), &lda, ipiv.memptr(), &info);
+    
+    if(info != 0)  { return false; }
+    
+    out_rcond = auxlib::lu_rcond<T>(A, norm_val);
+    
+    if(n > 16)
+      {
+      eT        work_query[2];
+      blas_int lwork_query = -1;
+      
+      arma_extra_debug_print("lapack::getri()");
+      lapack::getri(&n, A.memptr(), &lda, ipiv.memptr(), &work_query[0], &lwork_query, &info);
+      
+      if(info != 0)  { return false; }
+      
+      blas_int lwork_proposed = static_cast<blas_int>( access::tmp_real(work_query[0]) );
+      
+      lwork = (std::max)(lwork_proposed, lwork);
+      }
+    
+    podarray<eT> work( static_cast<uword>(lwork) );
+    
+    arma_extra_debug_print("lapack::getri()");
+    lapack::getri(&n, A.memptr(), &lda, ipiv.memptr(), work.memptr(), &lwork, &info);
+    
+    return (info == 0);
+    }
+  #else
+    {
+    arma_ignore(A);
+    arma_stop_logic_error("inv_rcond(): use of LAPACK must be enabled");
+    return false;
+    }
+  #endif
+  }
+
+
+
+template<typename eT>
+inline
+bool
 auxlib::inv_tr(Mat<eT>& A, const uword layout)
   {
   arma_extra_debug_sigprint();

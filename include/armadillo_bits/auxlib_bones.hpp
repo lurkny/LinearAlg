@@ -35,6 +35,9 @@ class auxlib
   inline static bool inv(Mat<eT>& out, const Mat<eT>& X);
   
   template<typename eT>
+  inline static bool inv_rcond(Mat<eT>& A, typename get_pod_type<eT>::result& out_rcond);
+  
+  template<typename eT>
   inline static bool inv_tr(Mat<eT>& A, const uword layout);
   
   template<typename eT>

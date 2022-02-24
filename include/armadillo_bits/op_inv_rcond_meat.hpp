@@ -24,29 +24,22 @@
 template<typename T1>
 inline
 bool
-op_inv_rcond::apply_direct_gen(Mat<typename T1::elem_type>& out_inv, typename T1::pod_type& out_rcond, const Base<typename T1::elem_type,T1>& expr)
+op_inv_rcond::apply_direct_gen(Mat<typename T1::elem_type>& out, typename T1::pod_type& out_rcond, const Base<typename T1::elem_type,T1>& expr)
   {
   arma_extra_debug_sigprint();
   
-  // NOTE: this is a temporary and rudimentary implementation
+  // NOTE: this is a work in progress
   
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  const Mat<eT> A = expr.get_ref();
+  Mat<eT> A = expr.get_ref();
   
   arma_debug_check( (A.is_square() == false), "inv_sympd(): given matrix must be square sized" );
   
-  const bool status = op_inv_gen::apply_direct<T1,false>(out_inv, A, uword(0));
+  out_rcond = T(0);
   
-  if(status)
-    {
-    out_rcond = op_cond::rcond(expr.get_ref());
-    }
-  else
-    {
-    out_rcond = T(0);
-    }
+  const bool status = auxlib::inv_rcond(A, out_rcond);
   
   return status;
   }
