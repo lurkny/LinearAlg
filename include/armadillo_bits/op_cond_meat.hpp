@@ -80,7 +80,34 @@ op_cond::rcond(const Base<typename T1::elem_type, T1>& X)
   
   if(A.is_empty()) { return Datum<T>::inf; }
   
-  // TODO: optimisation for diagonal matrices
+  if(is_op_diagmat<T1>::value || A.is_diagmat())
+    {
+    arma_extra_debug_print("op_cond::rcond(): detected diagonal matrix");
+    
+    const eT*   colmem = A.memptr();
+    const uword N      = A.n_rows;
+    
+    T max_abs_src_val = T(0);
+    T max_abs_inv_val = T(0);
+    
+    for(uword i=0; i<N; ++i)
+      {
+      const eT src_val = colmem[i];
+      const eT inv_val = eT(1) / src_val;
+      
+      if(src_val == eT(0))  { return T(0); }
+      
+      const T abs_src_val = std::abs(src_val);
+      const T abs_inv_val = std::abs(inv_val);
+      
+      max_abs_src_val = (abs_src_val > max_abs_src_val) ? abs_src_val : max_abs_src_val;
+      max_abs_inv_val = (abs_inv_val > max_abs_inv_val) ? abs_inv_val : max_abs_inv_val;
+      
+      colmem += N;
+      }
+    
+    return T(1) / (max_abs_src_val * max_abs_inv_val);
+    }
   
   const bool is_triu =                     trimat_helper::is_triu(A);
   const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(A);
