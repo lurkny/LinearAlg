@@ -20,7 +20,7 @@
 //! @{
 
 
-//! interface functions for accessing decompositions in LAPACK and ATLAS
+//! low-level interface functions for accessing LAPACK
 class auxlib
   {
   public:

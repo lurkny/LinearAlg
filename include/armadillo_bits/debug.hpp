@@ -1313,52 +1313,6 @@ arma_assert_blas_size(const T1& A, const T2& B)
 
 
 
-template<typename T1>
-arma_hot
-inline
-void
-arma_assert_atlas_size(const T1& A)
-  {
-  if(sizeof(uword) >= sizeof(int))
-    {
-    bool overflow;
-    
-    overflow = (A.n_rows > INT_MAX);
-    overflow = (A.n_cols > INT_MAX) || overflow;
-    
-    if(overflow)
-      {
-      arma_stop_runtime_error("integer overflow: matrix dimensions are too large for integer type used by ATLAS");
-      }
-    }
-  }
-
-
-
-template<typename T1, typename T2>
-arma_hot
-inline
-void
-arma_assert_atlas_size(const T1& A, const T2& B)
-  {
-  if(sizeof(uword) >= sizeof(int))
-    {
-    bool overflow;
-    
-    overflow = (A.n_rows > INT_MAX);
-    overflow = (A.n_cols > INT_MAX) || overflow;
-    overflow = (B.n_rows > INT_MAX) || overflow;
-    overflow = (B.n_cols > INT_MAX) || overflow;
-    
-    if(overflow)
-      {
-      arma_stop_runtime_error("integer overflow: matrix dimensions are too large for integer type used by ATLAS");
-      }
-    }
-  }
-
-
-
 //
 // macros
 
@@ -1381,7 +1335,6 @@ arma_assert_atlas_size(const T1& A, const T2& B)
   #define arma_debug_assert_trans_mul_size   true ? (void)0 : arma_assert_trans_mul_size
   #define arma_debug_assert_cube_as_mat      true ? (void)0 : arma_assert_cube_as_mat
   #define arma_debug_assert_blas_size        true ? (void)0 : arma_assert_blas_size
-  #define arma_debug_assert_atlas_size       true ? (void)0 : arma_assert_atlas_size
   
 #else
   
@@ -1396,7 +1349,6 @@ arma_assert_atlas_size(const T1& A, const T2& B)
   #define arma_debug_assert_trans_mul_size arma_assert_trans_mul_size
   #define arma_debug_assert_cube_as_mat    arma_assert_cube_as_mat
   #define arma_debug_assert_blas_size      arma_assert_blas_size
-  #define arma_debug_assert_atlas_size     arma_assert_atlas_size
   
 #endif
 
@@ -1462,7 +1414,6 @@ arma_assert_atlas_size(const T1& A, const T2& B)
         out << "@ arma_config::newarp       = " << arma_config::newarp       << '\n';
         out << "@ arma_config::arpack       = " << arma_config::arpack       << '\n';
         out << "@ arma_config::superlu      = " << arma_config::superlu      << '\n';
-        out << "@ arma_config::atlas        = " << arma_config::atlas        << '\n';
         out << "@ arma_config::hdf5         = " << arma_config::hdf5         << '\n';
         out << "@ arma_config::good_comp    = " << arma_config::good_comp    << '\n';
         out << "@ arma_config::extra_code   = " << arma_config::extra_code   << '\n';
