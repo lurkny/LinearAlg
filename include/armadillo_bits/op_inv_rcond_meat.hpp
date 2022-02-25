@@ -28,8 +28,6 @@ op_inv_rcond::apply_direct_gen(Mat<typename T1::elem_type>& out, typename T1::po
   {
   arma_extra_debug_sigprint();
   
-  // NOTE: this is a work in progress
-  
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
