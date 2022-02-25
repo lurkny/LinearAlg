@@ -186,15 +186,6 @@ auxlib::inv_tr(Mat<eT>& A, const uword layout)
     
     if(info != 0)  { return false; }
     
-    if(layout == 0)
-      {
-      A = trimatu(A);  // upper triangular
-      }
-    else
-      {
-      A = trimatl(A);  // lower triangular
-      }
-    
     return true;
     }
   #else

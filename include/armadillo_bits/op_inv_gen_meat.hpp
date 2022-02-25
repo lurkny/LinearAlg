@@ -106,17 +106,6 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     return op_inv_gen::apply_diagmat(out, strip.M, caller_sig);
     }
   
-  if(strip_trimat<T1>::do_trimat)
-    {
-    const strip_trimat<T1> strip(expr.get_ref());
-    
-    out = strip.M;
-    
-    arma_debug_check( (out.is_square() == false), caller_sig, ": given matrix must be square sized" );
-    
-    return auxlib::inv_tr(out, (strip.do_triu ? uword(0) : uword(1)));
-    }
-  
   out = expr.get_ref();
   
   arma_debug_check( (out.is_square() == false), caller_sig, ": given matrix must be square sized" );
@@ -138,10 +127,26 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   if(out.is_diagmat())  { return op_inv_gen::apply_diagmat(out, out, caller_sig); }
   
-  const bool is_triu =                     trimat_helper::is_triu(out);
-  const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(out);
+  const strip_trimat<T1> strip(expr.get_ref()) ;
   
-  if(is_triu || is_tril)  { return auxlib::inv_tr(out, ((is_triu) ? uword(0) : uword(1))); }
+  const bool is_triu_expr = strip.do_triu;
+  const bool is_tril_expr = strip.do_tril;
+  
+  const bool is_triu_mat = (is_triu_expr || is_tril_expr) ? false : (                        trimat_helper::is_triu(out));
+  const bool is_tril_mat = (is_triu_expr || is_tril_expr) ? false : ((is_triu_mat) ? false : trimat_helper::is_tril(out));
+  
+  if(is_triu_expr || is_tril_expr || is_triu_mat || is_tril_mat)
+    {
+    const bool status = auxlib::inv_tr(out, ((is_triu_expr || is_triu_mat) ? uword(0) : uword(1)));
+    
+    if(status)
+      {
+      if(is_triu_expr)  { out = trimatu(out); }
+      if(is_tril_expr)  { out = trimatl(out); }
+      }
+    
+    return status;
+    }
   
   #if defined(ARMA_OPTIMISE_SYMPD)
     const bool try_sympd = (no_sympd) ? false : (likely_sympd ? true : sympd_helper::guess_sympd(out));
