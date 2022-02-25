@@ -99,13 +99,6 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   arma_debug_check( (no_sympd && likely_sympd), "inv(): options 'no_sympd' and 'likely_sympd' are mutually exclusive" );
   
-  if(strip_diagmat<T1>::do_diagmat)
-    {
-    const strip_diagmat<T1> strip(expr.get_ref());
-    
-    return op_inv_gen::apply_diagmat(out, strip.M, caller_sig);
-    }
-  
   out = expr.get_ref();
   
   arma_debug_check( (out.is_square() == false), caller_sig, ": given matrix must be square sized" );
@@ -125,9 +118,32 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     // fallthrough if optimisation failed
     }
   
-  if(out.is_diagmat())  { return op_inv_gen::apply_diagmat(out, out, caller_sig); }
+  if(is_op_diagmat<T1>::value || out.is_diagmat())
+    {
+    arma_extra_debug_print("op_inv_gen: detected diagonal matrix");
+    
+    const uword N = out.n_rows;
+    
+    eT* colmem = out.memptr();
+    
+    for(uword i=0; i<N; ++i)
+      {
+      eT& out_ii = colmem[i];
+      
+      const eT src_val = out_ii;
+      const eT inv_val = eT(1) / src_val;
+      
+      if(src_val == eT(0))  { return false; }
+      
+      out_ii = inv_val;
+      
+      colmem += N;
+      }
+    
+    return true;
+    }
   
-  const strip_trimat<T1> strip(expr.get_ref()) ;
+  const strip_trimat<T1> strip(expr.get_ref());
   
   const bool is_triu_expr = strip.do_triu;
   const bool is_tril_expr = strip.do_tril;
@@ -170,57 +186,6 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     }
   
   return auxlib::inv(out);
-  }
-
-
-
-template<typename T1>
-inline
-bool
-op_inv_gen::apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X, const char* caller_sig)
-  {
-  arma_extra_debug_sigprint();
-  
-  typedef typename T1::elem_type eT;
-  
-  const diagmat_proxy<T1> A(X);
-  
-  arma_debug_check( (A.n_rows != A.n_cols), caller_sig, ": given matrix must be square sized" );
-  
-  const uword N = (std::min)(A.n_rows, A.n_cols);
-  
-  bool status = true;
-  
-  if(A.is_alias(out) == false)
-    {
-    out.zeros(N,N);
-    
-    for(uword i=0; i<N; ++i)
-      {
-      const eT val = A[i];
-      
-      status = (val == eT(0)) ? false : status;
-      
-      out.at(i,i) = eT(1) / val;
-      }
-    }
-  else
-    {
-    Mat<eT> tmp(N, N, arma_zeros_indicator());
-    
-    for(uword i=0; i<N; ++i)
-      {
-      const eT val = A[i];
-      
-      status = (val == eT(0)) ? false : status;
-      
-      tmp.at(i,i) = eT(1) / val;
-      }
-    
-    out.steal_mem(tmp);
-    }
-  
-  return status;
   }
 
 

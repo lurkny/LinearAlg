@@ -54,9 +54,6 @@ class op_inv_gen
   template<typename T1, const bool has_user_flags = true>
   inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig, const uword flags);
   
-  template<typename T1>
-  inline static bool apply_diagmat(Mat<typename T1::elem_type>& out, const T1& X, const char* caller_sig);
-  
   template<typename eT>
   arma_cold inline static bool apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X);
   };
