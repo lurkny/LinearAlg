@@ -38,9 +38,43 @@ op_inv_rcond::apply_direct_gen(Mat<typename T1::elem_type>& out, typename T1::po
   
   arma_debug_check( (out.is_square() == false), "inv(): given matrix must be square sized" );
   
-  const bool status = auxlib::inv_rcond(out, out_rcond);
+  const uword N = out.n_rows;
   
-  return status;
+  if(is_op_diagmat<T1>::value || out.is_diagmat())
+    {
+    arma_extra_debug_print("op_inv_rcond: detected diagonal matrix");
+    
+    eT* colmem = out.memptr();
+    
+    T max_abs_src_val = T(0);
+    T max_abs_inv_val = T(0);
+    
+    for(uword i=0; i<N; ++i)
+      {
+      eT& out_ii = colmem[i];
+      
+      const eT src_val = out_ii;
+      const eT inv_val = eT(1) / src_val;
+      
+      if(src_val == eT(0))  { return false; }
+      
+      out_ii = inv_val;
+      
+      const T abs_src_val = std::abs(src_val);
+      const T abs_inv_val = std::abs(inv_val);
+      
+      max_abs_src_val = (abs_src_val > max_abs_src_val) ? abs_src_val : max_abs_src_val;
+      max_abs_inv_val = (abs_inv_val > max_abs_inv_val) ? abs_inv_val : max_abs_inv_val;
+      
+      colmem += N;
+      }
+    
+    out_rcond = T(1) / (max_abs_src_val * max_abs_inv_val);
+    
+    return true;
+    }
+  
+  return auxlib::inv_rcond(out, out_rcond);
   }
 
 
