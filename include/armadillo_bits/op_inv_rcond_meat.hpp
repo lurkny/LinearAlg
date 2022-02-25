@@ -33,13 +33,12 @@ op_inv_rcond::apply_direct_gen(Mat<typename T1::elem_type>& out, typename T1::po
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  Mat<eT> A = expr.get_ref();
-  
-  arma_debug_check( (A.is_square() == false), "inv_sympd(): given matrix must be square sized" );
-  
+  out       = expr.get_ref();
   out_rcond = T(0);
   
-  const bool status = auxlib::inv_rcond(A, out_rcond);
+  arma_debug_check( (out.is_square() == false), "inv(): given matrix must be square sized" );
+  
+  const bool status = auxlib::inv_rcond(out, out_rcond);
   
   return status;
   }
