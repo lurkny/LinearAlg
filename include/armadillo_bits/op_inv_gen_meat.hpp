@@ -103,7 +103,7 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   arma_debug_check( (out.is_square() == false), caller_sig, ": given matrix must be square sized" );
   
-  if( tiny && (out.n_rows <= 4) && is_cx<eT>::no)
+  if(tiny && (out.n_rows <= 4) && is_cx<eT>::no)
     {
     arma_extra_debug_print("op_inv_gen: attempting tinymatrix optimisation");
     

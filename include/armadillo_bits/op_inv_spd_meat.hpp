@@ -117,7 +117,7 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     {
     arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
     
-    const bool status = op_inv_spd::apply_direct_tiny(out);
+    const bool status = op_inv_spd::apply_tiny(out);
     
     if(status)  { return true; }
     
@@ -174,7 +174,7 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
 template<typename eT>
 inline
 bool
-op_inv_spd::apply_direct_tiny(Mat<eT>& out)
+op_inv_spd::apply_tiny(Mat<eT>& out)
   {
   arma_extra_debug_sigprint();
   

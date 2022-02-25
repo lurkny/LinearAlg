@@ -47,7 +47,7 @@ class op_inv_spd
   inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const uword flags);
   
   template<typename eT>
-  inline static bool apply_direct_tiny(Mat<eT>& out);
+  inline static bool apply_tiny(Mat<eT>& out);
   };
 
 
