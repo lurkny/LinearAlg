@@ -151,15 +151,7 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   if(is_triu_expr || is_tril_expr || is_triu_mat || is_tril_mat)
     {
-    const bool status = auxlib::inv_tr(out, ((is_triu_expr || is_triu_mat) ? uword(0) : uword(1)));
-    
-    if(status)
-      {
-      if(is_triu_expr)  { out = trimatu(out); }
-      if(is_tril_expr)  { out = trimatl(out); }
-      }
-    
-    return status;
+    return = auxlib::inv_tr(out, ((is_triu_expr || is_triu_mat) ? uword(0) : uword(1)));
     }
   
   #if defined(ARMA_OPTIMISE_SYMPD)
