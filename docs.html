@@ -10042,7 +10042,7 @@ double result2 = log_det_sympd(B);           // form 2
 See also:
 <ul>
 <li><a href="#log_det">log_det()</a></li>
-<li><a href="det">det()</a></li>
+<li><a href="#det">det()</a></li>
 <li><a href="#rcond">rcond()</a></li>
 <li><a href="http://mathworld.wolfram.com/Determinant.html">determinant in MathWorld</a></li>
 <li><a href="http://en.wikipedia.org/wiki/Determinant">determinant in Wikipedia</a></li>
@@ -10558,7 +10558,7 @@ See also:
 <b>rcond( A )</b>
 <ul>
 <li>
-Return the 1-norm estimate of the reciprocal of the condition number of square matrix <i>A</i>
+Return the 1-norm estimate of the reciprocal condition number of square matrix <i>A</i>
 </li>
 <br>
 <li>
@@ -12536,9 +12536,18 @@ See also:
 <a name="inv"></a>
 <b>B = inv( A )</b>
 <br><b>inv( B, A )</b>
+<br><b>inv( B, rcond, A )</b>
 <ul>
 <li>
 Inverse of general square matrix <i>A</i>
+</li>
+<br>
+<li>
+The reciprocal condition number is optionally calculated and stored in <i>rcond</i>
+<ul>
+<li>rcond close to 1 suggest that <i>A</i> is well-conditioned</li>
+<li>rcond close to 0 suggest that <i>A</i> is badly conditioned</li>
+</ul>
 </li>
 <br>
 <li>
@@ -12549,6 +12558,7 @@ If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown
 <ul>
 <li><i>B = inv(A)</i> resets <i>B</i> and throws a <i>std::runtime_error</i> exception</li>
 <li><i>inv(B,A)</i> resets <i>B</i> and returns a bool set to <i>false</i> (exception is not thrown)</li>
+<li><i>inv(B,rcond,A)</i> resets <i>B</i>, sets rcond to zero, and returns a bool set to <i>false</i> (exception is not thrown)</li>
 </ul>
 </li>
 <br>
@@ -12569,6 +12579,13 @@ Examples:
 mat A(5, 5, fill::randu);
 
 mat B = inv(A);
+
+mat C;
+bool success = inv(C, A);
+
+mat D;
+double rcond_val;
+inv(D, rcond_val, A);
 </pre>
 </ul>
 </li>
@@ -12596,9 +12613,18 @@ See also:
 <a name="inv_sympd"></a>
 <b>B = inv_sympd( A )</b>
 <br><b>inv_sympd( B, A )</b>
+<br><b>inv_sympd( B, rcond, A )</b>
 <ul>
 <li>
 Inverse of symmetric/hermitian positive definite matrix <i>A</i>
+</li>
+<br>
+<li>
+The reciprocal condition number is optionally calculated and stored in <i>rcond</i>
+<ul>
+<li>rcond close to 1 suggest that <i>A</i> is well-conditioned</li>
+<li>rcond close to 0 suggest that <i>A</i> is badly conditioned</li>
+</ul>
 </li>
 <br>
 <li>
@@ -12609,6 +12635,7 @@ If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown
 <ul>
 <li><i>B = inv_sympd(A)</i> resets <i>B</i> and throws a <i>std::runtime_error</i> exception</li>
 <li><i>inv_sympd(B,A)</i> resets <i>B</i> and returns a bool set to <i>false</i> (exception is not thrown)</li>
+<li><i>inv_sympd(B,rcond,A)</i> resets <i>B</i>, sets rcond to zero, and returns a bool set to <i>false</i> (exception is not thrown)</li>
 </ul>
 </li>
 <!--
@@ -12628,7 +12655,15 @@ Examples:
 <pre>
 mat A(5, 5, fill::randu);
 mat B = A.t() * A;
+
 mat C = inv_sympd(B);
+
+mat D;
+bool success = inv_sympd(D, B);
+
+mat E;
+double rcond_val;
+inv_sympd(E, rcond_val, B);
 </pre>
 </ul>
 </li>
@@ -19338,8 +19373,9 @@ List of additions and changes for each version:
 <a name="version_110"></a>
 <li>Version 11.0:
 <ul>
+<li>added variants of <a href="#inv">inv()</a> and <a href="#inv_sympd">inv_sympd()</a> that provide rcond (reciprocal condition number)</li>
+<li>faster handling of diagonal matrices by  <a href="#rcond">rcond()</a></li>
 <li>removed support for ATLAS</li>
-<li>...</li>
 </ul>
 </li>
 <br>
