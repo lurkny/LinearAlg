@@ -74,6 +74,19 @@ op_inv_rcond::apply_direct_gen(Mat<typename T1::elem_type>& out, typename T1::po
     return true;
     }
   
+  const strip_trimat<T1> strip(expr.get_ref());
+  
+  const bool is_triu_expr = strip.do_triu;
+  const bool is_tril_expr = strip.do_tril;
+  
+  const bool is_triu_mat = (is_triu_expr || is_tril_expr) ? false : (                        trimat_helper::is_triu(out));
+  const bool is_tril_mat = (is_triu_expr || is_tril_expr) ? false : ((is_triu_mat) ? false : trimat_helper::is_tril(out));
+  
+  if(is_triu_expr || is_tril_expr || is_triu_mat || is_tril_mat)
+    {
+    return auxlib::inv_tr_rcond(out, out_rcond, ((is_triu_expr || is_triu_mat) ? uword(0) : uword(1)));
+    }
+  
   return auxlib::inv_rcond(out, out_rcond);
   }
 

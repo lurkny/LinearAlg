@@ -203,6 +203,48 @@ auxlib::inv_tr(Mat<eT>& A, const uword layout)
 template<typename eT>
 inline
 bool
+auxlib::inv_tr_rcond(Mat<eT>& A, typename get_pod_type<eT>::result& out_rcond, const uword layout)
+  {
+  arma_extra_debug_sigprint();
+  
+  #if defined(ARMA_USE_LAPACK)
+    {
+    typedef typename get_pod_type<eT>::result T;
+    
+    if(A.is_empty())  { return true; }
+  
+    out_rcond = auxlib::rcond_trimat(A, layout);
+    
+    arma_debug_assert_blas_size(A);
+    
+    char     uplo = (layout == 0) ? 'U' : 'L';
+    char     diag = 'N';
+    blas_int n    = blas_int(A.n_rows);
+    blas_int info = 0;
+    
+    arma_extra_debug_print("lapack::trtri()");
+    lapack::trtri(&uplo, &diag, &n, A.memptr(), &n, &info);
+    
+    if(info != 0)  { out_rcond = T(0); return false; }
+    
+    return true;
+    }
+  #else
+    {
+    arma_ignore(A);
+    arma_ignore(out_rcond);
+    arma_ignore(layout);
+    arma_stop_logic_error("inv(): use of LAPACK must be enabled");
+    return false;
+    }
+  #endif
+  }
+
+
+
+template<typename eT>
+inline
+bool
 auxlib::inv_sympd(Mat<eT>& A)
   {
   arma_extra_debug_sigprint();
