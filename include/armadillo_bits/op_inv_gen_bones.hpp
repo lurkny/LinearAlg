@@ -55,7 +55,7 @@ class op_inv_gen
   inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig, const uword flags);
   
   template<typename eT>
-  arma_cold inline static bool apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X);
+  arma_cold inline static bool apply_tiny(Mat<eT>& X);
   };
 
 

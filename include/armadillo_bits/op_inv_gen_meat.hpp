@@ -107,11 +107,9 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     {
     arma_extra_debug_print("op_inv_gen: attempting tinymatrix optimisation");
     
-    Mat<eT> tmp(out.n_rows, out.n_rows, arma_nozeros_indicator());
+    const bool status = op_inv_gen::apply_tiny(out);
     
-    const bool status = op_inv_gen::apply_tiny_noalias(tmp, out);
-    
-    if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
+    if(status)  { return true; }
     
     arma_extra_debug_print("op_inv_gen: tinymatrix optimisation failed");
     
@@ -194,7 +192,7 @@ template<typename eT>
 arma_cold
 inline
 bool
-op_inv_gen::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
+op_inv_gen::apply_tiny(Mat<eT>& X)
   {
   arma_extra_debug_sigprint();
   
@@ -204,7 +202,7 @@ op_inv_gen::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
   
   const uword N = X.n_rows;
   
-  out.set_size(N,N);
+  Mat<eT> out(N, N, arma_nozeros_indicator());
   
   constexpr T det_min =        std::numeric_limits<T>::epsilon();
   constexpr T det_max = T(1) / std::numeric_limits<T>::epsilon();
@@ -212,11 +210,9 @@ op_inv_gen::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
   const eT* Xm   =   X.memptr();
         eT* outm = out.memptr();
   
-  if(N == 0)  { return true; }
-  
-  if(N == 1)  { outm[0] = eT(1) / Xm[0]; return true; };
-  
-  if(N == 2)
+       if(N == 0)  { return true; }
+  else if(N == 1)  { outm[0] = eT(1) / Xm[0]; }
+  else if(N == 2)
     {
     const eT a = Xm[pos<0,0>::n2];
     const eT b = Xm[pos<0,1>::n2];
@@ -232,11 +228,8 @@ op_inv_gen::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
     outm[pos<0,1>::n2] = -b / det_val;
     outm[pos<1,0>::n2] = -c / det_val;
     outm[pos<1,1>::n2] =  a / det_val;
-    
-    return true;
     }
-  
-  if(N == 3)
+  else if(N == 3)
     {
     const eT     det_val = op_det::apply_tiny(X);
     const  T abs_det_val = std::abs(det_val);
@@ -260,11 +253,8 @@ op_inv_gen::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
     const  T max_diff  = (is_float<T>::value) ? T(1e-4) : T(1e-10);  // empirically determined; may need tuning
     
     if(std::abs(T(1) - check_val) >= max_diff)  { return false; }
-    
-    return true;
     }
-  
-  if(N == 4)
+  else if(N == 4)
     {
     const eT     det_val = op_det::apply_tiny(X);
     const  T abs_det_val = std::abs(det_val);
@@ -296,11 +286,15 @@ op_inv_gen::apply_tiny_noalias(Mat<eT>& out, const Mat<eT>& X)
     const  T max_diff  = (is_float<T>::value) ? T(1e-4) : T(1e-10);  // empirically determined; may need tuning
     
     if(std::abs(T(1) - check_val) >= max_diff)  { return false; }
-    
-    return true;
+    }
+  else
+    {
+    return false;
     }
   
-  return false;
+  arrayops::copy(X.memptr(), out.memptr(), out.n_elem);
+  
+  return true;
   }
 
 

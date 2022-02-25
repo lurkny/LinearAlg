@@ -221,13 +221,7 @@ op_inv_spd::apply_direct_tiny(Mat<eT>& out)
     if(print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
     }
   
-  Mat<eT> tmp(N, N, arma_nozeros_indicator());
-  
-  const bool status = op_inv_gen::apply_tiny_noalias(tmp, out);
-  
-  if(status)  { arrayops::copy(out.memptr(), tmp.memptr(), tmp.n_elem); return true; }
-  
-  return false;
+  return op_inv_gen::apply_tiny(out);
   }
 
 
