@@ -369,6 +369,7 @@ auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, T& out_rcond, const T rcond_t
   #if defined(ARMA_CRIPPLED_LAPACK)
     {
     arma_ignore(A);
+    arma_ignore(out_rcond);
     arma_ignore(rcond_threshold);
     return false;
     }
