@@ -100,6 +100,14 @@ op_inv_rcond::apply_direct_spd(Mat<typename T1::elem_type>& out, typename T1::po
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
+  if(auxlib::crippled_lapack(out))
+    {
+    out.soft_reset();
+    out_rcond = T(0);
+    arma_stop_runtime_error("inv_sympd(): not available for complex matrices due to presence of incomplete LAPACK");
+    return false;
+    }
+  
   out       = expr.get_ref();
   out_rcond = T(0);
   
