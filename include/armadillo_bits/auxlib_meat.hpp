@@ -41,6 +41,11 @@ auxlib::inv(Mat<eT>& A)
     
     podarray<blas_int> ipiv(A.n_rows);
     
+    arma_extra_debug_print("lapack::getrf()");
+    lapack::getrf(&n, &n, A.memptr(), &lda, ipiv.memptr(), &info);
+    
+    if(info != 0)  { return false; }
+    
     if(n > 16)
       {
       eT        work_query[2];
@@ -57,11 +62,6 @@ auxlib::inv(Mat<eT>& A)
       }
     
     podarray<eT> work( static_cast<uword>(lwork) );
-    
-    arma_extra_debug_print("lapack::getrf()");
-    lapack::getrf(&n, &n, A.memptr(), &lda, ipiv.memptr(), &info);
-    
-    if(info != 0)  { return false; }
     
     arma_extra_debug_print("lapack::getri()");
     lapack::getri(&n, A.memptr(), &lda, ipiv.memptr(), work.memptr(), &lwork, &info);
