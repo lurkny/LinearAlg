@@ -110,7 +110,6 @@ namespace arma
     #include "armadillo_bits/arma_rng_cxx98.hpp"
   #endif
   
-  #include "armadillo_bits/arma_rng_cxx11.hpp"
   #include "armadillo_bits/arma_rng.hpp"
   
   
