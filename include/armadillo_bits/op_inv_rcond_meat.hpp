@@ -85,6 +85,27 @@ op_inv_rcond::apply_direct_gen(Mat<typename T1::elem_type>& out, typename T1::po
     return auxlib::inv_tr_rcond(out, out_rcond, ((is_triu_expr || is_triu_mat) ? uword(0) : uword(1)));
     }
   
+  #if defined(ARMA_OPTIMISE_SYMPD)
+    const bool try_sympd = (auxlib::crippled_lapack(out)) ? false : sympd_helper::guess_sympd(out);
+  #else
+    const bool try_sympd = false;
+  #endif
+  
+  if(try_sympd)
+    {
+    arma_extra_debug_print("op_inv_rcond: attempting sympd optimisation");
+    
+    Mat<eT> tmp = out;
+    
+    const bool status = auxlib::inv_sympd_rcond(tmp, out_rcond, T(-1));
+    
+    if(status)  { out.steal_mem(tmp); return true; }
+    
+    arma_extra_debug_print("op_inv_rcond: sympd optimisation failed");
+    
+    // fallthrough if optimisation failed
+    }
+  
   return auxlib::inv_rcond(out, out_rcond);
   }
 
