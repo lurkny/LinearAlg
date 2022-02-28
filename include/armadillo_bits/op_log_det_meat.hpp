@@ -29,6 +29,7 @@ op_log_det::apply_direct(typename T1::elem_type& out_val, typename T1::pod_type&
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
+  typedef typename T1::pod_type   T;
   
   if(strip_diagmat<T1>::do_diagmat)
     {
@@ -54,6 +55,36 @@ op_log_det::apply_direct(typename T1::elem_type& out_val, typename T1::pod_type&
   const bool is_tril = is_triu ? false : trimat_helper::is_tril(A);
   
   if(is_triu || is_tril)  { return op_log_det::apply_trimat(out_val, out_sign, A); }
+  
+  // #if defined(ARMA_OPTIMISE_SYMPD)
+  //   const bool try_sympd = sympd_helper::guess_sympd(A);
+  // #else
+  //   const bool try_sympd = false;
+  // #endif
+  // 
+  // if(try_sympd)
+  //   {
+  //   arma_extra_debug_print("op_log_det: attempting sympd optimisation");
+  //   
+  //   T out_val_real = T(0);
+  //   
+  //   const bool status = auxlib::log_det_sympd(out_val_real, A);
+  //   
+  //   if(status)
+  //     {
+  //     out_val  = eT(out_val_real);
+  //     out_sign =  T(1);
+  //     
+  //     return true;
+  //     }
+  //   
+  //   arma_extra_debug_print("op_log_det: sympd optimisation failed");
+  //   
+  //   // restore A as it's destroyed by auxlib::log_det_sympd()
+  //   A = expr.get_ref();
+  //   
+  //   // fallthrough to the next return statement
+  //   }
   
   return auxlib::log_det(out_val, out_sign, A);
   }
