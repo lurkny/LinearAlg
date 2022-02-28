@@ -578,7 +578,7 @@ auxlib::log_det_sympd(typename get_pod_type<eT>::result& out_val, Mat<eT>& A)
     {
     arma_ignore(out_val);
     arma_ignore(A);
-    arma_stop_logic_error("det(): use of LAPACK must be enabled");
+    arma_stop_logic_error("log_det_sympd(): use of LAPACK must be enabled");
     return false;
     }
   #endif
