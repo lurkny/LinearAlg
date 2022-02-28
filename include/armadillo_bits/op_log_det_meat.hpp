@@ -29,7 +29,7 @@ op_log_det::apply_direct(typename T1::elem_type& out_val, typename T1::pod_type&
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
-  typedef typename T1::pod_type   T;
+  // typedef typename T1::pod_type   T;
   
   if(strip_diagmat<T1>::do_diagmat)
     {
