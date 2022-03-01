@@ -198,9 +198,10 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
         
         if(status == false)
           {
+          // auxlib::solve_sympd_fast() may have failed because A isn't really sympd
+          
           arma_extra_debug_print("glue_solve_gen::apply(): auxlib::solve_sympd_fast() failed; retrying");
           
-          // auxlib::solve_sympd_fast() may have failed because A isn't really sympd
           A = A_expr.get_ref();
           status = auxlib::solve_square_fast(out, A, B_expr.get_ref());  // A is overwritten
           }
@@ -232,11 +233,13 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
         
         status = auxlib::solve_sympd_refine(out, rcond, A, B_expr.get_ref(), equilibrate, allow_ugly);  // A is overwritten
         
-        if(status == false)
+        if( (status == false) && (rcond == T(0)) )
           {
+          // auxlib::solve_sympd_refine() may have failed because A isn't really sympd;
+          // in that case rcond is set to zero
+          
           arma_extra_debug_print("glue_solve_gen::apply(): auxlib::solve_sympd_refine() failed; retrying");
           
-          // auxlib::solve_sympd_refine() may have failed because A isn't really sympd
           A = A_expr.get_ref();
           status = auxlib::solve_square_refine(out, rcond, A, B_expr.get_ref(), equilibrate, allow_ugly);  // A is overwritten
           }
@@ -275,11 +278,13 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
         {
         status = auxlib::solve_sympd_rcond(out, rcond, A, B_expr.get_ref(), allow_ugly);  // A is overwritten
         
-        if(status == false)
+        if( (status == false) && (rcond == T(0)) )
           {
+          // auxlib::solve_sympd_rcond() may have failed because A isn't really sympd;
+          // in that case rcond is set to zero
+          
           arma_extra_debug_print("glue_solve_gen::apply(): auxlib::solve_sympd_rcond() failed; retrying");
           
-          // auxlib::solve_sympd_rcond() may have failed because A isn't really sympd
           A = A_expr.get_ref();
           status = auxlib::solve_square_rcond(out, rcond, A, B_expr.get_ref(), allow_ugly);  // A is overwritten
           }

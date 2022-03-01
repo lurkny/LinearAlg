@@ -4686,6 +4686,7 @@ auxlib::solve_sympd_refine(Mat<typename T1::pod_type>& out, typename T1::pod_typ
     // NOTE: using const_cast<eT*>(B.memptr()) to allow B to be overwritten for equilibration;
     // NOTE: B is created as a copy of B_expr if equilibration is enabled; otherwise B is a reference to B_expr
     
+    // NOTE: lapack::posvx() sets rcond to zero if A is not sympd
     out_rcond = rcond;
     
     return (allow_ugly) ? ((info == 0) || (info == (n+1))) : (info == 0);
@@ -4775,6 +4776,7 @@ auxlib::solve_sympd_refine(Mat< std::complex<typename T1::pod_type> >& out, type
     // NOTE: using const_cast<eT*>(B.memptr()) to allow B to be overwritten for equilibration;
     // NOTE: B is created as a copy of B_expr if equilibration is enabled; otherwise B is a reference to B_expr
     
+    // NOTE: lapack::cx_posvx() sets rcond to zero if A is not sympd
     out_rcond = rcond;
     
     return (allow_ugly) ? ((info == 0) || (info == (n+1))) : (info == 0);
