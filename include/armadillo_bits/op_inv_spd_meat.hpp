@@ -166,7 +166,9 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     return true;
     }
   
-  return auxlib::inv_sympd(out);
+  bool sympd_state_junk = false;
+  
+  return auxlib::inv_sympd(out, sympd_state_junk);
   }
 
 

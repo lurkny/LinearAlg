@@ -245,9 +245,11 @@ auxlib::inv_tr_rcond(Mat<eT>& A, typename get_pod_type<eT>::result& out_rcond, c
 template<typename eT>
 inline
 bool
-auxlib::inv_sympd(Mat<eT>& A)
+auxlib::inv_sympd(Mat<eT>& A, bool& out_sympd_state)
   {
   arma_extra_debug_sigprint();
+  
+  out_sympd_state = false;
   
   if(A.is_empty())  { return true; }
   
@@ -266,6 +268,8 @@ auxlib::inv_sympd(Mat<eT>& A)
     
     if(info != 0)  { return false; }
     
+    out_sympd_state = true;
+    
     arma_extra_debug_print("lapack::potri()");
     lapack::potri(&uplo, &n, A.memptr(), &n, &info);
     
@@ -278,6 +282,7 @@ auxlib::inv_sympd(Mat<eT>& A)
   #else
     {
     arma_ignore(A);
+    arma_ignore(out_sympd_state);
     arma_stop_logic_error("inv_sympd(): use of LAPACK must be enabled");
     return false;
     }
@@ -295,7 +300,9 @@ auxlib::inv_sympd(Mat<eT>& out, const Mat<eT>& X)
   
   out = X;
   
-  return auxlib::inv_sympd(out);
+  bool sympd_state_junk = false;
+  
+  return auxlib::inv_sympd(out, sympd_state_junk);
   }
 
 
@@ -303,9 +310,11 @@ auxlib::inv_sympd(Mat<eT>& out, const Mat<eT>& X)
 template<typename eT>
 inline
 bool
-auxlib::inv_sympd_rcond(Mat<eT>& A, eT& out_rcond, const eT rcond_threshold)
+auxlib::inv_sympd_rcond(Mat<eT>& A, bool& out_sympd_state, eT& out_rcond, const eT rcond_threshold)
   {
   arma_extra_debug_sigprint();
+  
+  out_sympd_state = false;
   
   if(A.is_empty())  { return true; }
   
@@ -331,6 +340,8 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, eT& out_rcond, const eT rcond_threshold)
     
     if(info != 0)  { out_rcond = eT(0); return false; }
     
+    out_sympd_state = true;
+    
     out_rcond = auxlib::lu_rcond_sympd<T>(A, norm_val);
     
     if( (rcond_threshold > eT(0)) && (out_rcond < rcond_threshold) )  { return false; }
@@ -347,6 +358,7 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, eT& out_rcond, const eT rcond_threshold)
   #else
     {
     arma_ignore(A);
+    arma_ignore(out_sympd_state);
     arma_ignore(out_rcond);
     arma_ignore(rcond_threshold);
     arma_stop_logic_error("inv_sympd_rcond(): use LAPACK must be enabled");
@@ -360,15 +372,18 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, eT& out_rcond, const eT rcond_threshold)
 template<typename T>
 inline
 bool
-auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, T& out_rcond, const T rcond_threshold)
+auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, bool& out_sympd_state, T& out_rcond, const T rcond_threshold)
   {
   arma_extra_debug_sigprint();
+  
+  out_sympd_state = false;
   
   if(A.is_empty())  { return true; }
   
   #if defined(ARMA_CRIPPLED_LAPACK)
     {
     arma_ignore(A);
+    arma_ignore(out_sympd_state);
     arma_ignore(out_rcond);
     arma_ignore(rcond_threshold);
     return false;
@@ -393,6 +408,8 @@ auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, T& out_rcond, const T rcond_t
     
     if(info != 0)  { out_rcond = T(0); return false; }
     
+    out_sympd_state = true;
+    
     out_rcond = auxlib::lu_rcond_sympd<T>(A, norm_val);
     
     if( (rcond_threshold > T(0)) && (out_rcond < rcond_threshold) )  { return false; }
@@ -409,6 +426,7 @@ auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, T& out_rcond, const T rcond_t
   #else
     {
     arma_ignore(A);
+    arma_ignore(out_sympd_state);
     arma_ignore(out_rcond);
     arma_ignore(rcond_threshold);
     arma_stop_logic_error("inv_sympd_rcond(): use LAPACK must be enabled");

@@ -97,9 +97,13 @@ op_inv_rcond::apply_direct_gen(Mat<typename T1::elem_type>& out, typename T1::po
     
     Mat<eT> tmp = out;
     
-    const bool status = auxlib::inv_sympd_rcond(tmp, out_rcond, T(-1));
+    bool sympd_state = false;
+    
+    const bool status = auxlib::inv_sympd_rcond(tmp, sympd_state, out_rcond, T(-1));
     
     if(status)  { out.steal_mem(tmp); return true; }
+    
+    if((status == false) && (sympd_state == true))  { return false; }
     
     arma_extra_debug_print("op_inv_rcond: sympd optimisation failed");
     

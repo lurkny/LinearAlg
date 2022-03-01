@@ -166,9 +166,13 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     
     Mat<eT> tmp = out;
     
-    const bool status = auxlib::inv_sympd(tmp);
+    bool sympd_state = false;
+    
+    const bool status = auxlib::inv_sympd(tmp, sympd_state);
     
     if(status)  { out.steal_mem(tmp); return true; }
+    
+    if((status == false) && (sympd_state == true))  { return false; }
     
     arma_extra_debug_print("op_inv: sympd optimisation failed");
     

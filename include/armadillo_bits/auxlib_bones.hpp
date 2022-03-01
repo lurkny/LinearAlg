@@ -44,16 +44,16 @@ class auxlib
   inline static bool inv_tr_rcond(Mat<eT>& A, typename get_pod_type<eT>::result& out_rcond, const uword layout);
   
   template<typename eT>
-  inline static bool inv_sympd(Mat<eT>& A);
+  inline static bool inv_sympd(Mat<eT>& A, bool& out_sympd_state);
   
   template<typename eT>
   inline static bool inv_sympd(Mat<eT>& out, const Mat<eT>& X);
   
   template<typename eT>
-  inline static bool inv_sympd_rcond(Mat<eT>& A, eT& out_rcond, const eT rcond_threshold);
+  inline static bool inv_sympd_rcond(Mat<eT>& A, bool& out_sympd_state, eT& out_rcond, const eT rcond_threshold);
   
   template<typename T>
-  inline static bool inv_sympd_rcond(Mat< std::complex<T> >& A, T& out_rcond, const T rcond_threshold);
+  inline static bool inv_sympd_rcond(Mat< std::complex<T> >& A, bool& out_sympd_state, T& out_rcond, const T rcond_threshold);
   
   
   //
