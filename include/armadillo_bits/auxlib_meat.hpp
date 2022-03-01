@@ -5078,7 +5078,8 @@ auxlib::solve_approx_svd(Mat<typename T1::pod_type>& out, Mat<typename T1::pod_t
     blas_int nrhs   = blas_int(B.n_cols);
     blas_int lda    = blas_int(A.n_rows);
     blas_int ldb    = blas_int(tmp.n_rows);
-    eT       rcond  = eT(-1);  // -1 means "use machine precision"
+  //eT       rcond  = eT(-1);  // -1 means "use machine precision"
+    eT       rcond  = (std::max)(A.n_rows, A.n_cols) * std::numeric_limits<eT>::epsilon();
     blas_int rank   = blas_int(0);
     blas_int info   = blas_int(0);
     
@@ -5199,7 +5200,8 @@ auxlib::solve_approx_svd(Mat< std::complex<typename T1::pod_type> >& out, Mat< s
     blas_int nrhs   = blas_int(B.n_cols);
     blas_int lda    = blas_int(A.n_rows);
     blas_int ldb    = blas_int(tmp.n_rows);
-    T        rcond  = T(-1);  // -1 means "use machine precision"
+  //T        rcond  = T(-1);  // -1 means "use machine precision"
+    T        rcond  = (std::max)(A.n_rows, A.n_cols) * std::numeric_limits<T>::epsilon();
     blas_int rank   = blas_int(0);
     blas_int info   = blas_int(0);
     
