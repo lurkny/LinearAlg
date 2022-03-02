@@ -48,8 +48,8 @@ auxlib::inv(Mat<eT>& A)
     
     if(n > 16)
       {
-      eT        work_query[2];
-      blas_int lwork_query = -1;
+      eT        work_query[2] = {};
+      blas_int lwork_query    = -1;
       
       arma_extra_debug_print("lapack::getri()");
       lapack::getri(&n, A.memptr(), &lda, ipiv.memptr(), &work_query[0], &lwork_query, &info);
@@ -132,8 +132,8 @@ auxlib::inv_rcond(Mat<eT>& A, typename get_pod_type<eT>::result& out_rcond)
     
     if(n > 16)
       {
-      eT        work_query[2];
-      blas_int lwork_query = -1;
+      eT        work_query[2] = {};
+      blas_int lwork_query    = -1;
       
       arma_extra_debug_print("lapack::getri()");
       lapack::getri(&n, A.memptr(), &lda, ipiv.memptr(), &work_query[0], &lwork_query, &info);
@@ -2312,8 +2312,8 @@ auxlib::eig_sym_dc(Col<eT>& eigval, Mat<eT>& eigvec, const Mat<eT>& X)
     
     if(N >= 32)
       {
-      eT        work_query[2];
-      blas_int iwork_query[2];
+      eT        work_query[2] = {};
+      blas_int iwork_query[2] = {};
       
       blas_int  lwork_query = -1;
       blas_int liwork_query = -1;
@@ -2393,9 +2393,9 @@ auxlib::eig_sym_dc(Col<T>& eigval, Mat< std::complex<T> >& eigvec, const Mat< st
     
     if(N >= 32)
       {
-      eT        work_query[2];
-      T        rwork_query[2];
-      blas_int iwork_query[2];
+      eT        work_query[2] = {};
+      T        rwork_query[2] = {};
+      blas_int iwork_query[2] = {};
       
       blas_int  lwork_query = -1;
       blas_int lrwork_query = -1;
@@ -2730,8 +2730,8 @@ auxlib::qr(Mat<eT>& Q, Mat<eT>& R, const Base<eT,T1>& X)
     
     podarray<eT> tau( static_cast<uword>(k) );
     
-    eT        work_query[2];
-    blas_int lwork_query = -1;
+    eT        work_query[2] = {};
+    blas_int lwork_query    = -1;
     
     arma_extra_debug_print("lapack::geqrf()");
     lapack::geqrf(&m, &n, R.memptr(), &m, tau.memptr(), &work_query[0], &lwork_query, &info);
@@ -2838,8 +2838,8 @@ auxlib::qr_econ(Mat<eT>& Q, Mat<eT>& R, const Base<eT,T1>& X)
     
     podarray<eT> tau( static_cast<uword>(k) );
     
-    eT        work_query[2];
-    blas_int lwork_query = -1;
+    eT        work_query[2] = {};
+    blas_int lwork_query    = -1;
     
     arma_extra_debug_print("lapack::geqrf()");
     lapack::geqrf(&m, &n, Q.memptr(), &m, tau.memptr(), &work_query[0], &lwork_query, &info);
@@ -2934,8 +2934,8 @@ auxlib::qr_pivot(Mat<eT>& Q, Mat<eT>& R, Mat<uword>& P, const Base<eT,T1>& X)
     
     jpvt.zeros();
     
-    eT        work_query[2];
-    blas_int lwork_query = -1;
+    eT        work_query[2] = {};
+    blas_int lwork_query    = -1;
     
     arma_extra_debug_print("lapack::geqp3()");
     lapack::geqp3(&m, &n, R.memptr(), &m, jpvt.memptr(), tau.memptr(), &work_query[0], &lwork_query, &info);
@@ -3028,8 +3028,8 @@ auxlib::qr_pivot(Mat< std::complex<T> >& Q, Mat< std::complex<T> >& R, Mat<uword
     
     jpvt.zeros();
     
-    eT        work_query[2];
-    blas_int lwork_query = -1;
+    eT        work_query[2] = {};
+    blas_int lwork_query    = -1;
     
     arma_extra_debug_print("lapack::geqp3()");
     lapack::cx_geqp3(&m, &n, R.memptr(), &m, jpvt.memptr(), tau.memptr(), &work_query[0], &lwork_query, rwork.memptr(), &info);
@@ -3115,8 +3115,8 @@ auxlib::svd(Col<eT>& S, Mat<eT>& A)
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = -1;
+      eT        work_query[2] = {};
+      blas_int lwork_query    = -1;
       
       arma_extra_debug_print("lapack::gesvd()");
       lapack::gesvd<eT>(&jobu, &jobvt, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, &info);
@@ -3185,8 +3185,8 @@ auxlib::svd(Col<T>& S, Mat< std::complex<T> >& A)
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = -1;  // query to find optimum size of workspace
+      eT        work_query[2] = {};
+      blas_int lwork_query    = -1;  // query to find optimum size of workspace
       
       arma_extra_debug_print("lapack::cx_gesvd()");
       lapack::cx_gesvd<T>(&jobu, &jobvt, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, rwork.memptr(), &info);
@@ -3258,8 +3258,8 @@ auxlib::svd(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
     if((m*n) >= 1024)
       {
       // query to find optimum size of workspace
-      eT        work_query[2];
-      blas_int lwork_query = -1;
+      eT        work_query[2] = {};
+      blas_int lwork_query    = -1;
       
       arma_extra_debug_print("lapack::gesvd()");
       lapack::gesvd<eT>(&jobu, &jobvt, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, &info);
@@ -3340,8 +3340,8 @@ auxlib::svd(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, Mat
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = -1;  // query to find optimum size of workspace
+      eT        work_query[2] = {};
+      blas_int lwork_query    = -1;  // query to find optimum size of workspace
       
       arma_extra_debug_print("lapack::cx_gesvd()");
       lapack::cx_gesvd<T>(&jobu, &jobvt, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, rwork.memptr(), &info);
@@ -3454,8 +3454,8 @@ auxlib::svd_econ(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A, const char mode
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = -1;  // query to find optimum size of workspace
+      eT        work_query[2] = {};
+      blas_int lwork_query    = -1;  // query to find optimum size of workspace
       
       arma_extra_debug_print("lapack::gesvd()");
       lapack::gesvd<eT>(&jobu, &jobvt, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, &info);
@@ -3572,8 +3572,8 @@ auxlib::svd_econ(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = -1;  // query to find optimum size of workspace
+      eT        work_query[2] = {};
+      blas_int lwork_query    = -1;  // query to find optimum size of workspace
       
       arma_extra_debug_print("lapack::cx_gesvd()");
       lapack::cx_gesvd<T>(&jobu, &jobvt, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, rwork.memptr(), &info);
@@ -3647,8 +3647,8 @@ auxlib::svd_dc(Col<eT>& S, Mat<eT>& A)
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = blas_int(-1);
+      eT        work_query[2] = {};
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::gesdd()");
       lapack::gesdd<eT>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, iwork.memptr(), &info);
@@ -3718,8 +3718,8 @@ auxlib::svd_dc(Col<T>& S, Mat< std::complex<T> >& A)
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = blas_int(-1);
+      eT        work_query[2] = {};
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::cx_gesdd()");
       lapack::cx_gesdd<T>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, rwork.memptr(), iwork.memptr(), &info);
@@ -3794,8 +3794,8 @@ auxlib::svd_dc(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = blas_int(-1);
+      eT        work_query[2] = {};
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::gesdd()");
       lapack::gesdd<eT>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, iwork.memptr(), &info);
@@ -3878,8 +3878,8 @@ auxlib::svd_dc(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, 
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = blas_int(-1);
+      eT        work_query[2] = {};
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::cx_gesdd()");
       lapack::cx_gesdd<T>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, rwork.memptr(), iwork.memptr(), &info);
@@ -3961,8 +3961,8 @@ auxlib::svd_dc_econ(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = blas_int(-1);
+      eT        work_query[2] = {};
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::gesdd()");
       lapack::gesdd<eT>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, iwork.memptr(), &info);
@@ -4046,8 +4046,8 @@ auxlib::svd_dc_econ(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = blas_int(-1);
+      eT        work_query[2] = {};
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::cx_gesdd()");
       lapack::cx_gesdd<T>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, rwork.memptr(), iwork.memptr(), &info);
@@ -4866,8 +4866,8 @@ auxlib::solve_rect_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::elem_
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = -1;
+      eT        work_query[2] = {};
+      blas_int lwork_query    = -1;
       
       arma_extra_debug_print("lapack::gels()");
       lapack::gels<eT>( &trans, &m, &n, &nrhs, A.memptr(), &lda, tmp.memptr(), &ldb, &work_query[0], &lwork_query, &info );
@@ -4964,8 +4964,8 @@ auxlib::solve_rect_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_type
     
     if((m*n) >= 1024)
       {
-      eT        work_query[2];
-      blas_int lwork_query = -1;
+      eT        work_query[2] = {};
+      blas_int lwork_query    = -1;
       
       arma_extra_debug_print("lapack::gels()");
       lapack::gels<eT>( &trans, &m, &n, &nrhs, A.memptr(), &lda, tmp.memptr(), &ldb, &work_query[0], &lwork_query, &info );
@@ -5133,8 +5133,8 @@ auxlib::solve_approx_svd(Mat<typename T1::pod_type>& out, Mat<typename T1::pod_t
     
     blas_int lwork_min = blas_int(12)*min_mn + blas_int(2)*min_mn*smlsiz + blas_int(8)*min_mn*nlvl + min_mn*nrhs + smlsiz_p1*smlsiz_p1;
     
-    eT        work_query[2];
-    blas_int lwork_query = blas_int(-1);
+    eT        work_query[2] = {};
+    blas_int lwork_query    = blas_int(-1);
     
     arma_extra_debug_print("lapack::gelsd()");
     lapack::gelsd(&m, &n, &nrhs, A.memptr(), &lda, tmp.memptr(), &ldb, S.memptr(), &rcond, &rank, &work_query[0], &lwork_query, iwork.memptr(), &info);
@@ -5258,8 +5258,8 @@ auxlib::solve_approx_svd(Mat< std::complex<typename T1::pod_type> >& out, Mat< s
     
     blas_int lwork_min = 2*min_mn + min_mn*nrhs;
     
-    eT        work_query[2];
-    blas_int lwork_query = blas_int(-1);
+    eT        work_query[2] = {};
+    blas_int lwork_query    = blas_int(-1);
     
     arma_extra_debug_print("lapack::cx_gelsd()");
     lapack::cx_gelsd(&m, &n, &nrhs, A.memptr(), &lda, tmp.memptr(), &ldb, S.memptr(), &rcond, &rank, &work_query[0], &lwork_query, rwork.memptr(), iwork.memptr(), &info);
