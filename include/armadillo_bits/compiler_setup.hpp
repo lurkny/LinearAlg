@@ -333,6 +333,10 @@
   #pragma warning(disable: 4800)  // value forced to bool
   #pragma warning(disable: 4519)  // C++11: default template args are only allowed on a class template
   
+  #if defined(ARMA_HAVE_CXX17)
+  #pragma warning(disable: 26812)  // unscoped enum
+  #pragma warning(disable: 26819)  // unannotated fallthrough
+  #endif
   
   // #if (_MANAGED == 1) || (_M_CEE == 1)
   //   
