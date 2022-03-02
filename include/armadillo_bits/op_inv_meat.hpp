@@ -323,11 +323,7 @@ op_inv_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
     }
   
   // TODO: the tinymatrix optimisation currently does not care if the given matrix is not sympd;
-  // TODO: need to print a warning if the matrix is not sympd based on fast rudimentary checks,
-  // TODO: ie. diagonal values are > 0, and max value is on the diagonal.
-  // 
-  // TODO: when the major version is bumped:
-  // TODO: either rework the tinymatrix optimisation to be reliably more strict, or remove it entirely
+  // TODO: this is a problem for user code that expects inv_sympd() to fail for non-sympd matrices
   
   if((out.n_rows <= 4) && is_cx<eT>::no)
     {
