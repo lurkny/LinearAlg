@@ -3685,7 +3685,7 @@ auxlib::svd_dc(Col<eT>& S, Mat<eT>& A)
     if((m*n) >= 1024)
       {
       eT        work_query[2] = {};
-      blas_int lwork_query = blas_int(-1);
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::gesdd()");
       lapack::gesdd<eT>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, iwork.memptr(), &info);
@@ -3756,7 +3756,7 @@ auxlib::svd_dc(Col<T>& S, Mat< std::complex<T> >& A)
     if((m*n) >= 1024)
       {
       eT        work_query[2] = {};
-      blas_int lwork_query = blas_int(-1);
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::cx_gesdd()");
       lapack::cx_gesdd<T>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, rwork.memptr(), iwork.memptr(), &info);
@@ -3832,7 +3832,7 @@ auxlib::svd_dc(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
     if((m*n) >= 1024)
       {
       eT        work_query[2] = {};
-      blas_int lwork_query = blas_int(-1);
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::gesdd()");
       lapack::gesdd<eT>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, iwork.memptr(), &info);
@@ -3916,7 +3916,7 @@ auxlib::svd_dc(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, 
     if((m*n) >= 1024)
       {
       eT        work_query[2] = {};
-      blas_int lwork_query = blas_int(-1);
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::cx_gesdd()");
       lapack::cx_gesdd<T>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, rwork.memptr(), iwork.memptr(), &info);
@@ -3999,7 +3999,7 @@ auxlib::svd_dc_econ(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
     if((m*n) >= 1024)
       {
       eT        work_query[2] = {};
-      blas_int lwork_query = blas_int(-1);
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::gesdd()");
       lapack::gesdd<eT>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, iwork.memptr(), &info);
@@ -4084,7 +4084,7 @@ auxlib::svd_dc_econ(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >
     if((m*n) >= 1024)
       {
       eT        work_query[2] = {};
-      blas_int lwork_query = blas_int(-1);
+      blas_int lwork_query    = blas_int(-1);
       
       arma_extra_debug_print("lapack::cx_gesdd()");
       lapack::cx_gesdd<T>(&jobz, &m, &n, A.memptr(), &lda, S.memptr(), U.memptr(), &ldu, V.memptr(), &ldvt, &work_query[0], &lwork_query, rwork.memptr(), iwork.memptr(), &info);
@@ -5259,7 +5259,7 @@ auxlib::solve_approx_svd(Mat<typename T1::pod_type>& out, Mat<typename T1::pod_t
     blas_int lwork_min = blas_int(12)*min_mn + blas_int(2)*min_mn*smlsiz + blas_int(8)*min_mn*nlvl + min_mn*nrhs + smlsiz_p1*smlsiz_p1;
     
     eT        work_query[2] = {};
-    blas_int lwork_query = blas_int(-1);
+    blas_int lwork_query    = blas_int(-1);
     
     arma_extra_debug_print("lapack::gelsd()");
     lapack::gelsd(&m, &n, &nrhs, A.memptr(), &lda, tmp.memptr(), &ldb, S.memptr(), &rcond, &rank, &work_query[0], &lwork_query, iwork.memptr(), &info);
@@ -5383,7 +5383,7 @@ auxlib::solve_approx_svd(Mat< std::complex<typename T1::pod_type> >& out, Mat< s
     blas_int lwork_min = 2*min_mn + min_mn*nrhs;
     
     eT        work_query[2] = {};
-    blas_int lwork_query = blas_int(-1);
+    blas_int lwork_query    = blas_int(-1);
     
     arma_extra_debug_print("lapack::cx_gelsd()");
     lapack::cx_gelsd(&m, &n, &nrhs, A.memptr(), &lda, tmp.memptr(), &ldb, S.memptr(), &rcond, &rank, &work_query[0], &lwork_query, rwork.memptr(), iwork.memptr(), &info);
