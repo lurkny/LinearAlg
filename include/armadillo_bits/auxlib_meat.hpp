@@ -3113,7 +3113,7 @@ auxlib::svd(Col<eT>& S, Mat<eT>& A)
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if((m*n) >= 1024)   // TODO: if(A.n_elem >= 1024)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = -1;
