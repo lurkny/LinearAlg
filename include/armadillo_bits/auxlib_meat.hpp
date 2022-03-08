@@ -499,13 +499,8 @@ auxlib::log_det(eT& out_val, typename get_pod_type<eT>::result& out_sign, Mat<eT
   
   typedef typename get_pod_type<eT>::result T;
   
-  if(A.is_empty())
-    {
-    out_val  = eT(0);
-    out_sign =  T(1);
-    return true;
-    }
-    
+  if(A.is_empty())  { out_val  = eT(0); out_sign =  T(1); return true; }
+  
   #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(A);
@@ -617,13 +612,7 @@ auxlib::lu(Mat<eT>& L, Mat<eT>& U, podarray<blas_int>& ipiv, const Base<eT,T1>& 
   const uword U_n_rows = U.n_rows;
   const uword U_n_cols = U.n_cols;
   
-  if(U.is_empty())
-    {
-    L.set_size(U_n_rows, 0);
-    U.set_size(0, U_n_cols);
-    ipiv.reset();
-    return true;
-    }
+  if(U.is_empty())  { L.set_size(U_n_rows, 0); U.set_size(0, U_n_cols); ipiv.reset(); return true; }
   
   #if defined(ARMA_USE_LAPACK)
     {
@@ -822,12 +811,7 @@ auxlib::eig_gen
     
     arma_debug_assert_blas_size(X);
     
-    if(X.is_empty())
-      {
-      vals.reset();
-      vecs.reset();
-      return true;
-      }
+    if(X.is_empty())  { vals.reset(); vecs.reset(); return true; }
     
     if(X.is_finite() == false)  { return false; }
     
@@ -935,12 +919,7 @@ auxlib::eig_gen
     
     arma_debug_assert_blas_size(X);
     
-    if(X.is_empty())
-      {
-      vals.reset();
-      vecs.reset();
-      return true;
-      }
+    if(X.is_empty())  { vals.reset(); vecs.reset(); return true; }
     
     if(X.is_finite() == false)  { return false; }
     
@@ -1007,12 +986,7 @@ auxlib::eig_gen_balance
     
     arma_debug_assert_blas_size(X);
     
-    if(X.is_empty())
-      {
-      vals.reset();
-      vecs.reset();
-      return true;
-      }
+    if(X.is_empty())  { vals.reset(); vecs.reset(); return true; }
     
     if(X.is_finite() == false)  { return false; }
     
@@ -1136,12 +1110,7 @@ auxlib::eig_gen_balance
     
     arma_debug_assert_blas_size(X);
     
-    if(X.is_empty())
-      {
-      vals.reset();
-      vecs.reset();
-      return true;
-      }
+    if(X.is_empty())  { vals.reset(); vecs.reset(); return true; }
     
     if(X.is_finite() == false)  { return false; }
     
@@ -1217,13 +1186,7 @@ auxlib::eig_gen_twosided
     
     arma_debug_assert_blas_size(X);
     
-    if(X.is_empty())
-      {
-       vals.reset();
-      lvecs.reset();
-      rvecs.reset();
-      return true;
-      }
+    if(X.is_empty())  { vals.reset(); lvecs.reset(); rvecs.reset(); return true; }
     
     if(X.is_finite() == false)  { return false; }
     
@@ -1324,13 +1287,7 @@ auxlib::eig_gen_twosided
     
     arma_debug_assert_blas_size(X);
     
-    if(X.is_empty())
-      {
-       vals.reset();
-      lvecs.reset();
-      rvecs.reset();
-      return true;
-      }
+    if(X.is_empty())  { vals.reset(); lvecs.reset(); rvecs.reset(); return true; }
     
     if(X.is_finite() == false)  { return false; }
     
@@ -1394,13 +1351,7 @@ auxlib::eig_gen_twosided_balance
     
     arma_debug_assert_blas_size(X);
     
-    if(X.is_empty())
-      {
-       vals.reset();
-      lvecs.reset();
-      rvecs.reset();
-      return true;
-      }
+    if(X.is_empty())  { vals.reset(); lvecs.reset(); rvecs.reset(); return true; }
     
     if(X.is_finite() == false)  { return false; }
     
@@ -1517,13 +1468,7 @@ auxlib::eig_gen_twosided_balance
     
     arma_debug_assert_blas_size(X);
     
-    if(X.is_empty())
-      {
-       vals.reset();
-      lvecs.reset();
-      rvecs.reset();
-      return true;
-      }
+    if(X.is_empty())  { vals.reset(); lvecs.reset(); rvecs.reset(); return true; }
     
     if(X.is_finite() == false)  { return false; }
     
@@ -1601,12 +1546,7 @@ auxlib::eig_pair
     
     arma_debug_assert_blas_size(A);
     
-    if(A.is_empty())
-      {
-      vals.reset();
-      vecs.reset();
-      return true;
-      }
+    if(A.is_empty())  { vals.reset(); vecs.reset(); return true; }
     
     if(A.is_finite() == false)  { return false; }
     if(B.is_finite() == false)  { return false; }
@@ -1744,12 +1684,7 @@ auxlib::eig_pair
     
     arma_debug_assert_blas_size(A);
     
-    if(A.is_empty())
-      {
-      vals.reset();
-      vecs.reset();
-      return true;
-      }
+    if(A.is_empty())  { vals.reset(); vecs.reset(); return true; }
     
     if(A.is_finite() == false)  { return false; }
     if(B.is_finite() == false)  { return false; }
@@ -1846,13 +1781,7 @@ auxlib::eig_pair_twosided
     
     arma_debug_assert_blas_size(A);
     
-    if(A.is_empty())
-      {
-       vals.reset();
-      lvecs.reset();
-      rvecs.reset();
-      return true;
-      }
+    if(A.is_empty())  { vals.reset(); lvecs.reset(); rvecs.reset(); return true; }
     
     if(A.is_finite() == false)  { return false; }
     if(B.is_finite() == false)  { return false; }
@@ -1983,13 +1912,7 @@ auxlib::eig_pair_twosided
     
     arma_debug_assert_blas_size(A);
     
-    if(A.is_empty())
-      {
-       vals.reset();
-      lvecs.reset();
-      rvecs.reset();
-      return true;
-      }
+    if(A.is_empty())  { vals.reset(); lvecs.reset(); rvecs.reset(); return true; }
     
     if(A.is_finite() == false)  { return false; }
     if(B.is_finite() == false)  { return false; }
@@ -2181,12 +2104,7 @@ auxlib::eig_sym(Col<eT>& eigval, Mat<eT>& eigvec, const Mat<eT>& X)
     
     eigvec = X;
     
-    if(eigvec.is_empty())
-      {
-      eigval.reset();
-      eigvec.reset();
-      return true;
-      }
+    if(eigvec.is_empty())  { eigval.reset(); eigvec.reset(); return true; }
     
     arma_debug_assert_blas_size(eigvec);
     
@@ -2235,12 +2153,7 @@ auxlib::eig_sym(Col<T>& eigval, Mat< std::complex<T> >& eigvec, const Mat< std::
     
     eigvec = X;
     
-    if(eigvec.is_empty())
-      {
-      eigval.reset();
-      eigvec.reset();
-      return true;
-      }
+    if(eigvec.is_empty())  { eigval.reset(); eigvec.reset(); return true; }
     
     arma_debug_assert_blas_size(eigvec);
     
@@ -2288,12 +2201,7 @@ auxlib::eig_sym_dc(Col<eT>& eigval, Mat<eT>& eigvec, const Mat<eT>& X)
     
     eigvec = X;
     
-    if(eigvec.is_empty())
-      {
-      eigval.reset();
-      eigvec.reset();
-      return true;
-      }
+    if(eigvec.is_empty())  { eigval.reset(); eigvec.reset(); return true; }
     
     arma_debug_assert_blas_size(eigvec);
     
@@ -2367,12 +2275,7 @@ auxlib::eig_sym_dc(Col<T>& eigval, Mat< std::complex<T> >& eigvec, const Mat< st
     
     eigvec = X;
     
-    if(eigvec.is_empty())
-      {
-      eigval.reset();
-      eigvec.reset();
-      return true;
-      }
+    if(eigvec.is_empty())  { eigval.reset(); eigvec.reset(); return true; }
     
     arma_debug_assert_blas_size(eigvec);
     
@@ -2659,10 +2562,7 @@ auxlib::hess(Mat<eT>& H, const Base<eT,T1>& X, Col<eT>& tao)
     
     arma_debug_check( (H.is_square() == false), "hess(): given matrix must be square sized" );
     
-    if(H.is_empty())
-      {
-      return true;
-      }
+    if(H.is_empty())  { return true; }
     
     arma_debug_assert_blas_size(H);
     
@@ -2714,11 +2614,7 @@ auxlib::qr(Mat<eT>& Q, Mat<eT>& R, const Base<eT,T1>& X)
     const uword R_n_rows = R.n_rows;
     const uword R_n_cols = R.n_cols;
     
-    if(R.is_empty())
-      {
-      Q.eye(R_n_rows, R_n_rows);
-      return true;
-      }
+    if(R.is_empty())  { Q.eye(R_n_rows, R_n_rows); return true; }
     
     arma_debug_assert_blas_size(R);
     
@@ -2805,10 +2701,7 @@ auxlib::qr_econ(Mat<eT>& Q, Mat<eT>& R, const Base<eT,T1>& X)
       const unwrap<T1>   tmp(X.get_ref());
       const Mat<eT>& M = tmp.M;
       
-      if(M.n_rows < M.n_cols)
-        {
-        return auxlib::qr(Q, R, X);
-        }
+      if(M.n_rows < M.n_cols)  { return auxlib::qr(Q, R, X); }
       }
     
     Q = X.get_ref();
@@ -2816,17 +2709,9 @@ auxlib::qr_econ(Mat<eT>& Q, Mat<eT>& R, const Base<eT,T1>& X)
     const uword Q_n_rows = Q.n_rows;
     const uword Q_n_cols = Q.n_cols;
     
-    if( Q_n_rows <= Q_n_cols )
-      {
-      return auxlib::qr(Q, R, Q);
-      }
+    if( Q_n_rows <= Q_n_cols )  { return auxlib::qr(Q, R, Q); }
     
-    if(Q.is_empty())
-      {
-      Q.set_size(Q_n_rows, 0       );
-      R.set_size(0,        Q_n_cols);
-      return true;
-      }
+    if(Q.is_empty())  { Q.set_size(Q_n_rows, 0); R.set_size(0, Q_n_cols); return true; }
     
     arma_debug_assert_blas_size(Q);
     
@@ -3226,13 +3111,7 @@ auxlib::svd(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
   
   #if defined(ARMA_USE_LAPACK)
     {
-    if(A.is_empty())
-      {
-      U.eye(A.n_rows, A.n_rows);
-      S.reset();
-      V.eye(A.n_cols, A.n_cols);
-      return true;
-      }
+    if(A.is_empty())  { U.eye(A.n_rows, A.n_rows); S.reset(); V.eye(A.n_cols, A.n_cols); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -3307,13 +3186,7 @@ auxlib::svd(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, Mat
     {
     typedef std::complex<T> eT;
     
-    if(A.is_empty())
-      {
-      U.eye(A.n_rows, A.n_rows);
-      S.reset();
-      V.eye(A.n_cols, A.n_cols);
-      return true;
-      }
+    if(A.is_empty())  { U.eye(A.n_rows, A.n_rows); S.reset(); V.eye(A.n_cols, A.n_cols); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -3387,13 +3260,7 @@ auxlib::svd_econ(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A, const char mode
   
   #if defined(ARMA_USE_LAPACK)
     {
-    if(A.is_empty())
-      {
-      U.eye();
-      S.reset();
-      V.eye();
-      return true;
-      }
+    if(A.is_empty())  { U.eye(); S.reset(); V.eye(); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -3504,13 +3371,7 @@ auxlib::svd_econ(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V
     {
     typedef std::complex<T> eT;
     
-    if(A.is_empty())
-      {
-      U.eye();
-      S.reset();
-      V.eye();
-      return true;
-      }
+    if(A.is_empty())  { U.eye(); S.reset(); V.eye(); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -3759,13 +3620,7 @@ auxlib::svd_dc(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
   
   #if defined(ARMA_USE_LAPACK)
     {
-    if(A.is_empty())
-      {
-      U.eye(A.n_rows, A.n_rows);
-      S.reset();
-      V.eye(A.n_cols, A.n_cols);
-      return true;
-      }
+    if(A.is_empty())  { U.eye(A.n_rows, A.n_rows); S.reset(); V.eye(A.n_cols, A.n_cols); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -3843,13 +3698,7 @@ auxlib::svd_dc(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, 
     {
     typedef std::complex<T> eT;
     
-    if(A.is_empty())
-      {
-      U.eye(A.n_rows, A.n_rows);
-      S.reset();
-      V.eye(A.n_cols, A.n_cols);
-      return true;
-      }
+    if(A.is_empty())  { U.eye(A.n_rows, A.n_rows); S.reset(); V.eye(A.n_cols, A.n_cols); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -4103,11 +3952,7 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
     
   arma_debug_check( (A_n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-  if(A.is_empty() || out.is_empty())
-    {
-    out.zeros(A.n_cols, B_n_cols);
-    return true;
-    }
+  if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
   
   #if defined(ARMA_USE_LAPACK)
     {
@@ -4158,11 +4003,7 @@ auxlib::solve_square_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_ty
       
     arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
       
-    if(A.is_empty() || out.is_empty())
-      {
-      out.zeros(A.n_cols, B_n_cols);
-      return true;
-      }
+    if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -4238,11 +4079,7 @@ auxlib::solve_square_refine(Mat<typename T1::pod_type>& out, typename T1::pod_ty
     
     arma_debug_check( (A.n_rows != B.n_rows), "solve(): number of rows in the given matrices must be the same" );
       
-    if(A.is_empty() || B.is_empty())
-      {
-      out.zeros(A.n_rows, B.n_cols);
-      return true;
-      }
+    if(A.is_empty() || B.is_empty())  { out.zeros(A.n_rows, B.n_cols); return true; }
     
     arma_debug_assert_blas_size(A,B);
     
@@ -4340,11 +4177,7 @@ auxlib::solve_square_refine(Mat< std::complex<typename T1::pod_type> >& out, typ
     
     arma_debug_check( (A.n_rows != B.n_rows), "solve(): number of rows in the given matrices must be the same" );
       
-    if(A.is_empty() || B.is_empty())
-      {
-      out.zeros(A.n_rows, B.n_cols);
-      return true;
-      }
+    if(A.is_empty() || B.is_empty())  { out.zeros(A.n_rows, B.n_cols); return true; }
     
     arma_debug_assert_blas_size(A,B);
     
@@ -4455,11 +4288,7 @@ auxlib::solve_sympd_fast_common(Mat<typename T1::elem_type>& out, Mat<typename T
   
   arma_debug_check( (A_n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
   
-  if(A.is_empty() || out.is_empty())
-    {
-    out.zeros(A.n_cols, B_n_cols);
-    return true;
-    }
+  if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
   
   #if defined(ARMA_USE_LAPACK)
     {
@@ -4512,11 +4341,7 @@ auxlib::solve_sympd_rcond(Mat<typename T1::pod_type>& out, typename T1::pod_type
     
     arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || out.is_empty())
-      {
-      out.zeros(A.n_cols, B_n_cols);
-      return true;
-      }
+    if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
     arma_debug_assert_blas_size(A, out);
     
@@ -4591,11 +4416,7 @@ auxlib::solve_sympd_rcond(Mat< std::complex<typename T1::pod_type> >& out, typen
     
     arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || out.is_empty())
-      {
-      out.zeros(A.n_cols, B_n_cols);
-      return true;
-      }
+    if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
     arma_debug_assert_blas_size(A, out);
     
@@ -4668,11 +4489,7 @@ auxlib::solve_sympd_refine(Mat<typename T1::pod_type>& out, typename T1::pod_typ
     
     arma_debug_check( (A.n_rows != B.n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || B.is_empty())
-      {
-      out.zeros(A.n_rows, B.n_cols);
-      return true;
-      }
+    if(A.is_empty() || B.is_empty())  { out.zeros(A.n_rows, B.n_cols); return true; }
     
     arma_debug_assert_blas_size(A,B);
     
@@ -4758,11 +4575,7 @@ auxlib::solve_sympd_refine(Mat< std::complex<typename T1::pod_type> >& out, type
     
     arma_debug_check( (A.n_rows != B.n_rows), "solve(): number of rows in the given matrices must be the same" );
       
-    if(A.is_empty() || B.is_empty())
-      {
-      out.zeros(A.n_rows, B.n_cols);
-      return true;
-      }
+    if(A.is_empty() || B.is_empty())  { out.zeros(A.n_rows, B.n_cols); return true; }
     
     arma_debug_assert_blas_size(A,B);
     
@@ -4832,11 +4645,7 @@ auxlib::solve_rect_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::elem_
     
     arma_debug_check( (A.n_rows != B.n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || B.is_empty())
-      {
-      out.zeros(A.n_cols, B.n_cols);
-      return true;
-      }
+    if(A.is_empty() || B.is_empty())  { out.zeros(A.n_cols, B.n_cols); return true; }
     
     arma_debug_assert_blas_size(A,B);
     
@@ -4930,11 +4739,7 @@ auxlib::solve_rect_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_type
     
     arma_debug_check( (A.n_rows != B.n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || B.is_empty())
-      {
-      out.zeros(A.n_cols, B.n_cols);
-      return true;
-      }
+    if(A.is_empty() || B.is_empty())  { out.zeros(A.n_cols, B.n_cols); return true; }
     
     arma_debug_assert_blas_size(A,B);
     
@@ -5072,11 +4877,7 @@ auxlib::solve_approx_svd(Mat<typename T1::pod_type>& out, Mat<typename T1::pod_t
     
     arma_debug_check( (A.n_rows != B.n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || B.is_empty())
-      {
-      out.zeros(A.n_cols, B.n_cols);
-      return true;
-      }
+    if(A.is_empty() || B.is_empty())  { out.zeros(A.n_cols, B.n_cols); return true; }
     
     arma_debug_assert_blas_size(A,B);
     
@@ -5194,11 +4995,7 @@ auxlib::solve_approx_svd(Mat< std::complex<typename T1::pod_type> >& out, Mat< s
     
     arma_debug_check( (A.n_rows != B.n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || B.is_empty())
-      {
-      out.zeros(A.n_cols, B.n_cols);
-      return true;
-      }
+    if(A.is_empty() || B.is_empty())  { out.zeros(A.n_cols, B.n_cols); return true; }
     
     arma_debug_assert_blas_size(A,B);
     
@@ -5316,11 +5113,7 @@ auxlib::solve_trimat_fast(Mat<typename T1::elem_type>& out, const Mat<typename T
     
     arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || out.is_empty())
-      {
-      out.zeros(A.n_cols, B_n_cols);
-      return true;
-      }
+    if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
     arma_debug_assert_blas_size(A,out);
     
@@ -5370,11 +5163,7 @@ auxlib::solve_trimat_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_ty
     
     arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || out.is_empty())
-      {
-      out.zeros(A.n_cols, B_n_cols);
-      return true;
-      }
+    if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
     arma_debug_assert_blas_size(A,out);
     
@@ -5471,11 +5260,7 @@ auxlib::solve_band_fast_common(Mat<typename T1::elem_type>& out, const Mat<typen
     
     arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || out.is_empty())
-      {
-      out.zeros(A.n_rows, B_n_cols);
-      return true;
-      }
+    if(A.is_empty() || out.is_empty())  { out.zeros(A.n_rows, B_n_cols); return true; }
     
     // for gbsv, matrix AB size: 2*KL+KU+1 x N; band representation of A stored in rows KL+1 to 2*KL+KU+1  (note: fortran counts from 1)
     
@@ -5579,11 +5364,7 @@ auxlib::solve_band_rcond_common(Mat<typename T1::elem_type>& out, typename T1::p
     
     arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || out.is_empty())
-      {
-      out.zeros(A.n_rows, B_n_cols);
-      return true;
-      }
+    if(A.is_empty() || out.is_empty())  { out.zeros(A.n_rows, B_n_cols); return true; }
     
     // for gbtrf, matrix AB size: 2*KL+KU+1 x N; band representation of A stored in rows KL+1 to 2*KL+KU+1  (note: fortran counts from 1)
     
@@ -5660,11 +5441,7 @@ auxlib::solve_band_refine(Mat<typename T1::pod_type>& out, typename T1::pod_type
     
     arma_debug_check( (A.n_rows != B.n_rows), "solve(): number of rows in the given matrices must be the same" );
       
-    if(A.is_empty() || B.is_empty())
-      {
-      out.zeros(A.n_rows, B.n_cols);
-      return true;
-      }
+    if(A.is_empty() || B.is_empty())  { out.zeros(A.n_rows, B.n_cols); return true; }
     
     // for gbsvx, matrix AB size: KL+KU+1 x N; band representation of A stored in rows 1 to KL+KU+1  (note: fortran counts from 1)
     
@@ -5769,11 +5546,7 @@ auxlib::solve_band_refine(Mat< std::complex<typename T1::pod_type> >& out, typen
     
     arma_debug_check( (A.n_rows != B.n_rows), "solve(): number of rows in the given matrices must be the same" );
       
-    if(A.is_empty() || B.is_empty())
-      {
-      out.zeros(A.n_rows, B.n_cols);
-      return true;
-      }
+    if(A.is_empty() || B.is_empty())  { out.zeros(A.n_rows, B.n_cols); return true; }
     
     // for gbsvx, matrix AB size: KL+KU+1 x N; band representation of A stored in rows 1 to KL+KU+1  (note: fortran counts from 1)
     
@@ -5907,11 +5680,7 @@ auxlib::solve_tridiag_fast_common(Mat<typename T1::elem_type>& out, const Mat<ty
     
     arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
     
-    if(A.is_empty() || out.is_empty())
-      {
-      out.zeros(A.n_rows, B_n_cols);
-      return true;
-      }
+    if(A.is_empty() || out.is_empty())  { out.zeros(A.n_rows, B_n_cols); return true; }
     
     Mat<eT> tridiag;
     band_helper::extract_tridiag(tridiag, A);
@@ -5957,12 +5726,7 @@ auxlib::schur(Mat<eT>& U, Mat<eT>& S, const Base<eT,T1>& X, const bool calc_U)
     
     arma_debug_check( (S.is_square() == false), "schur(): given matrix must be square sized" );
     
-    if(S.is_empty())
-      {
-      U.reset();
-      S.reset();
-      return true;
-      }
+    if(S.is_empty())  { U.reset(); S.reset(); return true; }
     
     arma_debug_assert_blas_size(S);
     
@@ -6031,12 +5795,7 @@ auxlib::schur(Mat< std::complex<T> >& U, Mat< std::complex<T> >& S, const bool c
     {
     typedef std::complex<T> eT;
     
-    if(S.is_empty())
-      {
-      U.reset();
-      S.reset();
-      return true;
-      }
+    if(S.is_empty())  { U.reset(); S.reset(); return true; }
     
     arma_debug_assert_blas_size(S);
     
@@ -6157,14 +5916,7 @@ auxlib::qz(Mat<T>& A, Mat<T>& B, Mat<T>& vsl, Mat<T>& vsr, const Base<T,T1>& X_e
     
     arma_debug_check( (A.n_rows != B.n_rows), "qz(): given matrices must have the same size" );
     
-    if(A.is_empty())
-      {
-        A.reset();
-        B.reset();
-      vsl.reset();
-      vsr.reset();
-      return true;
-      }
+    if(A.is_empty())  { A.reset();  B.reset();  vsl.reset(); vsr.reset(); return true; }
     
     arma_debug_assert_blas_size(A);
     
@@ -6248,14 +6000,7 @@ auxlib::qz(Mat< std::complex<T> >& A, Mat< std::complex<T> >& B, Mat< std::compl
     
     arma_debug_check( (A.n_rows != B.n_rows), "qz(): given matrices must have the same size" );
     
-    if(A.is_empty())
-      {
-        A.reset();
-        B.reset();
-      vsl.reset();
-      vsr.reset();
-      return true;
-      }
+    if(A.is_empty())  { A.reset(); B.reset(); vsl.reset(); vsr.reset(); return true; }
     
     arma_debug_assert_blas_size(A);
     
