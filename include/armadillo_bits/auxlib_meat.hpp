@@ -3113,7 +3113,7 @@ auxlib::svd(Col<eT>& S, Mat<eT>& A)
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)   // TODO: if(A.n_elem >= 1024)
+    if(A.n_elem >= 1024)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = -1;
@@ -3183,7 +3183,7 @@ auxlib::svd(Col<T>& S, Mat< std::complex<T> >& A)
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 256)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = -1;  // query to find optimum size of workspace
@@ -3255,7 +3255,7 @@ auxlib::svd(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 1024)
       {
       // query to find optimum size of workspace
       eT        work_query[2] = {};
@@ -3338,7 +3338,7 @@ auxlib::svd(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, Mat
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 256)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = -1;  // query to find optimum size of workspace
@@ -3452,7 +3452,7 @@ auxlib::svd_econ(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A, const char mode
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 1024)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = -1;  // query to find optimum size of workspace
@@ -3570,7 +3570,7 @@ auxlib::svd_econ(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 256)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = -1;  // query to find optimum size of workspace
@@ -3645,7 +3645,7 @@ auxlib::svd_dc(Col<eT>& S, Mat<eT>& A)
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 1024)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = blas_int(-1);
@@ -3716,7 +3716,7 @@ auxlib::svd_dc(Col<T>& S, Mat< std::complex<T> >& A)
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 256)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = blas_int(-1);
@@ -3792,7 +3792,7 @@ auxlib::svd_dc(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 1024)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = blas_int(-1);
@@ -3876,7 +3876,7 @@ auxlib::svd_dc(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >& V, 
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 256)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = blas_int(-1);
@@ -3959,7 +3959,7 @@ auxlib::svd_dc_econ(Mat<eT>& U, Col<eT>& S, Mat<eT>& V, Mat<eT>& A)
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 1024)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = blas_int(-1);
@@ -4044,7 +4044,7 @@ auxlib::svd_dc_econ(Mat< std::complex<T> >& U, Col<T>& S, Mat< std::complex<T> >
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 256)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = blas_int(-1);
@@ -4864,7 +4864,7 @@ auxlib::solve_rect_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::elem_
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 1024)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = -1;
@@ -4962,7 +4962,7 @@ auxlib::solve_rect_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_type
     
     blas_int lwork_proposed = 0;
     
-    if((m*n) >= 1024)
+    if(A.n_elem >= 1024)
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = -1;
