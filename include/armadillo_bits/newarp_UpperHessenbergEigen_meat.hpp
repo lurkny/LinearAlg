@@ -143,8 +143,8 @@ UpperHessenbergEigen<eT>::eigenvectors()
     else
       {
       // complex eigenvectors are stored in consecutive columns
-      eT r2 = dot(mat_Z.col(i), mat_Z.col(i));
-      eT i2 = dot(mat_Z.col(i + 1), mat_Z.col(i + 1));
+      eT r2 = dot(mat_Z.col(i  ), mat_Z.col(i  ));
+      eT i2 = dot(mat_Z.col(i+1), mat_Z.col(i+1));
       
       eT  z_norm = std::sqrt(r2 + i2);
       eT* z_ptr  = mat_Z.colptr(i);
