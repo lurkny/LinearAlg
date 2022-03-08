@@ -266,7 +266,8 @@ SymEigsSolver<eT, SelectionRule, OpType>::retrieve_ritzpair()
       {
       // If i is even, pick values from the left (large values)
       // If i is odd, pick values from the right (small values)
-      if(i % 2 == 0) { ind[i] = ind_copy[i / 2]; } else { ind[i] = ind_copy[ncv - 1 - i / 2]; }
+      
+      ind[i] = (i % 2 == 0) ? ind_copy[i / 2] : ind_copy[ncv - 1 - i / 2];
       }
     }
 
@@ -437,13 +438,10 @@ SymEigsSolver<eT, SelectionRule, OpType>::eigenvalues()
   if(nconv > 0)
     {
     uword j = 0;
-    for(uword i = 0; i < nev; i++)
+    
+    for(uword i=0; i < nev; i++)
       {
-      if(ritz_conv[i])
-        {
-        res(j) = ritz_val(i);
-        j++;
-        }
+      if(ritz_conv[i])  { res(j) = ritz_val(i); j++; }
       }
     }
   
@@ -468,13 +466,10 @@ SymEigsSolver<eT, SelectionRule, OpType>::eigenvectors(uword nvec)
     Mat<eT> ritz_vec_conv(ncv, nvec, arma_zeros_indicator());
     
     uword j = 0;
-    for(uword i = 0; i < nev && j < nvec; i++)
+    
+    for(uword i=0; i < nev && j < nvec; i++)
       {
-      if(ritz_conv[i])
-        {
-        ritz_vec_conv.col(j) = ritz_vec.col(i);
-        j++;
-        }
+      if(ritz_conv[i])  { ritz_vec_conv.col(j) = ritz_vec.col(i); j++; }
       }
     
     res = fac_V * ritz_vec_conv;
