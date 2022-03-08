@@ -75,7 +75,7 @@ UpperHessenbergEigen<eT>::compute(const Mat<eT>& mat_obj)
   podarray<eT> wr(static_cast<uword>(n));
   podarray<eT> wi(static_cast<uword>(n));
   
-  
+  arma_extra_debug_print("lapack::lahqr()");
   lapack::lahqr(&want_T, &want_Z, &n, &ilo, &ihi, mat_T.memptr(), &n, wr.memptr(), wi.memptr(), &iloz, &ihiz, mat_Z.memptr(), &n, &info);
   
   for(blas_int i = 0; i < n; i++)
@@ -91,6 +91,7 @@ UpperHessenbergEigen<eT>::compute(const Mat<eT>& mat_obj)
   
   podarray<eT> work(static_cast<uword>(3 * n));
   
+  arma_extra_debug_print("lapack::trevc()");
   lapack::trevc(&side, &howmny, (blas_int*) NULL, &n, mat_T.memptr(), &n, (eT*) NULL, &n, mat_Z.memptr(), &n, &n, &m, work.memptr(), &info);
   
   if(info < 0)  { arma_stop_logic_error("lapack::trevc(): illegal value"); return; }
