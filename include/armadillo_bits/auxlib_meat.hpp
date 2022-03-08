@@ -4864,7 +4864,7 @@ auxlib::solve_rect_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::elem_
     
     blas_int lwork_proposed = 0;
     
-    if(A.n_elem >= 1024)
+    if(A.n_elem >= ((is_cx<eT>::yes) ? uword(256) : uword(1024)))
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = -1;
@@ -4962,7 +4962,7 @@ auxlib::solve_rect_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_type
     
     blas_int lwork_proposed = 0;
     
-    if(A.n_elem >= 1024)
+    if(A.n_elem >= ((is_cx<eT>::yes) ? uword(256) : uword(1024)))
       {
       eT        work_query[2] = {};
       blas_int lwork_query    = -1;
