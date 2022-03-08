@@ -221,15 +221,13 @@ SymEigsSolver<eT, SelectionRule, OpType>::nev_adjusted(uword nconv)
 
   // Adjust nev_new, according to dsaup2.f line 677~684 in ARPACK
   nev_new += (std::min)(nconv, (ncv - nev_new) / 2);
+  
   if(nev_new >= ncv) { nev_new = ncv - 1; }
-  if(nev_new == 1 && ncv >= 6)
+  
+  if(nev_new == 1)
     {
-    nev_new = ncv / 2;
-    }
-  else
-  if(nev_new == 1 && ncv > 2)
-    {
-    nev_new = 2;
+         if(ncv >= 6)  { nev_new = ncv / 2; }
+    else if(ncv >  2)  { nev_new = 2;       }
     }
 
   return nev_new;
