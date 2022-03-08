@@ -60,26 +60,32 @@ TridiagEigen<eT>::compute(const Mat<eT>& mat_obj)
   
   evecs.set_size(n, n);
   
-  char     compz  = 'I';
-  blas_int lwork  = 1 + 4*n + n*n;
-  blas_int liwork = 3 + 5*n;
-  blas_int info   = blas_int(0);
+  char     compz      = 'I';
+  blas_int lwork_min  = 1 + 4*n + n*n;
+  blas_int liwork_min = 3 + 5*n;
+  blas_int info       = blas_int(0);
   
-  eT        work_query[2] = {};
-  blas_int lwork_query    = blas_int(-1);
+  blas_int  lwork_proposed = 0;
+  blas_int liwork_proposed = 0;
   
-  blas_int  iwork_query[2] = {};
-  blas_int liwork_query    = blas_int(-1);
+  if(n >= 32)
+    {
+    eT        work_query[2] = {};
+    blas_int lwork_query    = blas_int(-1);
+    
+    blas_int  iwork_query[2] = {};
+    blas_int liwork_query    = blas_int(-1);
+    
+    lapack::stedc(&compz, &n, main_diag.memptr(), sub_diag.memptr(), evecs.memptr(), &n, &work_query[0], &lwork_query, &iwork_query[0], &liwork_query, &info);
+    
+    if(info != 0)  { arma_stop_runtime_error("lapack::stedc(): couldn't get size of work arrays"); return; }
+    
+     lwork_proposed = static_cast<blas_int>( work_query[0] );
+    liwork_proposed = iwork_query[0];
+    }
   
-  lapack::stedc(&compz, &n, main_diag.memptr(), sub_diag.memptr(), evecs.memptr(), &n, &work_query[0], &lwork_query, &iwork_query[0], &liwork_query, &info);
-  
-  if(info != 0)  { arma_stop_runtime_error("lapack::stedc(): couldn't get size of work arrays"); return; }
-  
-  blas_int  lwork_proposed = static_cast<blas_int>( work_query[0] );
-  blas_int liwork_proposed = iwork_query[0];
-  
-   lwork = (std::max)( lwork,  lwork_proposed);
-  liwork = (std::max)(liwork, liwork_proposed);
+  blas_int  lwork = (std::max)( lwork_min,  lwork_proposed);
+  blas_int liwork = (std::max)(liwork_min, liwork_proposed);
   
   podarray<eT>        work( static_cast<uword>( lwork) );
   podarray<blas_int> iwork( static_cast<uword>(liwork) );
