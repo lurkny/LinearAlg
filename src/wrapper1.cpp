@@ -1159,18 +1159,6 @@ extern "C"
     
     
     
-    void arma_fortran_with_prefix(arma_slarnv)(const blas_int* idist, blas_int* iseed, const blas_int* n,  float* x)
-      {
-      arma_fortran_sans_prefix(arma_slarnv)(idist, iseed, n, x);
-      }
-    
-    void arma_fortran_with_prefix(arma_dlarnv)(const blas_int* idist, blas_int* iseed, const blas_int* n, double* x)
-      {
-      arma_fortran_sans_prefix(arma_dlarnv)(idist, iseed, n, x);
-      }
-    
-    
-    
     void arma_fortran_with_prefix(arma_sgehrd)(const blas_int* n, const blas_int* ilo, const blas_int* ihi,    float* a, const blas_int* lda,    float* tao,    float* work, const blas_int* lwork, blas_int* info)
       {
       arma_fortran_sans_prefix(arma_sgehrd)(n, ilo, ihi, a, lda, tao, work, lwork, info);
