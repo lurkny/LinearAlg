@@ -1343,13 +1343,13 @@ sp_auxlib::spsolve_refine(Mat<typename T1::elem_type>& X, typename T1::pod_type&
     
     superlu_stat_wrangler stat;
     
-    char equed[8];       // extra characters for paranoia
-    T    rpg   = T(0);
-    T    rcond = T(0);
-    int  info  = int(0); // Return code.
+    char equed[8] = {};     // extra characters for paranoia
+    T    rpg      = T(0);
+    T    rcond    = T(0);
+    int  info     = int(0); // Return code.
     
-    char  work[8];
-    int  lwork = int(0);  // 0 means superlu will allocate memory
+    char  work[8] = {};
+    int  lwork    = int(0);  // 0 means superlu will allocate memory
     
     arma_extra_debug_print("superlu::gssvx()");
     superlu::gssvx<eT>(&options, a.get_ptr(), perm_c.get_ptr(), perm_r.get_ptr(), etree.get_ptr(), equed, R.get_ptr(), C.get_ptr(), l.get_ptr(), u.get_ptr(), &work[0], lwork, b.get_ptr(), x.get_ptr(), &rpg, &rcond, ferr.get_ptr(), berr.get_ptr(), &glu, &mu, stat.get_ptr(), &info);
