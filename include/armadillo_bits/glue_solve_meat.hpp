@@ -276,14 +276,12 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
       else
       if(try_sympd)
         {
-        status = auxlib::solve_sympd_rcond(out, rcond, A, B_expr.get_ref(), allow_ugly);  // A is overwritten
+        bool sympd_state = false;
         
-        if( (status == false) && (rcond == T(0)) )
+        status = auxlib::solve_sympd_rcond(out, sympd_state, rcond, A, B_expr.get_ref(), allow_ugly);  // A is overwritten
+        
+        if( (status == false) && (sympd_state == false) )
           {
-          // auxlib::solve_sympd_rcond() may have failed because A isn't really sympd;
-          // in that case rcond is set to zero
-          // TODO: change auxlib::solve_sympd_rcond() to use a dedicated variable to indicate non-sympd state, rather than inferring via rcond
-          
           arma_extra_debug_print("glue_solve_gen::apply(): auxlib::solve_sympd_rcond() failed; retrying");
           
           A = A_expr.get_ref();

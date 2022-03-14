@@ -4323,7 +4323,7 @@ auxlib::solve_sympd_fast_common(Mat<typename T1::elem_type>& out, Mat<typename T
 template<typename T1>
 inline
 bool
-auxlib::solve_sympd_rcond(Mat<typename T1::pod_type>& out, typename T1::pod_type& out_rcond, Mat<typename T1::pod_type>& A, const Base<typename T1::pod_type,T1>& B_expr, const bool allow_ugly)
+auxlib::solve_sympd_rcond(Mat<typename T1::pod_type>& out, bool& out_sympd_state, typename T1::pod_type& out_rcond, Mat<typename T1::pod_type>& A, const Base<typename T1::pod_type,T1>& B_expr, const bool allow_ugly)
   {
   arma_extra_debug_sigprint();
   
@@ -4332,7 +4332,8 @@ auxlib::solve_sympd_rcond(Mat<typename T1::pod_type>& out, typename T1::pod_type
     typedef typename T1::elem_type eT;
     typedef typename T1::pod_type   T;
     
-    out_rcond = T(0);
+    out_sympd_state = false;
+    out_rcond       = T(0);
     
     out = B_expr.get_ref();
     
@@ -4362,6 +4363,8 @@ auxlib::solve_sympd_rcond(Mat<typename T1::pod_type>& out, typename T1::pod_type
     
     if(info != 0)  { return false; }
     
+    out_sympd_state = true;
+    
     arma_extra_debug_print("lapack::potrs()");
     lapack::potrs<eT>(&uplo, &n, &nrhs, A.memptr(), &n, out.memptr(), &n, &info);
     
@@ -4376,6 +4379,7 @@ auxlib::solve_sympd_rcond(Mat<typename T1::pod_type>& out, typename T1::pod_type
   #else
     {
     arma_ignore(out);
+    arma_ignore(out_sympd_state);
     arma_ignore(out_rcond);
     arma_ignore(A);
     arma_ignore(B_expr);
@@ -4392,13 +4396,15 @@ auxlib::solve_sympd_rcond(Mat<typename T1::pod_type>& out, typename T1::pod_type
 template<typename T1>
 inline
 bool
-auxlib::solve_sympd_rcond(Mat< std::complex<typename T1::pod_type> >& out, typename T1::pod_type& out_rcond, Mat< std::complex<typename T1::pod_type> >& A, const Base< std::complex<typename T1::pod_type>,T1>& B_expr, const bool allow_ugly)
+auxlib::solve_sympd_rcond(Mat< std::complex<typename T1::pod_type> >& out, bool& out_sympd_state, typename T1::pod_type& out_rcond, Mat< std::complex<typename T1::pod_type> >& A, const Base< std::complex<typename T1::pod_type>,T1>& B_expr, const bool allow_ugly)
   {
   arma_extra_debug_sigprint();
   
   #if defined(ARMA_CRIPPLED_LAPACK)
     {
     arma_extra_debug_print("auxlib::solve_sympd_rcond(): redirecting to auxlib::solve_square_rcond() due to crippled LAPACK");
+    
+    out_sympd_state = false;
     
     return auxlib::solve_square_rcond(out, out_rcond, A, B_expr, allow_ugly);
     }
@@ -4407,7 +4413,8 @@ auxlib::solve_sympd_rcond(Mat< std::complex<typename T1::pod_type> >& out, typen
     typedef typename T1::pod_type     T;
     typedef typename std::complex<T> eT;
     
-    out_rcond = T(0);
+    out_sympd_state = false;
+    out_rcond       = T(0);
     
     out = B_expr.get_ref();
     
@@ -4437,6 +4444,8 @@ auxlib::solve_sympd_rcond(Mat< std::complex<typename T1::pod_type> >& out, typen
     
     if(info != 0)  { return false; }
     
+    out_sympd_state = true;
+    
     arma_extra_debug_print("lapack::potrs()");
     lapack::potrs<eT>(&uplo, &n, &nrhs, A.memptr(), &n, out.memptr(), &n, &info);
     
@@ -4451,6 +4460,7 @@ auxlib::solve_sympd_rcond(Mat< std::complex<typename T1::pod_type> >& out, typen
   #else
     {
     arma_ignore(out);
+    arma_ignore(out_sympd_state);
     arma_ignore(out_rcond);
     arma_ignore(A);
     arma_ignore(B_expr);
