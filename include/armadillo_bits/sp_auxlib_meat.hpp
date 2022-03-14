@@ -1343,7 +1343,7 @@ sp_auxlib::spsolve_refine(Mat<typename T1::elem_type>& X, typename T1::pod_type&
     
     superlu_stat_wrangler stat;
     
-    char equed[8] = {};   // extra characters for paranoia
+    char equed[8] = {};     // extra characters for paranoia
     T    rpg      = T(0);
     T    rcond    = T(0);
     int  info     = int(0); // Return code.
