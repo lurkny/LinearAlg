@@ -97,9 +97,19 @@ class field
   arma_inline arma_warn_unused       oT& operator()(const uword i);
   arma_inline arma_warn_unused const oT& operator()(const uword i) const;
   
+  #if defined(__cpp_multidimensional_subscript)
+  arma_inline arma_warn_unused       oT& operator[](const uword row, const uword col);
+  arma_inline arma_warn_unused const oT& operator[](const uword row, const uword col) const;
+  #endif
+  
   arma_inline arma_warn_unused       oT&         at(const uword row, const uword col);
   arma_inline arma_warn_unused const oT&         at(const uword row, const uword col) const;
-
+  
+  #if defined(__cpp_multidimensional_subscript)
+  arma_inline arma_warn_unused       oT& operator[](const uword row, const uword col, const uword slice);
+  arma_inline arma_warn_unused const oT& operator[](const uword row, const uword col, const uword slice) const;
+  #endif
+  
   arma_inline arma_warn_unused       oT&         at(const uword row, const uword col, const uword slice);
   arma_inline arma_warn_unused const oT&         at(const uword row, const uword col, const uword slice) const;
   

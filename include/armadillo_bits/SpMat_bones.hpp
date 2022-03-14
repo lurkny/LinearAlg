@@ -276,14 +276,22 @@ class SpMat : public SpBase< eT, SpMat<eT> >
   // access the i-th element; if there is nothing at element i, 0 is returned
   arma_inline arma_warn_unused SpMat_MapMat_val<eT> operator[] (const uword i);
   arma_inline arma_warn_unused eT                   operator[] (const uword i) const;
+  
   arma_inline arma_warn_unused SpMat_MapMat_val<eT> at         (const uword i);
   arma_inline arma_warn_unused eT                   at         (const uword i) const;
+  
   arma_inline arma_warn_unused SpMat_MapMat_val<eT> operator() (const uword i);
   arma_inline arma_warn_unused eT                   operator() (const uword i) const;
   
   // access the element at the given row and column; if there is nothing at that position, 0 is returned
+  #if defined(__cpp_multidimensional_subscript)
+  arma_inline arma_warn_unused SpMat_MapMat_val<eT> operator[] (const uword in_row, const uword in_col);
+  arma_inline arma_warn_unused eT                   operator[] (const uword in_row, const uword in_col) const;
+  #endif
+  
   arma_inline arma_warn_unused SpMat_MapMat_val<eT> at         (const uword in_row, const uword in_col);
   arma_inline arma_warn_unused eT                   at         (const uword in_row, const uword in_col) const;
+  
   arma_inline arma_warn_unused SpMat_MapMat_val<eT> operator() (const uword in_row, const uword in_col);
   arma_inline arma_warn_unused eT                   operator() (const uword in_row, const uword in_col) const;
   

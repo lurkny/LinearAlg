@@ -271,6 +271,11 @@ class Cube : public BaseCube< eT, Cube<eT> >
   arma_inline arma_warn_unused       eT& operator() (const uword i);
   arma_inline arma_warn_unused const eT& operator() (const uword i) const;
   
+  #if defined(__cpp_multidimensional_subscript)
+  arma_inline arma_warn_unused       eT& operator[] (const uword in_row, const uword in_col, const uword in_slice);
+  arma_inline arma_warn_unused const eT& operator[] (const uword in_row, const uword in_col, const uword in_slice) const;
+  #endif
+  
   arma_inline arma_warn_unused       eT& at         (const uword in_row, const uword in_col, const uword in_slice);
   arma_inline arma_warn_unused const eT& at         (const uword in_row, const uword in_col, const uword in_slice) const;
   
@@ -489,6 +494,11 @@ class Cube<eT>::fixed : public Cube<eT>
   
   arma_inline arma_warn_unused       eT& operator() (const uword i);
   arma_inline arma_warn_unused const eT& operator() (const uword i) const;
+  
+  #if defined(__cpp_multidimensional_subscript)
+  arma_inline arma_warn_unused       eT& operator[] (const uword in_row, const uword in_col, const uword in_slice);
+  arma_inline arma_warn_unused const eT& operator[] (const uword in_row, const uword in_col, const uword in_slice) const;
+  #endif
   
   arma_inline arma_warn_unused       eT& at         (const uword in_row, const uword in_col, const uword in_slice);
   arma_inline arma_warn_unused const eT& at         (const uword in_row, const uword in_col, const uword in_slice) const;
