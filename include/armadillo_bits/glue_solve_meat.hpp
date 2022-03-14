@@ -237,7 +237,6 @@ glue_solve_gen::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>
           {
           // auxlib::solve_sympd_refine() may have failed because A isn't really sympd;
           // in that case rcond is set to zero
-          // TODO: change auxlib::solve_sympd_refine() to use a dedicated variable to indicate non-sympd state, rather than inferring via rcond
           
           arma_extra_debug_print("glue_solve_gen::apply(): auxlib::solve_sympd_refine() failed; retrying");
           
