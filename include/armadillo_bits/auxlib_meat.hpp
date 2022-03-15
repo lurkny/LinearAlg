@@ -579,9 +579,9 @@ auxlib::log_det_sympd(typename get_pod_type<eT>::result& out_val, Mat<eT>& A)
     
     if(info != 0)  { return false; }
     
-    T val = std::log( access::tmp_real(A.at(0,0)) );
+    T val = T(0);
     
-    for(uword i=1; i < A.n_rows; ++i)  { val += std::log( access::tmp_real(A.at(i,i)) ); }
+    for(uword i=0; i < A.n_rows; ++i)  { val += std::log( access::tmp_real(A.at(i,i)) ); }
     
     out_val = T(2) * val;
     
