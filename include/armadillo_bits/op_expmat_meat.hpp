@@ -191,27 +191,51 @@ op_expmat_sym::apply_direct(Mat<typename T1::elem_type>& out, const Base<typenam
   
   #if defined(ARMA_USE_LAPACK)
     {
-    typedef typename T1::pod_type   T;
     typedef typename T1::elem_type eT;
+    typedef typename T1::pod_type   T;
     
     const unwrap<T1>   U(expr.get_ref());
     const Mat<eT>& X = U.M;
     
     arma_debug_check( (X.is_square() == false), "expmat_sym(): given matrix must be square sized" );
     
-    if( (is_cx<eT>::no) && (is_op_diagmat<T1>::value || X.is_diagmat()) )
+    const uword N = X.n_rows;
+    
+    if(is_cx<eT>::yes)
+      {
+      arma_extra_debug_print("op_expmat_sym: checking imaginary components of diagonal elements");
+      
+      const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
+      
+      const eT* colmem = X.memptr();
+      
+      for(uword i=0; i<N; ++i)
+        {
+        const eT& X_ii      = colmem[i];
+        const  T  X_ii_imag = access::tmp_imag(X_ii);
+        
+        if(std::abs(X_ii_imag) > tol)  { return false; }
+        
+        colmem += N;
+        }
+      }
+    
+    if(is_op_diagmat<T1>::value || X.is_diagmat())
       {
       arma_extra_debug_print("op_expmat_sym: detected diagonal matrix");
       
       out = X;
       
-      const uword N = (std::min)(X.n_rows, X.n_cols);
+      eT* colmem = out.memptr();
       
       for(uword i=0; i<N; ++i)
         {
-        eT& out_ii = out.at(i,i);
+        eT& out_ii      = colmem[i];
+         T  out_ii_real = access::tmp_real(out_ii);
+         
+        out_ii = eT( std::exp(out_ii_real) );
         
-        out_ii = std::exp(out_ii);
+        colmem += N;
         }
       
       return true;
