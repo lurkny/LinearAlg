@@ -199,7 +199,7 @@ op_expmat_sym::apply_direct(Mat<typename T1::elem_type>& out, const Base<typenam
     
     arma_debug_check( (X.is_square() == false), "expmat_sym(): given matrix must be square sized" );
     
-    if( (is_op_diagmat<T1>::value) || X.is_diagmat() )
+    if( (is_cx<eT>::no) && (is_op_diagmat<T1>::value || X.is_diagmat()) )
       {
       arma_extra_debug_print("op_expmat_sym: detected diagonal matrix");
       
