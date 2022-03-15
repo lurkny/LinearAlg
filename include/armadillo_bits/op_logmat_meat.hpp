@@ -513,22 +513,47 @@ op_logmat_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     
     arma_debug_check( (X.is_square() == false), "logmat_sympd(): given matrix must be square sized" );
     
-    if( (is_cx<eT>::no) && (is_op_diagmat<T1>::value || X.is_diagmat()) )
+    if(is_cx<eT>::yes)
+      {
+      arma_extra_debug_print("op_logmat_sympd: checking imaginary components of diagonal elements");
+      
+      const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
+      
+      const eT* colmem = X.memptr();
+      
+      const uword N = X.n_rows;
+      
+      for(uword i=0; i<N; ++i)
+        {
+        const eT& X_ii      = colmem[i];
+        const  T  X_ii_imag = access::tmp_imag(X_ii);
+        
+        if(std::abs(X_ii_imag) > tol)  { return false; }
+        
+        colmem += N;
+        }
+      }
+    
+    if(is_op_diagmat<T1>::value || X.is_diagmat())
       {
       arma_extra_debug_print("op_logmat_sympd: detected diagonal matrix");
       
       out = X;
       
-      const uword N = (std::min)(X.n_rows, X.n_cols);
+      eT* colmem = out.memptr();
+      
+      const uword N = X.n_rows;
       
       for(uword i=0; i<N; ++i)
         {
-        eT& out_ii      = out.at(i,i);
+        eT& out_ii      = colmem[i];
          T  out_ii_real = access::tmp_real(out_ii);
         
         if(out_ii_real <= T(0))  { return false; }
         
         out_ii = std::log(out_ii);
+        
+        colmem += N;
         }
       
       return true;
