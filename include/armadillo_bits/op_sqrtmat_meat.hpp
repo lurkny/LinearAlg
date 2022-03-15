@@ -179,7 +179,7 @@ op_sqrtmat::apply_direct(Mat< std::complex<typename T1::elem_type> >& out, const
     
     arma_extra_debug_print("op_sqrtmat: sympd optimisation failed");
     
-    // fallthrough if eigen decomposition failed or an eigenvalue is zero
+    // fallthrough if eigen decomposition failed or an eigenvalue is <= 0
     }
   
   
@@ -380,7 +380,7 @@ op_sqrtmat_cx::apply_direct(Mat<typename T1::elem_type>& out, const Base<typenam
     
     arma_extra_debug_print("op_sqrtmat_cx: sympd optimisation failed");
     
-    // fallthrough if eigen decomposition failed or an eigenvalue is zero
+    // fallthrough if eigen decomposition failed or an eigenvalue is <= 0
     }
   
   const bool schur_ok = auxlib::schur(U, S);
