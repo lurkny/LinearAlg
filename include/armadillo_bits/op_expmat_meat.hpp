@@ -199,6 +199,24 @@ op_expmat_sym::apply_direct(Mat<typename T1::elem_type>& out, const Base<typenam
     
     arma_debug_check( (X.is_square() == false), "expmat_sym(): given matrix must be square sized" );
     
+    if( (is_op_diagmat<T1>::value) || X.is_diagmat() )
+      {
+      arma_extra_debug_print("op_expmat_sym: detected diagonal matrix");
+      
+      out = X;
+      
+      const uword N = (std::min)(X.n_rows, X.n_cols);
+      
+      for(uword i=0; i<N; ++i)
+        {
+        eT& out_ii = out.at(i,i);
+        
+        out_ii = std::exp(out_ii);
+        }
+      
+      return true;
+      }
+    
     Col< T> eigval;
     Mat<eT> eigvec;
     
