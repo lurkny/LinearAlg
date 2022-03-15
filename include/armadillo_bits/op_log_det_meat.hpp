@@ -204,6 +204,8 @@ op_log_det_sympd::apply_direct(typename T1::pod_type& out_val, const Base<typena
     if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "log_det_sympd(): given matrix is not hermitian"); }
     }
   
+  // TODO: for complex matrices, ensure imaginary components on the diagonal are zero (within tolerance?)
+  
   return auxlib::log_det_sympd(out_val, A);
   }
 
