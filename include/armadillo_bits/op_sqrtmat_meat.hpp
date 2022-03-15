@@ -490,6 +490,27 @@ op_sqrtmat_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<type
     
     arma_debug_check( (X.is_square() == false), "sqrtmat_sympd(): given matrix must be square sized" );
     
+    if( (is_cx<eT>::no) && (is_op_diagmat<T1>::value || X.is_diagmat()) )
+      {
+      arma_extra_debug_print("op_sqrtmat_sympd: detected diagonal matrix");
+      
+      out = X;
+      
+      const uword N = (std::min)(X.n_rows, X.n_cols);
+      
+      for(uword i=0; i<N; ++i)
+        {
+        eT& out_ii      = out.at(i,i);
+         T  out_ii_real = access::tmp_real(out_ii);
+        
+        if(out_ii_real < T(0))  { return false; }
+        
+        out_ii = std::sqrt(out_ii);
+        }
+      
+      return true;
+      }
+    
     Col< T> eigval;
     Mat<eT> eigvec;
     
