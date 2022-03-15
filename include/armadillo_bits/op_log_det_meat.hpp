@@ -193,18 +193,61 @@ op_log_det_sympd::apply_direct(typename T1::pod_type& out_val, const Base<typena
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
+  typedef typename T1::pod_type   T;
   
   Mat<eT> A(expr.get_ref());
   
   arma_debug_check( (A.is_square() == false), "log_det_sympd(): given matrix must be square sized" );
+  
+  const uword N = A.n_rows;
+  
+  if(is_cx<eT>::yes)
+    {
+    arma_extra_debug_print("op_log_det_sympd: checking imaginary components of diagonal elements");
+    
+    const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
+    
+    const eT* colmem = A.memptr();
+    
+    for(uword i=0; i<N; ++i)
+      {
+      const eT& A_ii      = colmem[i];
+      const  T  A_ii_imag = access::tmp_imag(A_ii);
+      
+      if(std::abs(A_ii_imag) > tol)  { return false; }
+      
+      colmem += N;
+      }
+    }
+  
+  if(is_op_diagmat<T1>::value || A.is_diagmat())
+    {
+    arma_extra_debug_print("op_log_det_sympd: detected diagonal matrix");
+    
+    eT* colmem = A.memptr();
+    
+    out_val = T(0);
+    
+    for(uword i=0; i<N; ++i)
+      {
+      const eT& A_ii      = colmem[i];
+      const  T  A_ii_real = access::tmp_real(A_ii);
+      
+      if(A_ii_real <= T(0))  { return false; }
+      
+      out_val += std::log(A_ii_real);
+      
+      colmem += N;
+      }
+    
+    return true;
+    }
   
   if((arma_config::debug) && (auxlib::rudimentary_sym_check(A) == false))
     {
     if(is_cx<eT>::no )  { arma_debug_warn_level(1, "log_det_sympd(): given matrix is not symmetric"); }
     if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "log_det_sympd(): given matrix is not hermitian"); }
     }
-  
-  // TODO: for complex matrices, ensure imaginary components on the diagonal are zero (within tolerance?)
   
   return auxlib::log_det_sympd(out_val, A);
   }
