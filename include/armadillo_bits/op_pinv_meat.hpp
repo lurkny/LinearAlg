@@ -114,7 +114,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     arma_extra_debug_print("op_pinv: sympd optimisation failed");
     // auxlib::inv_sympd_rcond() will fail if A isn't really positive definite or its rcond is below rcond_threshold
     }
-  ;
+  
   if(do_sym)
     {
     arma_extra_debug_print("op_pinv: symmetric/hermitian optimisation");
