@@ -140,7 +140,7 @@
   #define ARMA_OPTIMISE_SYMPD
   //// Comment out the above line if you don't want automatically optimised handling
   //// of symmetric/hermitian positive definite matrices by various functions:
-  //// inv(), pinv(), expmat(), logmat(), sqrtmat(), rcond()
+  //// solve(), inv(), pinv(), expmat(), logmat(), sqrtmat(), rcond(), rank()
 #endif
 
 #if !defined(ARMA_OPTIMISE_INVEXPR)
