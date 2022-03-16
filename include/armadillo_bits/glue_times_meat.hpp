@@ -83,13 +83,7 @@ glue_times_redirect2_helper<true>::apply(Mat<typename T1::elem_type>& out, const
   
   typedef typename T1::elem_type eT;
   
-  #if defined(ARMA_OPTIMISE_INVEXPR)
-    constexpr bool handle_invexpr = true;
-  #else
-    constexpr bool handle_invexpr = false;
-  #endif
-  
-  if(handle_invexpr && (strip_inv<T1>::do_inv_gen || strip_inv<T1>::do_inv_spd))
+  if(arma_config::optimise_invexpr && (strip_inv<T1>::do_inv_gen || strip_inv<T1>::do_inv_spd))
     {
     // replace inv(A)*B with solve(A,B)
     
@@ -137,7 +131,7 @@ glue_times_redirect2_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     return;
     }
   
-  if(handle_invexpr && strip_inv<T2>::do_inv_spd)
+  if(arma_config::optimise_invexpr && strip_inv<T2>::do_inv_spd)
     {
     // replace A*inv_sympd(B) with trans( solve(trans(B),trans(A)) )
     // transpose of B is avoided as B is explicitly marked as symmetric
@@ -258,13 +252,7 @@ glue_times_redirect3_helper<true>::apply(Mat<typename T1::elem_type>& out, const
   
   typedef typename T1::elem_type eT;
   
-  #if defined(ARMA_OPTIMISE_INVEXPR)
-    constexpr bool handle_invexpr = true;
-  #else
-    constexpr bool handle_invexpr = false;
-  #endif
-  
-  if(handle_invexpr && (strip_inv<T1>::do_inv_gen || strip_inv<T1>::do_inv_spd))
+  if(arma_config::optimise_invexpr && (strip_inv<T1>::do_inv_gen || strip_inv<T1>::do_inv_spd))
     {
     // replace inv(A)*B*C with solve(A,B*C);
     
@@ -310,7 +298,7 @@ glue_times_redirect3_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     }
   
   
-  if(handle_invexpr && (strip_inv<T2>::do_inv_gen || strip_inv<T2>::do_inv_spd))
+  if(arma_config::optimise_invexpr && (strip_inv<T2>::do_inv_gen || strip_inv<T2>::do_inv_spd))
     {
     // replace A*inv(B)*C with A*solve(B,C)
     

@@ -140,7 +140,7 @@ as_scalar_redirect<3>::apply(const Glue< Glue<T1, T2, glue_times>, T3, glue_time
   const strip_inv    <T2>            strip1(X.A.B);
   const strip_diagmat<T2_stripped_1> strip2(strip1.M);
   
-  const bool tmp2_do_inv_gen = strip1.do_inv_gen;
+  const bool tmp2_do_inv_gen = strip1.do_inv_gen && arma_config::optimise_invexpr;
   const bool tmp2_do_diagmat = strip2.do_diagmat;
   
   if(tmp2_do_diagmat == false)

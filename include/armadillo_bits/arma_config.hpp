@@ -44,6 +44,13 @@ struct arma_config
   #endif
   
   
+  #if defined(ARMA_OPTIMISE_INVEXPR)
+    static constexpr bool optimise_invexpr = true;
+  #else
+    static constexpr bool optimise_invexpr = false;
+  #endif
+  
+  
   #if defined(ARMA_USE_LAPACK)
     static constexpr bool lapack = true;
   #else
