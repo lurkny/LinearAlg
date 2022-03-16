@@ -62,31 +62,6 @@ inv
 
 
 template<typename T1>
-inline
-typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, bool >::result
-inv
-  (
-         Mat<typename T1::elem_type>&    out_inv,
-             typename T1::pod_type&      out_rcond,
-  const Base<typename T1::elem_type,T1>& X
-  )
-  {
-  arma_extra_debug_sigprint();
-  
-  const bool status = op_inv_rcond::apply_direct_gen(out_inv, out_rcond, X.get_ref());
-  
-  if(status == false)
-    {
-    out_inv.soft_reset();
-    arma_debug_warn_level(3, "inv(): matrix is singular");
-    }
-  
-  return status;
-  }
-
-
-
-template<typename T1>
 arma_warn_unused
 arma_inline
 typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, const Op<T1, op_inv_gen_full> >::result
@@ -120,6 +95,31 @@ inv
   if(status == false)
     {
     out.soft_reset();
+    arma_debug_warn_level(3, "inv(): matrix is singular");
+    }
+  
+  return status;
+  }
+
+
+
+template<typename T1>
+inline
+typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, bool >::result
+inv
+  (
+         Mat<typename T1::elem_type>&    out_inv,
+             typename T1::pod_type&      out_rcond,
+  const Base<typename T1::elem_type,T1>& X
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  const bool status = op_inv_gen_rcond::apply_direct(out_inv, out_rcond, X.get_ref());
+  
+  if(status == false)
+    {
+    out_inv.soft_reset();
     arma_debug_warn_level(3, "inv(): matrix is singular");
     }
   
@@ -226,7 +226,7 @@ inv_sympd
   {
   arma_extra_debug_sigprint();
   
-  const bool status = op_inv_rcond::apply_direct_spd(out_inv, out_rcond, X.get_ref());
+  const bool status = op_inv_spd_rcond::apply_direct(out_inv, out_rcond, X.get_ref());
   
   if(status == false)
     {

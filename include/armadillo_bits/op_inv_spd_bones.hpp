@@ -52,4 +52,15 @@ class op_inv_spd_full
 
 
 
+class op_inv_spd_rcond
+  : public traits_op_default
+  {
+  public:
+  
+  template<typename T1>
+  inline static bool apply_direct(Mat<typename T1::elem_type>& out_inv, typename T1::pod_type& out_rcond, const Base<typename T1::elem_type,T1>& expr);
+  };
+
+
+
 //! @}
