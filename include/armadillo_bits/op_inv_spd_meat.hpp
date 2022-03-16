@@ -92,7 +92,7 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
   const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
   
-  arma_extra_debug_print("op_inv_gen: enabled flags:");
+  arma_extra_debug_print("op_inv_spd_full: enabled flags:");
   
   if(tiny        )  { arma_extra_debug_print("tiny");         }
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
