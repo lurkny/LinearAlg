@@ -162,7 +162,7 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   if(try_sympd)
     {
-    arma_extra_debug_print("op_inv: attempting sympd optimisation");
+    arma_extra_debug_print("op_inv_gen: attempting sympd optimisation");
     
     Mat<eT> tmp = out;
     
@@ -174,7 +174,7 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     
     if((status == false) && (sympd_state == true))  { return false; }
     
-    arma_extra_debug_print("op_inv: sympd optimisation failed");
+    arma_extra_debug_print("op_inv_gen: sympd optimisation failed");
     
     // fallthrough if optimisation failed
     }
