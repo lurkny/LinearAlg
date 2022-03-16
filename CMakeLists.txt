@@ -415,10 +415,8 @@ else()
       
       if(ATLAS_FOUND)
         set(ARMA_USE_ATLAS true)
-        set(ARMA_ATLAS_INCLUDE_DIR ${ATLAS_INCLUDE_DIR})
         set(ARMA_LIBS ${ARMA_LIBS} ${ATLAS_LIBRARIES})
         
-        message(STATUS "ATLAS_INCLUDE_DIR = ${ATLAS_INCLUDE_DIR}")
         message(STATUS "")
         message(STATUS "*** NOTE: support for ATLAS is deprecated and will be removed;")
         message(STATUS "*** NOTE: recommend to use OpenBLAS or FlexiBLAS instead.")

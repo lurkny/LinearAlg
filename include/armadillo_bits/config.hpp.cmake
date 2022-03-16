@@ -68,6 +68,11 @@
 //// Make sure the directory has a trailing /
 #endif
 
+#if !defined(ARMA_USE_ATLAS)
+#cmakedefine ARMA_USE_ATLAS
+//// NOTE: support for ATLAS is deprecated and will be removed.
+#endif
+
 #cmakedefine ARMA_USE_WRAPPER
 //// Comment out the above line if you're getting linking errors when compiling your programs,
 //// or if you prefer to directly link with LAPACK, BLAS + etc instead of the Armadillo runtime library.
@@ -110,13 +115,6 @@
 //// You will need to include appropriate MKL headers before the Armadillo header.
 //// You may also need to enable or disable the following options:
 //// ARMA_BLAS_LONG, ARMA_BLAS_LONG_LONG, ARMA_USE_FORTRAN_HIDDEN_ARGS
-
-#cmakedefine ARMA_USE_ATLAS
-#define ARMA_ATLAS_INCLUDE_DIR ${ARMA_ATLAS_INCLUDE_DIR}/
-//// NOTE: support for ATLAS is deprecated and will be removed.
-//// If you're using ATLAS and the compiler can't find cblas.h and/or clapack.h
-//// uncomment the above define and specify the appropriate include directory.
-//// Make sure the directory has a trailing /
 
 #if !defined(ARMA_USE_OPENMP)
 // #define ARMA_USE_OPENMP
@@ -254,6 +252,10 @@
 #if defined(ARMA_DONT_USE_SUPERLU)
   #undef ARMA_USE_SUPERLU
   #undef ARMA_SUPERLU_INCLUDE_DIR
+#endif
+
+#if defined(ARMA_DONT_USE_ATLAS)
+  #undef ARMA_USE_ATLAS
 #endif
 
 #if defined(ARMA_DONT_USE_WRAPPER)

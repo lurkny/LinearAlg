@@ -359,9 +359,9 @@ class herk
         
         atlas::cblas_herk<T>
           (
-          atlas::CblasColMajor,
-          atlas::CblasUpper,
-          (do_trans_A) ? CblasConjTrans : atlas::CblasNoTrans,
+          atlas_CblasColMajor,
+          atlas_CblasUpper,
+          (do_trans_A) ? atlas_CblasConjTrans : atlas_CblasNoTrans,
           C.n_cols,
           (do_trans_A) ? A.n_rows : A.n_cols,
           (use_alpha) ? alpha : T(1),

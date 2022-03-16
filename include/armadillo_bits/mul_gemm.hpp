@@ -280,9 +280,9 @@ class gemm
         
         atlas::cblas_gemm<eT>
           (
-          atlas::CblasColMajor,
-          (do_trans_A) ? ( is_cx<eT>::yes ? CblasConjTrans : atlas::CblasTrans ) : atlas::CblasNoTrans,
-          (do_trans_B) ? ( is_cx<eT>::yes ? CblasConjTrans : atlas::CblasTrans ) : atlas::CblasNoTrans,
+          atlas_CblasColMajor,
+          (do_trans_A) ? ( is_cx<eT>::yes ? atlas_CblasConjTrans : atlas_CblasTrans ) : atlas_CblasNoTrans,
+          (do_trans_B) ? ( is_cx<eT>::yes ? atlas_CblasConjTrans : atlas_CblasTrans ) : atlas_CblasNoTrans,
           C.n_rows,
           C.n_cols,
           (do_trans_A) ? A.n_rows : A.n_cols,

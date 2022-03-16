@@ -27,7 +27,6 @@
 
 #include "armadillo_bits/compiler_setup.hpp"
 #include "armadillo_bits/typedef_elem.hpp"
-#include "armadillo_bits/include_atlas.hpp"
 #include "armadillo_bits/include_superlu.hpp"
 
 
@@ -58,6 +57,7 @@ namespace arma
 {
 
 #include "armadillo_bits/def_blas.hpp"
+#include "armadillo_bits/def_atlas.hpp"
 #include "armadillo_bits/def_lapack.hpp"
 #include "armadillo_bits/def_arpack.hpp"
 #include "armadillo_bits/def_superlu.hpp"
@@ -188,6 +188,124 @@ extern "C"
     void arma_fortran_with_prefix(arma_zherk)(const char* uplo, const char* transA, const blas_int* n, const blas_int* k, const double* alpha, const blas_cxd* A, const blas_int* ldA, const double* beta, blas_cxd* C, const blas_int* ldC)
       {
       arma_fortran_sans_prefix(arma_zherk)(uplo, transA, n, k, alpha, A, ldA, beta, C, ldC);
+      }
+    
+  #endif
+  
+  
+  
+  #if defined(ARMA_USE_ATLAS)
+    
+    float wrapper_cblas_sasum(const int N, const float  *X, const int incX)
+      {
+      return      cblas_sasum(N, X, incX);
+      }
+    
+    double wrapper_cblas_dasum(const int N, const double *X, const int incX)
+      {
+      return       cblas_dasum(N, X, incX);
+      }
+    
+    
+    
+    float wrapper_cblas_snrm2(const int N, const float  *X, const int incX)
+      {
+      return      cblas_snrm2(N, X, incX);
+      }
+    
+    double wrapper_cblas_dnrm2(const int N, const double *X, const int incX)
+      {
+      return       cblas_dnrm2(N, X, incX);
+      }
+    
+    
+    
+    float wrapper_cblas_sdot(const int N, const float  *X, const int incX, const float  *Y, const int incY)
+      {
+      return      cblas_sdot(N, X, incX, Y, incY);
+      }
+    
+    double wrapper_cblas_ddot(const int N, const double *X, const int incX, const double *Y, const int incY)
+      {
+      return       cblas_ddot(N, X, incX, Y, incY);
+      }
+    
+    void wrapper_cblas_cdotu_sub(const int N, const void *X, const int incX, const void *Y, const int incY, void *dotu)
+      {
+                 cblas_cdotu_sub(N, X, incX, Y, incY, dotu);
+      }
+    
+    void wrapper_cblas_zdotu_sub(const int N, const void *X, const int incX, const void *Y, const int incY, void *dotu)
+      {
+                 cblas_zdotu_sub(N, X, incX, Y, incY, dotu);
+      }
+    
+    
+    
+    void wrapper_cblas_sgemv(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_TRANS TransA, const int M, const int N, const float alpha, const float *A, const int lda, const float *X, const int incX, const float beta, float *Y, const int incY)
+      {
+                 cblas_sgemv(layout, TransA, M, N, alpha, A, lda, X, incX, beta, Y, incY);
+      }
+    
+    void wrapper_cblas_dgemv(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_TRANS TransA, const int M, const int N, const double alpha, const double *A, const int lda, const double *X, const int incX, const double beta, double *Y, const int incY)
+      {
+                 cblas_dgemv(layout, TransA, M, N, alpha, A, lda, X, incX, beta, Y, incY);
+      }
+    
+    void wrapper_cblas_cgemv(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_TRANS TransA, const int M, const int N, const void *alpha, const void *A, const int lda, const void *X, const int incX, const void *beta, void *Y, const int incY)
+      {
+                 cblas_cgemv(layout, TransA, M, N, alpha, A, lda, X, incX, beta, Y, incY);
+      }
+    
+    void wrapper_cblas_zgemv(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_TRANS TransA, const int M, const int N, const void *alpha, const void *A, const int lda, const void *X, const int incX, const void *beta, void *Y, const int incY)
+      {
+                 cblas_zgemv(layout, TransA, M, N, alpha, A, lda, X, incX, beta, Y, incY);
+      }
+    
+    
+    
+    void wrapper_cblas_sgemm(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_TRANS TransA, const atlas_CBLAS_TRANS TransB, const int M, const int N, const int K, const float alpha, const float *A, const int lda, const float *B, const int ldb, const float beta, float *C, const int ldc)
+      {
+                 cblas_sgemm(layout, TransA, TransB, M, N, K, alpha, A, lda, B, ldb, beta, C, ldc);
+      }
+    
+    void wrapper_cblas_dgemm(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_TRANS TransA, const atlas_CBLAS_TRANS TransB, const int M, const int N, const int K, const double alpha, const double *A, const int lda, const double *B, const int ldb, const double beta, double *C, const int ldc)
+      {
+                 cblas_dgemm(layout, TransA, TransB, M, N, K, alpha, A, lda, B, ldb, beta, C, ldc);
+      }
+    
+    void wrapper_cblas_cgemm(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_TRANS TransA, const atlas_CBLAS_TRANS TransB, const int M, const int N, const int K, const void *alpha, const void *A, const int lda, const void *B, const int ldb, const void *beta, void *C, const int ldc)
+      {
+                 cblas_cgemm(layout, TransA, TransB, M, N, K, alpha, A, lda, B, ldb, beta, C, ldc);
+      }
+    
+    void wrapper_cblas_zgemm(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_TRANS TransA, const atlas_CBLAS_TRANS TransB, const int M, const int N, const int K, const void *alpha, const void *A, const int lda, const void *B, const int ldb, const void *beta, void *C, const int ldc)
+      {
+                 cblas_zgemm(layout, TransA, TransB, M, N, K, alpha, A, lda, B, ldb, beta, C, ldc);
+      }
+    
+    
+    
+    void wrapper_cblas_ssyrk(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_UPLO Uplo, const atlas_CBLAS_TRANS Trans, const int N, const int K, const float alpha, const float *A, const int lda, const float beta, float *C, const int ldc)
+      {
+                 cblas_ssyrk(layout, Uplo, Trans, N, K, alpha, A, lda, beta, C, ldc);
+      }
+    
+    void wrapper_cblas_dsyrk(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_UPLO Uplo, const atlas_CBLAS_TRANS Trans, const int N, const int K, const double alpha, const double *A, const int lda, const double beta, double *C, const int ldc)
+      {
+                 cblas_dsyrk(layout, Uplo, Trans, N, K, alpha, A, lda, beta, C, ldc);
+      }
+    
+    
+    
+    void wrapper_cblas_cherk(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_UPLO Uplo, const atlas_CBLAS_TRANS Trans, const int N, const int K, const float alpha, const void *A, const int lda, const float beta, void *C, const int ldc)
+      {
+                 cblas_cherk(layout, Uplo, Trans, N, K, alpha, A, lda, beta, C, ldc);
+      }
+    
+    void wrapper_cblas_zherk(const atlas_CBLAS_LAYOUT layout, const atlas_CBLAS_UPLO Uplo, const atlas_CBLAS_TRANS Trans, const int N, const int K, const double alpha, const void *A, const int lda, const double beta, void *C, const int ldc)
+      {
+                 cblas_zherk(layout, Uplo, Trans, N, K, alpha, A, lda, beta, C, ldc);
       }
     
   #endif
@@ -1206,144 +1324,6 @@ extern "C"
   
   
   
-  #if defined(ARMA_USE_ATLAS)
-    
-    float wrapper_cblas_sasum(const int N, const float  *X, const int incX)
-      {
-      return      cblas_sasum(N, X, incX);
-      }
-    
-    double wrapper_cblas_dasum(const int N, const double *X, const int incX)
-      {
-      return       cblas_dasum(N, X, incX);
-      }
-    
-    
-    
-    float wrapper_cblas_snrm2(const int N, const float  *X, const int incX)
-      {
-      return      cblas_snrm2(N, X, incX);
-      }
-    
-    double wrapper_cblas_dnrm2(const int N, const double *X, const int incX)
-      {
-      return       cblas_dnrm2(N, X, incX);
-      }
-    
-    
-    
-    float wrapper_cblas_sdot(const int N, const float  *X, const int incX, const float  *Y, const int incY)
-      {
-      return      cblas_sdot(N, X, incX, Y, incY);
-      }
-    
-    double wrapper_cblas_ddot(const int N, const double *X, const int incX, const double *Y, const int incY)
-      {
-      return       cblas_ddot(N, X, incX, Y, incY);
-      }
-    
-    void wrapper_cblas_cdotu_sub(const int N, const void *X, const int incX, const void *Y, const int incY, void *dotu)
-      {
-                 cblas_cdotu_sub(N, X, incX, Y, incY, dotu);
-      }
-    
-    void wrapper_cblas_zdotu_sub(const int N, const void *X, const int incX, const void *Y, const int incY, void *dotu)
-      {
-                 cblas_zdotu_sub(N, X, incX, Y, incY, dotu);
-      }
-    
-    
-    
-    void wrapper_cblas_sgemv(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA, const int M, const int N, const float alpha,
-                             const float *A, const int lda, const float *X, const int incX, const float beta, float *Y, const int incY)
-      {
-                 cblas_sgemv(Order, TransA, M, N, alpha, A, lda, X, incX, beta, Y, incY);
-      }
-    
-    void wrapper_cblas_dgemv(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA, const int M, const int N, const double alpha,
-                             const double *A, const int lda, const double *X, const int incX, const double beta, double *Y, const int incY)
-      {
-                 cblas_dgemv(Order, TransA, M, N, alpha, A, lda, X, incX, beta, Y, incY);
-      }
-    
-    void wrapper_cblas_cgemv(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA, const int M, const int N, const void *alpha,
-                             const void *A, const int lda, const void *X, const int incX, const void *beta, void *Y, const int incY)
-      {
-                 cblas_cgemv(Order, TransA, M, N, alpha, A, lda, X, incX, beta, Y, incY);
-      }
-    
-    void wrapper_cblas_zgemv(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA, const int M, const int N, const void *alpha,
-                             const void *A, const int lda, const void *X, const int incX, const void *beta, void *Y, const int incY)
-      {
-                 cblas_zgemv(Order, TransA, M, N, alpha, A, lda, X, incX, beta, Y, incY);
-      }
-    
-    
-    
-    void wrapper_cblas_sgemm(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_TRANSPOSE TransB,
-                             const int M, const int N, const int K, const float alpha,
-                             const float *A, const int lda, const float *B, const int ldb, const float beta, float *C, const int ldc)
-      {
-                 cblas_sgemm(Order, TransA, TransB, M, N, K, alpha, A, lda, B, ldb, beta, C, ldc);
-      }
-    
-    void wrapper_cblas_dgemm(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_TRANSPOSE TransB,
-                             const int M, const int N, const int K, const double alpha,
-                             const double *A, const int lda, const double *B, const int ldb, const double beta, double *C, const int ldc)
-      {
-                 cblas_dgemm(Order, TransA, TransB, M, N, K, alpha, A, lda, B, ldb, beta, C, ldc);
-      }
-    
-    void wrapper_cblas_cgemm(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_TRANSPOSE TransB,
-                             const int M, const int N, const int K, const void *alpha,
-                             const void *A, const int lda, const void *B, const int ldb, const void *beta, void *C, const int ldc)
-      {
-                 cblas_cgemm(Order, TransA, TransB, M, N, K, alpha, A, lda, B, ldb, beta, C, ldc);
-      }
-    
-    void wrapper_cblas_zgemm(const enum CBLAS_ORDER Order, const enum CBLAS_TRANSPOSE TransA, const enum CBLAS_TRANSPOSE TransB,
-                             const int M, const int N, const int K, const void *alpha,
-                             const void *A, const int lda, const void *B, const int ldb, const void *beta, void *C, const int ldc)
-      {
-                 cblas_zgemm(Order, TransA, TransB, M, N, K, alpha, A, lda, B, ldb, beta, C, ldc);
-      }
-    
-    
-    
-    void wrapper_cblas_ssyrk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE Trans,
-                             const int N, const int K, const float alpha,
-                             const float *A, const int lda, const float beta, float *C, const int ldc)
-      {
-                 cblas_ssyrk(Order, Uplo, Trans, N, K, alpha, A, lda, beta, C, ldc);
-      }
-    
-    void wrapper_cblas_dsyrk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE Trans,
-                             const int N, const int K, const double alpha,
-                             const double *A, const int lda, const double beta, double *C, const int ldc)
-      {
-                 cblas_dsyrk(Order, Uplo, Trans, N, K, alpha, A, lda, beta, C, ldc);
-      }
-    
-    
-    
-    void wrapper_cblas_cherk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE Trans,
-                             const int N, const int K, const float alpha,
-                             const void *A, const int lda, const float beta, void *C, const int ldc)
-      {
-                 cblas_cherk(Order, Uplo, Trans, N, K, alpha, A, lda, beta, C, ldc);
-      }
-    
-    void wrapper_cblas_zherk(const enum CBLAS_ORDER Order, const enum CBLAS_UPLO Uplo, const enum CBLAS_TRANSPOSE Trans,
-                             const int N, const int K, const double alpha,
-                             const void *A, const int lda, const double beta, void *C, const int ldc)
-      {
-                 cblas_zherk(Order, Uplo, Trans, N, K, alpha, A, lda, beta, C, ldc);
-      }
-    
-  #endif
-
-
-
   #if defined(ARMA_USE_ARPACK)
 
     void arma_fortran_with_prefix(arma_snaupd)(blas_int* ido, char* bmat, blas_int* n, char* which, blas_int* nev, float* tol, float* resid, blas_int* ncv, float* v, blas_int* ldv, blas_int* iparam, blas_int* ipntr, float* workd, float* workl, blas_int* lworkl, blas_int* info)

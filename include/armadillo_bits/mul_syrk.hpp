@@ -318,9 +318,9 @@ class syrk
         
         atlas::cblas_syrk<eT>
           (
-          atlas::CblasColMajor,
-          atlas::CblasUpper,
-          (do_trans_A) ? atlas::CblasTrans : atlas::CblasNoTrans,
+          atlas_CblasColMajor,
+          atlas_CblasUpper,
+          (do_trans_A) ? atlas_CblasTrans : atlas_CblasNoTrans,
           C.n_cols,
           (do_trans_A) ? A.n_rows : A.n_cols,
           (use_alpha) ? alpha : eT(1),

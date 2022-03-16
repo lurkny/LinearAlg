@@ -327,9 +327,9 @@ class gemv
           
           atlas::cblas_gemm<eT>
             (
-            atlas::CblasColMajor,
-            (do_trans_A) ? ( is_cx<eT>::yes ? CblasConjTrans : atlas::CblasTrans ) : atlas::CblasNoTrans,
-            atlas::CblasNoTrans,
+            atlas_CblasColMajor,
+            (do_trans_A) ? ( is_cx<eT>::yes ? atlas_CblasConjTrans : atlas_CblasTrans ) : atlas_CblasNoTrans,
+            atlas_CblasNoTrans,
             (do_trans_A) ? A.n_cols : A.n_rows,
             1,
             (do_trans_A) ? A.n_rows : A.n_cols,
@@ -349,8 +349,8 @@ class gemv
           
           atlas::cblas_gemv<eT>
             (
-            atlas::CblasColMajor,
-            (do_trans_A) ? ( is_cx<eT>::yes ? CblasConjTrans : atlas::CblasTrans ) : atlas::CblasNoTrans,
+            atlas_CblasColMajor,
+            (do_trans_A) ? ( is_cx<eT>::yes ? atlas_CblasConjTrans : atlas_CblasTrans ) : atlas_CblasNoTrans,
             A.n_rows,
             A.n_cols,
             (use_alpha) ? alpha : eT(1),
