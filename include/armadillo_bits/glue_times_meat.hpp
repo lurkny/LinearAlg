@@ -83,7 +83,7 @@ glue_times_redirect2_helper<true>::apply(Mat<typename T1::elem_type>& out, const
   
   typedef typename T1::elem_type eT;
   
-  if(strip_inv<T1>::do_inv)
+  if(strip_inv<T1>::do_inv_gen || strip_inv<T1>::do_inv_spd)
     {
     // replace inv(A)*B with solve(A,B)
     
@@ -95,7 +95,7 @@ glue_times_redirect2_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     
     arma_debug_check( (A.is_square() == false), "inv(): given matrix must be square sized" );
     
-    if(strip_inv<T1>::do_inv_sympd)
+    if(strip_inv<T1>::do_inv_spd)
       {
       // if(auxlib::rudimentary_sym_check(A) == false)
       //   {
@@ -121,7 +121,7 @@ glue_times_redirect2_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     arma_debug_assert_mul_size(A, B, "matrix multiplication");
     
     #if defined(ARMA_OPTIMISE_SYMPD)
-      const bool status = (strip_inv<T1>::do_inv_sympd) ? auxlib::solve_sympd_fast(out, A, B) : auxlib::solve_square_fast(out, A, B);
+      const bool status = (strip_inv<T1>::do_inv_spd) ? auxlib::solve_sympd_fast(out, A, B) : auxlib::solve_square_fast(out, A, B);
     #else
       const bool status = auxlib::solve_square_fast(out, A, B);
     #endif
@@ -137,7 +137,7 @@ glue_times_redirect2_helper<true>::apply(Mat<typename T1::elem_type>& out, const
   
   #if defined(ARMA_OPTIMISE_SYMPD)
     {
-    if(strip_inv<T2>::do_inv_sympd)
+    if(strip_inv<T2>::do_inv_spd)
       {
       // replace A*inv_sympd(B) with trans( solve(trans(B),trans(A)) )
       // transpose of B is avoided as B is explicitly marked as symmetric
@@ -260,7 +260,7 @@ glue_times_redirect3_helper<true>::apply(Mat<typename T1::elem_type>& out, const
   
   typedef typename T1::elem_type eT;
   
-  if(strip_inv<T1>::do_inv)
+  if(strip_inv<T1>::do_inv_gen || strip_inv<T1>::do_inv_spd)
     {
     // replace inv(A)*B*C with solve(A,B*C);
     
@@ -295,7 +295,7 @@ glue_times_redirect3_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     arma_debug_assert_mul_size(A, BC, "matrix multiplication");
     
     #if defined(ARMA_OPTIMISE_SYMPD)
-      const bool status = (strip_inv<T1>::do_inv_sympd) ? auxlib::solve_sympd_fast(out, A, BC) : auxlib::solve_square_fast(out, A, BC);
+      const bool status = (strip_inv<T1>::do_inv_spd) ? auxlib::solve_sympd_fast(out, A, BC) : auxlib::solve_square_fast(out, A, BC);
     #else
       const bool status = auxlib::solve_square_fast(out, A, BC);
     #endif
@@ -310,7 +310,7 @@ glue_times_redirect3_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     }
   
   
-  if(strip_inv<T2>::do_inv)
+  if(strip_inv<T2>::do_inv_gen || strip_inv<T2>::do_inv_spd)
     {
     // replace A*inv(B)*C with A*solve(B,C)
     
@@ -330,7 +330,7 @@ glue_times_redirect3_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     Mat<eT> solve_result;
     
     #if defined(ARMA_OPTIMISE_SYMPD)
-      const bool status = (strip_inv<T2>::do_inv_sympd) ? auxlib::solve_sympd_fast(solve_result, B, C) : auxlib::solve_square_fast(solve_result, B, C);
+      const bool status = (strip_inv<T2>::do_inv_spd) ? auxlib::solve_sympd_fast(solve_result, B, C) : auxlib::solve_square_fast(solve_result, B, C);
     #else
       const bool status = auxlib::solve_square_fast(solve_result, B, C);
     #endif

@@ -73,8 +73,8 @@ struct strip_inv
   
   const T1& M;
   
-  static constexpr bool do_inv       = false;
-  static constexpr bool do_inv_sympd = false;
+  static constexpr bool do_inv_gen = false;
+  static constexpr bool do_inv_spd = false;
   };
 
 
@@ -93,8 +93,8 @@ struct strip_inv< Op<T1, op_inv_gen_default> >
   
   const T1& M;
   
-  static constexpr bool do_inv       = true;
-  static constexpr bool do_inv_sympd = false;
+  static constexpr bool do_inv_gen = true;
+  static constexpr bool do_inv_spd = false;
   };
 
 
@@ -113,8 +113,8 @@ struct strip_inv< Op<T1, op_inv_spd_default> >
   
   const T1& M;
   
-  static constexpr bool do_inv       = true;
-  static constexpr bool do_inv_sympd = true;
+  static constexpr bool do_inv_gen = false;
+  static constexpr bool do_inv_spd = true;
   };
 
 
