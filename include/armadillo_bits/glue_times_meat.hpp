@@ -83,7 +83,13 @@ glue_times_redirect2_helper<true>::apply(Mat<typename T1::elem_type>& out, const
   
   typedef typename T1::elem_type eT;
   
-  if(strip_inv<T1>::do_inv_gen || strip_inv<T1>::do_inv_spd)
+  #if defined(ARMA_OPTIMISE_INVEXPR)
+    constexpr bool handle_invexpr = true;
+  #else
+    constexpr bool handle_invexpr = false;
+  #endif
+  
+  if(handle_invexpr && (strip_inv<T1>::do_inv_gen || strip_inv<T1>::do_inv_spd))
     {
     // replace inv(A)*B with solve(A,B)
     
@@ -120,11 +126,7 @@ glue_times_redirect2_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     
     arma_debug_assert_mul_size(A, B, "matrix multiplication");
     
-    #if defined(ARMA_OPTIMISE_SYMPD)
-      const bool status = (strip_inv<T1>::do_inv_spd) ? auxlib::solve_sympd_fast(out, A, B) : auxlib::solve_square_fast(out, A, B);
-    #else
-      const bool status = auxlib::solve_square_fast(out, A, B);
-    #endif
+    const bool status = (strip_inv<T1>::do_inv_spd) ? auxlib::solve_sympd_fast(out, A, B) : auxlib::solve_square_fast(out, A, B);
     
     if(status == false)
       {
@@ -135,56 +137,52 @@ glue_times_redirect2_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     return;
     }
   
-  #if defined(ARMA_OPTIMISE_SYMPD)
+  if(handle_invexpr && strip_inv<T2>::do_inv_spd)
     {
-    if(strip_inv<T2>::do_inv_spd)
+    // replace A*inv_sympd(B) with trans( solve(trans(B),trans(A)) )
+    // transpose of B is avoided as B is explicitly marked as symmetric
+    
+    arma_extra_debug_print("glue_times_redirect<2>::apply(): detected A*inv_sympd(B)");
+    
+    const Mat<eT> At = trans(X.A);
+    
+    const strip_inv<T2> B_strip(X.B);
+    
+    Mat<eT> B = B_strip.M;
+    
+    arma_debug_check( (B.is_square() == false), "inv_sympd(): given matrix must be square sized" );
+    
+    // if(auxlib::rudimentary_sym_check(B) == false)
+    //   {
+    //   if(is_cx<eT>::no )  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not symmetric"); }
+    //   if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
+    //   
+    //   out.soft_reset();
+    //   arma_stop_runtime_error("matrix multiplication: problem with matrix inverse; suggest to use solve() instead");
+    //   
+    //   return;
+    //   }
+    
+    if( (arma_config::debug) && (auxlib::rudimentary_sym_check(B) == false) )
       {
-      // replace A*inv_sympd(B) with trans( solve(trans(B),trans(A)) )
-      // transpose of B is avoided as B is explicitly marked as symmetric
-      
-      arma_extra_debug_print("glue_times_redirect<2>::apply(): detected A*inv_sympd(B)");
-      
-      const Mat<eT> At = trans(X.A);
-      
-      const strip_inv<T2> B_strip(X.B);
-      
-      Mat<eT> B = B_strip.M;
-      
-      arma_debug_check( (B.is_square() == false), "inv_sympd(): given matrix must be square sized" );
-      
-      // if(auxlib::rudimentary_sym_check(B) == false)
-      //   {
-      //   if(is_cx<eT>::no )  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not symmetric"); }
-      //   if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
-      //   
-      //   out.soft_reset();
-      //   arma_stop_runtime_error("matrix multiplication: problem with matrix inverse; suggest to use solve() instead");
-      //   
-      //   return;
-      //   }
-      
-      if( (arma_config::debug) && (auxlib::rudimentary_sym_check(B) == false) )
-        {
-        if(is_cx<eT>::no )  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not symmetric"); }
-        if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
-        }
-      
-      arma_debug_assert_mul_size(At.n_cols, At.n_rows, B.n_rows, B.n_cols, "matrix multiplication");
-      
-      const bool status = auxlib::solve_sympd_fast(out, B, At);
-      
-      if(status == false)
-        {
-        out.soft_reset();
-        arma_stop_runtime_error("matrix multiplication: problem with matrix inverse; suggest to use solve() instead");
-        }
-      
-      out = trans(out);
-      
-      return;
+      if(is_cx<eT>::no )  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not symmetric"); }
+      if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
       }
+    
+    arma_debug_assert_mul_size(At.n_cols, At.n_rows, B.n_rows, B.n_cols, "matrix multiplication");
+    
+    const bool status = auxlib::solve_sympd_fast(out, B, At);
+    
+    if(status == false)
+      {
+      out.soft_reset();
+      arma_stop_runtime_error("matrix multiplication: problem with matrix inverse; suggest to use solve() instead");
+      }
+    
+    out = trans(out);
+    
+    return;
     }
-  #endif
   
   glue_times_redirect2_helper<false>::apply(out, X);
   }
@@ -260,7 +258,13 @@ glue_times_redirect3_helper<true>::apply(Mat<typename T1::elem_type>& out, const
   
   typedef typename T1::elem_type eT;
   
-  if(strip_inv<T1>::do_inv_gen || strip_inv<T1>::do_inv_spd)
+  #if defined(ARMA_OPTIMISE_INVEXPR)
+    constexpr bool handle_invexpr = true;
+  #else
+    constexpr bool handle_invexpr = false;
+  #endif
+  
+  if(handle_invexpr && (strip_inv<T1>::do_inv_gen || strip_inv<T1>::do_inv_spd))
     {
     // replace inv(A)*B*C with solve(A,B*C);
     
@@ -294,11 +298,7 @@ glue_times_redirect3_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     
     arma_debug_assert_mul_size(A, BC, "matrix multiplication");
     
-    #if defined(ARMA_OPTIMISE_SYMPD)
-      const bool status = (strip_inv<T1>::do_inv_spd) ? auxlib::solve_sympd_fast(out, A, BC) : auxlib::solve_square_fast(out, A, BC);
-    #else
-      const bool status = auxlib::solve_square_fast(out, A, BC);
-    #endif
+    const bool status = (strip_inv<T1>::do_inv_spd) ? auxlib::solve_sympd_fast(out, A, BC) : auxlib::solve_square_fast(out, A, BC);
     
     if(status == false)
       {
@@ -310,7 +310,7 @@ glue_times_redirect3_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     }
   
   
-  if(strip_inv<T2>::do_inv_gen || strip_inv<T2>::do_inv_spd)
+  if(handle_invexpr && (strip_inv<T2>::do_inv_gen || strip_inv<T2>::do_inv_spd))
     {
     // replace A*inv(B)*C with A*solve(B,C)
     
@@ -329,11 +329,7 @@ glue_times_redirect3_helper<true>::apply(Mat<typename T1::elem_type>& out, const
     
     Mat<eT> solve_result;
     
-    #if defined(ARMA_OPTIMISE_SYMPD)
-      const bool status = (strip_inv<T2>::do_inv_spd) ? auxlib::solve_sympd_fast(solve_result, B, C) : auxlib::solve_square_fast(solve_result, B, C);
-    #else
-      const bool status = auxlib::solve_square_fast(solve_result, B, C);
-    #endif
+    const bool status = (strip_inv<T2>::do_inv_spd) ? auxlib::solve_sympd_fast(solve_result, B, C) : auxlib::solve_square_fast(solve_result, B, C);
     
     if(status == false)
       {
