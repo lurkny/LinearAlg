@@ -315,7 +315,56 @@ class gemv
       }
     else
       {
-      #if defined(ARMA_USE_BLAS)
+      #if defined(ARMA_USE_ATLAS)
+        {
+        arma_debug_assert_atlas_size(A);
+        
+        if(is_cx<eT>::no)
+          {
+          // use gemm() instead of gemv() to work around a speed issue in Atlas 3.8.4
+          
+          arma_extra_debug_print("atlas::cblas_gemm()");
+          
+          atlas::cblas_gemm<eT>
+            (
+            atlas::CblasColMajor,
+            (do_trans_A) ? ( is_cx<eT>::yes ? CblasConjTrans : atlas::CblasTrans ) : atlas::CblasNoTrans,
+            atlas::CblasNoTrans,
+            (do_trans_A) ? A.n_cols : A.n_rows,
+            1,
+            (do_trans_A) ? A.n_rows : A.n_cols,
+            (use_alpha) ? alpha : eT(1),
+            A.mem,
+            A.n_rows,
+            x,
+            (do_trans_A) ? A.n_rows : A.n_cols,
+            (use_beta) ? beta : eT(0),
+            y,
+            (do_trans_A) ? A.n_cols : A.n_rows
+            );
+          }
+        else
+          {
+          arma_extra_debug_print("atlas::cblas_gemv()");
+          
+          atlas::cblas_gemv<eT>
+            (
+            atlas::CblasColMajor,
+            (do_trans_A) ? ( is_cx<eT>::yes ? CblasConjTrans : atlas::CblasTrans ) : atlas::CblasNoTrans,
+            A.n_rows,
+            A.n_cols,
+            (use_alpha) ? alpha : eT(1),
+            A.mem,
+            A.n_rows,
+            x,
+            1,
+            (use_beta) ? beta : eT(0),
+            y,
+            1
+            );
+          }
+        }
+      #elif defined(ARMA_USE_BLAS)
         {
         arma_extra_debug_print("blas::gemv()");
         

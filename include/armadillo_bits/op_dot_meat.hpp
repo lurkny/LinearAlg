@@ -114,7 +114,13 @@ op_dot::direct_dot(const uword n_elem, const eT* const A, const eT* const B)
     }
   else
     {
-    #if defined(ARMA_USE_BLAS)
+    #if defined(ARMA_USE_ATLAS)
+      {
+      arma_extra_debug_print("atlas::cblas_dot()");
+      
+      return atlas::cblas_dot(n_elem, A, B);
+      }
+    #elif defined(ARMA_USE_BLAS)
       {
       arma_extra_debug_print("blas::dot()");
       
@@ -143,7 +149,13 @@ op_dot::direct_dot(const uword n_elem, const eT* const A, const eT* const B)
     }
   else
     {
-    #if defined(ARMA_USE_BLAS)
+    #if defined(ARMA_USE_ATLAS)
+      {
+      arma_extra_debug_print("atlas::cblas_cx_dot()");
+      
+      return atlas::cblas_cx_dot(n_elem, A, B);
+      }
+    #elif defined(ARMA_USE_BLAS)
       {
       arma_extra_debug_print("blas::dot()");
       

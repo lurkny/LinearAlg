@@ -340,7 +340,41 @@ class herk
       }
     else
       {
-      #if defined(ARMA_USE_BLAS)
+      #if defined(ARMA_USE_ATLAS)
+        {
+        if(use_beta == true)
+          {
+          typedef typename std::complex<T> eT;
+          
+          // use a temporary matrix, as we can't assume that matrix C is already symmetric
+          Mat<eT> D(C.n_rows, C.n_cols, arma_nozeros_indicator());
+          
+          herk<do_trans_A, use_alpha, false>::apply_blas_type(D,A,alpha);
+          
+          // NOTE: assuming beta=1; this is okay for now, as currently glue_times only uses beta=1
+          arrayops::inplace_plus(C.memptr(), D.memptr(), C.n_elem);
+          
+          return;
+          }
+        
+        atlas::cblas_herk<T>
+          (
+          atlas::CblasColMajor,
+          atlas::CblasUpper,
+          (do_trans_A) ? CblasConjTrans : atlas::CblasNoTrans,
+          C.n_cols,
+          (do_trans_A) ? A.n_rows : A.n_cols,
+          (use_alpha) ? alpha : T(1),
+          A.mem,
+          (do_trans_A) ? A.n_rows : C.n_cols,
+          (use_beta) ? beta : T(0),
+          C.memptr(),
+          C.n_cols
+          );
+        
+        herk_helper::inplace_conj_copy_upper_tri_to_lower_tri(C);
+        }
+      #elif defined(ARMA_USE_BLAS)
         {
         if(use_beta == true)
           {
