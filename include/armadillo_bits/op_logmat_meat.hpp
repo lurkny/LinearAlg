@@ -134,11 +134,7 @@ op_logmat::apply_direct(Mat< std::complex<typename T1::elem_type> >& out, const 
     return true;
     }
   
-  #if defined(ARMA_OPTIMISE_SYMPD)
-    const bool try_sympd = sympd_helper::guess_sympd(A);
-  #else
-    const bool try_sympd = false;
-  #endif
+  const bool try_sympd = arma_config::optimise_sympd && sympd_helper::guess_sympd(A);
   
   if(try_sympd)
     {
@@ -307,11 +303,7 @@ op_logmat_cx::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename
     return true;
     }
   
-  #if defined(ARMA_OPTIMISE_SYMPD)
-    const bool try_sympd = sympd_helper::guess_sympd(S);
-  #else
-    const bool try_sympd = false;
-  #endif
+  const bool try_sympd = arma_config::optimise_sympd && sympd_helper::guess_sympd(S);
   
   if(try_sympd)
     {

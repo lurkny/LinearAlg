@@ -154,11 +154,7 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     return auxlib::inv_tr(out, ((is_triu_expr || is_triu_mat) ? uword(0) : uword(1)));
     }
   
-  #if defined(ARMA_OPTIMISE_SYMPD)
-    const bool try_sympd = (no_sympd) ? false : (likely_sympd ? true : sympd_helper::guess_sympd(out));
-  #else
-    const bool try_sympd = false;
-  #endif
+  const bool try_sympd = arma_config::optimise_sympd && ((no_sympd) ? false : (likely_sympd ? true : sympd_helper::guess_sympd(out)));
   
   if(try_sympd)
     {
@@ -359,11 +355,7 @@ op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
     return auxlib::inv_tr_rcond(out, out_rcond, ((is_triu_expr || is_triu_mat) ? uword(0) : uword(1)));
     }
   
-  #if defined(ARMA_OPTIMISE_SYMPD)
-    const bool try_sympd = (auxlib::crippled_lapack(out)) ? false : sympd_helper::guess_sympd(out);
-  #else
-    const bool try_sympd = false;
-  #endif
+  const bool try_sympd = arma_config::optimise_sympd && ((auxlib::crippled_lapack(out)) ? false : sympd_helper::guess_sympd(out));
   
   if(try_sympd)
     {

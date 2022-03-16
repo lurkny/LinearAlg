@@ -56,11 +56,7 @@ op_log_det::apply_direct(typename T1::elem_type& out_val, typename T1::pod_type&
   
   if(is_triu || is_tril)  { return op_log_det::apply_trimat(out_val, out_sign, A); }
   
-  // #if defined(ARMA_OPTIMISE_SYMPD)
-  //   const bool try_sympd = sympd_helper::guess_sympd(A);
-  // #else
-  //   const bool try_sympd = false;
-  // #endif
+  // const bool try_sympd = arma_config::optimise_sympd && sympd_helper::guess_sympd(A);
   // 
   // if(try_sympd)
   //   {

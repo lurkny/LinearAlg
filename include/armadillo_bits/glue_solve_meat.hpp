@@ -143,20 +143,12 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
     uword KL = 0;
     uword KU = 0;
     
-    #if defined(ARMA_OPTIMISE_BAND)
-      const bool is_band  = (no_band || auxlib::crippled_lapack(A)) ? false : band_helper::is_band(KL, KU, A, uword(32));
-    #else
-      const bool is_band  = false;
-    #endif
+    const bool is_band  = arma_config::optimise_band && ((no_band || auxlib::crippled_lapack(A)) ? false : band_helper::is_band(KL, KU, A, uword(32)));
     
     const bool is_triu = (no_trimat || refine || equilibrate || likely_sympd || is_band           ) ? false : trimat_helper::is_triu(A);
     const bool is_tril = (no_trimat || refine || equilibrate || likely_sympd || is_band || is_triu) ? false : trimat_helper::is_tril(A);
     
-    #if defined(ARMA_OPTIMISE_SYMPD)
-      const bool try_sympd = (no_sympd || auxlib::crippled_lapack(A) || is_band || is_triu || is_tril) ? false : (likely_sympd ? true : sympd_helper::guess_sympd(A, uword(16)));
-    #else
-      const bool try_sympd = false;
-    #endif
+    const bool try_sympd = arma_config::optimise_sympd && ((no_sympd || auxlib::crippled_lapack(A) || is_band || is_triu || is_tril) ? false : (likely_sympd ? true : sympd_helper::guess_sympd(A, uword(16))));
     
     if(fast)
       {

@@ -44,6 +44,20 @@ struct arma_config
   #endif
   
   
+  #if defined(ARMA_OPTIMISE_BAND)
+    static constexpr bool optimise_band = true;
+  #else
+    static constexpr bool optimise_band = false;
+  #endif
+  
+  
+  #if defined(ARMA_OPTIMISE_SYMPD)
+    static constexpr bool optimise_sympd = true;
+  #else
+    static constexpr bool optimise_sympd = false;
+  #endif
+  
+  
   #if defined(ARMA_OPTIMISE_INVEXPR)
     static constexpr bool optimise_invexpr = true;
   #else
