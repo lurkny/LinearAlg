@@ -1211,11 +1211,11 @@ struct has_op_inv_any
   { static constexpr bool value = false; };
 
 template<typename T1>
-struct has_op_inv_any< Op<T1,op_inv_gen> >
+struct has_op_inv_any< Op<T1,op_inv_gen_full> >
   { static constexpr bool value = true;  };
 
 template<typename T1>
-struct has_op_inv_any< Op<T1,op_inv_spd> >
+struct has_op_inv_any< Op<T1,op_inv_spd_full> >
   { static constexpr bool value = true;  };
 
 template<typename T1>
@@ -1227,11 +1227,11 @@ struct has_op_inv_any< Op<T1,op_inv_spd_default> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>
-struct has_op_inv_any< Glue<Op<T1,op_inv_gen>, T2, glue_times> >
+struct has_op_inv_any< Glue<Op<T1,op_inv_gen_full>, T2, glue_times> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>
-struct has_op_inv_any< Glue<Op<T1,op_inv_spd>, T2, glue_times> >
+struct has_op_inv_any< Glue<Op<T1,op_inv_spd_full>, T2, glue_times> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>
@@ -1243,11 +1243,11 @@ struct has_op_inv_any< Glue<Op<T1,op_inv_spd_default>, T2, glue_times> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>
-struct has_op_inv_any< Glue<T1, Op<T2,op_inv_gen>, glue_times> >
+struct has_op_inv_any< Glue<T1, Op<T2,op_inv_gen_full>, glue_times> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>
-struct has_op_inv_any< Glue<T1, Op<T2,op_inv_spd>, glue_times> >
+struct has_op_inv_any< Glue<T1, Op<T2,op_inv_spd_full>, glue_times> >
   { static constexpr bool value = true;  };
 
 template<typename T1, typename T2>

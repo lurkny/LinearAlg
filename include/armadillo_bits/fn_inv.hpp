@@ -89,7 +89,7 @@ inv
 template<typename T1>
 arma_warn_unused
 arma_inline
-typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, const Op<T1, op_inv_gen> >::result
+typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, const Op<T1, op_inv_gen_full> >::result
 inv
   (
   const Base<typename T1::elem_type,T1>& X,
@@ -98,7 +98,7 @@ inv
   {
   arma_extra_debug_sigprint();
   
-  return Op<T1, op_inv_gen>(X.get_ref(), opts.flags, uword(0));
+  return Op<T1, op_inv_gen_full>(X.get_ref(), opts.flags, uword(0));
   }
 
 
@@ -115,7 +115,7 @@ inv
   {
   arma_extra_debug_sigprint();
   
-  const bool status = op_inv_gen::apply_direct(out, X.get_ref(), "inv()", opts.flags);
+  const bool status = op_inv_gen_full::apply_direct(out, X.get_ref(), "inv()", opts.flags);
   
   if(status == false)
     {
@@ -175,7 +175,7 @@ inv_sympd
 template<typename T1>
 arma_warn_unused
 arma_inline
-typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, const Op<T1, op_inv_spd> >::result
+typename enable_if2< is_supported_blas_type<typename T1::elem_type>::value, const Op<T1, op_inv_spd_full> >::result
 inv_sympd
   (
   const Base<typename T1::elem_type, T1>& X,
@@ -184,7 +184,7 @@ inv_sympd
   {
   arma_extra_debug_sigprint();
   
-  return Op<T1, op_inv_spd>(X.get_ref(), opts.flags, uword(0));
+  return Op<T1, op_inv_spd_full>(X.get_ref(), opts.flags, uword(0));
   }
 
 
@@ -201,7 +201,7 @@ inv_sympd
   {
   arma_extra_debug_sigprint();
   
-  const bool status = op_inv_spd::apply_direct(out, X.get_ref(), opts.flags);
+  const bool status = op_inv_spd_full::apply_direct(out, X.get_ref(), opts.flags);
   
   if(status == false)
     {

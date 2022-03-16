@@ -46,7 +46,7 @@ op_inv_spd_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<ty
   {
   arma_extra_debug_sigprint();
   
-  return op_inv_spd::apply_direct<T1,false>(out, expr, uword(0));
+  return op_inv_spd_full::apply_direct<T1,false>(out, expr, uword(0));
   }
 
 
@@ -58,13 +58,13 @@ op_inv_spd_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<ty
 template<typename T1>
 inline
 void
-op_inv_spd::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_spd>& X)
+op_inv_spd_full::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_spd_full>& X)
   {
   arma_extra_debug_sigprint();
   
   const uword flags = X.in_aux_uword_a;
   
-  const bool status = op_inv_spd::apply_direct(out, X.m, flags);
+  const bool status = op_inv_spd_full::apply_direct(out, X.m, flags);
   
   if(status == false)
     {
@@ -78,15 +78,15 @@ op_inv_spd::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_spd>& X)
 template<typename T1, const bool has_user_flags>
 inline
 bool
-op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const uword flags)
+op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const uword flags)
   {
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  if(has_user_flags == true )  { arma_extra_debug_print("op_inv_spd: has_user_flags = true");  }
-  if(has_user_flags == false)  { arma_extra_debug_print("op_inv_spd: has_user_flags = false"); }
+  if(has_user_flags == true )  { arma_extra_debug_print("op_inv_spd_full: has_user_flags = true");  }
+  if(has_user_flags == false)  { arma_extra_debug_print("op_inv_spd_full: has_user_flags = false"); }
   
   const bool tiny         = has_user_flags && bool(flags & inv_opts::flag_tiny        );
   const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
@@ -115,20 +115,20 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   if(tiny && (N <= 4) && (is_cx<eT>::no))
     {
-    arma_extra_debug_print("op_inv_spd: attempting tinymatrix optimisation");
+    arma_extra_debug_print("op_inv_spd_full: attempting tinymatrix optimisation");
     
-    const bool status = op_inv_spd::apply_tiny(out);
+    const bool status = op_inv_spd_full::apply_tiny(out);
     
     if(status)  { return true; }
     
-    arma_extra_debug_print("op_inv_spd: tinymatrix optimisation failed");
+    arma_extra_debug_print("op_inv_spd_full: tinymatrix optimisation failed");
     
     // fallthrough if optimisation failed
     }
   
   if(is_cx<eT>::yes)
     {
-    arma_extra_debug_print("op_inv_spd: checking imaginary components of diagonal elements");
+    arma_extra_debug_print("op_inv_spd_full: checking imaginary components of diagonal elements");
     
     const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
     
@@ -147,7 +147,7 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   if(is_op_diagmat<T1>::value || out.is_diagmat())
     {
-    arma_extra_debug_print("op_inv_spd: detected diagonal matrix");
+    arma_extra_debug_print("op_inv_spd_full: detected diagonal matrix");
     
     eT* colmem = out.memptr();
     
@@ -176,7 +176,7 @@ op_inv_spd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
 template<typename eT>
 inline
 bool
-op_inv_spd::apply_tiny(Mat<eT>& out)
+op_inv_spd_full::apply_tiny(Mat<eT>& out)
   {
   arma_extra_debug_sigprint();
   
@@ -223,7 +223,7 @@ op_inv_spd::apply_tiny(Mat<eT>& out)
     if(print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
     }
   
-  return op_inv_gen::apply_tiny(out);
+  return op_inv_gen_full::apply_tiny(out);
   }
 
 

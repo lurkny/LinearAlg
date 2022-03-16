@@ -46,7 +46,7 @@ op_inv_gen_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<ty
   {
   arma_extra_debug_sigprint();
   
-  return op_inv_gen::apply_direct<T1,false>(out, expr, caller_sig, uword(0));
+  return op_inv_gen_full::apply_direct<T1,false>(out, expr, caller_sig, uword(0));
   }
 
 
@@ -58,13 +58,13 @@ op_inv_gen_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<ty
 template<typename T1>
 inline
 void
-op_inv_gen::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_gen>& X)
+op_inv_gen_full::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_gen_full>& X)
   {
   arma_extra_debug_sigprint();
   
   const uword flags = X.in_aux_uword_a;
   
-  const bool status = op_inv_gen::apply_direct(out, X.m, "inv()", flags);
+  const bool status = op_inv_gen_full::apply_direct(out, X.m, "inv()", flags);
   
   if(status == false)
     {
@@ -78,20 +78,20 @@ op_inv_gen::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_gen>& X)
 template<typename T1, const bool has_user_flags>
 inline
 bool
-op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig, const uword flags)
+op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig, const uword flags)
   {
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
   
-  if(has_user_flags == true )  { arma_extra_debug_print("op_inv_gen: has_user_flags = true");  }
-  if(has_user_flags == false)  { arma_extra_debug_print("op_inv_gen: has_user_flags = false"); }
+  if(has_user_flags == true )  { arma_extra_debug_print("op_inv_gen_full: has_user_flags = true");  }
+  if(has_user_flags == false)  { arma_extra_debug_print("op_inv_gen_full: has_user_flags = false"); }
   
   const bool tiny         = has_user_flags && bool(flags & inv_opts::flag_tiny        );
   const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
   const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
   
-  arma_extra_debug_print("op_inv_gen: enabled flags:");
+  arma_extra_debug_print("op_inv_gen_full: enabled flags:");
   
   if(tiny        )  { arma_extra_debug_print("tiny");         }
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
@@ -105,20 +105,20 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   if(tiny && (out.n_rows <= 4) && is_cx<eT>::no)
     {
-    arma_extra_debug_print("op_inv_gen: attempting tinymatrix optimisation");
+    arma_extra_debug_print("op_inv_gen_full: attempting tinymatrix optimisation");
     
-    const bool status = op_inv_gen::apply_tiny(out);
+    const bool status = op_inv_gen_full::apply_tiny(out);
     
     if(status)  { return true; }
     
-    arma_extra_debug_print("op_inv_gen: tinymatrix optimisation failed");
+    arma_extra_debug_print("op_inv_gen_full: tinymatrix optimisation failed");
     
     // fallthrough if optimisation failed
     }
   
   if(is_op_diagmat<T1>::value || out.is_diagmat())
     {
-    arma_extra_debug_print("op_inv_gen: detected diagonal matrix");
+    arma_extra_debug_print("op_inv_gen_full: detected diagonal matrix");
     
     const uword N = out.n_rows;
     
@@ -162,7 +162,7 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
   
   if(try_sympd)
     {
-    arma_extra_debug_print("op_inv_gen: attempting sympd optimisation");
+    arma_extra_debug_print("op_inv_gen_full: attempting sympd optimisation");
     
     Mat<eT> tmp = out;
     
@@ -174,7 +174,7 @@ op_inv_gen::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T
     
     if((status == false) && (sympd_state == true))  { return false; }
     
-    arma_extra_debug_print("op_inv_gen: sympd optimisation failed");
+    arma_extra_debug_print("op_inv_gen_full: sympd optimisation failed");
     
     // fallthrough if optimisation failed
     }
@@ -188,7 +188,7 @@ template<typename eT>
 arma_cold
 inline
 bool
-op_inv_gen::apply_tiny(Mat<eT>& X)
+op_inv_gen_full::apply_tiny(Mat<eT>& X)
   {
   arma_extra_debug_sigprint();
   
