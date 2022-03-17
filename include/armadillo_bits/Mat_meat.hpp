@@ -10060,7 +10060,7 @@ Mat_aux::set_imag(Mat< std::complex<T> >& out, const Base<T,T1>& X)
 
 
 
-#ifdef ARMA_EXTRA_MAT_MEAT
+#if defined(ARMA_EXTRA_MAT_MEAT)
   #include ARMA_INCFILE_WRAP(ARMA_EXTRA_MAT_MEAT)
 #endif
 

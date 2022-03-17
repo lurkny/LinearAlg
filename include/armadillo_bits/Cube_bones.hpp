@@ -446,7 +446,7 @@ class Cube : public BaseCube< eT, Cube<eT> >
   
   public:
   
-  #ifdef ARMA_EXTRA_CUBE_PROTO
+  #if defined(ARMA_EXTRA_CUBE_PROTO)
     #include ARMA_INCFILE_WRAP(ARMA_EXTRA_CUBE_PROTO)
   #endif
   };

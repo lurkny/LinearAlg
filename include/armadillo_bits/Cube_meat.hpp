@@ -5823,7 +5823,7 @@ Cube_aux::set_imag(Cube< std::complex<T> >& out, const BaseCube<T,T1>& X)
 
 
 
-#ifdef ARMA_EXTRA_CUBE_MEAT
+#if defined(ARMA_EXTRA_CUBE_MEAT)
   #include ARMA_INCFILE_WRAP(ARMA_EXTRA_CUBE_MEAT)
 #endif
 

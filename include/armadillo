@@ -104,7 +104,7 @@ namespace arma
   #include "armadillo_bits/arma_rel_comparators.hpp"
   #include "armadillo_bits/fill.hpp"
   
-  #ifdef ARMA_RNG_ALT
+  #if defined(ARMA_RNG_ALT)
     #include ARMA_INCFILE_WRAP(ARMA_RNG_ALT)
   #else
     #include "armadillo_bits/arma_rng_cxx03.hpp"

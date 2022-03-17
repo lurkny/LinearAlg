@@ -18,7 +18,7 @@
 
 // TODO: remove support for ATLAS in next major version
 
-#ifdef ARMA_USE_ATLAS
+#if defined(ARMA_USE_ATLAS)
 
 
 typedef enum

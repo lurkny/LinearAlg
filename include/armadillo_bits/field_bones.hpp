@@ -302,7 +302,7 @@ class field
   
   public:
   
-  #ifdef ARMA_EXTRA_FIELD_PROTO
+  #if defined(ARMA_EXTRA_FIELD_PROTO)
     #include ARMA_INCFILE_WRAP(ARMA_EXTRA_FIELD_PROTO)
   #endif
   };

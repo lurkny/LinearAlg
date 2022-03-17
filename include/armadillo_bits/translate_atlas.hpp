@@ -16,7 +16,7 @@
 // ------------------------------------------------------------------------
 
 
-#ifdef ARMA_USE_ATLAS
+#if defined(ARMA_USE_ATLAS)
 
 
 // TODO: remove support for ATLAS in next major version

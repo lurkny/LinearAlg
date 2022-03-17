@@ -6957,7 +6957,7 @@ SpMat_aux::set_imag(SpMat< std::complex<T> >& out, const SpBase<T,T1>& X)
 
 
 
-#ifdef ARMA_EXTRA_SPMAT_MEAT
+#if defined(ARMA_EXTRA_SPMAT_MEAT)
   #include ARMA_INCFILE_WRAP(ARMA_EXTRA_SPMAT_MEAT)
 #endif
 

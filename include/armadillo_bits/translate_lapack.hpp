@@ -17,7 +17,7 @@
 
 
 
-#ifdef ARMA_USE_LAPACK
+#if defined(ARMA_USE_LAPACK)
 
 
 //! \namespace lapack namespace for LAPACK functions

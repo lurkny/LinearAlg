@@ -714,7 +714,7 @@ class SpMat : public SpBase< eT, SpMat<eT> >
   
   public:
   
-  #ifdef ARMA_EXTRA_SPMAT_PROTO
+  #if defined(ARMA_EXTRA_SPMAT_PROTO)
     #include ARMA_INCFILE_WRAP(ARMA_EXTRA_SPMAT_PROTO)
   #endif
   };

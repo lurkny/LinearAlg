@@ -786,7 +786,7 @@ class Mat : public Base< eT, Mat<eT> >
   
   public:
   
-  #ifdef ARMA_EXTRA_MAT_PROTO
+  #if defined(ARMA_EXTRA_MAT_PROTO)
     #include ARMA_INCFILE_WRAP(ARMA_EXTRA_MAT_PROTO)
   #endif
   };

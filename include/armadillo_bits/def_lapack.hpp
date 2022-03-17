@@ -17,7 +17,7 @@
 
 
 
-#ifdef ARMA_USE_LAPACK
+#if defined(ARMA_USE_LAPACK)
 
 #if defined(dgetrf) || defined(DGETRF)
   #pragma message ("WARNING: detected possible interference with definitions of LAPACK functions;")

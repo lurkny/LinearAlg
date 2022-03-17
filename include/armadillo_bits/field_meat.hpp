@@ -3016,7 +3016,7 @@ field_aux::load(field< std::string >& x, std::istream& is, const file_type type,
 
 
 
-#ifdef ARMA_EXTRA_FIELD_MEAT
+#if defined(ARMA_EXTRA_FIELD_MEAT)
   #include ARMA_INCFILE_WRAP(ARMA_EXTRA_FIELD_MEAT)
 #endif
 
