@@ -126,23 +126,9 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     // fallthrough if optimisation failed
     }
   
-  if(is_cx<eT>::yes)
+  if((arma_config::debug) && (is_cx<eT>::yes) && (sympd_helper::check_diag_imag(out) == false))
     {
-    arma_extra_debug_print("op_inv_spd_full: checking imaginary components of diagonal elements");
-    
-    const T tol = T(10000) * std::numeric_limits<T>::epsilon();  // allow some leeway
-    
-    const eT* colmem = out.memptr();
-    
-    for(uword i=0; i<N; ++i)
-      {
-      const eT& out_ii      = colmem[i];
-      const  T  out_ii_imag = access::tmp_imag(out_ii);
-      
-      if(std::abs(out_ii_imag) > tol)  { return false; }
-      
-      colmem += N;
-      }
+    arma_debug_warn_level(1, "inv_sympd(): imaginary components on diagonal are non-zero");
     }
   
   if(is_op_diagmat<T1>::value || out.is_diagmat())

@@ -195,25 +195,9 @@ op_expmat_sym::apply_direct(Mat<typename T1::elem_type>& out, const Base<typenam
     
     arma_debug_check( (X.is_square() == false), "expmat_sym(): given matrix must be square sized" );
     
-    const uword N = X.n_rows;
-    
-    if(is_cx<eT>::yes)
+    if((arma_config::debug) && (is_cx<eT>::yes) && (sympd_helper::check_diag_imag(X) == false))
       {
-      arma_extra_debug_print("op_expmat_sym: checking imaginary components of diagonal elements");
-      
-      const T tol = T(10000) * std::numeric_limits<T>::epsilon();  // allow some leeway
-      
-      const eT* colmem = X.memptr();
-      
-      for(uword i=0; i<N; ++i)
-        {
-        const eT& X_ii      = colmem[i];
-        const  T  X_ii_imag = access::tmp_imag(X_ii);
-        
-        if(std::abs(X_ii_imag) > tol)  { return false; }
-        
-        colmem += N;
-        }
+      arma_debug_warn_level(1, "inv_sympd(): imaginary components on diagonal are non-zero");
       }
     
     if(is_op_diagmat<T1>::value || X.is_diagmat())
@@ -223,6 +207,8 @@ op_expmat_sym::apply_direct(Mat<typename T1::elem_type>& out, const Base<typenam
       out = X;
       
       eT* colmem = out.memptr();
+      
+      const uword N = X.n_rows;
       
       for(uword i=0; i<N; ++i)
         {

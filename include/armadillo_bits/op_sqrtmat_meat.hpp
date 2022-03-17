@@ -482,25 +482,9 @@ op_sqrtmat_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<type
     
     arma_debug_check( (X.is_square() == false), "sqrtmat_sympd(): given matrix must be square sized" );
     
-    if(is_cx<eT>::yes)
+    if((arma_config::debug) && (is_cx<eT>::yes) && (sympd_helper::check_diag_imag(X) == false))
       {
-      arma_extra_debug_print("op_sqrtmat_sympd: checking imaginary components of diagonal elements");
-      
-      const T tol = T(10000) * std::numeric_limits<T>::epsilon();  // allow some leeway
-      
-      const eT* colmem = X.memptr();
-      
-      const uword N = X.n_rows;
-      
-      for(uword i=0; i<N; ++i)
-        {
-        const eT& X_ii      = colmem[i];
-        const  T  X_ii_imag = access::tmp_imag(X_ii);
-        
-        if(std::abs(X_ii_imag) > tol)  { return false; }
-        
-        colmem += N;
-        }
+      arma_debug_warn_level(1, "sqrtmat_sympd(): imaginary components on the diagonal are non-zero");
       }
     
     if(is_op_diagmat<T1>::value || X.is_diagmat())
