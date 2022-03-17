@@ -201,7 +201,7 @@ op_log_det_sympd::apply_direct(typename T1::pod_type& out_val, const Base<typena
     {
     arma_extra_debug_print("op_log_det_sympd: checking imaginary components of diagonal elements");
     
-    const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
+    const T tol = T(10000) * std::numeric_limits<T>::epsilon();  // allow some leeway
     
     const eT* colmem = A.memptr();
     

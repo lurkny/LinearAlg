@@ -486,7 +486,7 @@ op_sqrtmat_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<type
       {
       arma_extra_debug_print("op_sqrtmat_sympd: checking imaginary components of diagonal elements");
       
-      const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
+      const T tol = T(10000) * std::numeric_limits<T>::epsilon();  // allow some leeway
       
       const eT* colmem = X.memptr();
       

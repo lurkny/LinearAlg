@@ -509,7 +509,7 @@ op_logmat_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
       {
       arma_extra_debug_print("op_logmat_sympd: checking imaginary components of diagonal elements");
       
-      const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
+      const T tol = T(10000) * std::numeric_limits<T>::epsilon();  // allow some leeway
       
       const eT* colmem = X.memptr();
       

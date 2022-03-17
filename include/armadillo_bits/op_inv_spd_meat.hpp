@@ -130,7 +130,7 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     {
     arma_extra_debug_print("op_inv_spd_full: checking imaginary components of diagonal elements");
     
-    const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
+    const T tol = T(10000) * std::numeric_limits<T>::epsilon();  // allow some leeway
     
     const eT* colmem = out.memptr();
     
@@ -267,7 +267,7 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
     {
     arma_extra_debug_print("op_inv_spd_rcond: checking imaginary components of diagonal elements");
     
-    const T tol = T(100) * std::numeric_limits<T>::epsilon();  // allow some leeway
+    const T tol = T(10000) * std::numeric_limits<T>::epsilon();  // allow some leeway
     
     const eT* colmem = out.memptr();
     
