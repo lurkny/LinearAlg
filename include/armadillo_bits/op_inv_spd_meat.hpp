@@ -105,10 +105,18 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   
   arma_debug_check( (out.is_square() == false), "inv_sympd(): given matrix must be square sized" );
   
-  if((arma_config::debug) && (auxlib::rudimentary_sym_check(out) == false))
+  if(arma_config::debug)
     {
-    if(is_cx<eT>::no )  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not symmetric"); }
-    if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
+    if(auxlib::rudimentary_sym_check(out) == false)
+      {
+      if(is_cx<eT>::no )  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not symmetric"); }
+      if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
+      }
+    else
+    if((is_cx<eT>::yes) && (sympd_helper::check_diag_imag(out) == false))
+      {
+      arma_debug_warn_level(1, "inv_sympd(): imaginary components on diagonal are non-zero");
+      }
     }
   
   const uword N = (std::min)(out.n_rows, out.n_cols);
@@ -124,11 +132,6 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     arma_extra_debug_print("op_inv_spd_full: tinymatrix optimisation failed");
     
     // fallthrough if optimisation failed
-    }
-  
-  if((arma_config::debug) && (is_cx<eT>::yes) && (sympd_helper::check_diag_imag(out) == false))
-    {
-    arma_debug_warn_level(1, "inv_sympd(): imaginary components on diagonal are non-zero");
     }
   
   if(is_op_diagmat<T1>::value || out.is_diagmat())
@@ -241,30 +244,17 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
   
   arma_debug_check( (out.is_square() == false), "inv_sympd(): given matrix must be square sized" );
   
-  if((arma_config::debug) && (auxlib::rudimentary_sym_check(out) == false))
+  if(arma_config::debug)
     {
-    if(is_cx<eT>::no )  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not symmetric"); }
-    if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
-    }
-  
-  const uword N = out.n_rows;
-  
-  if(is_cx<eT>::yes)
-    {
-    arma_extra_debug_print("op_inv_spd_rcond: checking imaginary components of diagonal elements");
-    
-    const T tol = T(10000) * std::numeric_limits<T>::epsilon();  // allow some leeway
-    
-    const eT* colmem = out.memptr();
-    
-    for(uword i=0; i<N; ++i)
+    if(auxlib::rudimentary_sym_check(out) == false)
       {
-      const eT& out_ii      = colmem[i];
-      const  T  out_ii_imag = access::tmp_imag(out_ii);
-      
-      if(std::abs(out_ii_imag) > tol)  { return false; }
-      
-      colmem += N;
+      if(is_cx<eT>::no )  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not symmetric"); }
+      if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
+      }
+    else
+    if((is_cx<eT>::yes) && (sympd_helper::check_diag_imag(out) == false))
+      {
+      arma_debug_warn_level(1, "inv_sympd(): imaginary components on diagonal are non-zero");
       }
     }
   
@@ -276,6 +266,8 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
     
     T max_abs_src_val = T(0);
     T max_abs_inv_val = T(0);
+    
+    const uword N = out.n_rows;
     
     for(uword i=0; i<N; ++i)
       {
