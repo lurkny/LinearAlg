@@ -3858,10 +3858,6 @@ and does not take into account that the underlying matrix memory could be freed
 </li>
 <br>
 <li>
-Submatrix views of sparse matrices are only useful with Armadillo 9.600 and later versions; in earlier versions they are inefficient 
-</li>
-<br>
-<li>
 Examples:
 <ul>
 <pre>
@@ -4158,15 +4154,7 @@ vec c = X.diag(-2);
 X.diag() = randu&lt;vec&gt;(5);
 X.diag() += 6;
 X.diag().ones();
-</pre>
-</ul>
-</li>
-<br>
-<li>
-<b>NOTE:</b> handling of sparse matrix diagonals has changed slightly between Armadillo 7.x and 8.x;
-to copy sparse diagonal to dense vector, use:
-<ul>
-<pre>
+
 sp_mat S = sprandu&lt;sp_mat&gt;(10,10,0.1);
 
 vec v(S.diag());  // copy sparse diagonal to dense vector
