@@ -420,8 +420,8 @@
 
 
 #if ( defined(_WIN32) || defined(_WIN64) || defined(_MSC_VER) || defined(__MINGW32__) || defined(__MINGW64__) )
-  #undef  ARMA_PRINT_EXCEPTIONS
-  #define ARMA_PRINT_EXCEPTIONS
+  #undef  ARMA_PRINT_EXCEPTIONS_INTERNAL
+  #define ARMA_PRINT_EXCEPTIONS_INTERNAL
 #endif
 
 

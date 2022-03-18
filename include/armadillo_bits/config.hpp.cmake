@@ -219,14 +219,12 @@
 #endif
 
 
-#if !defined(ARMA_PRINT_ERRORS)
-#define ARMA_PRINT_ERRORS
-//// Comment out the above line if you don't want errors and warnings printed (eg. failed decompositions)
-#endif
-
 #if !defined(ARMA_PRINT_EXCEPTIONS)
-// #define ARMA_PRINT_EXCEPTIONS
-//// see also compiler_setup.hpp
+  // #define ARMA_PRINT_EXCEPTIONS
+  #if defined(ARMA_PRINT_EXCEPTIONS_INTERNAL)
+    #undef  ARMA_PRINT_EXCEPTIONS
+    #define ARMA_PRINT_EXCEPTIONS
+  #endif
 #endif
 
 #if !defined(ARMA_PRINT_HDF5_ERRORS)
@@ -322,9 +320,10 @@
   #undef ARMA_OPTIMISE_INVEXPR
 #endif
 
-#if defined(ARMA_DONT_PRINT_ERRORS)
-  #undef ARMA_PRINT_ERRORS
-#endif
+// #if defined(ARMA_DONT_PRINT_ERRORS)
+//     #pragma message ("WARNING: support for ARMA_DONT_PRINT_ERRORS option has been removed;")
+//     #pragma message ("WARNING: use ARMA_WARN_LEVEL and ARMA_DONT_PRINT_EXCEPTIONS options instead.")
+// #endif
 
 #if defined(ARMA_DONT_PRINT_EXCEPTIONS)
   #undef ARMA_PRINT_EXCEPTIONS

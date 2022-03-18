@@ -137,7 +137,7 @@ static
 void
 arma_stop_logic_error(const T1& x)
   {
-  #if (defined(ARMA_PRINT_EXCEPTIONS) && defined(ARMA_PRINT_ERRORS))
+  #if defined(ARMA_PRINT_EXCEPTIONS)
     {
     get_cerr_stream() << "\nerror: " << x << std::endl;
     }
@@ -167,7 +167,7 @@ static
 void
 arma_stop_bounds_error(const T1& x)
   {
-  #if (defined(ARMA_PRINT_EXCEPTIONS) && defined(ARMA_PRINT_ERRORS))
+  #if defined(ARMA_PRINT_EXCEPTIONS)
     {
     get_cerr_stream() << "\nerror: " << x << std::endl;
     }
@@ -186,7 +186,7 @@ static
 void
 arma_stop_bad_alloc(const T1& x)
   {
-  #if (defined(ARMA_PRINT_EXCEPTIONS) && defined(ARMA_PRINT_ERRORS))
+  #if defined(ARMA_PRINT_EXCEPTIONS)
     {
     get_cerr_stream() << "\nerror: " << x << std::endl;
     }
@@ -209,7 +209,7 @@ static
 void
 arma_stop_runtime_error(const T1& x)
   {
-  #if (defined(ARMA_PRINT_EXCEPTIONS) && defined(ARMA_PRINT_ERRORS))
+  #if defined(ARMA_PRINT_EXCEPTIONS)
     {
     get_cerr_stream() << "\nerror: " << x << std::endl;
     }
@@ -347,15 +347,7 @@ static
 void
 arma_warn(const T1& arg1)
   {
-  #if defined(ARMA_PRINT_ERRORS)
-    {
-    get_cerr_stream() << "\nwarning: " << arg1 << '\n';
-    }
-  #else
-    {
-    arma_ignore(arg1);
-    }
-  #endif
+  get_cerr_stream() << "\nwarning: " << arg1 << '\n';
   }
 
 
@@ -366,16 +358,7 @@ static
 void
 arma_warn(const T1& arg1, const T2& arg2)
   {
-  #if defined(ARMA_PRINT_ERRORS)
-    {
-    get_cerr_stream() << "\nwarning: " << arg1 << arg2 << '\n';
-    }
-  #else
-    {
-    arma_ignore(arg1);
-    arma_ignore(arg2);
-    }
-  #endif
+  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << '\n';
   }
 
 
@@ -386,17 +369,7 @@ static
 void
 arma_warn(const T1& arg1, const T2& arg2, const T3& arg3)
   {
-  #if defined(ARMA_PRINT_ERRORS)
-    {
-    get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << '\n';
-    }
-  #else
-    {
-    arma_ignore(arg1);
-    arma_ignore(arg2);
-    arma_ignore(arg3);
-    }
-  #endif
+  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << '\n';
   }
 
 
@@ -407,18 +380,7 @@ static
 void
 arma_warn(const T1& arg1, const T2& arg2, const T3& arg3, const T4& arg4)
   {
-  #if defined(ARMA_PRINT_ERRORS)
-    {
-    get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << arg4 << '\n';
-    }
-  #else
-    {
-    arma_ignore(arg1);
-    arma_ignore(arg2);
-    arma_ignore(arg3);
-    arma_ignore(arg4);
-    }
-  #endif
+  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << arg4 << '\n';
   }
 
 
