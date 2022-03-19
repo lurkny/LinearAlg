@@ -231,14 +231,6 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  if(auxlib::crippled_lapack(out))
-    {
-    out.soft_reset();
-    out_rcond = T(0);
-    arma_stop_runtime_error("inv_sympd(): not available for complex matrices due to presence of incomplete LAPACK");
-    return false;
-    }
-  
   out       = expr.get_ref();
   out_rcond = T(0);
   
@@ -290,6 +282,23 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
       }
     
     out_rcond = T(1) / (max_abs_src_val * max_abs_inv_val);
+    
+    return true;
+    }
+  
+  if(auxlib::crippled_lapack(out))
+    {
+    Mat<eT> tmp = out;
+    
+    bool sympd_state = false;
+    
+    auxlib::inv_sympd(out, sympd_state);
+    
+    if(sympd_state == false)  { out.soft_reset(); out_rcond = T(0); return false; }
+    
+    out_rcond = auxlib::rcond(tmp);
+    
+    if(out_rcond == T(0))  { out.soft_reset(); return false; }
     
     return true;
     }
