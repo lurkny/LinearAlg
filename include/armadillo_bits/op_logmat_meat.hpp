@@ -505,7 +505,7 @@ op_logmat_sympd::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     
     arma_debug_check( (X.is_square() == false), "logmat_sympd(): given matrix must be square sized" );
     
-    if((arma_config::debug) && (is_cx<eT>::yes) && (sympd_helper::check_diag_imag(X) == false))
+    if((arma_config::debug) && (arma_config::warn_level > 0) && (is_cx<eT>::yes) && (sympd_helper::check_diag_imag(X) == false))
       {
       arma_debug_warn_level(1, "logmat_sympd(): imaginary components on diagonal are non-zero");
       }
