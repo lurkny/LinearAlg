@@ -173,7 +173,7 @@ op_inv_spd_full::apply_tiny(Mat<eT>& out)
   
   const uword N = out.n_rows;
   
-  if(arma_config::debug)
+  if((arma_config::debug) && (arma_config::warn_level > 0))
     {
     bool print_warning = false;
     
@@ -288,6 +288,8 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
   
   if(auxlib::crippled_lapack(out))
     {
+    // NOTE: this is a "better than nothing" workaround
+    
     Mat<eT> tmp = out;
     
     bool sympd_state = false;
