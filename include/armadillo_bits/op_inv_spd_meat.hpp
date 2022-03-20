@@ -288,7 +288,7 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
   
   if(auxlib::crippled_lapack(out))
     {
-    // NOTE: this is a "better than nothing" workaround
+    arma_extra_debug_print("op_inv_spd_rcond: workaround for crippled lapack");
     
     Mat<eT> tmp = out;
     
