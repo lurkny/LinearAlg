@@ -194,20 +194,21 @@ op_inv_gen_full::apply_tiny(Mat<eT>& X)
   
   const uword N = X.n_rows;
   
-  Mat<eT> out(N, N, arma_nozeros_indicator());
-  
   constexpr T det_min =        std::numeric_limits<T>::epsilon();
   constexpr T det_max = T(1) / std::numeric_limits<T>::epsilon();
   
-  const eT* Xm   =   X.memptr();
-        eT* outm = out.memptr();
+  eT* Xm = X.memptr();
   
        if(N == 0)  { return true; }
   else if(N == 1)
     {
-    if(Xm[0] == eT(0))  { return false; }
+    const eT a = Xm[0];
     
-    outm[0] = eT(1) / Xm[0];
+    if(a == eT(0))  { return false; }
+    
+    Xm[0] = eT(1) / a;
+    
+    return true;
     }
   else if(N == 2)
     {
@@ -221,13 +222,19 @@ op_inv_gen_full::apply_tiny(Mat<eT>& X)
     
     if((abs_det_val < det_min) || (abs_det_val > det_max))  { return false; }
     
-    outm[pos<0,0>::n2] =  d / det_val;
-    outm[pos<0,1>::n2] = -b / det_val;
-    outm[pos<1,0>::n2] = -c / det_val;
-    outm[pos<1,1>::n2] =  a / det_val;
+    Xm[pos<0,0>::n2] =  d / det_val;
+    Xm[pos<0,1>::n2] = -b / det_val;
+    Xm[pos<1,0>::n2] = -c / det_val;
+    Xm[pos<1,1>::n2] =  a / det_val;
+    
+    return true;
     }
   else if(N == 3)
     {
+    Mat<eT> out(3, 3, arma_nozeros_indicator());
+    
+    eT* outm = out.memptr();
+    
     const eT     det_val = op_det::apply_tiny(X);
     const  T abs_det_val = std::abs(det_val);
     
@@ -250,9 +257,15 @@ op_inv_gen_full::apply_tiny(Mat<eT>& X)
     const  T max_diff  = (is_float<T>::value) ? T(1e-4) : T(1e-10);  // empirically determined; may need tuning
     
     if(std::abs(T(1) - check_val) >= max_diff)  { return false; }
+    
+    arrayops::copy(X.memptr(), out.memptr(), out.n_elem);
     }
   else if(N == 4)
     {
+    Mat<eT> out(4, 4, arma_nozeros_indicator());
+    
+    eT* outm = out.memptr();
+    
     const eT     det_val = op_det::apply_tiny(X);
     const  T abs_det_val = std::abs(det_val);
     
@@ -283,13 +296,13 @@ op_inv_gen_full::apply_tiny(Mat<eT>& X)
     const  T max_diff  = (is_float<T>::value) ? T(1e-4) : T(1e-10);  // empirically determined; may need tuning
     
     if(std::abs(T(1) - check_val) >= max_diff)  { return false; }
+    
+    arrayops::copy(X.memptr(), out.memptr(), out.n_elem);
     }
   else
     {
     return false;
     }
-  
-  arrayops::copy(X.memptr(), out.memptr(), out.n_elem);
   
   return true;
   }
