@@ -203,9 +203,9 @@ op_inv_spd_full::apply_tiny_2x2(Mat<eT>& X)
   
   eT* Xm = X.memptr();
   
-  const T a = access::tmp_real(Xm[pos<0,0>::n2]);
-  const T c = access::tmp_real(Xm[pos<1,0>::n2]);
-  const T d = access::tmp_real(Xm[pos<1,1>::n2]);
+  T a = access::tmp_real(Xm[0]);
+  T c = access::tmp_real(Xm[1]);
+  T d = access::tmp_real(Xm[3]);
   
   const T det_val = (a*d - c*c);
   
@@ -218,10 +218,14 @@ op_inv_spd_full::apply_tiny_2x2(Mat<eT>& X)
   // NOTE: since det_min is positive, this also checks whether det_val is positive
   if((det_val < det_min) || (det_val > det_max))  { return false; }
   
-  Xm[pos<0,0>::n2] =  d / det_val;
-  Xm[pos<0,1>::n2] = -c / det_val;
-  Xm[pos<1,0>::n2] = -c / det_val;
-  Xm[pos<1,1>::n2] =  a / det_val;
+  d /= det_val;
+  c /= det_val;
+  a /= det_val;
+  
+  Xm[0] =  d;
+  Xm[1] = -c;
+  Xm[2] = -c;
+  Xm[3] =  a;
   
   return true;
   }
