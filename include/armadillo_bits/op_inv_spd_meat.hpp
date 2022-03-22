@@ -138,11 +138,20 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
       
       if(status)  { return true; }
       }
-    
-    // NOTE: currently the "tiny" option is not used,
-    // NOTE: as it's cumbersome to implement optimisations for 3x3 and 4x4 matrices;
-    // NOTE: need to ensure that all leading principal minors are positive,
-    // NOTE: which would involve a lot of dedicated code
+    else
+    if((N == 3) && tiny)
+      {
+      const bool status = op_inv_spd_full::apply_tiny_3x3(out);
+      
+      if(status)  { return true; }
+      }
+    else
+    if((N == 4) && tiny)
+      {
+      const bool status = op_inv_spd_full::apply_tiny_4x4(out);
+      
+      if(status)  { return true; }
+      }
     
     // fallthrough if optimisation failed
     }
@@ -213,6 +222,68 @@ op_inv_spd_full::apply_tiny_2x2(Mat<eT>& X)
   Xm[pos<0,1>::n2] = -c / det_val;
   Xm[pos<1,0>::n2] = -c / det_val;
   Xm[pos<1,1>::n2] =  a / det_val;
+  
+  return true;
+  }
+
+
+
+template<typename eT>
+arma_cold
+inline
+bool
+op_inv_spd_full::apply_tiny_3x3(Mat<eT>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  // NOTE: assuming matrix X is square sized
+  // NOTE: assuming matrix X is symmetric
+  // NOTE: assuming matrix X is real
+  
+  Mat<eT> Y(3, 3, arma_nozeros_indicator());
+  
+  arrayops::copy(Y.memptr(), X.memptr(), uword(3*3));
+  
+  const bool is_posdef = auxlib::chol_simple(Y);
+  
+  if(is_posdef == false)  { return false; }
+  
+  const bool status = op_inv_gen_full::apply_tiny_3x3(X);
+  
+  if(status == false)  { return false; }
+  
+  X = symmatl(X);
+  
+  return true;
+  }
+
+
+
+template<typename eT>
+arma_cold
+inline
+bool
+op_inv_spd_full::apply_tiny_4x4(Mat<eT>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  // NOTE: assuming matrix X is square sized
+  // NOTE: assuming matrix X is symmetric
+  // NOTE: assuming matrix X is real
+  
+  Mat<eT> Y(4, 4, arma_nozeros_indicator());
+  
+  arrayops::copy(Y.memptr(), X.memptr(), uword(4*4));
+  
+  const bool is_posdef = auxlib::chol_simple(Y);
+  
+  if(is_posdef == false)  { return false; }
+  
+  const bool status = op_inv_gen_full::apply_tiny_4x4(X);
+  
+  if(status == false)  { return false; }
+  
+  X = symmatl(X);
   
   return true;
   }
