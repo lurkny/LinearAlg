@@ -55,7 +55,13 @@ class op_inv_gen_full
   inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const char* caller_sig, const uword flags);
   
   template<typename eT>
-  arma_cold inline static bool apply_tiny(Mat<eT>& X);
+  arma_cold inline static bool apply_tiny_2x2(Mat<eT>& X);
+  
+  template<typename eT>
+  arma_cold inline static bool apply_tiny_3x3(Mat<eT>& X);
+  
+  template<typename eT>
+  arma_cold inline static bool apply_tiny_4x4(Mat<eT>& X);
   };
 
 

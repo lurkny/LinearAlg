@@ -119,17 +119,30 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
       }
     }
   
-  const uword N = (std::min)(out.n_rows, out.n_cols);
+  const uword N = out.n_rows;
   
-  if(tiny && (N <= 4) && (is_cx<eT>::no))
+  if(is_cx<eT>::no)
     {
-    arma_extra_debug_print("op_inv_spd_full: attempting tinymatrix optimisation");
+    if(N == 1)
+      {
+      const T a = access::tmp_real(out[0]);
+      
+      out[0] = eT(T(1) / a);
+      
+      return (a > T(0));
+      }
+    else
+    if(N == 2)
+      {
+      const bool status = op_inv_spd_full::apply_tiny_2x2(out);
+      
+      if(status)  { return true; }
+      }
     
-    const bool status = op_inv_spd_full::apply_tiny(out);
-    
-    if(status)  { return true; }
-    
-    arma_extra_debug_print("op_inv_spd_full: tinymatrix optimisation failed");
+    // NOTE: currently the "tiny" option is not used,
+    // NOTE: as it's cumbersome to implement optimisations for 3x3 and 4x4 matrices;
+    // NOTE: need to ensure that all leading principal minors are positive,
+    // NOTE: which would involve a lot of dedicated code
     
     // fallthrough if optimisation failed
     }
@@ -163,56 +176,45 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
 
 
 template<typename eT>
+arma_cold
 inline
 bool
-op_inv_spd_full::apply_tiny(Mat<eT>& out)
+op_inv_spd_full::apply_tiny_2x2(Mat<eT>& X)
   {
   arma_extra_debug_sigprint();
   
   typedef typename get_pod_type<eT>::result T;
   
-  const uword N = out.n_rows;
+  // NOTE: assuming matrix X is square sized
+  // NOTE: assuming matrix X is symmetric
+  // NOTE: assuming matrix X is real
   
-  if((arma_config::debug) && (arma_config::warn_level > 0))
-    {
-    bool print_warning = false;
-    
-    T max_diag = T(0);
-    
-    const eT* colmem = out.memptr();
-    
-    for(uword i=0; i<N; ++i)
-      {
-      const eT& out_ii      = colmem[i];
-      const  T  out_ii_real = access::tmp_real(out_ii);
-      
-      // NOTE: inv_opts::tiny is also used as a workaround for broken user software
-        
-      print_warning = (out_ii_real <= T(0)) ? true : print_warning;
-      
-      max_diag = (out_ii_real > max_diag) ? out_ii_real : max_diag;
-      
-      colmem += N;
-      }
-    
-    colmem = out.memptr();
-    
-    for(uword c=0; c < N; ++c)
-      {
-      for(uword r=(c+1); r < N; ++r)
-        {
-        const T abs_val = std::abs(colmem[r]);
-        
-        print_warning = (abs_val > max_diag) ? true : print_warning;
-        }
-      
-      colmem += N;
-      }
-    
-    if(print_warning)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not positive definite"); }
-    }
+  constexpr T det_min =        std::numeric_limits<T>::epsilon();
+  constexpr T det_max = T(1) / std::numeric_limits<T>::epsilon();
   
-  return op_inv_gen_full::apply_tiny(out);
+  eT* Xm = X.memptr();
+  
+  const T a = access::tmp_real(Xm[pos<0,0>::n2]);
+  const T c = access::tmp_real(Xm[pos<1,0>::n2]);
+  const T d = access::tmp_real(Xm[pos<1,1>::n2]);
+  
+  const T det_val = (a*d - c*c);
+  
+  // positive definite iff all leading principal minors are positive
+  // a       = first  leading principal minor (top-left 1x1 submatrix)
+  // det_val = second leading principal minor (top-left 2x2 submatrix)
+  
+  if(a <= T(0))  { return false; }
+  
+  // NOTE: since det_min is positive, this also checks whether det_val is positive
+  if((det_val < det_min) || (det_val > det_max))  { return false; }
+  
+  Xm[pos<0,0>::n2] =  d / det_val;
+  Xm[pos<0,1>::n2] = -c / det_val;
+  Xm[pos<1,0>::n2] = -c / det_val;
+  Xm[pos<1,1>::n2] =  a / det_val;
+  
+  return true;
   }
 
 

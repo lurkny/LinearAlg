@@ -40,6 +40,14 @@ class op_inv_spd_full
   {
   public:
   
+  template<const uword row, const uword col>
+  struct pos
+    {
+    static constexpr uword n2 = row + col*2;
+    static constexpr uword n3 = row + col*3;
+    static constexpr uword n4 = row + col*4;
+    };
+  
   template<typename T1>
   inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_inv_spd_full>& in);
   
@@ -47,7 +55,7 @@ class op_inv_spd_full
   inline static bool apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::elem_type,T1>& expr, const uword flags);
   
   template<typename eT>
-  inline static bool apply_tiny(Mat<eT>& out);
+  arma_cold inline static bool apply_tiny_2x2(Mat<eT>& X);
   };
 
 
