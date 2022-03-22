@@ -203,7 +203,12 @@ op_inv_gen_full::apply_tiny(Mat<eT>& X)
         eT* outm = out.memptr();
   
        if(N == 0)  { return true; }
-  else if(N == 1)  { outm[0] = eT(1) / Xm[0]; }
+  else if(N == 1)
+    {
+    if(Xm[0] == eT(0))  { return false; }
+    
+    outm[0] = eT(1) / Xm[0];
+    }
   else if(N == 2)
     {
     const eT a = Xm[pos<0,0>::n2];
