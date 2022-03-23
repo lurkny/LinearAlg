@@ -107,7 +107,9 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     {
     T rcond = T(0);
     
-    const bool status = op_inv_spd_rcond::apply_direct(out, rcond, expr);
+    Mat<eT> tmp;
+    
+    const bool status = op_inv_spd_rcond::apply_direct(tmp, rcond, expr);
     
     if((status == false) || (rcond < auxlib::epsilon_lapack(out)))
       {
@@ -115,6 +117,10 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
       
       return op_pinv::apply_sym(out, A, T(0), uword(0));
       }
+    
+    out.steal_mem(tmp);
+    
+    return true;
     }
   
   out = expr.get_ref();
