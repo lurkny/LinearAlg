@@ -63,10 +63,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
   
   Mat<eT> A(expr.get_ref());
   
-  const uword n_rows = A.n_rows;
-  const uword n_cols = A.n_cols;
-  
-  if(A.is_empty())  { out.set_size(n_cols,n_rows); return true; }
+  if(A.is_empty())  { out.set_size(A.n_cols,A.n_rows); return true; }
   
   if(is_op_diagmat<T1>::value || A.is_diagmat())
     {
@@ -78,7 +75,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
   bool do_sym   = false;
   bool do_sympd = false;
   
-  const bool is_sym_size_ok = (n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)));
+  const bool is_sym_size_ok = (A.n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)));
   const bool is_arg_default = ((tol == T(0)) && (method_id == uword(0)));
   
   if( (arma_config::optimise_sympd) && (auxlib::crippled_lapack(A) == false) && (is_arg_default || is_sym_size_ok) )
