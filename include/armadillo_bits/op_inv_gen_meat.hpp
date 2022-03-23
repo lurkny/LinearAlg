@@ -83,21 +83,38 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
+  typedef typename T1::pod_type   T;
   
   if(has_user_flags == true )  { arma_extra_debug_print("op_inv_gen_full: has_user_flags = true");  }
   if(has_user_flags == false)  { arma_extra_debug_print("op_inv_gen_full: has_user_flags = false"); }
   
   const bool tiny         = has_user_flags && bool(flags & inv_opts::flag_tiny        );
+  const bool allow_approx = has_user_flags && bool(flags & inv_opts::flag_allow_approx);
   const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
   const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
   
   arma_extra_debug_print("op_inv_gen_full: enabled flags:");
   
   if(tiny        )  { arma_extra_debug_print("tiny");         }
+  if(allow_approx)  { arma_extra_debug_print("allow_approx"); }
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
   if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
   
   arma_debug_check( (no_sympd && likely_sympd), "inv(): options 'no_sympd' and 'likely_sympd' are mutually exclusive" );
+  
+  if(allow_approx)
+    {
+    T rcond = T(0);
+    
+    const bool status = op_inv_gen_rcond::apply_direct(out, rcond, expr);
+    
+    if((status == false) || (rcond < auxlib::epsilon_lapack(out)))
+      {
+      Mat<eT> A = expr.get_ref();
+      
+      return op_pinv::apply_gen(out, A, T(0), uword(0));
+      }
+    }
   
   out = expr.get_ref();
   

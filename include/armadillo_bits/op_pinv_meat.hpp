@@ -224,7 +224,7 @@ op_pinv::apply_sym(Mat<eT>& out, const Mat<eT>& A, typename get_pod_type<eT>::re
 
 
 
-  
+
 template<typename eT>
 inline
 bool

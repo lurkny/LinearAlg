@@ -89,17 +89,33 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   if(has_user_flags == false)  { arma_extra_debug_print("op_inv_spd_full: has_user_flags = false"); }
   
   const bool tiny         = has_user_flags && bool(flags & inv_opts::flag_tiny        );
+  const bool allow_approx = has_user_flags && bool(flags & inv_opts::flag_allow_approx);
   const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
   const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
   
   arma_extra_debug_print("op_inv_spd_full: enabled flags:");
   
   if(tiny        )  { arma_extra_debug_print("tiny");         }
+  if(allow_approx)  { arma_extra_debug_print("allow_approx"); }
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
   if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
   
   if(likely_sympd)  { arma_debug_warn_level(1, "inv_sympd(): option 'likely_sympd' ignored" ); }
   if(no_sympd)      { arma_debug_warn_level(1, "inv_sympd(): option 'no_sympd' ignored" );     }
+  
+  if(allow_approx)
+    {
+    T rcond = T(0);
+    
+    const bool status = op_inv_spd_rcond::apply_direct(out, rcond, expr);
+    
+    if((status == false) || (rcond < auxlib::epsilon_lapack(out)))
+      {
+      const Mat<eT> A = expr.get_ref();
+      
+      return op_pinv::apply_sym(out, A, T(0), uword(0));
+      }
+    }
   
   out = expr.get_ref();
   
