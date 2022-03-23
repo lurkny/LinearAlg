@@ -12687,8 +12687,8 @@ mat E;
 double rcond_val;
 inv_sympd(E, rcond_val, B);
 
-A.col(1).zeros();
-A.row(1).zeros();
+B.col(1).zeros();
+B.row(1).zeros();
 mat F;
 inv_sympd(F, B, inv_opts::allow_approx);
 </pre>
