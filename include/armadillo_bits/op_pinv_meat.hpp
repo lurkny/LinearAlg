@@ -117,60 +117,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     return op_pinv::apply_sym(out, A, tol, method_id);
     }
   
-  // economical SVD decomposition 
-  Mat<eT> U;
-  Col< T> s;
-  Mat<eT> V;
-  
-  if(n_cols > n_rows)  { A = trans(A); }
-  
-  const bool status = ((method_id == uword(0)) || (method_id == uword(2))) ? auxlib::svd_dc_econ(U, s, V, A) : auxlib::svd_econ(U, s, V, A, 'b');
-  
-  if(status == false)  { return false; }
-  
-  // set tolerance to default if it hasn't been specified
-  if( (tol == T(0)) && (s.n_elem > 0) )  { tol = (std::max)(n_rows, n_cols) * s[0] * std::numeric_limits<T>::epsilon(); }
-  
-  uword count = 0;
-  
-  for(uword i=0; i < s.n_elem; ++i)  { count += (s[i] >= tol) ? uword(1) : uword(0); }
-  
-  if(count == 0)  { out.zeros(n_cols, n_rows); return true; }
-  
-  Col<T> s2(count, arma_nozeros_indicator());
-  
-  uword count2 = 0;
-  
-  for(uword i=0; i < s.n_elem; ++i)
-    {
-    const T val = s[i];
-    
-    if(val >= tol)  { s2[count2] = (val > T(0)) ? T(T(1) / val) : T(0); ++count2; }
-    }
-  
-  const Mat<eT> U_use(U.memptr(), U.n_rows, count, false);
-  const Mat<eT> V_use(V.memptr(), V.n_rows, count, false);
-  
-  Mat<eT> tmp;
-  
-  if(n_rows >= n_cols)
-    {
-    // out = ( (V.n_cols > count) ? V.cols(0,count-1) : V ) * diagmat(s2) * trans( (U.n_cols > count) ? U.cols(0,count-1) : U );
-    
-    tmp = V_use * diagmat(s2);
-    
-    out = tmp * trans(U_use);
-    }
-  else
-    {
-    // out = ( (U.n_cols > count) ? U.cols(0,count-1) : U ) * diagmat(s2) * trans( (V.n_cols > count) ? V.cols(0,count-1) : V );
-    
-    tmp = U_use * diagmat(s2);
-    
-    out = tmp * trans(V_use);
-    }
-  
-  return true;
+  return op_pinv::apply_gen(out, A, tol, method_id);
   }
 
 
@@ -271,6 +218,77 @@ op_pinv::apply_sym(Mat<eT>& out, const Mat<eT>& A, typename get_pod_type<eT>::re
   const Mat<eT> eigvec_use(eigvec.memptr(), eigvec.n_rows, count, false);
   
   out = (eigvec_use * diagmat(eigval2)).eval() * eigvec_use.t();
+  
+  return true;
+  }
+
+
+
+  
+template<typename eT>
+inline
+bool
+op_pinv::apply_gen(Mat<eT>& out, Mat<eT>& A, typename get_pod_type<eT>::result tol, const uword method_id)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename get_pod_type<eT>::result T;
+  
+  const uword n_rows = A.n_rows;
+  const uword n_cols = A.n_cols;
+  
+  // economical SVD decomposition 
+  Mat<eT> U;
+  Col< T> s;
+  Mat<eT> V;
+  
+  if(n_cols > n_rows)  { A = trans(A); }
+  
+  const bool status = ((method_id == uword(0)) || (method_id == uword(2))) ? auxlib::svd_dc_econ(U, s, V, A) : auxlib::svd_econ(U, s, V, A, 'b');
+  
+  if(status == false)  { return false; }
+  
+  // set tolerance to default if it hasn't been specified
+  if( (tol == T(0)) && (s.n_elem > 0) )  { tol = (std::max)(n_rows, n_cols) * s[0] * std::numeric_limits<T>::epsilon(); }
+  
+  uword count = 0;
+  
+  for(uword i=0; i < s.n_elem; ++i)  { count += (s[i] >= tol) ? uword(1) : uword(0); }
+  
+  if(count == 0)  { out.zeros(n_cols, n_rows); return true; }
+  
+  Col<T> s2(count, arma_nozeros_indicator());
+  
+  uword count2 = 0;
+  
+  for(uword i=0; i < s.n_elem; ++i)
+    {
+    const T val = s[i];
+    
+    if(val >= tol)  { s2[count2] = (val > T(0)) ? T(T(1) / val) : T(0); ++count2; }
+    }
+  
+  const Mat<eT> U_use(U.memptr(), U.n_rows, count, false);
+  const Mat<eT> V_use(V.memptr(), V.n_rows, count, false);
+  
+  Mat<eT> tmp;
+  
+  if(n_rows >= n_cols)
+    {
+    // out = ( (V.n_cols > count) ? V.cols(0,count-1) : V ) * diagmat(s2) * trans( (U.n_cols > count) ? U.cols(0,count-1) : U );
+    
+    tmp = V_use * diagmat(s2);
+    
+    out = tmp * trans(U_use);
+    }
+  else
+    {
+    // out = ( (U.n_cols > count) ? U.cols(0,count-1) : U ) * diagmat(s2) * trans( (V.n_cols > count) ? V.cols(0,count-1) : V );
+    
+    tmp = U_use * diagmat(s2);
+    
+    out = tmp * trans(V_use);
+    }
   
   return true;
   }
