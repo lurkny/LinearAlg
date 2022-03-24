@@ -111,7 +111,7 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     
     const bool status = op_inv_spd_rcond::apply_direct(tmp, rcond, expr);
     
-    if((status == false) || (rcond < auxlib::epsilon_lapack(out)))
+    if((status == false) || (rcond < auxlib::epsilon_lapack(tmp)))
       {
       const Mat<eT> A = expr.get_ref();
       
