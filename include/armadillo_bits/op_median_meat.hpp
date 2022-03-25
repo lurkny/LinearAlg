@@ -115,8 +115,6 @@ op_median::apply_noalias(Mat<eT>& out, const Mat<eT>& X, const uword dim, const 
   
   typedef typename get_pod_type<eT>::result T;
   
-  arma_type_check(( is_same_type<eT, T>::no ));
-  
   const uword X_n_rows = X.n_rows;
   const uword X_n_cols = X.n_cols;
   
