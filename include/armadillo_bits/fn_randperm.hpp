@@ -31,14 +31,18 @@ internal_randperm_helper(obj_type& x, const uword N, const uword N_keep)
   typedef typename obj_type::elem_type eT;
   
   // see op_sort_index_bones.hpp for the definition of arma_sort_index_packet
+  // and the associated comparison functor
   
   typedef arma_sort_index_packet<int> packet;
   
   std::vector<packet> packet_vec(N);
+  std::vector<int>    tmp(N);
+  
+  arma_rng::randi<int>::fill(&(tmp[0]), N, 0, arma_rng::randi<int>::max_val());
   
   for(uword i=0; i < N; ++i)
     {
-    packet_vec[i].val   = int(arma_rng::randi<int>());
+    packet_vec[i].val   = tmp[i];
     packet_vec[i].index = i;
     }
   
