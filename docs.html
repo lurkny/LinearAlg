@@ -10488,27 +10488,37 @@ See also:
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="rank"></a>
-<b>rank( X )</b>
-<br>
-<b>rank( X, tolerance )</b>
+<table>
+<tbody>
+<tr><td><b>r = rank( X )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
+<tr><td><b>r = rank( X, tolerance )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><td><b>rank( r, X )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td><b>rank( r, X, tolerance )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;</td></tr>
+</tbody>
+</table>
 <ul>
-<li>Return the rank of matrix <i>X</i>, based on on singular value decomposition</li>
+<li>Calculate the rank of matrix <i>X</i>, based on singular value decomposition</li>
 <br>
 <li>Any singular values less than <i>tolerance</i> are treated as zero</li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;datum::eps</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(X.n_rows,&thinsp;X.n_cols)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
 <ul>
-<li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>X</i></li>
 <li><i>max_sv</i> = maximum singular value of <i>X</i></li>
-<li><i>datum::eps</i> = difference between 1 and the least value greater than 1 that is representable</li>
+<li><i>epsilon</i> = difference between 1 and the least value greater than 1 that is representable</li>
 </ul>
 </li>
 <br>
-<li>If the decomposition fails, a <i>std::runtime_error</i> exception is thrown</li>
+<li>form 1: return the rank</li>
 <br>
-<li>
-<b>Caveat:</b> to confirm whether a matrix is singular, use <a href="#rcond">rcond()</a> or <a href="#cond">cond()</a>
+<li>form 2: store the calculated rank in <i>r</i> and return a bool indicating success</li>
+<br>
+<li>If the calculation fails:
+<ul>
+<li><i>r = rank(X)</i> thows a <i>std::runtime_error</i> exception</li>
+<li><i>rank(r,X)</i> return a bool set to <i>false</i> (exception is not thrown)</li>
+</ul>
 </li>
 <br>
 <li>
@@ -10521,7 +10531,10 @@ Examples:
 <pre>
 mat A(4, 5, fill::randu);
 
-uword r = rank(A);
+uword r1 = rank(A);
+
+uword r2;
+bool success = rank(r2,  A);
 </pre>
 </ul>
 </li>
@@ -10529,7 +10542,6 @@ uword r = rank(A);
 <li>
 See also:
 <ul>
-<li><a href="#cond">cond()</a></li>
 <li><a href="#rcond">rcond()</a></li>
 <li><a href="#svd">svd()</a></li>
 <li><a href="#orth">orth()</a></li>
