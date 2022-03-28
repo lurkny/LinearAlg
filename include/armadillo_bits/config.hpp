@@ -154,6 +154,11 @@
   //// of inv() and inv_sympd() within compound expressions
 #endif
 
+#if !defined(ARMA_CHECK_NONFINITE)
+  #define ARMA_CHECK_NONFINITE
+  //// Comment out the above line if you don't want automatic checking for nonfinite matrices
+#endif
+
 // #define ARMA_USE_HDF5_ALT
 #if defined(ARMA_USE_HDF5_ALT) && defined(ARMA_USE_WRAPPER)
   #undef  ARMA_USE_HDF5

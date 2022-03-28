@@ -65,6 +65,13 @@ struct arma_config
   #endif
   
   
+  #if defined(ARMA_CHECK_NONFINITE)
+    static constexpr bool check_nonfinite = true;
+  #else
+    static constexpr bool check_nonfinite = false;
+  #endif
+  
+  
   #if defined(ARMA_USE_LAPACK)
     static constexpr bool lapack = true;
   #else
