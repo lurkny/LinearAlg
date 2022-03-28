@@ -86,6 +86,13 @@ struct arma_config
   #endif
   
   
+  #if defined(ARMA_USE_ATLAS)
+    static constexpr bool atlas = true;
+  #else
+    static constexpr bool atlas = false;
+  #endif
+  
+  
   #if defined(ARMA_USE_NEWARP)
     static constexpr bool newarp = true;
   #else
