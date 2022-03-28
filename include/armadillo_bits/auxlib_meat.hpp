@@ -570,7 +570,7 @@ auxlib::log_det_sympd(typename get_pod_type<eT>::result& out_val, Mat<eT>& A)
   
   if(A.is_empty())  { out_val = T(0); return true; }
   
-  if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
+  if(arma_config::check_nonfinite && trimat_helper::has_nonfinite_tril(A))  { return false; }
   
   #if defined(ARMA_USE_LAPACK)
     {
@@ -1999,7 +1999,7 @@ auxlib::eig_sym(Col<eT>& eigval, Mat<eT>& A)
     
     if(A.is_empty())  { eigval.reset(); return true; }
     
-    if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
+    if(arma_config::check_nonfinite && trimat_helper::has_nonfinite_triu(A))  { return false; }
     
     if((arma_config::debug) && (auxlib::rudimentary_sym_check(A) == false))
       {
@@ -2052,7 +2052,7 @@ auxlib::eig_sym(Col<T>& eigval, Mat< std::complex<T> >& A)
     
     if(A.is_empty())  { eigval.reset(); return true; }
     
-    if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
+    if(arma_config::check_nonfinite && trimat_helper::has_nonfinite_triu(A))  { return false; }
     
     if((arma_config::debug) && (auxlib::rudimentary_sym_check(A) == false))
       {
@@ -2102,7 +2102,7 @@ auxlib::eig_sym(Col<eT>& eigval, Mat<eT>& eigvec, const Mat<eT>& X)
     {
     arma_debug_check( (X.is_square() == false), "eig_sym(): given matrix must be square sized" );
     
-    if(arma_config::check_nonfinite && X.has_nonfinite())  { return false; }
+    if(arma_config::check_nonfinite && trimat_helper::has_nonfinite_triu(X))  { return false; }
     
     eigvec = X;
     
@@ -2153,7 +2153,7 @@ auxlib::eig_sym(Col<T>& eigval, Mat< std::complex<T> >& eigvec, const Mat< std::
     
     arma_debug_check( (X.is_square() == false), "eig_sym(): given matrix must be square sized" );
     
-    if(arma_config::check_nonfinite && X.has_nonfinite())  { return false; }
+    if(arma_config::check_nonfinite && trimat_helper::has_nonfinite_triu(X))  { return false; }
     
     eigvec = X;
     
@@ -2203,7 +2203,7 @@ auxlib::eig_sym_dc(Col<eT>& eigval, Mat<eT>& eigvec, const Mat<eT>& X)
     {
     arma_debug_check( (X.is_square() == false), "eig_sym(): given matrix must be square sized" );
     
-    if(arma_config::check_nonfinite && X.has_nonfinite())  { return false; }
+    if(arma_config::check_nonfinite && trimat_helper::has_nonfinite_triu(X))  { return false; }
     
     eigvec = X;
     
@@ -2279,7 +2279,7 @@ auxlib::eig_sym_dc(Col<T>& eigval, Mat< std::complex<T> >& eigvec, const Mat< st
     
     arma_debug_check( (X.is_square() == false), "eig_sym(): given matrix must be square sized" );
     
-    if(arma_config::check_nonfinite && X.has_nonfinite())  { return false; }
+    if(arma_config::check_nonfinite && trimat_helper::has_nonfinite_triu(X))  { return false; }
     
     eigvec = X;
     
@@ -2359,7 +2359,7 @@ auxlib::chol_simple(Mat<eT>& X)
     {
     arma_debug_assert_blas_size(X);
     
-    if(arma_config::check_nonfinite && X.has_nonfinite())  { return false; }
+    if(arma_config::check_nonfinite && trimat_helper::has_nonfinite_triu(X))  { return false; }
     
     char      uplo = 'U';
     blas_int  n    = blas_int(X.n_rows);
@@ -2393,7 +2393,11 @@ auxlib::chol(Mat<eT>& X, const uword layout)
     {
     arma_debug_assert_blas_size(X);
     
-    if(arma_config::check_nonfinite && X.has_nonfinite())  { return false; }
+    if(arma_config::check_nonfinite)
+      {
+      if((layout == 0) && (trimat_helper::has_nonfinite_triu(X)))  { return false; }
+      if((layout == 1) && (trimat_helper::has_nonfinite_tril(X)))  { return false; }
+      }
     
     char      uplo = (layout == 0) ? 'U' : 'L';
     blas_int  n    = blas_int(X.n_rows);
@@ -2518,7 +2522,11 @@ auxlib::chol_pivot(Mat<eT>& X, Mat<uword>& P, const uword layout)
     
     arma_debug_assert_blas_size(X);
     
-    if(arma_config::check_nonfinite && X.has_nonfinite())  { return false; }
+    if(arma_config::check_nonfinite)
+      {
+      if((layout == 0) && (trimat_helper::has_nonfinite_triu(X)))  { return false; }
+      if((layout == 1) && (trimat_helper::has_nonfinite_tril(X)))  { return false; }
+      }
     
     char     uplo = (layout == 0) ? 'U' : 'L';
     blas_int n    = blas_int(X.n_rows);
