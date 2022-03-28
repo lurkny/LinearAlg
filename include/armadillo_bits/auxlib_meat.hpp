@@ -34,6 +34,8 @@ auxlib::inv(Mat<eT>& A)
     {
     arma_debug_assert_blas_size(A);
     
+    if((arma_config::check_nonfinite) && (A.is_finite() == false))  { return false; }
+    
     blas_int n     = blas_int(A.n_rows);
     blas_int lda   = blas_int(A.n_rows);
     blas_int lwork = (std::max)(blas_int(podarray_prealloc_n_elem::val), n);
@@ -109,6 +111,8 @@ auxlib::inv_rcond(Mat<eT>& A, typename get_pod_type<eT>::result& out_rcond)
   #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(A);
+    
+    if((arma_config::check_nonfinite) && (A.is_finite() == false))  { return false; }
     
     char     norm_id  = '1';
     blas_int n        = blas_int(A.n_rows);
