@@ -30,8 +30,6 @@ auxlib::inv(Mat<eT>& A)
   
   if(A.is_empty())  { return true; }
   
-  if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
-  
   #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(A);
@@ -108,8 +106,6 @@ auxlib::inv_rcond(Mat<eT>& A, typename get_pod_type<eT>::result& out_rcond)
   
   if(A.is_empty())  { return true; }
   
-  if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
-  
   #if defined(ARMA_USE_LAPACK)
     {
     arma_debug_assert_blas_size(A);
@@ -177,8 +173,6 @@ auxlib::inv_tr(Mat<eT>& A, const uword layout)
   #if defined(ARMA_USE_LAPACK)
     {
     if(A.is_empty())  { return true; }
-  
-    if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
     
     arma_debug_assert_blas_size(A);
     
@@ -218,8 +212,6 @@ auxlib::inv_tr_rcond(Mat<eT>& A, typename get_pod_type<eT>::result& out_rcond, c
     typedef typename get_pod_type<eT>::result T;
     
     if(A.is_empty())  { return true; }
-  
-    if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
     
     out_rcond = auxlib::rcond_trimat(A, layout);
     
@@ -260,8 +252,6 @@ auxlib::inv_sympd(Mat<eT>& A, bool& out_sympd_state)
   out_sympd_state = false;
   
   if(A.is_empty())  { return true; }
-  
-  if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
   
   #if defined(ARMA_USE_LAPACK)
     {
@@ -328,8 +318,6 @@ auxlib::inv_sympd_rcond(Mat<eT>& A, bool& out_sympd_state, eT& out_rcond, const 
   
   if(A.is_empty())  { return true; }
   
-  if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
-  
   #if defined(ARMA_USE_LAPACK)
     {
     typedef typename get_pod_type<eT>::result T;
@@ -391,8 +379,6 @@ auxlib::inv_sympd_rcond(Mat< std::complex<T> >& A, bool& out_sympd_state, T& out
   out_sympd_state = false;
   
   if(A.is_empty())  { return true; }
-  
-  if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
   
   #if defined(ARMA_CRIPPLED_LAPACK)
     {

@@ -143,8 +143,12 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   
   const uword N = out.n_rows;
   
-  if(is_cx<eT>::no)
+  if(N == 0)  { return true; }
+  
+  if((is_cx<eT>::no) && (N <= 4))
     {
+    if(arma_config::check_nonfinite && out.has_nonfinite())  { return false; }
+    
     if(N == 1)
       {
       const T a = access::tmp_real(out[0]);
@@ -186,12 +190,15 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     
     for(uword i=0; i<N; ++i)
       {
-            eT& out_ii      = colmem[i];
-      const  T  out_ii_real = access::tmp_real(out_ii);
+            eT& out_ii       = colmem[i];
+      const eT  src_val      = out_ii;
+      const  T  src_val_real = access::tmp_real(src_val);
       
-      if(out_ii_real <= T(0))  { return false; }
+      if((arma_config::check_nonfinite) && (arma_isfinite(src_val_real) == false))  { return false; }
       
-      out_ii = eT(T(1) / out_ii_real);
+      if(src_val_real <= T(0))  { return false; }
+      
+      out_ii = eT(T(1) / src_val_real);
       
       colmem += N;
       }
@@ -362,10 +369,11 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
     
     for(uword i=0; i<N; ++i)
       {
-      eT& out_ii = colmem[i];
+            eT& out_ii  = colmem[i];
+      const eT  src_val = out_ii;
+      const eT  inv_val = eT(1) / src_val;
       
-      const eT src_val = out_ii;
-      const eT inv_val = eT(1) / src_val;
+      if((arma_config::check_nonfinite) && (arma_isfinite(src_val) == false))  { return false; }
       
       if( (src_val == eT(0)) || (access::tmp_real(src_val) <= T(0)) )  { return false; }
       
@@ -384,6 +392,8 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
     
     return true;
     }
+  
+  if(arma_config::check_nonfinite && out.has_nonfinite())  { return false; }
   
   if(auxlib::crippled_lapack(out))
     {

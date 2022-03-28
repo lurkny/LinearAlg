@@ -1149,6 +1149,26 @@ inline
 bool
 arrayops::is_finite(const eT* src, const uword n_elem)
   {
+  if(n_elem <= 4)
+    {
+    bool ok = true;
+    
+    switch(n_elem)
+      {
+      case  4: ok = ok && arma_isfinite(src[3]);
+      // fallthrough
+      case  3: ok = ok && arma_isfinite(src[2]);
+      // fallthrough
+      case  2: ok = ok && arma_isfinite(src[1]);
+      // fallthrough
+      case  1: ok = ok && arma_isfinite(src[0]);
+      // fallthrough
+      default: ;
+      
+      return ok;
+      }
+    }
+  
   uword j;
   
   for(j=1; j<n_elem; j+=2)
