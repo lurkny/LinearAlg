@@ -132,8 +132,6 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   
   if((is_cx<eT>::no) && (N <= 4))
     {
-    if(arma_config::check_nonfinite && out.has_nonfinite())  { return false; }
-    
     if(N == 1)
       {
       const eT a = out[0];
@@ -178,8 +176,6 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
             eT& out_ii  = colmem[i];
       const eT  src_val = out_ii;
       
-      if((arma_config::check_nonfinite) && (arma_isfinite(src_val) == false))  { return false; }
-      
       if(src_val == eT(0))  { return false; }
       
       out_ii = eT(1) / src_val;
@@ -200,16 +196,8 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   
   if(is_triu_expr || is_tril_expr || is_triu_mat || is_tril_mat)
     {
-    if(arma_config::check_nonfinite)
-      {
-      if((is_triu_expr || is_triu_mat) && trimat_helper::has_nonfinite_triu(out))  { return false; }
-      if((is_tril_expr || is_tril_mat) && trimat_helper::has_nonfinite_tril(out))  { return false; }
-      }
-    
     return auxlib::inv_tr(out, ((is_triu_expr || is_triu_mat) ? uword(0) : uword(1)));
     }
-  
-  if(arma_config::check_nonfinite && out.has_nonfinite())  { return false; }
   
   const bool try_sympd = arma_config::optimise_sympd && ((no_sympd) ? false : (likely_sympd ? true : sympd_helper::guess_sympd(out)));
   
@@ -415,8 +403,6 @@ op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
       const eT src_val = out_ii;
       const eT inv_val = eT(1) / src_val;
       
-      if((arma_config::check_nonfinite) && (arma_isfinite(src_val) == false))  { return false; }
-      
       if(src_val == eT(0))  { return false; }
       
       out_ii = inv_val;
@@ -445,16 +431,8 @@ op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
   
   if(is_triu_expr || is_tril_expr || is_triu_mat || is_tril_mat)
     {
-    if(arma_config::check_nonfinite)
-      {
-      if((is_triu_expr || is_triu_mat) && trimat_helper::has_nonfinite_triu(out))  { return false; }
-      if((is_tril_expr || is_tril_mat) && trimat_helper::has_nonfinite_tril(out))  { return false; }
-      }
-    
     return auxlib::inv_tr_rcond(out, out_rcond, ((is_triu_expr || is_triu_mat) ? uword(0) : uword(1)));
     }
-  
-  if(arma_config::check_nonfinite && out.has_nonfinite())  { return false; }
   
   const bool try_sympd = arma_config::optimise_sympd && ((auxlib::crippled_lapack(out)) ? false : sympd_helper::guess_sympd(out));
   
