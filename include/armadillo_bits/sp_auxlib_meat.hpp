@@ -1336,10 +1336,7 @@ sp_auxlib::spsolve_refine(Mat<typename T1::elem_type>& X, typename T1::pod_type&
     
     X.zeros(A.n_cols, B.n_cols);  // set the elements to zero, as we don't trust the SuperLU spaghetti code
     
-    if(A.is_empty() || B.is_empty())
-      {
-      return true;
-      }
+    if(A.is_empty() || B.is_empty())  { return true; }
     
     if(A.n_nonzero == uword(0))  { X.soft_reset(); return false; }
     
