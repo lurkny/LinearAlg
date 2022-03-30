@@ -130,8 +130,6 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
     if(refine)        { arma_debug_warn_level(2,  "solve(): option 'refine' ignored for forced approximate solution"       ); }
     if(likely_sympd)  { arma_debug_warn_level(2,  "solve(): option 'likely_sympd' ignored for forced approximate solution" ); }
     
-    if(arma_config::check_nonfinite && A.has_nonfinite())  { arma_debug_warn_level(3, "solve(): given matrix has non-finite elements"); return false; }
-    
     return auxlib::solve_approx_svd(out, A, B_expr.get_ref());  // A is overwritten
     }
   
@@ -151,18 +149,6 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
     const bool is_tril = (no_trimat || refine || equilibrate || likely_sympd || is_band || is_triu) ? false : trimat_helper::is_tril(A);
     
     const bool try_sympd = arma_config::optimise_sympd && ((no_sympd || auxlib::crippled_lapack(A) || is_band || is_triu || is_tril) ? false : (likely_sympd ? true : sympd_helper::guess_sympd(A, uword(16))));
-    
-    if(arma_config::check_nonfinite)
-      {
-      bool has_nonfinite = false;
-      
-           if(is_triu  )  { has_nonfinite = trimat_helper::has_nonfinite_triu(A); }
-      else if(is_tril  )  { has_nonfinite = trimat_helper::has_nonfinite_tril(A); }
-      else if(try_sympd)  { has_nonfinite = trimat_helper::has_nonfinite_tril(A); }
-      else                { has_nonfinite = A.has_nonfinite();                    }
-            
-      if(has_nonfinite)  { arma_debug_warn_level(3, "solve(): given matrix has non-finite elements"); return false; }
-      }
     
     if(fast)
       {
@@ -336,8 +322,6 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
     if(refine)        { arma_debug_warn_level(2,  "solve(): option 'refine' ignored for non-square matrix"       ); }
     if(likely_sympd)  { arma_debug_warn_level(2,  "solve(): option 'likely_sympd' ignored for non-square matrix" ); }
     
-    if(arma_config::check_nonfinite && A.has_nonfinite())  { arma_debug_warn_level(3, "solve(): given matrix has non-finite elements"); return false; }
-    
     if(fast)
       {
       status = auxlib::solve_rect_fast(out, A, B_expr.get_ref());  // A is overwritten
@@ -421,16 +405,6 @@ glue_solve_tri_default::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, co
   const Mat<eT>& A     = U.M;
   
   arma_debug_check( (A.is_square() == false), "solve(): matrix marked as triangular must be square sized" );
-  
-  if(arma_config::check_nonfinite)
-    {
-    bool has_nonfinite = false;
-    
-    if(triu)  { has_nonfinite = trimat_helper::has_nonfinite_triu(A); }
-    if(tril)  { has_nonfinite = trimat_helper::has_nonfinite_tril(A); }
-          
-    if(has_nonfinite)  { arma_debug_warn_level(3, "solve(): given matrix has non-finite elements"); return false; }
-    }
   
   const uword layout   = (triu) ? uword(0) : uword(1);
   const bool  is_alias = U.is_alias(actual_out);
@@ -543,16 +517,6 @@ glue_solve_tri_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
   const Mat<eT>& A     = U.M;
   
   arma_debug_check( (A.is_square() == false), "solve(): matrix marked as triangular must be square sized" );
-  
-  if(arma_config::check_nonfinite)
-    {
-    bool has_nonfinite = false;
-    
-    if(triu)  { has_nonfinite = trimat_helper::has_nonfinite_triu(A); }
-    if(tril)  { has_nonfinite = trimat_helper::has_nonfinite_tril(A); }
-          
-    if(has_nonfinite)  { arma_debug_warn_level(3, "solve(): given matrix has non-finite elements"); return false; }
-    }
   
   const uword layout   = (triu) ? uword(0) : uword(1);
   const bool  is_alias = U.is_alias(actual_out);
