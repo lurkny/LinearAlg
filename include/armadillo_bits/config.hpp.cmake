@@ -325,6 +325,10 @@
   #undef ARMA_OPTIMISE_INVEXPR
 #endif
 
+#if defined(ARMA_DONT_CHECK_NONFINITE)
+  #undef ARMA_CHECK_NONFINITE
+#endif
+
 // #if defined(ARMA_DONT_PRINT_ERRORS)
 //     #pragma message ("WARNING: support for ARMA_DONT_PRINT_ERRORS option has been removed;")
 //     #pragma message ("WARNING: use ARMA_WARN_LEVEL and ARMA_DONT_PRINT_EXCEPTIONS options instead.")
