@@ -1178,8 +1178,6 @@ inline
 bool
 arrayops::is_finite(const std::complex<T>* src, const uword n_elem)
   {
-  arma_ignore(junk);
-  
   typedef typename std::complex<T> eT;
   
   for(uword i=0; i<n_elem; ++i)
