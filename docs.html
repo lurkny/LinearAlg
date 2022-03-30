@@ -8832,10 +8832,10 @@ Examples:
 <pre>
 mat A(5, 5, fill::randu);
 
-double val1 = det(A);
+double val1 = det(A);         // form 1
 
 double val2;
-bool success = det(val2, A);
+bool success = det(val2, A);  // form 2
 </pre>
 </ul>
 </li>
@@ -10534,10 +10534,10 @@ Examples:
 <pre>
 mat A(4, 5, fill::randu);
 
-uword r1 = rank(A);
+uword r1 = rank(A);           // form 1
 
 uword r2;
-bool success = rank(r2,  A);
+bool success = rank(r2,  A);  // form 2
 </pre>
 </ul>
 </li>
