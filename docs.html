@@ -10500,6 +10500,10 @@ See also:
 <ul>
 <li>Calculate the rank of matrix <i>X</i>, based on singular value decomposition</li>
 <br>
+<li>form 1: return the rank</li>
+<br>
+<li>form 2: store the calculated rank in <i>r</i> and return a bool indicating success</li>
+<br>
 <li>Any singular values less than <i>tolerance</i> are treated as zero</li>
 <br>
 <li>
@@ -10510,14 +10514,10 @@ The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max
 </ul>
 </li>
 <br>
-<li>form 1: return the rank</li>
-<br>
-<li>form 2: store the calculated rank in <i>r</i> and return a bool indicating success</li>
-<br>
 <li>If the calculation fails:
 <ul>
 <li><i>r = rank(X)</i> thows a <i>std::runtime_error</i> exception</li>
-<li><i>rank(r,X)</i> return a bool set to <i>false</i> (exception is not thrown)</li>
+<li><i>rank(r,X)</i> returns a bool set to <i>false</i> (exception is not thrown)</li>
 </ul>
 </li>
 <br>
