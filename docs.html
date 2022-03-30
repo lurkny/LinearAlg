@@ -8802,19 +8802,29 @@ See also:
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="det"></a>
-<b>det( A )</b>
+<table>
+<tbody>
+<tr><td><b>val = det( A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
+<tr><td><b>det( val, A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+</tbody>
+</table>
 <ul>
-<li>
-Determinant of square matrix <i>A</i>
+<li>Calculate the determinant of square matrix <i>A</i>, based on LU decomposition</li>
+<br>
+<li>form 1: return the determinant</li>
+<br>
+<li>form 2: store the calculated determinant in <i>val</i> and return a bool indicating success</li>
+<br>
+<li>If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown</li>
+<br>
+<li>If the calculation fails:
+<ul>
+<li><i>val = det(A)</i> thows a <i>std::runtime_error</i> exception</li>
+<li><i>det(val,A)</i> returns a bool set to <i>false</i> (exception is not thrown)</li>
+</ul>
 </li>
 <br>
-<li>
-If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown
-</li>
-<br>
-<li>
-<b>Caveat</b>: for large matrices <i><a href="#log_det">log_det()</a></i> and <i><a href="#log_det_sympd">log_det_sympd()</a></i> are more precise than <i>det()</i>
-</li>
+<li><b>Caveat</b>: <a href="#log_det">log_det()</a> is preferred, as it's less likely to suffer from numerical underflows/overflows</li>
 <br>
 <li>
 Examples:
@@ -8822,7 +8832,10 @@ Examples:
 <pre>
 mat A(5, 5, fill::randu);
 
-double x = det(A);
+double val1 = det(A);
+
+double val2;
+bool success = det(val2, A);
 </pre>
 </ul>
 </li>
@@ -8831,7 +8844,6 @@ double x = det(A);
 See also:
 <ul>
 <li><a href="#log_det">log_det()</a></li>
-<li><a href="#log_det_sympd">log_det_sympd()</a></li>
 <li><a href="#rcond">rcond()</a></li>
 <li><a href="http://mathworld.wolfram.com/Determinant.html">determinant in MathWorld</a></li>
 <li><a href="http://en.wikipedia.org/wiki/Determinant">determinant in Wikipedia</a></li>
@@ -9915,13 +9927,7 @@ See also:
 </tbody>
 </table>
 <ul>
-<li>
-Log determinant of square matrix <i>A</i>
-</li>
-<br>
-<li>
-If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown
-</li>
+<li>Log determinant of square matrix <i>A</i>, based on LU decomposition</li>
 <br>
 <li>form 1: store the calculated log determinant in <i>val</i> and <i>sign</i>
 <br>the determinant is equal to <i>exp(val)*sign</i>
@@ -9944,6 +9950,8 @@ if matrix <i>A</i> is real and the determinant is negative:
 </ul>
 </li>
 </ul>
+<br>
+<li>If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown</li>
 <br>
 <li>If the log determinant cannot be found:
 <ul>
@@ -9991,17 +9999,13 @@ See also:
 </tbody>
 </table>
 <ul>
-<li>
-Log determinant of symmetric positive definite matrix <i>A</i>
-</li>
-<br>
-<li>
-If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown
-</li>
+<li>Log determinant of symmetric positive definite matrix <i>A</i></li>
 <br>
 <li>form 1: store the calculated log determinant in <i>result</i> and return a bool indicating success</li>
 <br>
 <li>form 2: return the log determinant</li>
+<br>
+<li>If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown</li>
 <br>
 <li>If the log determinant cannot be found:
 <ul>
@@ -10030,7 +10034,6 @@ double result2 = log_det_sympd(B);           // form 2
 See also:
 <ul>
 <li><a href="#log_det">log_det()</a></li>
-<li><a href="#det">det()</a></li>
 <li><a href="#rcond">rcond()</a></li>
 <li><a href="http://mathworld.wolfram.com/Determinant.html">determinant in MathWorld</a></li>
 <li><a href="http://en.wikipedia.org/wiki/Determinant">determinant in Wikipedia</a></li>
