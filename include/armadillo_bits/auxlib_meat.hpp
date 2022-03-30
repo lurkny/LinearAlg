@@ -4913,6 +4913,9 @@ auxlib::solve_approx_svd(Mat<typename T1::pod_type>& out, Mat<typename T1::pod_t
     
     if(A.is_empty() || B.is_empty())  { out.zeros(A.n_cols, B.n_cols); return true; }
     
+    if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
+    if(arma_config::check_nonfinite && B.has_nonfinite())  { return false; }
+    
     arma_debug_assert_blas_size(A,B);
     
     Mat<eT> tmp( (std::max)(A.n_rows, A.n_cols), B.n_cols, arma_nozeros_indicator() );
@@ -5030,6 +5033,9 @@ auxlib::solve_approx_svd(Mat< std::complex<typename T1::pod_type> >& out, Mat< s
     arma_debug_check( (A.n_rows != B.n_rows), "solve(): number of rows in the given matrices must be the same" );
     
     if(A.is_empty() || B.is_empty())  { out.zeros(A.n_cols, B.n_cols); return true; }
+    
+    if(arma_config::check_nonfinite && A.has_nonfinite())  { return false; }
+    if(arma_config::check_nonfinite && B.has_nonfinite())  { return false; }
     
     arma_debug_assert_blas_size(A,B);
     
