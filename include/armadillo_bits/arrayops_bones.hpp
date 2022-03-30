@@ -220,7 +220,12 @@ class arrayops
   template<typename eT>
   arma_hot inline static
   bool
-  is_finite(const eT* src, const uword n_elem);
+  is_finite(const eT* src, const uword n_elem, const typename arma_not_cx<eT>::result* junk = nullptr);
+  
+  template<typename T>
+  arma_hot inline static
+  bool
+  is_finite(const std::complex<T>* src, const uword n_elem);
   
   template<typename eT>
   arma_hot inline static

@@ -1147,8 +1147,10 @@ template<typename eT>
 arma_hot
 inline
 bool
-arrayops::is_finite(const eT* src, const uword n_elem)
+arrayops::is_finite(const eT* src, const uword n_elem, const typename arma_not_cx<eT>::result* junk)
   {
+  arma_ignore(junk);
+  
   uword j;
   
   for(j=1; j<n_elem; j+=2)
@@ -1168,6 +1170,29 @@ arrayops::is_finite(const eT* src, const uword n_elem)
       {
       return false;
       }
+    }
+  
+  return true;
+  }
+
+
+
+template<typename T>
+arma_hot
+inline
+bool
+arrayops::is_finite(const std::complex<T>* src, const uword n_elem)
+  {
+  arma_ignore(junk);
+  
+  typedef typename std::complex<T> eT;
+  
+  for(uword i=0; i<n_elem; ++i)
+    {
+    const eT& val = src[i];
+    
+    if(arma_isfinite(val.real()) == false)  { return false; }
+    if(arma_isfinite(val.imag()) == false)  { return false; }
     }
   
   return true;
