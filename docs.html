@@ -9922,18 +9922,14 @@ See also:
 <a name="log_det"></a>
 <table>
 <tbody>
-<tr><td><b>log_det( val, sign, A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td><b>complex result = log_det( A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td><b>complex result = log_det( A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
+<tr><td><b>log_det( val, sign, A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
 </tbody>
 </table>
 <ul>
 <li>Log determinant of square matrix <i>A</i>, based on LU decomposition</li>
 <br>
-<li>form 1: store the calculated log determinant in <i>val</i> and <i>sign</i>
-<br>the determinant is equal to <i>exp(val)*sign</i>
-</li>
-<br>
-<li>form 2: return the complex log determinant
+<li>form 1: return the complex log determinant
 <ul>
 <li>
 if matrix <i>A</i> is real and the determinant is positive:
@@ -9951,12 +9947,16 @@ if matrix <i>A</i> is real and the determinant is negative:
 </li>
 </ul>
 <br>
+<li>form 2: store the calculated log determinant in <i>val</i> and <i>sign</i>
+<br>the determinant is equal to <i>exp(val)*sign</i>
+</li>
+<br>
 <li>If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown</li>
 <br>
 <li>If the log determinant cannot be found:
 <ul>
-<li><i>log_det(val, sign, A)</i> returns a bool set to <i>false</i> (exception is not thrown)</li>
 <li><i>result = log_det(A)</i> throws a <i>std::runtime_error</i> exception</li>
+<li><i>log_det(val, sign, A)</i> returns a bool set to <i>false</i> (exception is not thrown)</li>
 </ul>
 </li>
 <br>
@@ -9966,12 +9966,12 @@ Examples:
 <pre>
 mat A(5, 5, fill::randu);
 
+cx_double result = log_det(A);  // form 1
+
 double val;
 double sign;
 
-log_det(val, sign, A);          // form 1
-
-cx_double result = log_det(A);  // form 2
+log_det(val, sign, A);          // form 2
 </pre>
 </ul>
 </li>
@@ -9994,23 +9994,23 @@ See also:
 <a name="log_det_sympd"></a>
 <table>
 <tbody>
-<tr><td><b>log_det_sympd( result, A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td><b>result = log_det_sympd( A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td><b>result = log_det_sympd( A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
+<tr><td><b>log_det_sympd( result, A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
 </tbody>
 </table>
 <ul>
 <li>Log determinant of symmetric positive definite matrix <i>A</i></li>
 <br>
-<li>form 1: store the calculated log determinant in <i>result</i> and return a bool indicating success</li>
+<li>form 1: return the log determinant</li>
 <br>
-<li>form 2: return the log determinant</li>
+<li>form 2: store the calculated log determinant in <i>result</i> and return a bool indicating success</li>
 <br>
 <li>If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown</li>
 <br>
 <li>If the log determinant cannot be found:
 <ul>
-<li><i>log_det_sympd(result, A)</i> returns a bool set to <i>false</i> (exception is not thrown)</li>
 <li><i>result = log_det_sympd(A)</i> throws a <i>std::runtime_error</i> exception</li>
+<li><i>log_det_sympd(result, A)</i> returns a bool set to <i>false</i> (exception is not thrown)</li>
 </ul>
 </li>
 <br>
@@ -10022,10 +10022,10 @@ mat A(5, 5, fill::randu);
 
 mat B = A.t() * A;  // make symmetric matrix
 
-double result1;
-bool   success = log_det_sympd(result1, B);  // form 1
+double result1 = log_det_sympd(B);           // form 1
 
-double result2 = log_det_sympd(B);           // form 2
+double result2;
+bool   success = log_det_sympd(result2, B);  // form 2
 </pre>
 </ul>
 </li>
