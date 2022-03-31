@@ -9934,21 +9934,21 @@ See also:
 <li>
 if matrix <i>A</i> is real and the determinant is positive:
 <ul>
-<li>the real part of the result is the log determinant</li>
+<li>the real part is the log determinant</li>
 <li>the imaginary part is zero</li>
 </ul>
 </li>
 <li>
 if matrix <i>A</i> is real and the determinant is negative:
 <ul>
-<li>the real part of the result is the log of the absolute value of the determinant</li>
+<li>the real part is log abs(determinant)</li>
 <li>the imaginary part is equal to <i><a href="#constants">datum::pi</a></i></li>
 </ul>
 </li>
 </ul>
 <br>
-<li>form 2: store the calculated log determinant in <i>val</i> and <i>sign</i>
-<br>the determinant is equal to <i>exp(val)*sign</i>
+<li>form 2: store the calculated log determinant in <i>val</i> and <i>sign</i>, and return a bool indicating success;
+<br>the determinant is equal to <i>exp(val)&thinsp;&middot;&thinsp;sign</i>
 </li>
 <br>
 <li>If <i>A</i> is not square sized, a <i>std::logic_error</i> exception is thrown</li>
@@ -9966,12 +9966,12 @@ Examples:
 <pre>
 mat A(5, 5, fill::randu);
 
-cx_double result = log_det(A);  // form 1
+cx_double result = log_det(A);    // form 1
 
 double val;
 double sign;
 
-log_det(val, sign, A);          // form 2
+bool ok = log_det(val, sign, A);  // form 2
 </pre>
 </ul>
 </li>
