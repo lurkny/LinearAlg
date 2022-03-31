@@ -6576,7 +6576,7 @@ See also:
 <br>
 <li>For objects with complex elements: return <i>true</i> if for each element, each component (real and imaginary) has an absolute value &leq; <i>tolerance</i>; return <i>false</i> otherwise</li>
 <br>
-<li>The argument <i>tolerance</i> is optional; by default <i>tolerance&nbsp;=&nbsp;0</i></li>
+<li>The argument <i>tolerance</i> is optional; by default <i>tolerance&thinsp;=&thinsp;0</i></li>
 <br>
 <li>
 Examples:
@@ -10510,8 +10510,9 @@ See also:
 <li>Any singular values less than <i>tolerance</i> are treated as zero</li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is set to <i>max(X.n_rows,&thinsp;X.n_cols)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is set to <i>max_rc&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
 <ul>
+<li><i>max_rc</i> = max(X.n_rows,&thinsp;X.n_cols)</li>
 <li><i>max_sv</i> = maximum singular value of <i>X</i></li>
 <li><i>epsilon</i> = difference between 1 and the least value greater than 1 that is representable</li>
 </ul>
@@ -12801,8 +12802,9 @@ The dimension of the range space is the number of singular values of <i>A</i> no
 </li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is set to <i>max(A.n_rows,&thinsp;A.n_cols)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is set to <i>max_rc&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
 <ul>
+<li><i>mar_rc</i> = max(A.n_rows,&thinsp;A.n_cols)</li>
 <li><i>max_sv</i> = maximum singular value of <i>A</i></li>
 <li><i>epsilon</i> = difference between 1 and the least value greater than 1 that is representable</li>
 </ul>
@@ -12862,8 +12864,9 @@ The dimension of the range space is the number of singular values of <i>A</i> gr
 </li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is set to <i>max(A.n_rows,&thinsp;A.n_cols)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is set to <i>max_rc&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
 <ul>
+<li><i>mar_rc</i> = max(A.n_rows,&thinsp;A.n_cols)</li>
 <li><i>max_sv</i> = maximum singular value of <i>A</i></li>
 <li><i>epsilon</i> = difference between 1 and the least value greater than 1 that is representable</li>
 </ul>
@@ -12920,8 +12923,9 @@ The computation is based on singular value decomposition
 <br>
 <li>The <i>tolerance</i> argument is optional</li>
 <br>
-<li>The default <i>tolerance</i> is set to <i>max(A.n_rows,&thinsp;A.n_cols)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
+<li>The default <i>tolerance</i> is set to <i>max_rc&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
 <ul>
+<li><i>mar_rc</i> = max(A.n_rows,&thinsp;A.n_cols)</li>
 <li><i>max_sv</i> = maximum singular value of <i>A</i></li>
 <li><i>epsilon</i> = difference between 1 and the least value greater than 1 that is representable</li>
 </ul>
