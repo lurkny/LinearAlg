@@ -8566,21 +8566,13 @@ See also:
 <a name="cond"></a>
 <b>cond( A )</b>
 <ul>
-<li>
-Return the condition number of matrix <i>A</i> (the ratio of the largest singular value to the smallest)
-</li>
+<li>Return the condition number of matrix <i>A</i> (the ratio of the largest singular value to the smallest)</li>
 <br>
-<li>
-Large condition numbers suggest that matrix <i>A</i> is nearly singular
-</li>
+<li>The ideal condition number is close to 1; large condition numbers suggest that matrix <i>A</i> is nearly singular</li>
 <br>
-<li>
-The computation is based on singular value decomposition; if the decomposition fails, a <i>std::runtime_error</i> exception is thrown
-</li>
+<li>The computation is based on singular value decomposition; if the decomposition fails, a <i>std::runtime_error</i> exception is thrown</li>
 <br>
-<li>
-<b>Caveat:</b> <a href="#rcond">rcond()</a> is considerably faster for providing an estimate of the reciprocal condition number
-</li>
+<li><b>Caveat:</b> <a href="#rcond">rcond()</a> is considerably faster for providing an estimate of the reciprocal condition number</li>
 <br>
 <li>
 Examples:
