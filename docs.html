@@ -10510,7 +10510,7 @@ See also:
 <li>Any singular values less than <i>tolerance</i> are treated as zero</li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(X.n_rows,&thinsp;X.n_cols)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is set to <i>max(X.n_rows,&thinsp;X.n_cols)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
 <ul>
 <li><i>max_sv</i> = maximum singular value of <i>X</i></li>
 <li><i>epsilon</i> = difference between 1 and the least value greater than 1 that is representable</li>
@@ -12801,11 +12801,10 @@ The dimension of the range space is the number of singular values of <i>A</i> no
 </li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;datum::eps</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is set to <i>max(A.n_rows,&thinsp;A.n_cols)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
 <ul>
-<li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>A</i></li>
 <li><i>max_sv</i> = maximum singular value of <i>A</i></li>
-<li><i>datum::eps</i> = difference between 1 and the least value greater than 1 that is representable</li>
+<li><i>epsilon</i> = difference between 1 and the least value greater than 1 that is representable</li>
 </ul>
 </li>
 <br>
@@ -12863,11 +12862,10 @@ The dimension of the range space is the number of singular values of <i>A</i> gr
 </li>
 <br>
 <li>
-The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is <i>max(m,n)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;datum::eps</i>, where:
+The <i>tolerance</i> argument is optional; by default <i>tolerance</i> is set to <i>max(A.n_rows,&thinsp;A.n_cols)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
 <ul>
-<li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>A</i></li>
 <li><i>max_sv</i> = maximum singular value of <i>A</i></li>
-<li><i>datum::eps</i> = difference between 1 and the least value greater than 1 that is representable</li>
+<li><i>epsilon</i> = difference between 1 and the least value greater than 1 that is representable</li>
 </ul>
 </li>
 <br>
@@ -12922,11 +12920,10 @@ The computation is based on singular value decomposition
 <br>
 <li>The <i>tolerance</i> argument is optional</li>
 <br>
-<li>The default tolerance is <i>max(m,n)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;datum::eps</i>, where:
+<li>The default <i>tolerance</i> is set to <i>max(A.n_rows,&thinsp;A.n_cols)&thinsp;&middot;&thinsp;max_sv&thinsp;&middot;&thinsp;epsilon</i>, where:
 <ul>
-<li><i>m</i> = number of rows and <i>n</i> = number of columns in <i>A</i></li>
 <li><i>max_sv</i> = maximum singular value of <i>A</i></li>
-<li><i>datum::eps</i> = difference between 1 and the least value greater than 1 that is representable</li>
+<li><i>epsilon</i> = difference between 1 and the least value greater than 1 that is representable</li>
 </ul>
 </li>
 <br>
