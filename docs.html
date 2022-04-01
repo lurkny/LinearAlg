@@ -8570,7 +8570,7 @@ See also:
 <br>
 <li>The ideal condition number is close to 1; large condition numbers suggest that matrix <i>A</i> is nearly singular</li>
 <br>
-<li>The computation is based on singular value decomposition; if the decomposition fails, a <i>std::runtime_error</i> exception is thrown</li>
+<li>The computation is based on singular value decomposition</li>
 <br>
 <li><b>Caveat:</b> <a href="#rcond">rcond()</a> is considerably faster</li>
 <br>
@@ -8578,7 +8578,8 @@ See also:
 Examples:
 <ul>
 <pre>
-mat    A(5, 5, fill::randu);
+mat A(5, 5, fill::randu);
+
 double c = cond(A);
 </pre>
 </ul>
