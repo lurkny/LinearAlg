@@ -120,6 +120,44 @@ struct strip_inv< Op<T1, op_inv_spd_default> >
 
 
 template<typename T1>
+struct strip_pinv
+  {
+  typedef T1 stored_type;
+  
+  inline
+  strip_pinv(const T1& X)
+    : M(X)
+    {
+    arma_extra_debug_sigprint();
+    }
+  
+  const T1& M;
+  
+  static constexpr bool do_pinv_default = false;
+  };
+
+
+
+template<typename T1>
+struct strip_pinv< Op<T1, op_pinv_default> >
+  {
+  typedef T1 stored_type;
+  
+  inline
+  strip_pinv(const Op<T1, op_pinv_default>& X)
+    : M(X.m)
+    {
+    arma_extra_debug_sigprint();
+    }
+  
+  const T1& M;
+  
+  static constexpr bool do_pinv_default = true;
+  };
+
+
+
+template<typename T1>
 struct strip_trimat
   {
   typedef T1 stored_type;
