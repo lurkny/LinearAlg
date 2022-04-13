@@ -57,6 +57,93 @@ op_pinv_default::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
 
 
 
+// template<typename T1>
+// inline
+// bool
+// op_pinv_default::apply_solve(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B)
+//   {
+//   arma_extra_debug_sigprint();
+//   
+//   // NOTE: assuming A is square-sized
+//   // NOTE: assuming sizes of A and B are conformant for matrix multiplication
+//   
+//   typedef typename T1::pod_type T;
+//   
+//   constexpr T     tol       = T(0);
+//   constexpr uword method_id = uword(0);
+//   
+//   if(A.is_diagmat())
+//     {
+//     arma_extra_debug_print("op_pinv: detected diagonal matrix");
+//     
+//     Mat<eT> tmp;
+//     
+//     const bool status = op_pinv::apply_diag(tmp, A, tol);
+//     
+//     if(status == false)  { return false; }
+//     
+//     out = diagmat(tmp)*B;
+//     
+//     return true;
+//     }
+//   
+//   bool do_sym   = false;
+//   bool do_sympd = false;
+//   
+//   const bool is_sym_size_ok = (A.n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)));
+//   
+//   if( (arma_config::optimise_sympd) && (auxlib::crippled_lapack(A) == false) && (is_sym_size_ok) )
+//     {
+//     bool is_approx_sym   = false;
+//     bool is_approx_sympd = false;
+//     
+//     sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
+//     
+//     do_sym   = is_sym_size_ok && ((is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd));
+//     do_sympd = is_arg_default && is_approx_sympd;
+//     }
+//   
+//   if(do_sympd)
+//     {
+//     arma_extra_debug_print("op_pinv: attempting sympd optimisation");
+//     
+//     Mat<eT> tmp = A;
+//     
+//           bool is_sympd_junk   = false;
+//           T    rcond_calc      = T(0);
+//     const T    rcond_threshold = T((std::max)(uword(100), uword(A.n_rows))) * std::numeric_limits<T>::epsilon();
+//     
+//     const bool status = auxlib::solve_sympd_rcond(tmp, is_sympd_junk, rcond_calc, A, B, false);
+//     
+//     if((status) && (rcond_calc >= rcond_threshold) && (arma_isfinite(rcond_calc)))
+//       {
+//       out.steal_mem(tmp);
+//       return true;
+//       }
+//     
+//     arma_extra_debug_print("op_pinv: sympd optimisation failed");
+//     }
+//   
+//   if(do_sym)
+//     {
+//     arma_extra_debug_print("op_pinv: symmetric/hermitian optimisation");
+//     
+//     Mat<eT> tmp;
+//     
+//     const bool status = op_pinv::apply_sym(tmp, A, tol, method_id);
+//     
+//     if(status == false)  { return false; }
+//     
+//     out = tmp*B;
+//     
+//     return true;
+//     }
+//   
+//   // TODO: call auxlib::solve_approx_svd()
+//   }
+
+
+
 //
 
 
