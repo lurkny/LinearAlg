@@ -104,15 +104,18 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   
   if(allow_approx)
     {
-    T rcond = T(0);
+    op_inv_gen_state<T> inv_state;
     
     Mat<eT> tmp;
     
-    const bool status = op_inv_gen_rcond::apply_direct(tmp, rcond, expr);
+    const bool status = op_inv_gen_rcond::apply_direct(tmp, inv_state, expr);
     
-    if((status == false) || (rcond < auxlib::epsilon_lapack(tmp)))
+    if((status == false) || (inv_state.rcond < auxlib::epsilon_lapack(tmp)))
       {
       Mat<eT> A = expr.get_ref();
+      
+      if(inv_state.is_diag)  { return op_pinv::apply_diag(out, A, T(0)          ); }
+      if(inv_state.is_sym )  { return op_pinv::apply_sym (out, A, T(0), uword(0)); }
       
       return op_pinv::apply_gen(out, A, T(0), uword(0));
       }
@@ -375,15 +378,15 @@ op_inv_gen_full::apply_tiny_4x4(Mat<eT>& X)
 template<typename T1>
 inline
 bool
-op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::pod_type& out_rcond, const Base<typename T1::elem_type,T1>& expr)
+op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, op_inv_gen_state<typename T1::pod_type>& out_state, const Base<typename T1::elem_type,T1>& expr)
   {
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  out       = expr.get_ref();
-  out_rcond = T(0);
+  out             = expr.get_ref();
+  out_state.rcond = T(0);
   
   arma_debug_check( (out.is_square() == false), "inv(): given matrix must be square sized" );
   
@@ -392,6 +395,8 @@ op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
   if(is_op_diagmat<T1>::value || out.is_diagmat())
     {
     arma_extra_debug_print("op_inv_gen_rcond: detected diagonal matrix");
+    
+    out_state.is_diag = true;
     
     eT* colmem = out.memptr();
     
@@ -418,7 +423,7 @@ op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
       colmem += N;
       }
     
-    out_rcond = T(1) / (max_abs_src_val * max_abs_inv_val);
+    out_state.rcond = T(1) / (max_abs_src_val * max_abs_inv_val);
     
     return true;
     }
@@ -433,7 +438,7 @@ op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
   
   if(is_triu_expr || is_tril_expr || is_triu_mat || is_tril_mat)
     {
-    return auxlib::inv_tr_rcond(out, out_rcond, ((is_triu_expr || is_triu_mat) ? uword(0) : uword(1)));
+    return auxlib::inv_tr_rcond(out, out_state.rcond, ((is_triu_expr || is_triu_mat) ? uword(0) : uword(1)));
     }
   
   const bool try_sympd = arma_config::optimise_sympd && ((auxlib::crippled_lapack(out)) ? false : sympd_helper::guess_sympd(out));
@@ -442,11 +447,13 @@ op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
     {
     arma_extra_debug_print("op_inv_gen_rcond: attempting sympd optimisation");
     
+    out_state.is_sym = true;
+    
     Mat<eT> tmp = out;
     
     bool sympd_state = false;
     
-    const bool status = auxlib::inv_sympd_rcond(tmp, sympd_state, out_rcond, T(-1));
+    const bool status = auxlib::inv_sympd_rcond(tmp, sympd_state, out_state.rcond, T(-1));
     
     if(status)  { out.steal_mem(tmp); return true; }
     
@@ -457,7 +464,7 @@ op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
     // fallthrough if optimisation failed
     }
   
-  return auxlib::inv_rcond(out, out_rcond);
+  return auxlib::inv_rcond(out, out_state.rcond);
   }
 
 
