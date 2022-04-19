@@ -216,14 +216,14 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
         {
         arma_extra_debug_print("glue_solve_gen_full::apply(): refine + band");
         
-        status = auxlib::solve_band_refine(out, rcond, A, KL, KU, B_expr, equilibrate, allow_ugly);
+        status = auxlib::solve_band_refine(out, rcond, A, KL, KU, B_expr, equilibrate);
         }
       else
       if(try_sympd)
         {
         arma_extra_debug_print("glue_solve_gen_full::apply(): refine + try_sympd");
         
-        status = auxlib::solve_sympd_refine(out, rcond, A, B_expr.get_ref(), equilibrate, allow_ugly);  // A is overwritten
+        status = auxlib::solve_sympd_refine(out, rcond, A, B_expr.get_ref(), equilibrate);  // A is overwritten
         
         if( (status == false) && (rcond == T(0)) )
           {
@@ -233,14 +233,14 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
           arma_extra_debug_print("glue_solve_gen_full::apply(): auxlib::solve_sympd_refine() failed; retrying");
           
           A = A_expr.get_ref();
-          status = auxlib::solve_square_refine(out, rcond, A, B_expr.get_ref(), equilibrate, allow_ugly);  // A is overwritten
+          status = auxlib::solve_square_refine(out, rcond, A, B_expr.get_ref(), equilibrate);  // A is overwritten
           }
         }
       else
         {
         arma_extra_debug_print("glue_solve_gen_full::apply(): refine + dense");
         
-        status = auxlib::solve_square_refine(out, rcond, A, B_expr, equilibrate, allow_ugly);  // A is overwritten
+        status = auxlib::solve_square_refine(out, rcond, A, B_expr, equilibrate);  // A is overwritten
         }
       }
     else
@@ -253,7 +253,7 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
         {
         arma_extra_debug_print("glue_solve_gen_full::apply(): rcond + band");
         
-        status = auxlib::solve_band_rcond(out, rcond, A, KL, KU, B_expr.get_ref(), allow_ugly);
+        status = auxlib::solve_band_rcond(out, rcond, A, KL, KU, B_expr.get_ref());
         }
       else
       if(is_triu || is_tril)
@@ -263,34 +263,41 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
         
         const uword layout = (is_triu) ? uword(0) : uword(1);
         
-        status = auxlib::solve_trimat_rcond(out, rcond, A, B_expr.get_ref(), layout, allow_ugly);
+        status = auxlib::solve_trimat_rcond(out, rcond, A, B_expr.get_ref(), layout);
         }
       else
       if(try_sympd)
         {
         bool sympd_state = false;
         
-        status = auxlib::solve_sympd_rcond(out, sympd_state, rcond, A, B_expr.get_ref(), allow_ugly);  // A is overwritten
+        status = auxlib::solve_sympd_rcond(out, sympd_state, rcond, A, B_expr.get_ref());  // A is overwritten
         
         if( (status == false) && (sympd_state == false) )
           {
           arma_extra_debug_print("glue_solve_gen_full::apply(): auxlib::solve_sympd_rcond() failed; retrying");
           
           A = A_expr.get_ref();
-          status = auxlib::solve_square_rcond(out, rcond, A, B_expr.get_ref(), allow_ugly);  // A is overwritten
+          status = auxlib::solve_square_rcond(out, rcond, A, B_expr.get_ref());  // A is overwritten
           }
         }
       else
         {
-        status = auxlib::solve_square_rcond(out, rcond, A, B_expr.get_ref(), allow_ugly);  // A is overwritten
+        status = auxlib::solve_square_rcond(out, rcond, A, B_expr.get_ref());  // A is overwritten
         }
       }
     
     
     
-    if( (status == true) && (rcond > T(0)) && (rcond < auxlib::epsilon_lapack(A)) )
+    if( (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
       {
-      arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
+      if(allow_ugly)
+        {
+        arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
+        }
+      else
+        {
+        status = false;
+        }
       }
     
     
@@ -328,12 +335,19 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
       }
     else
       {
-      status = auxlib::solve_rect_rcond(out, rcond, A, B_expr.get_ref(), allow_ugly);  // A is overwritten
+      status = auxlib::solve_rect_rcond(out, rcond, A, B_expr.get_ref());  // A is overwritten
       }
 
-    if( (status == true) && (rcond > T(0)) && (rcond < auxlib::epsilon_lapack(A)) )
+    if( (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
       {
-      arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
+      if(allow_ugly)
+        {
+        arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
+        }
+      else
+        {
+        status = false;
+        }
       }
     
     if( (status == false) && (no_approx == false) )
@@ -415,11 +429,18 @@ glue_solve_tri_default::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, co
   Mat<eT>  tmp;
   Mat<eT>& out = (is_alias) ? tmp : actual_out;
   
-  status = auxlib::solve_trimat_rcond(out, rcond, A, B_expr.get_ref(), layout, allow_ugly);  // A is not modified
+  status = auxlib::solve_trimat_rcond(out, rcond, A, B_expr.get_ref(), layout);  // A is not modified
   
-  if( (status == true) && (rcond > T(0)) && (rcond < auxlib::epsilon_lapack(A)) )
+  if( (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
     {
-    arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
+    if(allow_ugly)
+      {
+      arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
+      }
+    else
+      {
+      status = false;
+      }
     }
   
   
@@ -533,12 +554,19 @@ glue_solve_tri_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
     }
   else
     {
-    status = auxlib::solve_trimat_rcond(out, rcond, A, B_expr.get_ref(), layout, allow_ugly);  // A is not modified
+    status = auxlib::solve_trimat_rcond(out, rcond, A, B_expr.get_ref(), layout);  // A is not modified
     }
   
-  if( (status == true) && (rcond > T(0)) && (rcond < auxlib::epsilon_lapack(A)) )
+  if( (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
     {
-    arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
+    if(allow_ugly)
+      {
+      arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
+      }
+    else
+      {
+      status = false;
+      }
     }
   
   
