@@ -288,16 +288,9 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
     
     
     
-    if( (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
+    if( (allow_ugly == false) && (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
       {
-      if(allow_ugly)
-        {
-        arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
-        }
-      else
-        {
-        status = false;
-        }
+      status = false;
       }
     
     
@@ -338,16 +331,9 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
       status = auxlib::solve_rect_rcond(out, rcond, A, B_expr.get_ref());  // A is overwritten
       }
 
-    if( (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
+    if( (allow_ugly == false) && (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
       {
-      if(allow_ugly)
-        {
-        arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
-        }
-      else
-        {
-        status = false;
-        }
+      status = false;
       }
     
     if( (status == false) && (no_approx == false) )
@@ -431,16 +417,9 @@ glue_solve_tri_default::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, co
   
   status = auxlib::solve_trimat_rcond(out, rcond, A, B_expr.get_ref(), layout);  // A is not modified
   
-  if( (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
+  if( (allow_ugly == false) && (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
     {
-    if(allow_ugly)
-      {
-      arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
-      }
-    else
-      {
-      status = false;
-      }
+    status = false;
     }
   
   
@@ -557,16 +536,9 @@ glue_solve_tri_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
     status = auxlib::solve_trimat_rcond(out, rcond, A, B_expr.get_ref(), layout);  // A is not modified
     }
   
-  if( (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
+  if( (allow_ugly == false) && (status == true) && (rcond > T(0)) && (rcond < std::numeric_limits<T>::epsilon()) )
     {
-    if(allow_ugly)
-      {
-      arma_debug_warn_level(2, "solve(): solution computed, but system is singular to working precision (rcond: ", rcond, ")");
-      }
-    else
-      {
-      status = false;
-      }
+    status = false;
     }
   
   
