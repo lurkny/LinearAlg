@@ -92,6 +92,7 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   const bool allow_approx = has_user_flags && bool(flags & inv_opts::flag_allow_approx);
   const bool likely_sympd = has_user_flags && bool(flags & inv_opts::flag_likely_sympd);
   const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
+  const bool no_ugly      = has_user_flags && bool(flags & inv_opts::flag_no_ugly     );
   
   arma_extra_debug_print("op_inv_gen_full: enabled flags:");
   
@@ -99,8 +100,21 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   if(allow_approx)  { arma_extra_debug_print("allow_approx"); }
   if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
   if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
+  if(no_ugly     )  { arma_extra_debug_print("no_ugly");      }
   
   arma_debug_check( (no_sympd && likely_sympd), "inv(): options 'no_sympd' and 'likely_sympd' are mutually exclusive" );
+  arma_debug_check( (no_ugly  && allow_approx), "inv(): options 'no_ugly' and 'allow_approx' are mutually exclusive"  );
+  
+  if(no_ugly)
+    {
+    op_inv_gen_state<T> inv_state;
+    
+    const bool status = op_inv_gen_rcond::apply_direct(out, inv_state, expr);
+    
+    if((status == false) || (inv_state.rcond < auxlib::epsilon_lapack(out)))  { return false; }
+    
+    return true;
+    }
   
   if(allow_approx)
     {
