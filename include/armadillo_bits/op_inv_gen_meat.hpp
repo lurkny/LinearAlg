@@ -111,7 +111,7 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     
     const bool status = op_inv_gen_rcond::apply_direct(out, inv_state, expr);
     
-    if((status == false) || (inv_state.rcond < auxlib::epsilon_lapack(out)))  { return false; }
+    if((status == false) || (inv_state.rcond < std::numeric_limits<T>::epsilon()))  { return false; }
     
     return true;
     }
@@ -124,7 +124,7 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     
     const bool status = op_inv_gen_rcond::apply_direct(tmp, inv_state, expr);
     
-    if((status == false) || (inv_state.rcond < auxlib::epsilon_lapack(tmp)))
+    if((status == false) || (inv_state.rcond < std::numeric_limits<T>::epsilon()))
       {
       Mat<eT> A = expr.get_ref();
       

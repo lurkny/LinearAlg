@@ -113,7 +113,7 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     
     const bool status = op_inv_spd_rcond::apply_direct(out, rcond, expr);
     
-    if((status == false) || (rcond < auxlib::epsilon_lapack(out)))  { return false; }
+    if((status == false) || (rcond < std::numeric_limits<T>::epsilon()))  { return false; }
     
     return true;
     }
@@ -126,7 +126,7 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     
     const bool status = op_inv_spd_rcond::apply_direct(tmp, rcond, expr);
     
-    if((status == false) || (rcond < auxlib::epsilon_lapack(tmp)))
+    if((status == false) || (rcond < std::numeric_limits<T>::epsilon()))
       {
       const Mat<eT> A = expr.get_ref();
       
