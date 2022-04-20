@@ -298,14 +298,7 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
       {
       arma_extra_debug_print("glue_solve_gen_full::apply(): solving rank deficient system");
       
-      if(rcond > T(0))
-        {
-        arma_debug_warn_level(2, "solve(): system is singular (rcond: ", rcond, "); attempting approx solution");
-        }
-      else
-        {
-        arma_debug_warn_level(2, "solve(): system is singular; attempting approx solution");
-        }
+      arma_debug_warn_level(2, "solve(): system is singular; rcond: ", rcond, "; attempting approx solution");
       
       // TODO: conditionally recreate A: have a separate state flag which indicates whether A was previously overwritten
       
@@ -340,14 +333,7 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
       {
       arma_extra_debug_print("glue_solve_gen_full::apply(): solving rank deficient system");
       
-      if(rcond > T(0))
-        {
-        arma_debug_warn_level(2, "solve(): system is singular (rcond: ", rcond, "); attempting approx solution");
-        }
-      else
-        {
-        arma_debug_warn_level(2, "solve(): system is singular; attempting approx solution");
-        }
+      arma_debug_warn_level(2, "solve(): system is singular; rcond: ", rcond, "; attempting approx solution");
       
       A = A_expr.get_ref();  // as A was overwritten
       
@@ -392,9 +378,8 @@ glue_solve_tri_default::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, co
   
   typedef typename get_pod_type<eT>::result T;
   
-  const bool triu       = bool(flags & solve_opts::flag_triu);
-  const bool tril       = bool(flags & solve_opts::flag_tril);
-  const bool allow_ugly = false;
+  const bool triu = bool(flags & solve_opts::flag_triu);
+  const bool tril = bool(flags & solve_opts::flag_tril);
   
   arma_extra_debug_print("glue_solve_tri_default::apply(): enabled flags:");
   
@@ -417,7 +402,7 @@ glue_solve_tri_default::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, co
   
   status = auxlib::solve_trimat_rcond(out, rcond, A, B_expr.get_ref(), layout);  // A is not modified
   
-  if( (allow_ugly == false) && (status == true) && (rcond < std::numeric_limits<T>::epsilon()) )
+  if( (status == true) && (rcond < std::numeric_limits<T>::epsilon()) )
     {
     status = false;
     }
@@ -427,14 +412,7 @@ glue_solve_tri_default::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, co
     {
     arma_extra_debug_print("glue_solve_tri_default::apply(): solving rank deficient system");
     
-    if(rcond > T(0))
-      {
-      arma_debug_warn_level(2, "solve(): system is singular (rcond: ", rcond, "); attempting approx solution");
-      }
-    else
-      {
-      arma_debug_warn_level(2, "solve(): system is singular; attempting approx solution");
-      }
+    arma_debug_warn_level(2, "solve(): system is singular; rcond: ", rcond, "; attempting approx solution");
     
     Mat<eT> triA = (triu) ? trimatu(A) : trimatl(A);  // trimatu() and trimatl() return the same type
     
@@ -546,14 +524,7 @@ glue_solve_tri_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
     {
     arma_extra_debug_print("glue_solve_tri_full::apply(): solving rank deficient system");
     
-    if(rcond > T(0))
-      {
-      arma_debug_warn_level(2, "solve(): system is singular (rcond: ", rcond, "); attempting approx solution");
-      }
-    else
-      {
-      arma_debug_warn_level(2, "solve(): system is singular; attempting approx solution");
-      }
+    arma_debug_warn_level(2, "solve(): system is singular; rcond: ", rcond, "; attempting approx solution");
     
     Mat<eT> triA = (triu) ? trimatu(A) : trimatl(A);  // trimatu() and trimatl() return the same type
     
