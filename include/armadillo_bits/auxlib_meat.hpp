@@ -6627,58 +6627,6 @@ auxlib::crippled_lapack(const Base<typename T1::elem_type, T1>&)
 
 
 
-template<typename T1>
-inline
-typename T1::pod_type
-auxlib::epsilon_lapack(const Base<typename T1::elem_type, T1>&)
-  {
-  typedef typename T1::pod_type T;
-  
-  return T(0.5)*std::numeric_limits<T>::epsilon();
-  
-  // value reverse engineered from dgesvx.f and dlamch.f
-  // http://www.netlib.org/lapack/explore-html/da/d21/dgesvx_8f.html
-  // http://www.netlib.org/lapack/explore-html/d5/dd4/dlamch_8f.html
-  //
-  // Fortran epsilon(X) function:
-  // https://gcc.gnu.org/onlinedocs/gfortran/EPSILON.html
-  // "EPSILON(X) returns the smallest number E of the same kind as X such that 1 + E > 1"
-  // 
-  // C++ std::numeric_limits<T>::epsilon() function:
-  // https://en.cppreference.com/w/cpp/types/numeric_limits/epsilon
-  // "the difference between 1.0 and the next value representable by the floating-point type T"
-  // 
-  // extract from dgesvx.f:
-  // 
-  //   IF( rcond.LT.dlamch( 'Epsilon' ) )
-  //     info = n + 1
-  //   RETURN
-  // 
-  // extract from dlamch.f:
-  //   
-  //   * rnd = 1.0 when rounding occurs in addition, 0.0 otherwise
-  //   ...
-  //   *  Assume rounding, not chopping. Always
-  //   
-  //   rnd = one
-  //   
-  //   IF( one.EQ.rnd ) THEN
-  //     eps = epsilon(zero) * 0.5
-  //   ELSE
-  //     eps = epsilon(zero)
-  //   END IF
-  //   ...
-  //   IF( lsame( cmach, 'E' ) ) THEN
-  //     rmach = eps
-  //   ...
-  //   END IF
-  //   ...
-  //   dlamch = rmach
-  //   RETURN
-  }
-
-
-
 template<typename eT>
 inline
 bool

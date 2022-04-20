@@ -428,9 +428,6 @@ class auxlib
   template<typename T1>
   inline static bool crippled_lapack(const Base<typename T1::elem_type, T1>&);
   
-  template<typename T1>
-  inline static typename T1::pod_type epsilon_lapack(const Base<typename T1::elem_type, T1>&);
-  
   template<typename eT>
   inline static bool rudimentary_sym_check(const Mat<eT>& X);
   
