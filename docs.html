@@ -12550,6 +12550,7 @@ Inverse of general square matrix <i>A</i>
 <tbody>
 <tr><td><code>inv_opts::tiny</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>use fast inverse algorithm for tiny matrices (with size &leq; 4x4); may produce lower quality inverses</td></tr>
 <tr><td><code>inv_opts::allow_approx</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>allow approximate inverses for rank deficient or poorly conditioned matrices; similar to pseudo-inverse</td></tr>
+<tr><td><code>inv_opts::no_ugly</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not provide inverses for poorly conditioned matrices (where <i>rcond</i> &lt; <a href="#constants">datum::eps</a>)</td></tr>
 </tbody>
 </table>
 </li>
@@ -12557,8 +12558,8 @@ Inverse of general square matrix <i>A</i>
 <li>
 The reciprocal condition number is optionally calculated and stored in <i>rcond</i>
 <ul>
-<li>rcond close to 1 suggests that <i>A</i> is well-conditioned</li>
-<li>rcond close to 0 suggests that <i>A</i> is badly conditioned</li>
+<li><i>rcond</i> close to 1 suggests that <i>A</i> is well-conditioned</li>
+<li><i>rcond</i> close to 0 suggests that <i>A</i> is badly conditioned</li>
 </ul>
 </li>
 <br>
@@ -12646,6 +12647,7 @@ Inverse of symmetric/hermitian positive definite matrix <i>A</i>
 <tbody>
 <tr><td><code>inv_opts::tiny</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>use fast inverse algorithm for tiny matrices (with size &leq; 4x4); may produce lower quality inverses</td></tr>
 <tr><td><code>inv_opts::allow_approx</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>allow approximate inverses for symmetric rank deficient or poorly conditioned matrices; similar to pseudo-inverse</td></tr>
+<tr><td><code>inv_opts::no_ugly</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>do not provide inverses for poorly conditioned matrices (where <i>rcond</i> &lt; <a href="#constants">datum::eps</a>)</td></tr>
 </tbody>
 </table>
 </li>
@@ -12653,8 +12655,8 @@ Inverse of symmetric/hermitian positive definite matrix <i>A</i>
 <li>
 The reciprocal condition number is optionally calculated and stored in <i>rcond</i>
 <ul>
-<li>rcond close to 1 suggests that <i>A</i> is well-conditioned</li>
-<li>rcond close to 0 suggests that <i>A</i> is badly conditioned</li>
+<li><i>rcond</i> close to 1 suggests that <i>A</i> is well-conditioned</li>
+<li><i>rcond</i> close to 0 suggests that <i>A</i> is badly conditioned</li>
 </ul>
 </li>
 <br>
