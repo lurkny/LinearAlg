@@ -109,26 +109,28 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   
   if(no_ugly)
     {
-    T rcond = T(0);
+    op_inv_spd_state<T> inv_state;
     
-    const bool status = op_inv_spd_rcond::apply_direct(out, rcond, expr);
+    const bool status = op_inv_spd_rcond::apply_direct(out, inv_state, expr);
     
-    if((status == false) || (rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond))  { return false; }
+    if((status == false) || (inv_state.rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(inv_state.rcond))  { return false; }
     
     return true;
     }
   
   if(allow_approx)
     {
-    T rcond = T(0);
+    op_inv_spd_state<T> inv_state;
     
     Mat<eT> tmp;
     
-    const bool status = op_inv_spd_rcond::apply_direct(tmp, rcond, expr);
+    const bool status = op_inv_spd_rcond::apply_direct(tmp, inv_state, expr);
     
-    if((status == false) || (rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond))
+    if((status == false) || (inv_state.rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(inv_state.rcond))
       {
       const Mat<eT> A = expr.get_ref();
+      
+      if(inv_state.is_diag)  { return op_pinv::apply_diag(out, A, T(0)); }
       
       return op_pinv::apply_sym(out, A, T(0), uword(0));
       }
@@ -340,15 +342,15 @@ op_inv_spd_full::apply_tiny_4x4(Mat<eT>& X)
 template<typename T1>
 inline
 bool
-op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::pod_type& out_rcond, const Base<typename T1::elem_type,T1>& expr)
+op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, op_inv_spd_state<typename T1::pod_type>& out_state, const Base<typename T1::elem_type,T1>& expr)
   {
   arma_extra_debug_sigprint();
   
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  out       = expr.get_ref();
-  out_rcond = T(0);
+  out             = expr.get_ref();
+  out_state.rcond = T(0);
   
   arma_debug_check( (out.is_square() == false), "inv_sympd(): given matrix must be square sized" );
   
@@ -369,6 +371,8 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
   if(is_op_diagmat<T1>::value || out.is_diagmat())
     {
     arma_extra_debug_print("op_inv_spd_rcond: detected diagonal matrix");
+    
+    out_state.is_diag = true;
     
     eT* colmem = out.memptr();
     
@@ -397,7 +401,7 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
       colmem += N;
       }
     
-    out_rcond = T(1) / (max_abs_src_val * max_abs_inv_val);
+    out_state.rcond = T(1) / (max_abs_src_val * max_abs_inv_val);
     
     return true;
     }
@@ -412,18 +416,18 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, typename T1::po
     
     auxlib::inv_sympd(out, sympd_state);
     
-    if(sympd_state == false)  { out.soft_reset(); out_rcond = T(0); return false; }
+    if(sympd_state == false)  { out.soft_reset(); out_state.rcond = T(0); return false; }
     
-    out_rcond = auxlib::rcond(tmp);
+    out_state.rcond = auxlib::rcond(tmp);
     
-    if(out_rcond == T(0))  { out.soft_reset(); return false; }
+    if(out_state.rcond == T(0))  { out.soft_reset(); return false; }
     
     return true;
     }
   
   bool is_sympd_junk = false;
   
-  return auxlib::inv_sympd_rcond(out, is_sympd_junk, out_rcond, T(-1));
+  return auxlib::inv_sympd_rcond(out, is_sympd_junk, out_state.rcond, T(-1));
   }
 
 
