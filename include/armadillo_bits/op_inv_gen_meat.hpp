@@ -404,8 +404,6 @@ op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, op_inv_gen_stat
   
   arma_debug_check( (out.is_square() == false), "inv(): given matrix must be square sized" );
   
-  const uword N = out.n_rows;
-  
   if(is_op_diagmat<T1>::value || out.is_diagmat())
     {
     arma_extra_debug_print("op_inv_gen_rcond: detected diagonal matrix");
@@ -416,6 +414,8 @@ op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, op_inv_gen_stat
     
     T max_abs_src_val = T(0);
     T max_abs_inv_val = T(0);
+    
+    const uword N = out.n_rows;
     
     for(uword i=0; i<N; ++i)
       {
