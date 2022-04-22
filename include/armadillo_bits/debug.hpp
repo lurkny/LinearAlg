@@ -1438,6 +1438,7 @@ arma_assert_atlas_size(const T1& A, const T2& B)
         out << "@ arma_config::optimise_sympd   = " << arma_config::optimise_sympd   << '\n';
         out << "@ arma_config::optimise_invexpr = " << arma_config::optimise_invexpr << '\n';
         out << "@ arma_config::check_nonfinite  = " << arma_config::check_nonfinite  << '\n';
+        out << "@ arma_config::zero_init        = " << arma_config::zero_init        << '\n';
         out << "@ sizeof(void*)    = " << sizeof(void*)    << '\n';
         out << "@ sizeof(int)      = " << sizeof(int)      << '\n';
         out << "@ sizeof(long)     = " << sizeof(long)     << '\n';
