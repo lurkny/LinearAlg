@@ -8197,26 +8197,34 @@ See also:
 <a name="affmul"></a>
 <b>affmul( A, B )</b>
 <ul>
-<li>Multiply matrix <i>A</i> by an augmented form of <i>B</i>, where a row with ones is appended to B;<br>for example:</li>
-<pre>
-&#9121; A<sub>00</sub> A<sub>01</sub> A<sub>02</sub> &#9124;   &#9121; B<sub>0</sub> &#9124;
-&#9122; A<sub>10</sub> A<sub>11</sub> A<sub>12</sub> &#9125; x &#9122; B<sub>1</sub> &#9125;
-&#9123; A<sub>20</sub> A<sub>21</sub> A<sub>22</sub> &#9126;   &#9123; 1<sub> </sub> &#9126;
-</pre>
+<li>Multiply matrix <i>A</i> by an automatically extended form of <i>B</i></li>
+<br>
 <li><i>A</i> is typically an affine transformation matrix</li>
 <br>
-<li>The number of columns in <i>A</i> must be equal to number of rows in the augmented form of <i>B</i> (ie. A.n_cols = B.n_rows+1)</li>
+<li><i>B</i> can be a vector or matrix, and is treated as having an additional row of ones</li>
 <br>
-<li><i>B</i> can be a vector or matrix</li>
+<li>The number of columns in <i>A</i> must be equal to number of rows in the extended form of <i>B</i> (ie. A.n_cols = B.n_rows+1)</li>
 <br>
+<li>If <i>A</i> is 3x3 and <i>B</i> is 2x1, the equivalent matrix multiplication is:</li>
+<pre>
+&#9121; C<sub>0</sub> &#9124;   &#9121; A<sub>00</sub> A<sub>01</sub> A<sub>02</sub> &#9124;   &#9121; B<sub>0</sub> &#9124;
+&#9122; C<sub>1</sub> &#9125; = &#9122; A<sub>10</sub> A<sub>11</sub> A<sub>12</sub> &#9125; x &#9122; B<sub>1</sub> &#9125;
+&#9123; C<sub>2</sub> &#9126;   &#9123; A<sub>20</sub> A<sub>21</sub> A<sub>22</sub> &#9126;   &#9123; 1<sub> </sub> &#9126;
+</pre>
+<li>If <i>A</i> is 2x3 and <i>B</i> is 2x1, the equivalent matrix multiplication is:</li>
+<pre>
+&#9121; C<sub>0</sub> &#9124;   &#9121; A<sub>00</sub> A<sub>01</sub> A<sub>02</sub> &#9124;   &#9121; B<sub>0</sub> &#9124;
+&#9123; C<sub>1</sub> &#9126; = &#9123; A<sub>10</sub> A<sub>11</sub> A<sub>12</sub> &#9126; x &#9122; B<sub>1</sub> &#9125;
+                          &#9123; 1<sub> </sub> &#9126;
+</pre>
 <li>
 Examples:
 <ul>
 <pre>
-mat44 A; A.randu();
-vec3  B; B.randu();
+mat A(2, 3, fill::randu);
+vec B(2,    fill::randu);
 
-vec4  C = affmul(A,B);
+vec C = affmul(A,B);
 </pre>
 </ul>
 </li>
