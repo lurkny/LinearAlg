@@ -818,8 +818,8 @@ This is generally faster than dynamic memory allocation, but the size of the mat
 For convenience, there are several pre-defined typedefs for each matrix type
 (where the types are: <i>umat</i>, <i>imat</i>, <i>fmat</i>, <i>mat</i>, <i>cx_fmat</i>, <i>cx_mat</i>).
 The typedefs specify a square matrix size, ranging from 2x2 to 9x9.
-The typedefs were defined by simply appending a two digit form of the size to the matrix type
--- for example, <i>mat33</i> is equivalent to <i>mat::fixed&lt;3,3&gt;</i>,
+The typedefs were defined by appending a two digit form of the size to the matrix type;
+examples: <i>mat33</i> is equivalent to <i>mat::fixed&lt;3,3&gt;</i>,
 while <i>cx_mat44</i> is equivalent to <i>cx_mat::fixed&lt;4,4&gt;</i>.
 </ul>
 <br>
@@ -1161,8 +1161,8 @@ This is generally faster than dynamic memory allocation, but the size of the vec
 For convenience, there are several pre-defined typedefs for each vector type
 (where the types are: <i>uvec</i>, <i>ivec</i>, <i>fvec</i>, <i>vec</i>, <i>cx_fvec</i>, <i>cx_vec</i> as well as the corresponding <i>colvec</i> versions).
 The pre-defined typedefs specify vector sizes ranging from 2 to 9.
-The typedefs were defined by simply appending a single digit form of the size to the vector type
--- for example, <i>vec3</i> is equivalent to <i>vec::fixed&lt;3&gt;</i>,
+The typedefs were defined by appending a single digit form of the size to the vector type;
+examples: <i>vec3</i> is equivalent to <i>vec::fixed&lt;3&gt;</i>,
 while <i>cx_vec4</i> is equivalent to <i>cx_vec::fixed&lt;4&gt;</i>.
 </ul>
 <br>
@@ -1426,8 +1426,8 @@ This is generally faster than dynamic memory allocation, but the size of the vec
 For convenience, there are several pre-defined typedefs for each vector type
 (where the types are: <i>urowvec</i>, <i>irowvec</i>, <i>frowvec</i>, <i>rowvec</i>, <i>cx_frowvec</i>, <i>cx_rowvec</i>).
 The pre-defined typedefs specify vector sizes ranging from 2 to 9.
-The typedefs were defined by simply appending a single digit form of the size to the vector type
--- for example, <i>rowvec3</i> is equivalent to <i>rowvec::fixed&lt;3&gt;</i>,
+The typedefs were defined by appending a single digit form of the size to the vector type;
+examples: <i>rowvec3</i> is equivalent to <i>rowvec::fixed&lt;3&gt;</i>,
 while <i>cx_rowvec4</i> is equivalent to <i>cx_rowvec::fixed&lt;4&gt;</i>.
 </ul>
 <br>
