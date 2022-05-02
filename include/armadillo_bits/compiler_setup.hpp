@@ -27,7 +27,7 @@
 #undef arma_inline
 #undef arma_noinline
 #undef arma_ignore
-#undef arma_constexpr_if
+#undef arma_if_constexpr
 
 #define arma_hot
 #define arma_cold
@@ -39,7 +39,7 @@
 #define arma_inline            inline
 #define arma_noinline
 #define arma_ignore(variable)  ((void)(variable))
-#define arma_constexpr_if      if
+#define arma_if_constexpr      if
 
 #undef arma_fortran_sans_prefix_B
 #undef arma_fortran_with_prefix_B
@@ -146,8 +146,8 @@
 
 
 #if (defined(ARMA_HAVE_CXX17) && defined(__cpp_if_constexpr))
-  #undef  arma_constexpr_if
-  #define arma_constexpr_if if constexpr
+  #undef  arma_if_constexpr
+  #define arma_if_constexpr if constexpr
 #endif
 
 
