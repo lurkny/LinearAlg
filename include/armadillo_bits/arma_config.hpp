@@ -209,10 +209,10 @@ struct arma_config
   #endif
   
   
-  #if (!defined(ARMA_DONT_ZERO_INIT))
-    static constexpr bool zero_init = true;
-  #else
+  #if defined(ARMA_DONT_ZERO_INIT)
     static constexpr bool zero_init = false;
+  #else
+    static constexpr bool zero_init = true;
   #endif
   
   
