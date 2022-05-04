@@ -31,9 +31,89 @@ op_cond::apply(const Base<typename T1::elem_type, T1>& X)
   typedef typename T1::elem_type eT;
   typedef typename T1::pod_type   T;
   
-  // TODO: implement speed up for symmetric matrices, similar to op_pinv::apply_sym()
-  
   Mat<eT> A(X.get_ref());
+  
+  if(A.n_elem == 0)  { return T(0); }
+  
+  // TODO: specialised handling of diagonal matrices
+  
+  //const bool is_sym_size_ok = (A.n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)));
+  const bool is_sym_size_ok = true;  // TODO
+  
+  bool do_sym = false;
+  
+  if(is_sym_size_ok)
+    {
+    bool is_approx_sym   = false;
+    bool is_approx_sympd = false;
+    
+    sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
+    
+    do_sym = (is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd);
+    }
+  
+  if(do_sym)
+    {
+    arma_extra_debug_print("op_cond: symmetric/hermitian optimisation");
+    
+    return op_cond::apply_sym(A);
+    }
+  
+  return op_cond::apply_gen(A);
+  }
+
+
+
+template<typename eT>
+inline
+typename get_pod_type<eT>::result
+op_cond::apply_sym(Mat<eT>& A)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename get_pod_type<eT>::result T;
+  
+  Col<T> eigval;
+  
+  const bool status = auxlib::eig_sym(eigval, A);
+  
+  if(status == false)
+    {
+    arma_debug_warn_level(3, "cond(): failed");
+    
+    return Datum<T>::nan;
+    }
+  
+  if(eigval.n_elem == 0)  { return T(0); }
+  
+  const T* eigval_mem = eigval.memptr();
+  
+  T abs_min = std::abs(eigval_mem[0]);
+  T abs_max = abs_min;
+  
+  for(uword i=1; i < eigval.n_elem; ++i)
+    {
+    const T abs_val = std::abs(eigval_mem[i]);
+    
+    abs_min = (abs_val < abs_min) ? abs_val : abs_min;
+    abs_max = (abs_val > abs_max) ? abs_val : abs_max;
+    }
+  
+  if((abs_min == T(0)) || (abs_max == T(0)))  { return Datum<T>::inf; }
+  
+  return T(abs_max / abs_min);
+  }
+
+
+
+template<typename eT>
+inline
+typename get_pod_type<eT>::result
+op_cond::apply_gen(Mat<eT>& A)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename get_pod_type<eT>::result T;
   
   Col<T> S;
   
@@ -41,12 +121,19 @@ op_cond::apply(const Base<typename T1::elem_type, T1>& X)
   
   if(status == false)
     {
-    arma_debug_warn_level(3, "cond(): svd failed");
+    arma_debug_warn_level(3, "cond(): failed");
     
     return Datum<T>::nan;
     }
   
-  return (S.n_elem > 0) ? T( max(S) / min(S) ) : T(0);
+  if(S.n_elem == 0)  { return T(0); }
+  
+  const T S_max = S[0];
+  const T S_min = S[S.n_elem-1];
+  
+  if((S_max == T(0)) || (S_min == T(0)))  { return Datum<T>::inf; }
+  
+  return T(S_max / S_min);
   }
 
 
