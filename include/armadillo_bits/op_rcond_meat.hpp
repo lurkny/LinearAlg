@@ -16,7 +16,7 @@
 // ------------------------------------------------------------------------
 
 
-//! \addtogroup op_cond
+//! \addtogroup op_rcond
 //! @{
 
 
@@ -24,37 +24,7 @@
 template<typename T1>
 inline
 typename T1::pod_type
-op_cond::cond(const Base<typename T1::elem_type, T1>& X)
-  {
-  arma_extra_debug_sigprint();
-  
-  typedef typename T1::elem_type eT;
-  typedef typename T1::pod_type   T;
-  
-  // TODO: implement speed up for symmetric matrices, similar to op_pinv::apply_sym()
-  
-  Mat<eT> A(X.get_ref());
-  
-  Col<T> S;
-  
-  const bool status = auxlib::svd_dc(S, A);
-  
-  if(status == false)
-    {
-    arma_debug_warn_level(3, "cond(): svd failed");
-    
-    return Datum<T>::nan;
-    }
-  
-  return (S.n_elem > 0) ? T( max(S) / min(S) ) : T(0);
-  }
-
-
-
-template<typename T1>
-inline
-typename T1::pod_type
-op_cond::rcond(const Base<typename T1::elem_type, T1>& X)
+op_rcond::apply(const Base<typename T1::elem_type, T1>& X)
   {
   arma_extra_debug_sigprint();
   
@@ -82,7 +52,7 @@ op_cond::rcond(const Base<typename T1::elem_type, T1>& X)
   
   if(is_op_diagmat<T1>::value || A.is_diagmat())
     {
-    arma_extra_debug_print("op_cond::rcond(): detected diagonal matrix");
+    arma_extra_debug_print("op_rcond::apply(): detected diagonal matrix");
     
     const eT*   colmem = A.memptr();
     const uword N      = A.n_rows;
@@ -123,7 +93,7 @@ op_cond::rcond(const Base<typename T1::elem_type, T1>& X)
   
   if(try_sympd)
     {
-    arma_extra_debug_print("op_cond::rcond(): attempting sympd optimisation");
+    arma_extra_debug_print("op_rcond::apply(): attempting sympd optimisation");
     
     bool calc_ok = false;
     
@@ -131,7 +101,7 @@ op_cond::rcond(const Base<typename T1::elem_type, T1>& X)
     
     if(calc_ok)  { return out_val; }
     
-    arma_extra_debug_print("op_cond::rcond(): sympd optimisation failed");
+    arma_extra_debug_print("op_rcond::apply(): sympd optimisation failed");
     
     // auxlib::rcond_sympd() may have failed because A isn't really sympd
     // restore A, as auxlib::rcond_sympd() may have destroyed it

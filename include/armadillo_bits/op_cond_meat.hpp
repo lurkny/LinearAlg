@@ -24,7 +24,7 @@
 template<typename T1>
 inline
 typename T1::pod_type
-op_cond::cond(const Base<typename T1::elem_type, T1>& X)
+op_cond::apply(const Base<typename T1::elem_type, T1>& X)
   {
   arma_extra_debug_sigprint();
   
@@ -47,99 +47,6 @@ op_cond::cond(const Base<typename T1::elem_type, T1>& X)
     }
   
   return (S.n_elem > 0) ? T( max(S) / min(S) ) : T(0);
-  }
-
-
-
-template<typename T1>
-inline
-typename T1::pod_type
-op_cond::rcond(const Base<typename T1::elem_type, T1>& X)
-  {
-  arma_extra_debug_sigprint();
-  
-  typedef typename T1::elem_type eT;
-  typedef typename T1::pod_type   T;
-  
-  if(strip_trimat<T1>::do_trimat)
-    {
-    const strip_trimat<T1> S(X.get_ref());
-    
-    const quasi_unwrap<typename strip_trimat<T1>::stored_type> U(S.M);
-    
-    arma_debug_check( (U.M.is_square() == false), "rcond(): matrix must be square sized" );
-    
-    const uword layout = (S.do_triu) ? uword(0) : uword(1);
-    
-    return auxlib::rcond_trimat(U.M, layout);
-    }
-  
-  Mat<eT> A = X.get_ref();
-  
-  arma_debug_check( (A.is_square() == false), "rcond(): matrix must be square sized" );
-  
-  if(A.is_empty()) { return Datum<T>::inf; }
-  
-  if(is_op_diagmat<T1>::value || A.is_diagmat())
-    {
-    arma_extra_debug_print("op_cond::rcond(): detected diagonal matrix");
-    
-    const eT*   colmem = A.memptr();
-    const uword N      = A.n_rows;
-    
-    T max_abs_src_val = T(0);
-    T max_abs_inv_val = T(0);
-    
-    for(uword i=0; i<N; ++i)
-      {
-      const eT src_val = colmem[i];
-      const eT inv_val = eT(1) / src_val;
-      
-      if(src_val == eT(0))  { return T(0); }
-      
-      const T abs_src_val = std::abs(src_val);
-      const T abs_inv_val = std::abs(inv_val);
-      
-      max_abs_src_val = (abs_src_val > max_abs_src_val) ? abs_src_val : max_abs_src_val;
-      max_abs_inv_val = (abs_inv_val > max_abs_inv_val) ? abs_inv_val : max_abs_inv_val;
-      
-      colmem += N;
-      }
-    
-    return T(1) / (max_abs_src_val * max_abs_inv_val);
-    }
-  
-  const bool is_triu =                     trimat_helper::is_triu(A);
-  const bool is_tril = (is_triu) ? false : trimat_helper::is_tril(A);
-  
-  if(is_triu || is_tril)
-    {
-    const uword layout = (is_triu) ? uword(0) : uword(1);
-    
-    return auxlib::rcond_trimat(A, layout);
-    }
-  
-  const bool try_sympd = arma_config::optimise_sympd && (auxlib::crippled_lapack(A) ? false : sympd_helper::guess_sympd(A));
-  
-  if(try_sympd)
-    {
-    arma_extra_debug_print("op_cond::rcond(): attempting sympd optimisation");
-    
-    bool calc_ok = false;
-    
-    const T out_val = auxlib::rcond_sympd(A, calc_ok);
-    
-    if(calc_ok)  { return out_val; }
-    
-    arma_extra_debug_print("op_cond::rcond(): sympd optimisation failed");
-    
-    // auxlib::rcond_sympd() may have failed because A isn't really sympd
-    // restore A, as auxlib::rcond_sympd() may have destroyed it
-    A = X.get_ref();
-    // fallthrough to the next return statement
-    }
-  
-  return auxlib::rcond(A);
   }
 
 

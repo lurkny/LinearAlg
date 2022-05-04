@@ -25,8 +25,7 @@ class op_cond
   {
   public:
   
-  template<typename T1> static inline typename T1::pod_type  cond(const Base<typename T1::elem_type, T1>& X);
-  template<typename T1> static inline typename T1::pod_type rcond(const Base<typename T1::elem_type, T1>& X);
+  template<typename T1> static inline typename T1::pod_type apply(const Base<typename T1::elem_type, T1>& X);
   };
 
 
