@@ -35,7 +35,12 @@ op_cond::apply(const Base<typename T1::elem_type, T1>& X)
   
   if(A.n_elem == 0)  { return T(0); }
   
-  // TODO: specialised handling of diagonal matrices
+  if(is_op_diagmat<T1>::value || A.is_diagmat())
+    {
+    arma_extra_debug_print("op_cond::apply(): detected diagonal matrix");
+    
+    return op_cond::apply_diag(A);
+    }
   
   //const bool is_sym_size_ok = (A.n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)));
   const bool is_sym_size_ok = true;  // TODO
@@ -60,6 +65,42 @@ op_cond::apply(const Base<typename T1::elem_type, T1>& X)
     }
   
   return op_cond::apply_gen(A);
+  }
+
+
+
+template<typename eT>
+inline
+typename get_pod_type<eT>::result
+op_cond::apply_diag(const Mat<eT>& A)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename get_pod_type<eT>::result T;
+  
+  const uword N = (std::min)(A.n_rows, A.n_cols);
+  
+  T abs_min = Datum<T>::inf;
+  T abs_max = T(0);
+  
+  for(uword i=0; i < N; ++i)
+    {
+    const T abs_val = std::abs(A.at(i,i));
+    
+    if(arma_isnan(abs_val))
+      {
+      arma_debug_warn_level(3, "cond(): failed");
+      
+      return Datum<T>::nan;
+      }
+    
+    abs_min = (abs_val < abs_min) ? abs_val : abs_min;
+    abs_max = (abs_val > abs_max) ? abs_val : abs_max;
+    }
+  
+  if((abs_min == T(0)) || (abs_max == T(0)))  { return Datum<T>::inf; }
+  
+  return T(abs_max / abs_min);
   }
 
 
