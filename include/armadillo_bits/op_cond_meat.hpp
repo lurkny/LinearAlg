@@ -42,20 +42,12 @@ op_cond::apply(const Base<typename T1::elem_type, T1>& X)
     return op_cond::apply_diag(A);
     }
   
-  //const bool is_sym_size_ok = (A.n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)));
-  const bool is_sym_size_ok = true;  // TODO
+  bool is_approx_sym   = false;
+  bool is_approx_sympd = false;
   
-  bool do_sym = false;
+  sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
   
-  if(is_sym_size_ok)
-    {
-    bool is_approx_sym   = false;
-    bool is_approx_sympd = false;
-    
-    sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
-    
-    do_sym = (is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd);
-    }
+  const bool do_sym = (is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd);
   
   if(do_sym)
     {
