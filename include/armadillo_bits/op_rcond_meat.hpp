@@ -57,26 +57,22 @@ op_rcond::apply(const Base<typename T1::elem_type, T1>& X)
     const eT*   colmem = A.memptr();
     const uword N      = A.n_rows;
     
-    T max_abs_src_val = T(0);
-    T max_abs_inv_val = T(0);
+    T abs_min = Datum<T>::inf;
+    T abs_max = T(0);
     
     for(uword i=0; i<N; ++i)
       {
-      const eT src_val = colmem[i];
-      const eT inv_val = eT(1) / src_val;
+      const T abs_val = std::abs(colmem[i]);
       
-      if(src_val == eT(0))  { return T(0); }
-      
-      const T abs_src_val = std::abs(src_val);
-      const T abs_inv_val = std::abs(inv_val);
-      
-      max_abs_src_val = (abs_src_val > max_abs_src_val) ? abs_src_val : max_abs_src_val;
-      max_abs_inv_val = (abs_inv_val > max_abs_inv_val) ? abs_inv_val : max_abs_inv_val;
+      abs_min = (abs_val < abs_min) ? abs_val : abs_min;
+      abs_max = (abs_val > abs_max) ? abs_val : abs_max;
       
       colmem += N;
       }
     
-    return T(1) / (max_abs_src_val * max_abs_inv_val);
+    if((abs_min == T(0)) || (abs_max == T(0)))  { return T(0); }
+    
+    return T(abs_min / abs_max);
     }
   
   const bool is_triu =                     trimat_helper::is_triu(A);
