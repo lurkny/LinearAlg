@@ -324,17 +324,17 @@ if(APPLE)
   
 else()
   
-  include(ARMA_FindMKL)
-  include(ARMA_FindOpenBLAS)
-  include(ARMA_FindATLAS)     # TODO: remove support for ATLAS in next major version
-  include(ARMA_FindBLAS)
-  include(ARMA_FindLAPACK)
-  
   if(ALLOW_FLEXIBLAS_LINUX AND (${CMAKE_SYSTEM_NAME} MATCHES "Linux"))
     include(ARMA_FindFlexiBLAS)
   else()
     set(FlexiBLAS_FOUND false)
   endif()
+  
+  include(ARMA_FindMKL)
+  include(ARMA_FindOpenBLAS)
+  include(ARMA_FindATLAS)     # TODO: remove support for ATLAS in next major version
+  include(ARMA_FindBLAS)
+  include(ARMA_FindLAPACK)
   
   message(STATUS "FlexiBLAS_FOUND = ${FlexiBLAS_FOUND}" )
   message(STATUS "      MKL_FOUND = ${MKL_FOUND}"       )
