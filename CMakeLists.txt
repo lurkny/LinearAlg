@@ -332,8 +332,11 @@ else()
   
   if(ALLOW_FLEXIBLAS_LINUX AND (${CMAKE_SYSTEM_NAME} MATCHES "Linux"))
     include(ARMA_FindFlexiBLAS)
+  else()
+    set(FlexiBLAS_FOUND false)
   endif()
   
+  message(STATUS "FlexiBLAS_FOUND = ${FlexiBLAS_FOUND}" )
   message(STATUS "      MKL_FOUND = ${MKL_FOUND}"       )
   message(STATUS " OpenBLAS_FOUND = ${OpenBLAS_FOUND}"  )
   message(STATUS "    ATLAS_FOUND = ${ATLAS_FOUND}"     )
@@ -341,8 +344,6 @@ else()
   message(STATUS "   LAPACK_FOUND = ${LAPACK_FOUND}"    )
   
   if(FlexiBLAS_FOUND)
-    
-    message(STATUS "FlexiBLAS_FOUND = ${FlexiBLAS_FOUND}" )
     
     set(ARMA_USE_LAPACK true)
     set(ARMA_USE_BLAS   true)
