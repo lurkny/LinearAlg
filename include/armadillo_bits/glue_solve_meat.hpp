@@ -387,6 +387,7 @@ glue_solve_tri_default::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, co
   
   status = auxlib::solve_trimat_rcond(out, rcond, A, B_expr.get_ref(), layout);  // A is not modified
   
+  
   if( (status == true) && ( (rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond) ) )
     {
     status = false;
@@ -499,8 +500,8 @@ glue_solve_tri_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
     status = auxlib::solve_trimat_rcond(out, rcond, A, B_expr.get_ref(), layout);  // A is not modified
     }
   
-  if( (allow_ugly == false) && (status == true) && (fast == false) && ( (rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond) ) )
-if( (status == true) && (fast == false) && (allow_ugly == false) && ((rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond)) )
+  
+  if( (status == true) && (fast == false) && (allow_ugly == false) && ((rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond)) )
     {
     status = false;
     }
