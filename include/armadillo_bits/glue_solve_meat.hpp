@@ -195,6 +195,7 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
           arma_extra_debug_print("glue_solve_gen_full::apply(): auxlib::solve_sympd_fast() failed; retrying");
           
           A = A_expr.get_ref();
+          
           status = auxlib::solve_square_fast(out, A, B_expr.get_ref());  // A is overwritten
           }
         }
@@ -233,6 +234,7 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
           arma_extra_debug_print("glue_solve_gen_full::apply(): auxlib::solve_sympd_refine() failed; retrying");
           
           A = A_expr.get_ref();
+          
           status = auxlib::solve_square_refine(out, rcond, A, B_expr.get_ref(), equilibrate);  // A is overwritten
           }
         }
@@ -277,6 +279,7 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
           arma_extra_debug_print("glue_solve_gen_full::apply(): auxlib::solve_sympd_rcond() failed; retrying");
           
           A = A_expr.get_ref();
+          
           status = auxlib::solve_square_rcond(out, rcond, A, B_expr.get_ref());  // A is overwritten
           }
         }
@@ -305,7 +308,7 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
     }
   
   
-  if( (allow_ugly == false) && (status == true) && (fast == false) && ( (rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond) ) )
+  if( (status == true) && (fast == false) && (allow_ugly == false) && ((rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond)) )
     {
     status = false;
     }
@@ -497,6 +500,7 @@ glue_solve_tri_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
     }
   
   if( (allow_ugly == false) && (status == true) && (fast == false) && ( (rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond) ) )
+if( (status == true) && (fast == false) && (allow_ugly == false) && ((rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond)) )
     {
     status = false;
     }
