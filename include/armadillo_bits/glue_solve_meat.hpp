@@ -285,27 +285,6 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
         status = auxlib::solve_square_rcond(out, rcond, A, B_expr.get_ref());  // A is overwritten
         }
       }
-    
-    
-    
-    if( (allow_ugly == false) && (status == true) && (fast == false) && ( (rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond) ) )
-      {
-      status = false;
-      }
-    
-    
-    if( (status == false) && (no_approx == false) )
-      {
-      arma_extra_debug_print("glue_solve_gen_full::apply(): solving rank deficient system");
-      
-      arma_debug_warn_level(2, "solve(): system is singular; rcond: ", rcond, "; attempting approx solution");
-      
-      // TODO: conditionally recreate A: have a separate state flag which indicates whether A was previously overwritten
-      
-      A = A_expr.get_ref();  // as A may have been overwritten
-      
-      status = auxlib::solve_approx_svd(out, A, B_expr.get_ref());  // A is overwritten
-      }
     }
   else
     {
@@ -323,24 +302,27 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
       {
       status = auxlib::solve_rect_rcond(out, rcond, A, B_expr.get_ref());  // A is overwritten
       }
-
-    if( (allow_ugly == false) && (status == true) && (fast == false) && ( (rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond) ) )
-      {
-      status = false;
-      }
-    
-    if( (status == false) && (no_approx == false) )
-      {
-      arma_extra_debug_print("glue_solve_gen_full::apply(): solving rank deficient system");
-      
-      arma_debug_warn_level(2, "solve(): system is singular; rcond: ", rcond, "; attempting approx solution");
-      
-      A = A_expr.get_ref();  // as A was overwritten
-      
-      status = auxlib::solve_approx_svd(out, A, B_expr.get_ref());  // A is overwritten
-      }
     }
   
+  
+  if( (allow_ugly == false) && (status == true) && (fast == false) && ( (rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(rcond) ) )
+    {
+    status = false;
+    }
+  
+  
+  if( (status == false) && (no_approx == false) )
+    {
+    arma_extra_debug_print("glue_solve_gen_full::apply(): solving rank deficient system");
+    
+    arma_debug_warn_level(2, "solve(): system is singular; rcond: ", rcond, "; attempting approx solution");
+    
+    // TODO: conditionally recreate A: have a separate state flag which indicates whether A was previously overwritten
+    
+    A = A_expr.get_ref();  // as A may have been overwritten
+    
+    status = auxlib::solve_approx_svd(out, A, B_expr.get_ref());  // A is overwritten
+    }
   
   return status;
   }
