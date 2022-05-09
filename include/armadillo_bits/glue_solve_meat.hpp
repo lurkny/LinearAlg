@@ -80,7 +80,7 @@ glue_solve_gen_full::apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,gl
 template<typename eT, typename T1, typename T2, const bool has_user_flags>
 inline
 bool
-glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<eT,T2>& B_expr, const uword flags)
+glue_solve_gen_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const Base<eT,T2>& B_expr, const uword flags)
   {
   arma_extra_debug_sigprint();
   
@@ -116,6 +116,8 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
   arma_debug_check( (fast     && equilibrate ), "solve(): options 'fast' and 'equilibrate' are mutually exclusive"      );
   arma_debug_check( (fast     && refine      ), "solve(): options 'fast' and 'refine' are mutually exclusive"           );
   arma_debug_check( (no_sympd && likely_sympd), "solve(): options 'no_sympd' and 'likely_sympd' are mutually exclusive" );
+  
+  Mat<eT> out;
   
   Mat<eT> A = A_expr.get_ref();
   
@@ -326,6 +328,8 @@ glue_solve_gen_full::apply(Mat<eT>& out, const Base<eT,T1>& A_expr, const Base<e
     
     status = auxlib::solve_approx_svd(out, A, B_expr.get_ref());  // A is overwritten
     }
+  
+  actual_out.steal_mem(out);
   
   return status;
   }
