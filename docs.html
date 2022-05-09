@@ -12228,6 +12228,8 @@ mat X = A.t()*A;
 mat R1 = chol(X);
 mat R2 = chol(X, "lower");
 
+mat R3;
+bool ok = chol(R3, X);
 
  mat R;
 uvec P_vec;
