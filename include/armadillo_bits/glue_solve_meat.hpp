@@ -399,13 +399,21 @@ glue_solve_tri_default::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, co
   if(triu)  { arma_extra_debug_print("triu"); }
   if(tril)  { arma_extra_debug_print("tril"); }
   
-  const quasi_unwrap<T1> U(A_expr.get_ref());
-  const Mat<eT>& A     = U.M;
+  const quasi_unwrap<T1> UA(A_expr.get_ref());
+  const Mat<eT>& A     = UA.M;
   
   arma_debug_check( (A.is_square() == false), "solve(): matrix marked as triangular must be square sized" );
   
-  const uword layout   = (triu) ? uword(0) : uword(1);
-  const bool  is_alias = U.is_alias(actual_out);
+  const uword layout = (triu) ? uword(0) : uword(1);
+  
+  bool is_alias = true;
+  
+  if(is_Mat<T2>::value)
+    {
+    const quasi_unwrap<T2> UB(B_expr.get_ref());
+    
+    is_alias = UA.is_alias(actual_out) || UB.is_alias(actual_out);
+    }
   
   T    rcond  = T(0);
   bool status = false;
@@ -512,13 +520,21 @@ glue_solve_tri_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
   
   if(likely_sympd)  { arma_debug_warn_level(2, "solve(): option 'likely_sympd' ignored for triangular matrix"); }
   
-  const quasi_unwrap<T1> U(A_expr.get_ref());
-  const Mat<eT>& A     = U.M;
+  const quasi_unwrap<T1> UA(A_expr.get_ref());
+  const Mat<eT>& A     = UA.M;
   
   arma_debug_check( (A.is_square() == false), "solve(): matrix marked as triangular must be square sized" );
   
-  const uword layout   = (triu) ? uword(0) : uword(1);
-  const bool  is_alias = U.is_alias(actual_out);
+  const uword layout = (triu) ? uword(0) : uword(1);
+  
+  bool is_alias = true;
+  
+  if(is_Mat<T2>::value)
+    {
+    const quasi_unwrap<T2> UB(B_expr.get_ref());
+    
+    is_alias = UA.is_alias(actual_out) || UB.is_alias(actual_out);
+    }
   
   T    rcond  = T(0);
   bool status = false;
