@@ -1424,7 +1424,7 @@ sp_auxlib::spsolve_refine(Mat<typename T1::elem_type>& X, typename T1::pod_type&
     else
     if( (info == int(A.n_cols+1)) && (user_opts.allow_ugly) )
       {
-      arma_debug_warn_level(2, "spsolve(): system is singular to working precision; rcond: ", rcond);
+      arma_debug_warn_level(2, "spsolve(): system is singular to working precision (rcond: ", rcond, ")");
       status = true;
       }
     else
@@ -2293,7 +2293,7 @@ sp_auxlib::run_aupd_shiftinvert
     
     if( (x_rcond < std::numeric_limits<eT>::epsilon()) || arma_isnan(x_rcond) )
       {
-      arma_debug_warn_level(2, "matrix is singular to working precision; rcond: ", x_rcond);
+      arma_debug_warn_level(2, "matrix is singular to working precision (rcond: ", x_rcond, ")");
       info = blas_int(-1);
       return;
       }
