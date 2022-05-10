@@ -146,7 +146,7 @@ glue_solve_gen_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
     const quasi_unwrap<T1> UA( A_expr.get_ref() );
     const quasi_unwrap<T2> UB( B_expr.get_ref() );
     
-    if( (UA.is_alias(actual_out) == false) && (UB.is_alias(actual_out) == false) )  { is_alias = false; }
+    is_alias = UA.is_alias(actual_out) || UB.is_alias(actual_out);
     }
   
   Mat<eT>  tmp;
