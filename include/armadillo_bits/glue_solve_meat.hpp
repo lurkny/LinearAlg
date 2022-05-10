@@ -117,19 +117,6 @@ glue_solve_gen_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
   arma_debug_check( (fast     && refine      ), "solve(): options 'fast' and 'refine' are mutually exclusive"           );
   arma_debug_check( (no_sympd && likely_sympd), "solve(): options 'no_sympd' and 'likely_sympd' are mutually exclusive" );
   
-  bool is_alias = true;
-  
-  if(is_Mat<T1>::value && is_Mat<T2>::value)
-    {
-    const quasi_unwrap<T1> UA( A_expr.get_ref() );
-    const quasi_unwrap<T2> UB( B_expr.get_ref() );
-    
-    if( (UA.is_alias(actual_out) == false) && (UB.is_alias(actual_out) == false) )  { is_alias = false; }
-    }
-  
-  Mat<eT>  tmp;
-  Mat<eT>& out = (is_alias) ? tmp : actual_out;
-  
   Mat<eT> A = A_expr.get_ref();
   
   if(force_approx)
@@ -143,8 +130,21 @@ glue_solve_gen_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
     if(refine)        { arma_debug_warn_level(2,  "solve(): option 'refine' ignored for forced approximate solution"       ); }
     if(likely_sympd)  { arma_debug_warn_level(2,  "solve(): option 'likely_sympd' ignored for forced approximate solution" ); }
     
-    return auxlib::solve_approx_svd(out, A, B_expr.get_ref());  // A is overwritten
+    return auxlib::solve_approx_svd(actual_out, A, B_expr.get_ref());  // A is overwritten
     }
+  
+  bool is_alias = true;
+  
+  if(is_Mat<T1>::value && is_Mat<T2>::value)
+    {
+    const quasi_unwrap<T1> UA( A_expr.get_ref() );
+    const quasi_unwrap<T2> UB( B_expr.get_ref() );
+    
+    if( (UA.is_alias(actual_out) == false) && (UB.is_alias(actual_out) == false) )  { is_alias = false; }
+    }
+  
+  Mat<eT>  tmp;
+  Mat<eT>& out = (is_alias) ? tmp : actual_out;
   
   T    rcond  = T(0);
   bool status = false;
