@@ -100,18 +100,21 @@ glue_solve_gen_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
   const bool no_trimat    = has_user_flags && bool(flags & solve_opts::flag_no_trimat   );
   const bool force_approx = has_user_flags && bool(flags & solve_opts::flag_force_approx);
   
-  arma_extra_debug_print("glue_solve_gen_full::apply(): enabled flags:");
-  
-  if(fast        )  { arma_extra_debug_print("fast");         }
-  if(equilibrate )  { arma_extra_debug_print("equilibrate");  }
-  if(no_approx   )  { arma_extra_debug_print("no_approx");    }
-  if(no_band     )  { arma_extra_debug_print("no_band");      }
-  if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
-  if(allow_ugly  )  { arma_extra_debug_print("allow_ugly");   }
-  if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
-  if(refine      )  { arma_extra_debug_print("refine");       }
-  if(no_trimat   )  { arma_extra_debug_print("no_trimat");    }
-  if(force_approx)  { arma_extra_debug_print("force_approx"); }
+  if(has_user_flags)
+    {
+    arma_extra_debug_print("glue_solve_gen_full::apply(): enabled flags:");
+    
+    if(fast        )  { arma_extra_debug_print("fast");         }
+    if(equilibrate )  { arma_extra_debug_print("equilibrate");  }
+    if(no_approx   )  { arma_extra_debug_print("no_approx");    }
+    if(no_band     )  { arma_extra_debug_print("no_band");      }
+    if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
+    if(allow_ugly  )  { arma_extra_debug_print("allow_ugly");   }
+    if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
+    if(refine      )  { arma_extra_debug_print("refine");       }
+    if(no_trimat   )  { arma_extra_debug_print("no_trimat");    }
+    if(force_approx)  { arma_extra_debug_print("force_approx"); }
+    }
   
   arma_debug_check( (fast     && equilibrate ), "solve(): options 'fast' and 'equilibrate' are mutually exclusive"      );
   arma_debug_check( (fast     && refine      ), "solve(): options 'fast' and 'refine' are mutually exclusive"           );
@@ -133,7 +136,7 @@ glue_solve_gen_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
     return auxlib::solve_approx_svd(actual_out, A, B_expr.get_ref());  // A is overwritten
     }
   
-  bool is_alias = true;
+  bool is_alias = (no_approx) ? false : true;
   
   if(is_Mat<T1>::value && is_Mat<T2>::value)
     {
