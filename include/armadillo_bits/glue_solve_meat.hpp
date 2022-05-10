@@ -337,7 +337,14 @@ glue_solve_gen_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
     {
     arma_extra_debug_print("glue_solve_gen_full::apply(): solving rank deficient system");
     
-    arma_debug_warn_level(2, "solve(): system is singular; rcond: ", rcond, "; attempting approx solution");
+    if(rcond == T(0))
+      {
+      arma_debug_warn_level(2, "solve(): system is singular; attempting approx solution");
+      }
+    else
+      {
+      arma_debug_warn_level(2, "solve(): system is singular (rcond: ", rcond, "); attempting approx solution");
+      }
     
     // TODO: conditionally recreate A: have a separate state flag which indicates whether A was previously overwritten
     
@@ -419,7 +426,14 @@ glue_solve_tri_default::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, co
     {
     arma_extra_debug_print("glue_solve_tri_default::apply(): solving rank deficient system");
     
-    arma_debug_warn_level(2, "solve(): system is singular; rcond: ", rcond, "; attempting approx solution");
+    if(rcond == T(0))
+      {
+      arma_debug_warn_level(2, "solve(): system is singular; attempting approx solution");
+      }
+    else
+      {
+      arma_debug_warn_level(2, "solve(): system is singular (rcond: ", rcond, "); attempting approx solution");
+      }
     
     Mat<eT> triA = (triu) ? trimatu(A) : trimatl(A);  // trimatu() and trimatl() return the same type
     
@@ -532,7 +546,14 @@ glue_solve_tri_full::apply(Mat<eT>& actual_out, const Base<eT,T1>& A_expr, const
     {
     arma_extra_debug_print("glue_solve_tri_full::apply(): solving rank deficient system");
     
-    arma_debug_warn_level(2, "solve(): system is singular; rcond: ", rcond, "; attempting approx solution");
+    if(rcond == T(0))
+      {
+      arma_debug_warn_level(2, "solve(): system is singular; attempting approx solution");
+      }
+    else
+      {
+      arma_debug_warn_level(2, "solve(): system is singular (rcond: ", rcond, "); attempting approx solution");
+      }
     
     Mat<eT> triA = (triu) ? trimatu(A) : trimatl(A);  // trimatu() and trimatl() return the same type
     
