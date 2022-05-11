@@ -94,16 +94,19 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
   const bool no_ugly      = has_user_flags && bool(flags & inv_opts::flag_no_ugly     );
   
-  arma_extra_debug_print("op_inv_gen_full: enabled flags:");
-  
-  if(tiny        )  { arma_extra_debug_print("tiny");         }
-  if(allow_approx)  { arma_extra_debug_print("allow_approx"); }
-  if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
-  if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
-  if(no_ugly     )  { arma_extra_debug_print("no_ugly");      }
-  
-  arma_debug_check( (no_sympd && likely_sympd), "inv(): options 'no_sympd' and 'likely_sympd' are mutually exclusive" );
-  arma_debug_check( (no_ugly  && allow_approx), "inv(): options 'no_ugly' and 'allow_approx' are mutually exclusive"  );
+  if(has_user_flags)
+    {
+    arma_extra_debug_print("op_inv_gen_full: enabled flags:");
+    
+    if(tiny        )  { arma_extra_debug_print("tiny");         }
+    if(allow_approx)  { arma_extra_debug_print("allow_approx"); }
+    if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
+    if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
+    if(no_ugly     )  { arma_extra_debug_print("no_ugly");      }
+    
+    arma_debug_check( (no_sympd && likely_sympd), "inv(): options 'no_sympd' and 'likely_sympd' are mutually exclusive" );
+    arma_debug_check( (no_ugly  && allow_approx), "inv(): options 'no_ugly' and 'allow_approx' are mutually exclusive"  );
+    }
   
   if(no_ugly)
     {
