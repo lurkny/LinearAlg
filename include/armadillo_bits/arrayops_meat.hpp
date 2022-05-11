@@ -679,7 +679,7 @@ arrayops::inplace_set(eT* dest, const eT val, const uword n_elem)
     }
   else
     {
-    if( (n_elem <= 9) && (is_cx<eT>::no) )
+    if( (n_elem <= 8) && (is_cx<eT>::no) )
       {
       arrayops::inplace_set_small(dest, val, n_elem);
       }
@@ -753,8 +753,6 @@ arrayops::inplace_set_small(eT* dest, const eT val, const uword n_elem)
   {
   switch(n_elem)
     {
-    case  9: dest[ 8] = val;
-    // fallthrough
     case  8: dest[ 7] = val;
     // fallthrough
     case  7: dest[ 6] = val;
