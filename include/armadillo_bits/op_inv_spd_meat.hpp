@@ -94,18 +94,21 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   const bool no_sympd     = has_user_flags && bool(flags & inv_opts::flag_no_sympd    );
   const bool no_ugly      = has_user_flags && bool(flags & inv_opts::flag_no_ugly     );
   
-  arma_extra_debug_print("op_inv_spd_full: enabled flags:");
-  
-  if(tiny        )  { arma_extra_debug_print("tiny");         }
-  if(allow_approx)  { arma_extra_debug_print("allow_approx"); }
-  if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
-  if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
-  if(no_ugly     )  { arma_extra_debug_print("no_ugly");      }
-  
-  if(likely_sympd)  { arma_debug_warn_level(1, "inv_sympd(): option 'likely_sympd' ignored" ); }
-  if(no_sympd)      { arma_debug_warn_level(1, "inv_sympd(): option 'no_sympd' ignored" );     }
-  
-  arma_debug_check( (no_ugly && allow_approx), "inv_sympd(): options 'no_ugly' and 'allow_approx' are mutually exclusive" );
+  if(has_user_flags)
+    {
+    arma_extra_debug_print("op_inv_spd_full: enabled flags:");
+    
+    if(tiny        )  { arma_extra_debug_print("tiny");         }
+    if(allow_approx)  { arma_extra_debug_print("allow_approx"); }
+    if(likely_sympd)  { arma_extra_debug_print("likely_sympd"); }
+    if(no_sympd    )  { arma_extra_debug_print("no_sympd");     }
+    if(no_ugly     )  { arma_extra_debug_print("no_ugly");      }
+    
+    if(likely_sympd)  { arma_debug_warn_level(1, "inv_sympd(): option 'likely_sympd' ignored" ); }
+    if(no_sympd)      { arma_debug_warn_level(1, "inv_sympd(): option 'no_sympd' ignored" );     }
+    
+    arma_debug_check( (no_ugly && allow_approx), "inv_sympd(): options 'no_ugly' and 'allow_approx' are mutually exclusive" );
+    }
   
   if(no_ugly)
     {
