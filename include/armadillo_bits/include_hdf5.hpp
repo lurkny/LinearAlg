@@ -22,6 +22,7 @@
   #define H5_USE_110_API
   
   #if !defined(ARMA_HDF5_INCLUDE_DIR)
+    // TODO: refactor to optionally use __has_include
     #include <hdf5.h>
   #else
     #define ARMA_STR1(x) x
@@ -29,6 +30,7 @@
     
     #define ARMA_HDF5_HEADER ARMA_STR2(ARMA_HDF5_INCLUDE_DIR)ARMA_STR2(hdf5.h)
     
+    // TODO: refactor to optionally use __has_include
     #include ARMA_INCFILE_WRAP(ARMA_HDF5_HEADER)
     
     #undef ARMA_STR1
