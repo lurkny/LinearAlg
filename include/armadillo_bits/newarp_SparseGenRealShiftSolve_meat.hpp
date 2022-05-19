@@ -63,7 +63,7 @@ SparseGenRealShiftSolve<eT>::SparseGenRealShiftSolve(const SpMat<eT>& mat_obj, c
     
     if(slu_info != 0)
       {
-      arma_debug_warn_level(2, "matrix is singular to working precision");
+      arma_warn("matrix is singular to working precision");
       return;
       }
     
