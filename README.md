@@ -83,8 +83,8 @@ Citations are useful for the continued development and maintenance of the librar
     Journal of Open Source Software, Vol. 1, pp. 26, 2016.  
   
   * Conrad Sanderson and Ryan Curtin.  
-    An Adaptive Solver for Systems of Linear Equations.  
-    International Conference on Signal Processing and Communication Systems, pp. 1-6, 2020.
+    A User-Friendly Hybrid Sparse Matrix Class in C++.  
+    Lecture Notes in Computer Science (LNCS), Vol. 10931, pp. 422-430, 2018.
 
 ---
 
