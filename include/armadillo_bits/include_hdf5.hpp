@@ -22,16 +22,38 @@
   #define H5_USE_110_API
   
   #if !defined(ARMA_HDF5_INCLUDE_DIR)
-    // TODO: refactor to optionally use __has_include
-    #include <hdf5.h>
+    #if defined(__has_include)
+      #if __has_include(<hdf5.h>)
+        #include <hdf5.h>
+      #else
+        #undef ARMA_USE_HDF5
+        #undef ARMA_USE_HDF5_ALT
+        #pragma message ("WARNING: disabling use of HDF5 as hdf5.h header not found")
+      #endif
+    #else
+      #include <hdf5.h>
+    #endif
   #else
+    #undef ARMA_STR1
+    #undef ARMA_STR2
+    #undef ARMA_HDF5_HEADER
+    
     #define ARMA_STR1(x) x
     #define ARMA_STR2(x) ARMA_STR1(x)
     
     #define ARMA_HDF5_HEADER ARMA_STR2(ARMA_HDF5_INCLUDE_DIR)ARMA_STR2(hdf5.h)
     
-    // TODO: refactor to optionally use __has_include
-    #include ARMA_INCFILE_WRAP(ARMA_HDF5_HEADER)
+    #if defined(__has_include)
+      #if __has_include(ARMA_INCFILE_WRAP(ARMA_HDF5_HEADER))
+        #include ARMA_INCFILE_WRAP(ARMA_HDF5_HEADER)
+      #else
+        #undef ARMA_USE_HDF5
+        #undef ARMA_USE_HDF5_ALT
+        #pragma message ("WARNING: disabling use of HDF5 as hdf5.h header not found")
+      #endif
+    #else
+      #include ARMA_INCFILE_WRAP(ARMA_HDF5_HEADER)
+    #endif
     
     #undef ARMA_STR1
     #undef ARMA_STR2
