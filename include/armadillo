@@ -53,6 +53,7 @@
       #include <mutex>
       #include <atomic>
     #else
+      #pragma message ("WARNING: disabled use of std::mutex as required headers not found")
       #define ARMA_DONT_USE_STD_MUTEX
     #endif
   #else
