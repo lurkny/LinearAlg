@@ -103,7 +103,7 @@ namespace superlu
       #include ARMA_INCFILE_WRAP(ARMA_SLU_SUPERLU_ENUM_CONSTS_H)
     #else
       #undef ARMA_USE_SUPERLU
-      #pragma message ("WARNING: disabling use of SuperLU as required headers not found")
+      #pragma message ("WARNING: disabled use of SuperLU as required headers not found")
     #endif
   #else
     #include ARMA_INCFILE_WRAP(ARMA_SLU_SUPERMATRIX_H)
