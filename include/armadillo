@@ -48,18 +48,8 @@
 #include <chrono>
 
 #if !defined(ARMA_DONT_USE_STD_MUTEX)
-  #if defined(__has_include)
-    #if __has_include(<mutex>) && __has_include(<atomic>)
-      #include <mutex>
-      #include <atomic>
-    #else
-      #pragma message ("WARNING: disabled use of std::mutex as required headers not found")
-      #define ARMA_DONT_USE_STD_MUTEX
-    #endif
-  #else
-    #include <mutex>
-    #include <atomic>
-  #endif
+  #include <mutex>
+  #include <atomic>
 #endif
 
 #if defined(ARMA_USE_TBB_ALLOC)
