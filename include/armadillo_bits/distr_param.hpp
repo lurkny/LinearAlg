@@ -69,14 +69,14 @@ class distr_param
     
     if(state == 1)
       {
-      out_a = param.a_int;
-      out_b = param.b_int;
+      out_a = a_int;
+      out_b = b_int;
       }
     else
     if(state == 2)
       {
-      out_a = int(param.a_double);
-      out_b = int(param.b_double);
+      out_a = int(a_double);
+      out_b = int(b_double);
       }
     }
   
