@@ -47,7 +47,7 @@ randg(const uword n_rows, const uword n_cols, const distr_param& param = distr_p
   
   param.get_double_vals(a,b);
   
-  arma_debug_check( ((a <= double(0)) || (b <= double(0))), "randg(): a and b must be greater than zero" );
+  arma_debug_check( ((a <= double(0)) || (b <= double(0))), "randg(): incorrect distribution parameters: a and b must be greater than zero" );
   
   obj_type out(n_rows, n_cols, arma_nozeros_indicator());
   
@@ -165,7 +165,7 @@ randg(const uword n_rows, const uword n_cols, const uword n_slices, const distr_
   
   param.get_double_vals(a,b);
   
-  arma_debug_check( ((a <= double(0)) || (b <= double(0))), "randg(): a and b must be greater than zero" );
+  arma_debug_check( ((a <= double(0)) || (b <= double(0))), "randg(): incorrect distribution parameters: a and b must be greater than zero" );
   
   cube_type out(n_rows, n_cols, n_slices, arma_nozeros_indicator());
   
