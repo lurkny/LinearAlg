@@ -69,7 +69,16 @@
 
 
 #if defined(ARMA_USE_OPENMP)
-  #include <omp.h>
+  #if defined(__has_include)
+    #if __has_include(<omp.h>)
+      #include <omp.h>
+    #else
+      #undef ARMA_USE_OPENMP
+      #pragma message ("WARNING: use of OpenMP disabled; omp.h header not found")
+    #endif
+  #else
+    #include <omp.h>
+  #endif
 #endif
 
 
