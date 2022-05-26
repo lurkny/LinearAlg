@@ -47,7 +47,7 @@ randi(const uword n_rows, const uword n_cols, const distr_param& param = distr_p
   
   param.get_int_vals(a,b);
   
-  arma_debug_check( (a > b), "randi(): incorrect distribution parameters: a must be less than b" );
+  arma_debug_check( (a > b), "randi(): incorrect distribution parameters; a must be less than b" );
   
   obj_type out(n_rows, n_cols, arma_nozeros_indicator());
   
@@ -188,7 +188,7 @@ randi(const uword n_rows, const uword n_cols, const uword n_slices, const distr_
   
   param.get_int_vals(a,b);
   
-  arma_debug_check( (a > b), "randi(): incorrect distribution parameters: a must be less than b" );
+  arma_debug_check( (a > b), "randi(): incorrect distribution parameters; a must be less than b" );
   
   cube_type out(n_rows, n_cols, n_slices, arma_nozeros_indicator());
   

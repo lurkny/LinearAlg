@@ -43,7 +43,7 @@ randu(const distr_param& param)
   
   param.get_double_vals(a,b);
   
-  arma_debug_check( (a >= b), "randu(): incorrect distribution parameters: a must be less than b" );
+  arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
   
   double val;
   
@@ -78,7 +78,7 @@ randu(const distr_param& param)
   
   param.get_double_vals(a,b);
   
-  arma_debug_check( (a >= b), "randu(): incorrect distribution parameters: a must be less than b" );
+  arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
   
   eT val;
   
@@ -114,7 +114,7 @@ randu(const uword n_elem, const distr_param& param)
   
   param.get_double_vals(a,b);
   
-  arma_debug_check( (a >= b), "randu(): incorrect distribution parameters: a must be less than b" );
+  arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
   
   vec out(n_elem, arma_nozeros_indicator());
   
