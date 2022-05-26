@@ -41,7 +41,7 @@ randu(const distr_param& param)
   double a = 0;
   double b = 1;
   
-  param_get_double_vals(a,b);
+  param.get_double_vals(a,b);
   
   arma_debug_check( (a >= b), "randu(): a must be less than b" );
   
@@ -76,7 +76,7 @@ randu(const distr_param& param)
   double a = 0;
   double b = 1;
   
-  param_get_double_vals(a,b);
+  param.get_double_vals(a,b);
   
   arma_debug_check( (a >= b), "randu(): a must be less than b" );
   
@@ -112,7 +112,7 @@ randu(const uword n_elem, const distr_param& param)
   double a = 0;
   double b = 1;
   
-  param_get_double_vals(a,b);
+  param.get_double_vals(a,b);
   
   arma_debug_check( (a >= b), "randu(): a must be less than b" );
   
