@@ -45,7 +45,7 @@ randg(const uword n_rows, const uword n_cols, const distr_param& param = distr_p
   double a = double(1);
   double b = double(1);
   
-  param.get_vals(a,b);
+  param.get_double_vals(a,b);
   
   arma_debug_check( ((a <= double(0)) || (b <= double(0))), "randg(): a and b must be greater than zero" );
   
@@ -163,7 +163,7 @@ randg(const uword n_rows, const uword n_cols, const uword n_slices, const distr_
   double a = double(1);
   double b = double(1);
   
-  param.get_vals(a,b);
+  param.get_double_vals(a,b);
   
   arma_debug_check( ((a <= double(0)) || (b <= double(0))), "randg(): a and b must be greater than zero" );
   

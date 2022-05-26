@@ -63,7 +63,25 @@ class distr_param
     }
   
   
-  inline void get_vals(double& out_a, double& out_b) const
+  inline void get_int_vals(int& out_a, int& out_b) const
+    {
+    // if state == 0, do nothing
+    
+    if(state == 1)
+      {
+      out_a = param.a_int;
+      out_b = param.b_int;
+      }
+    else
+    if(state == 2)
+      {
+      out_a = int(param.a_double);
+      out_b = int(param.b_double);
+      }
+    }
+  
+  
+  inline void get_double_vals(double& out_a, double& out_b) const
     {
     // if state == 0, do nothing
     
