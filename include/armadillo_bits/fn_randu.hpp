@@ -31,6 +31,29 @@ randu()
 
 
 
+arma_warn_unused
+inline
+double
+randu(const distr_param& param)
+  {
+  arma_extra_debug_sigprint();
+  
+  double a = 0;
+  double b = 1;
+  
+  param.get_vals(a,b);
+  
+  arma_debug_check( (a >= b), "randu(): a must be less than b" );
+  
+  double val;
+  
+  arma_rng::randu<double>::fill(&val, 1, a, b);
+  
+  return val;
+  }
+
+
+
 template<typename eT>
 arma_warn_unused
 inline
@@ -38,6 +61,30 @@ typename arma_real_or_cx_only<eT>::result
 randu()
   {
   return eT(arma_rng::randu<eT>());
+  }
+
+
+
+template<typename eT>
+arma_warn_unused
+inline
+typename arma_real_or_cx_only<eT>::result
+randu(const distr_param& param)
+  {
+  arma_extra_debug_sigprint();
+  
+  double a = 0;
+  double b = 1;
+  
+  param.get_vals(a,b);
+  
+  arma_debug_check( (a >= b), "randu(): a must be less than b" );
+  
+  eT val;
+  
+  arma_rng::randu<eT>::fill(&val, 1, a, b);
+  
+  return val;
   }
 
 
@@ -51,6 +98,29 @@ randu(const uword n_elem)
   arma_extra_debug_sigprint();
   
   return Gen<vec, gen_randu>(n_elem, 1);
+  }
+
+
+
+arma_warn_unused
+inline
+vec
+randu(const uword n_elem, const distr_param& param)
+  {
+  arma_extra_debug_sigprint();
+  
+  double a = 0;
+  double b = 1;
+  
+  param.get_vals(a,b);
+  
+  arma_debug_check( (a >= b), "randu(): a must be less than b" );
+  
+  vec out(n_elem, arma_nozeros_indicator());
+  
+  arma_rng::randu<double>::fill(out.memptr(), n_elem, a, b);
+  
+  return out;
   }
 
 
