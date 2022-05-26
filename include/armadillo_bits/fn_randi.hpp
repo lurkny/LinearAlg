@@ -42,25 +42,10 @@ randi(const uword n_rows, const uword n_cols, const distr_param& param = distr_p
     arma_debug_check( (n_rows != 1), "randi(): incompatible size" );
     }
   
-  int a;
-  int b;
+  int a = 0;
+  int b = arma_rng::randi<eT>::max_val();
   
-  if(param.state == 0)
-    {
-    a = 0;
-    b = arma_rng::randi<eT>::max_val();
-    }
-  else
-  if(param.state == 1)
-    {
-    a = param.a_int;
-    b = param.b_int;
-    }
-  else
-    {
-    a = int(param.a_double);
-    b = int(param.b_double);
-    }
+  param.get_int_vals(a,b);
   
   arma_debug_check( (a > b), "randi(): incorrect distribution parameters: a must be less than b" );
   
@@ -198,25 +183,10 @@ randi(const uword n_rows, const uword n_cols, const uword n_slices, const distr_
   
   typedef typename cube_type::elem_type eT;
   
-  int a;
-  int b;
+  int a = 0;
+  int b = arma_rng::randi<eT>::max_val();
   
-  if(param.state == 0)
-    {
-    a = 0;
-    b = arma_rng::randi<eT>::max_val();
-    }
-  else
-  if(param.state == 1)
-    {
-    a = param.a_int;
-    b = param.b_int;
-    }
-  else
-    {
-    a = int(param.a_double);
-    b = int(param.b_double);
-    }
+  param.get_int_vals(a,b);
   
   arma_debug_check( (a > b), "randi(): incorrect distribution parameters: a must be less than b" );
   
