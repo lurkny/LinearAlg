@@ -19,7 +19,7 @@
 //! \addtogroup fn_randn
 //! @{
 
-
+// TODO: add variants with distr_param
 
 arma_warn_unused
 inline
