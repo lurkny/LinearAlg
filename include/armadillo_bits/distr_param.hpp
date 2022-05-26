@@ -61,6 +61,24 @@ class distr_param
     , b_double(b)
     {
     }
+  
+  
+  inline void get_vals(double& out_a, double& out_b) const
+    {
+    // if state == 0, do nothing
+    
+    if(state == 1)
+      {
+      out_a = double(a_int);
+      out_b = double(b_int);
+      }
+    else
+    if(state == 2)
+      {
+      out_a = a_double;
+      out_b = b_double;
+      }
+    }
   };
 
 
