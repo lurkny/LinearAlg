@@ -677,6 +677,22 @@ struct arma_rng::randn
     #endif
     }
   
+  
+  inline
+  static
+  void
+  fill(eT* mem, const uword N, const double mu, const double sd)
+    {
+    arma_rng::randn<eT>::fill(mem, N);
+    
+    for(uword i=0; i<N; ++i)
+      {
+      const eT val = mem[i];
+      
+      mem[i] = (val * sd) + mu;
+      }
+    }
+  
   };
 
 
@@ -837,6 +853,22 @@ struct arma_rng::randn< std::complex<T> >
       arma_rng::randn< std::complex<T> >::fill_simple(mem, N);
       }
     #endif
+    }
+  
+  
+  inline
+  static
+  void
+  fill(std::complex<T>* mem, const uword N, const double mu, const double sd)
+    {
+    arma_rng::randn< std::complex<T> >::fill(mem, N);
+    
+    for(uword i=0; i<N; ++i)
+      {
+      const std::complex<T>& val = mem[i];
+      
+      mem[i] = std::complex<T>( ((val.real() * sd) + mu), ((val.imag() * sd) + mu) );
+      }
     }
   };
 

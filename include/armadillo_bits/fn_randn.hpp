@@ -31,6 +31,27 @@ randn()
 
 
 
+arma_warn_unused
+inline
+double
+randn(const distr_param& param)
+  {
+  arma_extra_debug_sigprint();
+  
+  double mu = double(0);
+  double sd = double(1);
+  
+  param.get_double_vals(mu,sd);
+  
+  arma_debug_check( (sd <= double(0)), "randn(): incorrect distribution parameters; standard deviation must be > 0" );
+  
+  const double val = double(arma_rng::randn<double>());
+  
+  return ((val * sd) + mu);
+  }
+
+
+
 template<typename eT>
 arma_warn_unused
 inline
@@ -38,6 +59,30 @@ typename arma_real_or_cx_only<eT>::result
 randn()
   {
   return eT(arma_rng::randn<eT>());
+  }
+
+
+
+template<typename eT>
+arma_warn_unused
+inline
+typename arma_real_or_cx_only<eT>::result
+randn(const distr_param& param)
+  {
+  arma_extra_debug_sigprint();
+  
+  double mu = double(0);
+  double sd = double(1);
+  
+  param.get_double_vals(mu,sd);
+  
+  arma_debug_check( (sd <= double(0)), "randn(): incorrect distribution parameters; standard deviation must be > 0" );
+  
+  eT val = eT(0);
+  
+  arma_rng::randn<eT>::fill(&val, 1, mu, sd);
+  
+  return val;
   }
 
 
@@ -51,6 +96,29 @@ randn(const uword n_elem)
   arma_extra_debug_sigprint();
   
   return Gen<vec, gen_randn>(n_elem, 1);
+  }
+
+
+
+arma_warn_unused
+inline
+vec
+randn(const uword n_elem, const distr_param& param)
+  {
+  arma_extra_debug_sigprint();
+  
+  double mu = double(0);
+  double sd = double(1);
+  
+  param.get_double_vals(mu,sd);
+  
+  arma_debug_check( (sd <= double(0)), "randn(): incorrect distribution parameters; standard deviation must be > 0" );
+  
+  vec out(n_elem, arma_nozeros_indicator());
+  
+  arma_rng::randn<double>::fill(out.memptr(), n_elem, mu, sd);
+  
+  return out;
   }
 
 
