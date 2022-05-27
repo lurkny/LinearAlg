@@ -38,14 +38,14 @@ randu(const distr_param& param)
   {
   arma_extra_debug_sigprint();
   
-  double a = 0;
-  double b = 1;
+  double a = double(0);
+  double b = double(1);
   
   param.get_double_vals(a,b);
   
   arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
   
-  double val;
+  double val = double(0);
   
   arma_rng::randu<double>::fill(&val, 1, a, b);
   
@@ -73,14 +73,14 @@ randu(const distr_param& param)
   {
   arma_extra_debug_sigprint();
   
-  double a = 0;
-  double b = 1;
+  double a = double(0);
+  double b = double(1);
   
   param.get_double_vals(a,b);
   
   arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
   
-  eT val;
+  eT val = eT(0);
   
   arma_rng::randu<eT>::fill(&val, 1, a, b);
   
@@ -109,8 +109,8 @@ randu(const uword n_elem, const distr_param& param)
   {
   arma_extra_debug_sigprint();
   
-  double a = 0;
-  double b = 1;
+  double a = double(0);
+  double b = double(1);
   
   param.get_double_vals(a,b);
   
