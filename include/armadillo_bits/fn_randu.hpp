@@ -45,11 +45,9 @@ randu(const distr_param& param)
   
   arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
   
-  double val = double(0);
+  const double val = double(arma_rng::randu<double>());
   
-  arma_rng::randu<double>::fill(&val, 1, a, b);
-  
-  return val;
+  return ((val * (b - a)) + a);
   }
 
 
