@@ -87,7 +87,6 @@ randn(const distr_param& param)
 
 
 
-//! Generate a vector with all elements set to random values with a gaussian distribution (zero mean, unit variance)
 arma_warn_unused
 arma_inline
 const Gen<vec, gen_randn>
@@ -141,7 +140,6 @@ randn(const uword n_elem, const arma_empty_class junk1 = arma_empty_class(), con
 
 
 
-//! Generate a dense matrix with all elements set to random values with a gaussian distribution (zero mean, unit variance)
 arma_warn_unused
 arma_inline
 const Gen<mat, gen_randn>

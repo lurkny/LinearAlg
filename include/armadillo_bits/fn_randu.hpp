@@ -89,7 +89,6 @@ randu(const distr_param& param)
 
 
 
-//! Generate a vector with all elements set to random values in the [0,1] interval (uniform distribution)
 arma_warn_unused
 arma_inline
 const Gen<vec, gen_randu>
@@ -143,7 +142,6 @@ randu(const uword n_elem, const arma_empty_class junk1 = arma_empty_class(), con
 
 
 
-//! Generate a dense matrix with all elements set to random values in the [0,1] interval (uniform distribution)
 arma_warn_unused
 arma_inline
 const Gen<mat, gen_randu>
