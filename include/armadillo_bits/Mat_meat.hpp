@@ -2816,6 +2816,8 @@ Mat<eT>::operator=(const SpSubview<eT>& X)
   
   (*this).zeros(X.n_rows, X.n_cols);
   
+  if(X.n_nonzero == 0)  { return *this; }
+  
   if(X.n_rows == X.m.n_rows)
     {
     X.m.sync();
