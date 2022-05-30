@@ -2818,6 +2818,8 @@ Mat<eT>::operator=(const SpSubview<eT>& X)
   
   if(X.n_rows == X.m.n_rows)
     {
+    X.m.sync();
+    
     const uword sv_col_start = X.aux_col1;
     const uword sv_col_end   = X.aux_col1 + X.n_cols - 1;
     
