@@ -116,6 +116,8 @@ On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
 If sparse matrices are not needed, ARPACK and SuperLU are not required.
 Caveat: only SuperLU versions 5.2.x and 5.3.x can be used; SuperLU must be available as a shared library.
 
+Armadillo requires a C++ compiler that supports at least the C++11 standard.
+
 On Linux-based systems, install the GCC C++ compiler, which is available as a pre-built package.
 The package name might be `g++` or `gcc-c++` depending on your system.
 
