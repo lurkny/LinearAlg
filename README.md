@@ -105,11 +105,16 @@ informational purposes only and do not modify the License.
 ### 4: Prerequisites and Dependencies
 
 The functionality of Armadillo is partly dependent on other libraries:
-OpenBLAS (or standard BLAS) and LAPACK (for dense matrices),
-as well as ARPACK and SuperLU (for sparse matrices).
-Caveat: only SuperLU versions 5.2.x can be used.
+- OpenBLAS (or standard BLAS)
+- LAPACK
+- ARPACK
+- SuperLU
+
+Use of OpenBLAS (instead of standard BLAS) is strongly recommended on all systems.
 On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
-Use of OpenBLAS is strongly recommended on all systems.
+
+If sparse matrices are not needed, ARPACK and SuperLU are not required.
+Caveat: only SuperLU versions 5.2.x and 5.3.x can be used; SuperLU must be available as a shared library.
 
 On Linux-based systems, install the GCC C++ compiler, which is available as a pre-built package.
 The package name might be `g++` or `gcc-c++` depending on your system.
