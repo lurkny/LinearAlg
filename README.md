@@ -111,9 +111,6 @@ Caveat: only SuperLU versions 5.2.x can be used.
 On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
 Use of OpenBLAS is strongly recommended on all systems.
 
-Armadillo 10.x requires a C++ compiler that supports at least the C++11 standard.
-Use Armadillo 9.900 if your compiler only supports the old C++98/C++03 standards.
-
 On Linux-based systems, install the GCC C++ compiler, which is available as a pre-built package.
 The package name might be `g++` or `gcc-c++` depending on your system.
 
