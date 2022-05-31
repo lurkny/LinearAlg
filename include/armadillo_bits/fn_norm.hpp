@@ -193,18 +193,9 @@ norm
       {
       const SpMat<eT>& m   = sv.m;
       const uword      col = sv.aux_col1;
+      const eT*        mem = &(m.values[ m.col_ptrs[col] ]);
       
-      // create a fake dense vector to allow reuse of code for dense vectors
-      Col<eT> fake_vector( access::rwp(&(m.values[ m.col_ptrs[col] ])), sv.n_nonzero, false );
-      
-      const Proxy< Col<eT> > P_fake_vector(fake_vector);
-      
-      if(k == uword(1))  { return op_norm::vec_norm_1(P_fake_vector); }
-      if(k == uword(2))  { return op_norm::vec_norm_2(P_fake_vector); }
-      
-      arma_debug_check( (k == 0), "norm(): k must be greater than zero" );
-      
-      return op_norm::vec_norm_k(P_fake_vector, int(k));
+      return spop_norm::vec_norm_k(mem, sv.n_nonzero, k);
       }
     }
   
@@ -217,17 +208,7 @@ norm
   
   if(is_vec)
     {
-    // create a fake dense vector to allow reuse of code for dense vectors
-    Col<eT> fake_vector( access::rwp(X.values), X.n_nonzero, false );
-    
-    const Proxy< Col<eT> > P_fake_vector(fake_vector);
-    
-    if(k == uword(1))  { return op_norm::vec_norm_1(P_fake_vector); }
-    if(k == uword(2))  { return op_norm::vec_norm_2(P_fake_vector); }
-    
-    arma_debug_check( (k == 0), "norm(): k must be greater than zero" );
-    
-    return op_norm::vec_norm_k(P_fake_vector, int(k));
+    return spop_norm::vec_norm_k(X.values, X.n_nonzero, k);
     }
   else
     {
