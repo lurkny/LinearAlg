@@ -3080,7 +3080,7 @@ std::mt19937 engine;  // Mersenne twister random number engine
 
 std::uniform_real_distribution&lt;double&gt; distr(0.0, 1.0);
   
-mat A(4, 5, fill:none);
+mat A(4, 5, fill::none);
   
 A.imbue( [&amp;]() { return distr(engine); } );
 </pre>
@@ -3434,7 +3434,7 @@ mat A;
 A.set_size(5, 10);      // or:  mat A(5, 10, fill::none);
 
 mat B;
-B.set_size( size(A) );  // or:  mat B(size(A), fill:none);
+B.set_size( size(A) );  // or:  mat B(size(A), fill::none);
 
 vec v;
 v.set_size(100);        // or:  vec v(100, fill::none);
