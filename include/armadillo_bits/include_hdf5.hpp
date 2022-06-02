@@ -60,8 +60,8 @@
     #undef ARMA_HDF5_HEADER
   #endif
 
-  #if defined(H5_USE_16_API_DEFAULT) || defined(H5_USE_16_API)
-    #pragma message ("WARNING: disabled use of HDF5 due to its incompatible configuration")
+  #if defined(H5_USE_16_API) || defined(H5_USE_16_API_DEFAULT) || defined(H5_USE_18_API) || defined(H5_USE_18_API_DEFAULT) 
+    #pragma message ("WARNING: use of HDF5 disabled; incompatible configuration: H5_USE_16_API or H5_USE_18_API")
     #undef ARMA_USE_HDF5
     #undef ARMA_USE_HDF5_ALT
   #endif
