@@ -83,6 +83,9 @@ namespace superlu
   // Therefore, putting it in the superlu namespace is reasonably safe.
   // This same reasoning is true for superlu_enum_consts.h.
   
+  #undef ARMA_SLU_SUPERMATRIX_H
+  #undef ARMA_SLU_SUPERLU_ENUM_CONSTS_H
+  
   #if defined(ARMA_SUPERLU_INCLUDE_DIR)
     #undef ARMA_SLU_STR1
     #undef ARMA_SLU_STR2
