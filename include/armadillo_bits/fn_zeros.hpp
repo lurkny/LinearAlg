@@ -88,15 +88,8 @@ zeros(const uword n_rows, const uword n_cols, const typename arma_Mat_Col_Row_on
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  if(is_Col<obj_type>::value)
-    {
-    arma_debug_check( (n_cols != 1), "zeros(): incompatible size" );
-    }
-  else
-  if(is_Row<obj_type>::value)
-    {
-    arma_debug_check( (n_rows != 1), "zeros(): incompatible size" );
-    }
+  if(is_Col<obj_type>::value)  { arma_debug_check( (n_cols != 1), "zeros(): incompatible size" ); }
+  if(is_Row<obj_type>::value)  { arma_debug_check( (n_rows != 1), "zeros(): incompatible size" ); }
   
   return Gen<obj_type, gen_zeros>(n_rows, n_cols);
   }
@@ -178,15 +171,8 @@ zeros(const uword n_rows, const uword n_cols, const typename arma_SpMat_SpCol_Sp
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  if(is_SpCol<sp_obj_type>::value)
-    {
-    arma_debug_check( (n_cols != 1), "zeros(): incompatible size" );
-    }
-  else
-  if(is_SpRow<sp_obj_type>::value)
-    {
-    arma_debug_check( (n_rows != 1), "zeros(): incompatible size" );
-    }
+  if(is_SpCol<sp_obj_type>::value)  { arma_debug_check( (n_cols != 1), "zeros(): incompatible size" ); }
+  if(is_SpRow<sp_obj_type>::value)  { arma_debug_check( (n_rows != 1), "zeros(): incompatible size" ); }
   
   return sp_obj_type(n_rows, n_cols);
   }
