@@ -19,7 +19,9 @@
 //! \addtogroup fn_randu
 //! @{
 
-// TODO: add variants with distr_param
+
+
+// scalars
 
 arma_warn_unused
 inline
@@ -87,6 +89,8 @@ randu(const distr_param& param)
 
 
 
+// vectors
+
 arma_warn_unused
 arma_inline
 const Gen<vec, gen_randu>
@@ -140,6 +144,38 @@ randu(const uword n_elem, const arma_empty_class junk1 = arma_empty_class(), con
 
 
 
+template<typename obj_type>
+arma_warn_unused
+inline
+obj_type
+randu(const uword n_elem, const distr_param& param, const typename arma_Mat_Col_Row_only<obj_type>::result* junk = nullptr)
+  {
+  arma_extra_debug_sigprint();
+  arma_ignore(junk);
+  
+  typedef typename obj_type::elem_type eT;
+  
+  const uword n_rows = (is_Row<obj_type>::value) ? uword(1) : n_elem;
+  const uword n_cols = (is_Row<obj_type>::value) ? n_elem   : uword(1);
+  
+  double a = double(0);
+  double b = double(1);
+  
+  param.get_double_vals(a,b);
+  
+  arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
+  
+  obj_type out(n_rows, n_cols, arma_nozeros_indicator());
+  
+  arma_rng::randu<eT>::fill(out.memptr(), out.n_elem, a, b);
+  
+  return out;
+  }
+
+
+
+// matrices
+
 arma_warn_unused
 arma_inline
 const Gen<mat, gen_randu>
@@ -148,6 +184,29 @@ randu(const uword n_rows, const uword n_cols)
   arma_extra_debug_sigprint();
   
   return Gen<mat, gen_randu>(n_rows, n_cols);
+  }
+
+
+
+arma_warn_unused
+inline
+mat
+randu(const uword n_rows, const uword n_cols, const distr_param& param)
+  {
+  arma_extra_debug_sigprint();
+  
+  double a = double(0);
+  double b = double(1);
+  
+  param.get_double_vals(a,b);
+  
+  arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
+  
+  mat out(n_rows, n_cols, arma_nozeros_indicator());
+  
+  arma_rng::randu<double>::fill(out.memptr(), out.n_elem, a, b);
+  
+  return out;
   }
 
 
@@ -164,6 +223,29 @@ randu(const SizeMat& s)
 
 
 
+arma_warn_unused
+inline
+mat
+randu(const SizeMat& s, const distr_param& param)
+  {
+  arma_extra_debug_sigprint();
+  
+  double a = double(0);
+  double b = double(1);
+  
+  param.get_double_vals(a,b);
+  
+  arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
+  
+  mat out(s.n_rows, s.n_cols, arma_nozeros_indicator());
+  
+  arma_rng::randu<double>::fill(out.memptr(), out.n_elem, a, b);
+  
+  return out;
+  }
+
+
+
 template<typename obj_type>
 arma_warn_unused
 arma_inline
@@ -173,17 +255,40 @@ randu(const uword n_rows, const uword n_cols, const typename arma_Mat_Col_Row_on
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  if(is_Col<obj_type>::value)
-    {
-    arma_debug_check( (n_cols != 1), "randu(): incompatible size" );
-    }
-  else
-  if(is_Row<obj_type>::value)
-    {
-    arma_debug_check( (n_rows != 1), "randu(): incompatible size" );
-    }
+  if(is_Col<obj_type>::value)  { arma_debug_check( (n_cols != 1), "randu(): incompatible size" ); }
+  if(is_Row<obj_type>::value)  { arma_debug_check( (n_rows != 1), "randu(): incompatible size" ); }
   
   return Gen<obj_type, gen_randu>(n_rows, n_cols);
+  }
+
+
+
+template<typename obj_type>
+arma_warn_unused
+inline
+obj_type
+randu(const uword n_rows, const uword n_cols, const distr_param& param, const typename arma_Mat_Col_Row_only<obj_type>::result* junk = nullptr)
+  {
+  arma_extra_debug_sigprint();
+  arma_ignore(junk);
+  
+  typedef typename obj_type::elem_type eT;
+  
+  if(is_Col<obj_type>::value)  { arma_debug_check( (n_cols != 1), "randu(): incompatible size" ); }
+  if(is_Row<obj_type>::value)  { arma_debug_check( (n_rows != 1), "randu(): incompatible size" ); }
+  
+  double a = double(0);
+  double b = double(1);
+  
+  param.get_double_vals(a,b);
+  
+  arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
+  
+  obj_type out(n_rows, n_cols, arma_nozeros_indicator());
+  
+  arma_rng::randu<eT>::fill(out.memptr(), out.n_elem, a, b);
+  
+  return out;
   }
 
 
@@ -200,6 +305,24 @@ randu(const SizeMat& s, const typename arma_Mat_Col_Row_only<obj_type>::result* 
   return randu<obj_type>(s.n_rows, s.n_cols);
   }
 
+
+
+template<typename obj_type>
+arma_warn_unused
+inline
+obj_type
+randu(const SizeMat& s, const distr_param& param, const typename arma_Mat_Col_Row_only<obj_type>::result* junk = nullptr)
+  {
+  arma_extra_debug_sigprint();
+  arma_ignore(junk);
+  
+  return randu<obj_type>(s.n_rows, s.n_cols, param);
+  }
+
+
+
+// cubes
+// TODO: add variants with distr_param
 
 
 arma_warn_unused
