@@ -120,7 +120,7 @@ struct ProxyCube< GenCube<eT, gen_type> >
   template<typename eT2>
   constexpr bool has_overlap(const subview_cube<eT2>&) const { return false; }
   
-  arma_inline bool is_aligned() const { return GenCube<eT, gen_type>::is_simple; }
+  constexpr bool is_aligned() const { return GenCube<eT, gen_type>::is_simple; }
   };
 
 

@@ -334,7 +334,7 @@ struct Proxy< Gen<T1, gen_type> >
   template<typename eT2>
   constexpr bool has_overlap(const subview<eT2>&) const { return false; }
   
-  arma_inline bool is_aligned() const { return Gen<T1, gen_type>::is_simple; }
+  constexpr bool is_aligned() const { return Gen<T1, gen_type>::is_simple; }
   };
 
 
