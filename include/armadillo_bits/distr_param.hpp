@@ -26,7 +26,7 @@ class distr_param
   {
   public:
   
-  uword state;
+  const uword state;
   
   union
     {
