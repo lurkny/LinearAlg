@@ -201,25 +201,7 @@ randu(const SizeMat& s, const distr_param& param = distr_param())
   {
   arma_extra_debug_sigprint();
   
-  mat out(s.n_rows, s.n_cols, arma_nozeros_indicator());
-  
-  if(param.state == 0)
-    {
-    arma_rng::randu<double>::fill(out.memptr(), out.n_elem);
-    }
-  else
-    {
-    double a = double(0);
-    double b = double(1);
-    
-    param.get_double_vals(a,b);
-    
-    arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
-    
-    arma_rng::randu<double>::fill(out.memptr(), out.n_elem, a, b);
-    }
-  
-  return out;
+  return randu(s.n_rows, s.n_cols, param);
   }
 
 
