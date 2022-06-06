@@ -33,6 +33,17 @@ randn()
 
 
 
+template<typename eT>
+arma_warn_unused
+inline
+typename arma_real_or_cx_only<eT>::result
+randn()
+  {
+  return eT(arma_rng::randn<eT>());
+  }
+
+
+
 arma_warn_unused
 inline
 double
@@ -52,17 +63,6 @@ randn(const distr_param& param)
   const double val = double(arma_rng::randn<double>());
   
   return ((val * sd) + mu);
-  }
-
-
-
-template<typename eT>
-arma_warn_unused
-inline
-typename arma_real_or_cx_only<eT>::result
-randn()
-  {
-  return eT(arma_rng::randn<eT>());
   }
 
 

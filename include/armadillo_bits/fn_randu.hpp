@@ -33,6 +33,17 @@ randu()
 
 
 
+template<typename eT>
+arma_warn_unused
+inline
+typename arma_real_or_cx_only<eT>::result
+randu()
+  {
+  return eT(arma_rng::randu<eT>());
+  }
+
+
+
 arma_warn_unused
 inline
 double
@@ -52,17 +63,6 @@ randu(const distr_param& param)
   const double val = double(arma_rng::randu<double>());
   
   return ((val * (b - a)) + a);
-  }
-
-
-
-template<typename eT>
-arma_warn_unused
-inline
-typename arma_real_or_cx_only<eT>::result
-randu()
-  {
-  return eT(arma_rng::randu<eT>());
   }
 
 
