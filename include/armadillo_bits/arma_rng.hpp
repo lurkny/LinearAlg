@@ -529,7 +529,7 @@ struct arma_rng::randu< std::complex<T> >
         const T tmp1 = T( local_u_distr(local_engine) );
         const T tmp2 = T( local_u_distr(local_engine) );
         
-        mem[0] = std::complex<T>(tmp1, tmp2);
+        mem[i] = std::complex<T>(tmp1, tmp2);
         }
       }
     #endif
