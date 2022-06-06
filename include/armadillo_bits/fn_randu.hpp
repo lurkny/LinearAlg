@@ -258,57 +258,94 @@ randu(const SizeMat& s, const distr_param& param = distr_param(), const typename
 
 
 // cubes
-// TODO: add variants with distr_param
 
 
 arma_warn_unused
-arma_inline
-const GenCube<cube::elem_type, gen_randu>
-randu(const uword n_rows, const uword n_cols, const uword n_slices)
+inline
+cube
+randu(const uword n_rows, const uword n_cols, const uword n_slices, const distr_param& param = distr_param())
   {
   arma_extra_debug_sigprint();
   
-  return GenCube<cube::elem_type, gen_randu>(n_rows, n_cols, n_slices);
+  cube out(n_rows, n_cols, n_slices, arma_nozeros_indicator());
+  
+  if(param.state == 0)
+    {
+    arma_rng::randu<double>::fill(out.memptr(), out.n_elem);
+    }
+  else
+    {
+    double a = double(0);
+    double b = double(1);
+    
+    param.get_double_vals(a,b);
+    
+    arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
+    
+    arma_rng::randu<double>::fill(out.memptr(), out.n_elem, a, b);
+    }
+  
+  return out;
   }
 
 
 
 arma_warn_unused
-arma_inline
-const GenCube<cube::elem_type, gen_randu>
-randu(const SizeCube& s)
+inline
+cube
+randu(const SizeCube& s, const distr_param& param = distr_param())
   {
   arma_extra_debug_sigprint();
   
-  return GenCube<cube::elem_type, gen_randu>(s.n_rows, s.n_cols, s.n_slices);
+  return randu(s.n_rows, s.n_cols, s.n_slices, param);
   }
 
 
 
 template<typename cube_type>
 arma_warn_unused
-arma_inline
-const GenCube<typename cube_type::elem_type, gen_randu>
-randu(const uword n_rows, const uword n_cols, const uword n_slices, const typename arma_Cube_only<cube_type>::result* junk = nullptr)
+inline
+cube_type
+randu(const uword n_rows, const uword n_cols, const uword n_slices, const distr_param& param = distr_param(), const typename arma_Cube_only<cube_type>::result* junk = nullptr)
   {
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  return GenCube<typename cube_type::elem_type, gen_randu>(n_rows, n_cols, n_slices);
+  typedef typename cube_type::elem_type eT;
+  
+  cube_type out(n_rows, n_cols, n_slices, arma_nozeros_indicator());
+  
+  if(param.state == 0)
+    {
+    arma_rng::randu<eT>::fill(out.memptr(), out.n_elem);
+    }
+  else
+    {
+    double a = double(0);
+    double b = double(1);
+    
+    param.get_double_vals(a,b);
+    
+    arma_debug_check( (a >= b), "randu(): incorrect distribution parameters; a must be less than b" );
+    
+    arma_rng::randu<eT>::fill(out.memptr(), out.n_elem, a, b);
+    }
+  
+  return out;
   }
 
 
 
 template<typename cube_type>
 arma_warn_unused
-arma_inline
-const GenCube<typename cube_type::elem_type, gen_randu>
-randu(const SizeCube& s, const typename arma_Cube_only<cube_type>::result* junk = nullptr)
+inline
+cube_type
+randu(const SizeCube& s, const distr_param& param = distr_param(), const typename arma_Cube_only<cube_type>::result* junk = nullptr)
   {
   arma_extra_debug_sigprint();
   arma_ignore(junk);
   
-  return GenCube<typename cube_type::elem_type, gen_randu>(s.n_rows, s.n_cols, s.n_slices);
+  return randu<cube_type>(s.n_rows, s.n_cols, s.n_slices, param);
   }
 
 
