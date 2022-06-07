@@ -1313,7 +1313,7 @@ struct Proxy_diagvec_mat< Op<T1, op_diagvec> >
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return ((void_ptr(&R) == void_ptr(&X)) || (void_ptr(R.m.mem) == void_ptr(X.mem))); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ((void_ptr(&R) == void_ptr(&X)) || (void_ptr(R.mem) == void_ptr(X.mem))); }
   
   template<typename eT2>
   arma_inline bool has_overlap(const subview<eT2>& X) const { return is_alias(X.m); }
