@@ -784,7 +784,7 @@ The <i>strict</i> parameter comes into effect only when <i>copy_aux_mem</i> is s
 (ie. the matrix is directly using auxiliary memory)
 <ul>
 <li>
-when <i>strict</i> is set to <i>false</i>, the matrix will use the auxiliary memory until a size change
+when <i>strict</i> is set to <i>false</i>, the matrix will use the auxiliary memory until a size change or an aliasing event
 </li>
 <li>
 when <i>strict</i> is set to <i>true</i>, the matrix will be bound to the auxiliary memory for its lifetime;
@@ -1127,7 +1127,7 @@ The <i>strict</i> parameter comes into effect only when <i>copy_aux_mem</i> is s
 (ie. the vector is directly using auxiliary memory)
 <ul>
 <li>
-when <i>strict</i> is set to <i>false</i>, the vector will use the auxiliary memory until a size change
+when <i>strict</i> is set to <i>false</i>, the vector will use the auxiliary memory until a size change or an aliasing event
 </li>
 <li>
 when <i>strict</i> is set to <i>true</i>, the vector will be bound to the auxiliary memory for its lifetime;
@@ -1393,7 +1393,7 @@ The <i>strict</i> parameter comes into effect only when <i>copy_aux_mem</i> is s
 (ie. the vector is directly using auxiliary memory)
 <ul>
 <li>
-when <i>strict</i> is set to <i>false</i>, the vector will use the auxiliary memory until a size change
+when <i>strict</i> is set to <i>false</i>, the vector will use the auxiliary memory until a size change or an aliasing event
 </li>
 <li>
 when <i>strict</i> is set to <i>true</i>, the vector will be bound to the auxiliary memory for its lifetime;
@@ -1681,7 +1681,7 @@ The <i>strict</i> parameter comes into effect only when <i>copy_aux_mem</i> is s
 (ie. the cube is directly using auxiliary memory)
 <ul>
 <li>
-when <i>strict</i> is set to <i>false</i>, the cube will use the auxiliary memory until a size change
+when <i>strict</i> is set to <i>false</i>, the cube will use the auxiliary memory until a size change or an aliasing event
 </li>
 <li>
 when <i>strict</i> is set to <i>true</i>, the cube will be bound to the auxiliary memory for its lifetime;
