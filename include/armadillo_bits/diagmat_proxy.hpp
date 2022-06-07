@@ -201,7 +201,7 @@ class diagmat_proxy< Mat<eT> >
   arma_inline elem_type operator[] (const uword i)                    const { return P_is_vec ? P[i] : P.at(i,i);                                         }
   arma_inline elem_type at         (const uword row, const uword col) const { return (row == col) ? ( P_is_vec ? P[row] : P.at(row,row) ) : elem_type(0); }
   
-  arma_inline bool is_alias(const Mat<eT>& X) const { return ((void_ptr(&P) == void_ptr(&X)) || (void_ptr(P.mem) == void_ptr(X.mem))); }
+  arma_inline bool is_alias(const Mat<eT>& X) const { return (void_ptr(P.mem) == void_ptr(X.mem)); }
   
   const Mat<eT>& P;
   const bool     P_is_vec;
@@ -232,7 +232,7 @@ class diagmat_proxy< Row<eT> >
   arma_inline elem_type operator[] (const uword i)                    const { return P[i];                                 }
   arma_inline elem_type at         (const uword row, const uword col) const { return (row == col) ? P[row] : elem_type(0); }
   
-  arma_inline bool is_alias(const Mat<eT>& X) const { return ((void_ptr(&P) == void_ptr(&X)) || (void_ptr(P.mem) == void_ptr(X.mem))); }
+  arma_inline bool is_alias(const Mat<eT>& X) const { return (void_ptr(P.mem) == void_ptr(X.mem)); }
   
   static constexpr bool P_is_vec = true;
   
@@ -264,7 +264,7 @@ class diagmat_proxy< Col<eT> >
   arma_inline elem_type operator[] (const uword i)                    const { return P[i];                                 }
   arma_inline elem_type at         (const uword row, const uword col) const { return (row == col) ? P[row] : elem_type(0); }
   
-  arma_inline bool is_alias(const Mat<eT>& X) const { return ((void_ptr(&P) == void_ptr(&X)) || (void_ptr(P.mem) == void_ptr(X.mem))); }
+  arma_inline bool is_alias(const Mat<eT>& X) const { return (void_ptr(P.mem) == void_ptr(X.mem)); }
   
   static constexpr bool P_is_vec = true;
   
@@ -296,7 +296,7 @@ class diagmat_proxy< subview_row<eT> >
   arma_inline elem_type operator[] (const uword i)                    const { return P[i];                                 }
   arma_inline elem_type at         (const uword row, const uword col) const { return (row == col) ? P[row] : elem_type(0); }
   
-  arma_inline bool is_alias(const Mat<eT>& X) const { return ((void_ptr(&(P.m)) == void_ptr(&X)) || (void_ptr(P.m.mem) == void_ptr(X.mem))); }
+  arma_inline bool is_alias(const Mat<eT>& X) const { return (void_ptr(P.m.mem) == void_ptr(X.mem)); }
   
   static constexpr bool P_is_vec = true;
   
@@ -328,7 +328,7 @@ class diagmat_proxy< subview_col<eT> >
   arma_inline elem_type operator[] (const uword i)                    const { return P[i];                                 }
   arma_inline elem_type at         (const uword row, const uword col) const { return (row == col) ? P[row] : elem_type(0); }
   
-  arma_inline bool is_alias(const Mat<eT>& X) const { return ((void_ptr(&(P.m)) == void_ptr(&X)) || (void_ptr(P.m.mem) == void_ptr(X.mem))); }
+  arma_inline bool is_alias(const Mat<eT>& X) const { return (void_ptr(P.m.mem) == void_ptr(X.mem)); }
   
   static constexpr bool P_is_vec = true;
   
