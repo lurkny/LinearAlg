@@ -7682,9 +7682,9 @@ See also:
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="randu"></a>
 <b>randu( )</b> 
-<br><b>randu( distr_param(a,b) )</b> 
+<br><b>randu( distr_param(a,b) )</b>
 <br>
-<br><b>randu( n_elem )</b> 
+<br><b>randu( n_elem )</b>
 <br><b>randu( n_elem, distr_param(a,b) )</b> 
 <br>
 <br><b>randu( n_rows, n_cols )</b>
@@ -7771,10 +7771,10 @@ arma_rng::set_seed_random();  // set the seed to a random value
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="randn"></a>
 <b>randn( )</b> 
-<br><b>randn( distr_param(mu,sd) )</b> 
+<br><b>randn( distr_param(mu,sd) )</b>
 <br>
-<br><b>randn( n_elem )</b> 
-<br><b>randn( n_elem, distr_param(mu,sd) )</b> 
+<br><b>randn( n_elem )</b>
+<br><b>randn( n_elem, distr_param(mu,sd) )</b>
 <br>
 <br><b>randn( n_rows, n_cols )</b>
 <br><b>randn( n_rows, n_cols, distr_param(mu,sd) )</b>
@@ -7796,11 +7796,20 @@ Generate a scalar, vector, matrix or cube with the elements set to random values
 Usage:
 <ul>
 <li><i>scalar_type</i> s = randn&lt;<i>scalar_type</i>&gt;( ), where <i>scalar_type</i> &in; { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }</li>
+<li><i>scalar_type</i> s = randn&lt;<i>scalar_type</i>&gt;( distr_param(mu,sd) ), where <i>scalar_type</i>  &in; { float, double, <a href="#cx_double">cx_float</a>, <a href="#cx_double">cx_double</a> }</li>
+<br>
 <li><i>vector_type</i> v = randn&lt;<i>vector_type</i>&gt;( n_elem )</li>
+<li><i>vector_type</i> v = randn&lt;<i>vector_type</i>&gt;( n_elem, distr_param(mu,sd) )</li>
+<br>
 <li><i>matrix_type</i> X = randn&lt;<i>matrix_type</i>&gt;( n_rows, n_cols )</li>
+<li><i>matrix_type</i> X = randn&lt;<i>matrix_type</i>&gt;( n_rows, n_cols, distr_param(mu,sd) )</li>
 <li><i>matrix_type</i> Y = randn&lt;<i>matrix_type</i>&gt;( size(X) )</li>
+<li><i>matrix_type</i> Y = randn&lt;<i>matrix_type</i>&gt;( size(X), distr_param(mu,sd) )</li>
+<br>
 <li><i>cube_type</i> Q = randn&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices )</li>
+<li><i>cube_type</i> Q = randn&lt;<i>cube_type</i>&gt;( n_rows, n_cols, n_slices, distr_param(mu,sd) )</li>
 <li><i>cube_type</i> R = randn&lt;<i>cube_type</i>&gt;( size(Q) )</li>
+<li><i>cube_type</i> R = randn&lt;<i>cube_type</i>&gt;( size(Q), distr_param(mu,sd) )</li>
 </ul>
 </li>
 <br>
@@ -7812,9 +7821,14 @@ To change the RNG seed, use <i>arma_rng::set_seed(value)</i> or <i>arma_rng::set
 Examples:
 <ul>
 <pre>
-vec  v = randn&lt;vec&gt;(5);
-mat  A = randn&lt;mat&gt;(5,6);
-cube Q = randn&lt;cube&gt;(5,6,7);
+double x = randn&lt;double&gt;();
+double y = randn&lt;double&gt;(distr_param(10,5));
+
+vec v = randn&lt;vec&gt;(5);
+vec w = randn&lt;vec&gt;(5, distr_param(10,5));
+
+mat A = randn&lt;mat&gt;(5, 6);
+mat B = randn&lt;mat&gt;(5, 6, distr_param(10,5));
 
 arma_rng::set_seed_random();  // set the seed to a random value
 </pre>
@@ -7840,10 +7854,10 @@ arma_rng::set_seed_random();  // set the seed to a random value
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="randg"></a>
 <b>randg( )</b> 
-<br><b>randg( distr_param(a,b) )</b> 
+<br><b>randg( distr_param(a,b) )</b>
 <br>
-<br><b>randg( n_elem )</b> 
-<br><b>randg( n_elem, distr_param(a,b) )</b> 
+<br><b>randg( n_elem )</b>
+<br><b>randg( n_elem, distr_param(a,b) )</b>
 <br>
 <br><b>randg( n_rows, n_cols )</b>
 <br><b>randg( n_rows, n_cols, distr_param(a,b) )</b>
