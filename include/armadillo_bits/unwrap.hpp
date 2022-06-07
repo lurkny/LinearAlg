@@ -372,7 +372,7 @@ struct quasi_unwrap< subview<eT> >
   static constexpr bool has_orig_mem = false;  // NOTE: set to false as this is the general case; original memory is only used when the subview is a contiguous chunk
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( ((sv.aux_row1 == 0) && (sv.n_rows == sv.m.n_rows)) ? (void_ptr(sv.m.mem) == void_ptr(X.mem)) : false ); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( ((sv.aux_row1 == 0) && (sv.n_rows == sv.m.n_rows)) ? ((void_ptr(sv.m.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem))) : false ); }
   };
 
 
@@ -1276,7 +1276,7 @@ struct partial_unwrap< Mat<eT> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = false;
@@ -1301,7 +1301,7 @@ struct partial_unwrap< Row<eT> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = false;
@@ -1326,7 +1326,7 @@ struct partial_unwrap< Col<eT> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = false;
@@ -1352,7 +1352,7 @@ struct partial_unwrap< subview<eT> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( ((sv.aux_row1 == 0) && (sv.n_rows == sv.m.n_rows)) ? (void_ptr(&(sv.m)) == void_ptr(&X)) : false ); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( ((sv.aux_row1 == 0) && (sv.n_rows == sv.m.n_rows)) ? ((void_ptr(sv.m.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem))) : false ); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = false;
@@ -1379,7 +1379,7 @@ struct partial_unwrap< subview_col<eT> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&orig)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( (void_ptr(orig.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem)) ); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = false;
@@ -1406,7 +1406,7 @@ struct partial_unwrap< subview_cols<eT> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&orig)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( (void_ptr(orig.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem)) ); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = false;
@@ -1528,7 +1528,7 @@ struct partial_unwrap< Op< Mat<eT>, op_htrans> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = false;
@@ -1553,7 +1553,7 @@ struct partial_unwrap< Op< Row<eT>, op_htrans> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = false;
@@ -1578,7 +1578,7 @@ struct partial_unwrap< Op< Col<eT>, op_htrans> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = false;
@@ -1604,7 +1604,7 @@ struct partial_unwrap< Op< subview<eT>, op_htrans> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( ((sv.aux_row1 == 0) && (sv.n_rows == sv.m.n_rows)) ? (void_ptr(&(sv.m)) == void_ptr(&X)) : false ); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( ((sv.aux_row1 == 0) && (sv.n_rows == sv.m.n_rows)) ? ((void_ptr(sv.m.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem))) : false ); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = false;
@@ -1631,7 +1631,7 @@ struct partial_unwrap< Op< subview_cols<eT>, op_htrans> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&orig) == void_ptr(&X)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( (void_ptr(orig.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem)) ); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = false;
@@ -1658,7 +1658,7 @@ struct partial_unwrap< Op< subview_col<eT>, op_htrans> >
   constexpr eT get_val() const { return eT(1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&orig)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( (void_ptr(orig.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem)) ); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = false;
@@ -1785,7 +1785,7 @@ struct partial_unwrap< Op< Mat<eT>, op_htrans2> >
   inline eT get_val() const { return val; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = true;
@@ -1812,7 +1812,7 @@ struct partial_unwrap< Op< Row<eT>, op_htrans2> >
   inline eT get_val() const { return val; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = true;
@@ -1839,7 +1839,7 @@ struct partial_unwrap< Op< Col<eT>, op_htrans2> >
   inline eT get_val() const { return val; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = true;
@@ -1867,7 +1867,7 @@ struct partial_unwrap< Op< subview<eT>, op_htrans2> >
   inline eT get_val() const { return val; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( ((sv.aux_row1 == 0) && (sv.n_rows == sv.m.n_rows)) ? (void_ptr(&(sv.m)) == void_ptr(&X)) : false ); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( ((sv.aux_row1 == 0) && (sv.n_rows == sv.m.n_rows)) ? ((void_ptr(sv.m.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem))) : false ); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = true;
@@ -1896,7 +1896,7 @@ struct partial_unwrap< Op< subview_cols<eT>, op_htrans2> >
   inline eT get_val() const { return val; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&orig) == void_ptr(&X)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( (void_ptr(orig.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem)) ); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = true;
@@ -1925,7 +1925,7 @@ struct partial_unwrap< Op< subview_col<eT>, op_htrans2> >
   inline eT get_val() const { return val; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&orig)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( (void_ptr(orig.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem)) ); }
   
   static constexpr bool do_trans = true;
   static constexpr bool do_times = true;
@@ -2061,7 +2061,7 @@ struct partial_unwrap< eOp<Mat<eT>, eop_scalar_times> >
   inline eT get_val() const { return val; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = true;
@@ -2088,7 +2088,7 @@ struct partial_unwrap< eOp<Row<eT>, eop_scalar_times> >
   inline eT get_val() const { return val; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = true;
@@ -2115,7 +2115,7 @@ struct partial_unwrap< eOp<Col<eT>, eop_scalar_times> >
   inline eT get_val() const { return val; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = true;
@@ -2143,7 +2143,7 @@ struct partial_unwrap< eOp<subview_col<eT>, eop_scalar_times> >
   arma_inline eT get_val() const { return val; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&orig)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( (void_ptr(orig.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem)) ); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = true;
@@ -2274,7 +2274,7 @@ struct partial_unwrap< eOp<Mat<eT>, eop_neg> >
   constexpr eT get_val() const { return eT(-1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = true;
@@ -2299,7 +2299,7 @@ struct partial_unwrap< eOp<Row<eT>, eop_neg> >
   constexpr eT get_val() const { return eT(-1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = true;
@@ -2324,7 +2324,7 @@ struct partial_unwrap< eOp<Col<eT>, eop_neg> >
   constexpr eT get_val() const { return eT(-1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&M)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = true;
@@ -2350,7 +2350,7 @@ struct partial_unwrap< eOp<subview_col<eT>, eop_neg> >
   constexpr eT get_val() const { return eT(-1); }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (void_ptr(&X) == void_ptr(&orig)); }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return ( (void_ptr(orig.mem) == void_ptr(X.mem)) || (void_ptr(M.mem) == void_ptr(X.mem)) ); }
   
   static constexpr bool do_trans = false;
   static constexpr bool do_times = true;

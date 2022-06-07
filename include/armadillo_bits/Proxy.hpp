@@ -1062,7 +1062,7 @@ struct Proxy< subview_cols<eT> >
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Mat<eT2>& X) const { return (is_same_type<eT,eT2>::value) ? (void_ptr(sv.m.mem) == void_ptr(X.mem)): false; }
+  arma_inline bool is_alias(const Mat<eT2>& X) const { return (is_same_type<eT,eT2>::value) ? ((void_ptr(sv.m.mem) == void_ptr(X.mem)) || (void_ptr(Q.mem) == void_ptr(X.mem))) : false; }
   
   template<typename eT2>
   arma_inline bool has_overlap(const subview<eT2>& X) const { return sv.check_overlap(X); }
