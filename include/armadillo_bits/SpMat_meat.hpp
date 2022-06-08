@@ -5815,6 +5815,8 @@ SpMat<eT>::steal_mem(SpMat<eT>& x)
   
   if(layout_ok)
     {
+    arma_extra_debug_print("SpMat::steal_mem(): stealing memory");
+    
     x.sync_csc();
     
     steal_mem_simple(x);
@@ -5825,6 +5827,8 @@ SpMat<eT>::steal_mem(SpMat<eT>& x)
     }
   else
     {
+    arma_extra_debug_print("SpMat::steal_mem(): copying memory");
+    
     (*this).operator=(x);
     }
   }

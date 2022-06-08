@@ -1213,6 +1213,8 @@ Mat<eT>::steal_mem(Mat<eT>& x)
   
   if( layout_ok && (t_mem_state <= 1) && ((x_n_alloc > arma_config::mat_prealloc) || (x_mem_state == 1)) )
     {
+    arma_extra_debug_print("Mat::steal_mem(): stealing memory");
+    
     reset();
     
     access::rw(n_rows)    = x_n_rows;
@@ -1231,6 +1233,8 @@ Mat<eT>::steal_mem(Mat<eT>& x)
     }
   else
     {
+    arma_extra_debug_print("Mat::steal_mem(): copying memory");
+    
     (*this).operator=(x);
     }
   }
