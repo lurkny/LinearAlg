@@ -70,7 +70,7 @@ struct ProxyCube< Cube<eT> >
   arma_inline aligned_ea_type get_aligned_ea() const { return Q;          }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Cube<eT2>& X) const { return (void_ptr(Q.mem) == void_ptr(X.mem)); }
+  arma_inline bool is_alias(const Cube<eT2>& X) const { return (void_ptr(&Q) == void_ptr(&X)); }
   
   template<typename eT2>
   arma_inline bool has_overlap(const subview_cube<eT2>& X) const { return is_alias(X.m); }
@@ -250,7 +250,7 @@ struct ProxyCube< subview_cube<eT> >
   arma_inline aligned_ea_type get_aligned_ea() const { return Q; }
   
   template<typename eT2>
-  arma_inline bool is_alias(const Cube<eT2>& X) const { return (void_ptr(Q.m.mem) == void_ptr(X.mem)); }
+  arma_inline bool is_alias(const Cube<eT2>& X) const { return (void_ptr(&(Q.m)) == void_ptr(&X)); }
   
   template<typename eT2>
   arma_inline bool has_overlap(const subview_cube<eT2>& X) const { return Q.check_overlap(X); }

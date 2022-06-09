@@ -54,7 +54,7 @@ struct unwrap_cube< Cube<eT> >
   const Cube<eT>& M;
   
   template<typename eT2>
-  arma_inline bool is_alias(const Cube<eT2>& X) const { return (void_ptr(M.mem) == void_ptr(X.mem)); }
+  arma_inline bool is_alias(const Cube<eT2>& X) const { return (void_ptr(&M) == void_ptr(&X)); }
   };
 
 
