@@ -51,6 +51,8 @@ Gen<T1, gen_type>::operator[](const uword ii) const
        if(is_same_type<gen_type, gen_zeros>::yes)  { return eT(0);                                            }
   else if(is_same_type<gen_type, gen_ones >::yes)  { return eT(1);                                            }
   else if(is_same_type<gen_type, gen_eye  >::yes)  { return ((ii % n_rows) == (ii / n_rows)) ? eT(1) : eT(0); }
+  
+  return eT(0);  // prevent pedantic compiler warnings 
   }
 
 
@@ -65,6 +67,8 @@ Gen<T1, gen_type>::at(const uword r, const uword c) const
        if(is_same_type<gen_type, gen_zeros>::yes)  { return eT(0);                    }
   else if(is_same_type<gen_type, gen_ones >::yes)  { return eT(1);                    }
   else if(is_same_type<gen_type, gen_eye  >::yes)  { return (r == c) ? eT(1) : eT(0); }
+  
+  return eT(0);  // prevent pedantic compiler warnings 
   }
 
 

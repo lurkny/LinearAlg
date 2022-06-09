@@ -49,6 +49,8 @@ GenCube<eT, gen_type>::operator[](const uword) const
   {
        if(is_same_type<gen_type, gen_zeros>::yes)  { return eT(0); }
   else if(is_same_type<gen_type, gen_ones >::yes)  { return eT(1); }
+  
+  return eT(0);  // prevent pedantic compiler warnings 
   }
 
 
@@ -60,6 +62,8 @@ GenCube<eT, gen_type>::at(const uword, const uword, const uword) const
   {
        if(is_same_type<gen_type, gen_zeros>::yes)  { return eT(0); }
   else if(is_same_type<gen_type, gen_ones >::yes)  { return eT(1); }
+  
+  return eT(0);  // prevent pedantic compiler warnings 
   }
 
 
@@ -71,6 +75,8 @@ GenCube<eT, gen_type>::at_alt(const uword) const
   {
        if(is_same_type<gen_type, gen_zeros>::yes)  { return eT(0); }
   else if(is_same_type<gen_type, gen_ones >::yes)  { return eT(1); }
+  
+  return eT(0);  // prevent pedantic compiler warnings 
   }
 
 
