@@ -82,7 +82,6 @@ namespace superlu
 
 namespace arma
 {
-
 namespace superlu
   {
   // Include supermatrix.h.  This gives us SuperMatrix.
