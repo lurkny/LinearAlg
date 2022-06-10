@@ -56,8 +56,6 @@
 
 #undef ARMA_SLU_HEADERS_FOUND
 
-#if defined(ARMA_USE_SUPERLU_HEADERS) || defined(ARMA_SUPERLU_INCLUDE_DIR)
-
 // Since we need to suport float, double, cx_float and cx_double,
 // as well as preserve the sanity of the user,
 // we cannot simply include all the SuperLU headers due to their messy state
@@ -71,13 +69,22 @@
 
 namespace arma
 {
-
 namespace superlu
   {
   // slu_*defs.h has int typedefed to int_t.
   // I'll just write it as int for simplicity, where I can, but supermatrix.h needs int_t.
   typedef int int_t;
-  
+  }
+}
+
+
+#if defined(ARMA_USE_SUPERLU_HEADERS) || defined(ARMA_SUPERLU_INCLUDE_DIR)
+
+namespace arma
+{
+
+namespace superlu
+  {
   // Include supermatrix.h.  This gives us SuperMatrix.
   // Put it in the slu namespace.
   // For versions of SuperLU I am familiar with, supermatrix.h does not include any other files.
@@ -131,7 +138,6 @@ namespace superlu
       int     expansions;
       } SuperLUStat_t;
     
-    
     typedef struct
       {
       fact_t        Fact;
@@ -162,20 +168,17 @@ namespace superlu
       yes_no_t      SymPattern;
       } superlu_options_t;
     
-    
     typedef struct
       {
       float for_lu;
       float total_needed;
       } mem_usage_t;
     
-    
     typedef struct e_node
       {
       int   size;
       void* mem;
       } ExpHeader;
-    
     
     typedef struct
       {
@@ -185,7 +188,6 @@ namespace superlu
       int   top2;
       void* array;
       } LU_stack_t;
-    
     
     typedef struct
       {
@@ -228,23 +230,16 @@ namespace superlu
 
 #if defined(ARMA_USE_SUPERLU) && !defined(ARMA_SLU_HEADERS_FOUND)
 
+// Not using any SuperLU headers, so define all required enums and structs.
+
 #if defined(ARMA_SUPERLU_INCLUDE_DIR)
   #pragma message ("WARNING: SuperLU headers not found; using built-in definitions")
 #endif
 
-// Not using any SuperLU headers, so define all required enums and structs.
-// 
-// CAVEAT:
-// This code requires SuperLU version 5.2,
-// and assumes that newer 5.x versions will have no API changes.
-
 namespace arma
 {
-
 namespace superlu
   {
-  typedef int int_t;
-  
   typedef enum
     {
     SLU_NC,
@@ -257,7 +252,6 @@ namespace superlu
     SLU_NR_loc
     } Stype_t;
   
-  
   typedef enum
     {
     SLU_S,
@@ -265,7 +259,6 @@ namespace superlu
     SLU_C,
     SLU_Z
     } Dtype_t;
-  
   
   typedef enum
     {
@@ -280,7 +273,6 @@ namespace superlu
     SLU_HEU
     } Mtype_t;
   
-  
   typedef struct
     {
     Stype_t Stype;
@@ -290,7 +282,6 @@ namespace superlu
     int_t   ncol;
     void*   Store;
     } SuperMatrix;
-  
   
   typedef struct
     {
@@ -302,7 +293,6 @@ namespace superlu
     int     expansions;
     } SuperLUStat_t;
   
-  
   typedef enum {NO, YES}                                          yes_no_t;
   typedef enum {DOFACT, SamePattern, SamePattern_SameRowPerm, FACTORED} fact_t;
   typedef enum {NOROWPERM, LargeDiag, MY_PERMR}                   rowperm_t;
@@ -313,7 +303,6 @@ namespace superlu
   typedef enum {SYSTEM, USER}                                     LU_space_t;
   typedef enum {ONE_NORM, TWO_NORM, INF_NORM}                     norm_t;
   typedef enum {SILU, SMILU_1, SMILU_2, SMILU_3}                  milu_t;
-
 
   typedef struct
     {
@@ -345,13 +334,11 @@ namespace superlu
     yes_no_t      SymPattern;
     } superlu_options_t;
   
-  
   typedef struct
     {
     float for_lu;
     float total_needed;
     } mem_usage_t;
-  
   
   typedef struct
     {
@@ -361,20 +348,17 @@ namespace superlu
     int_t* colptr;
     } NCformat;
   
-  
   typedef struct
     {
     int_t lda;
     void* nzval;
     } DNformat;
   
-  
   typedef struct e_node
     {
     int   size;
     void* mem;
     } ExpHeader;
-  
   
   typedef struct
     {
@@ -384,7 +368,6 @@ namespace superlu
     int   top2;
     void* array;
     } LU_stack_t;
-  
   
   typedef struct
     {
@@ -408,6 +391,8 @@ namespace superlu
     } GlobalLU_t;
   }
 }
+
+#undef ARMA_SLU_HEADERS_FOUND
 
 
 #endif
