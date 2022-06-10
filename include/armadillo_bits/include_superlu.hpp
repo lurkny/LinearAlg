@@ -77,7 +77,6 @@ namespace superlu
   }
 }
 
-
 #if defined(ARMA_USE_SUPERLU_HEADERS) || defined(ARMA_SUPERLU_INCLUDE_DIR)
 
 namespace arma
@@ -216,12 +215,10 @@ namespace superlu
 
 #endif
 
-
 #if defined(ARMA_USE_SUPERLU_HEADERS) && !defined(ARMA_SLU_HEADERS_FOUND)
   #undef ARMA_USE_SUPERLU
   #pragma message ("WARNING: use of SuperLU disabled; required headers not found")
 #endif
-
 
 #endif
 
@@ -392,6 +389,5 @@ namespace superlu
 }
 
 #undef ARMA_SLU_HEADERS_FOUND
-
 
 #endif
