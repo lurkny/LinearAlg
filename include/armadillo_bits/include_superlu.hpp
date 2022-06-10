@@ -89,8 +89,8 @@ namespace superlu
   // Therefore, putting it in the superlu namespace is reasonably safe.
   // This same reasoning is true for superlu_enum_consts.h.
   
-  #undef ARMA_SLU_SUPERMATRIX_H
-  #undef ARMA_SLU_SUPERLU_ENUM_CONSTS_H
+  #undef ARMA_SLU_HEADER_A
+  #undef ARMA_SLU_HEADER_B
   
   #if defined(ARMA_SUPERLU_INCLUDE_DIR)
     #undef ARMA_SLU_STR1
@@ -99,30 +99,30 @@ namespace superlu
     #define ARMA_SLU_STR1(x) x
     #define ARMA_SLU_STR2(x) ARMA_SLU_STR1(x)
     
-    #define ARMA_SLU_SUPERMATRIX_H         ARMA_SLU_STR2(ARMA_SUPERLU_INCLUDE_DIR)ARMA_SLU_STR2(supermatrix.h)
-    #define ARMA_SLU_SUPERLU_ENUM_CONSTS_H ARMA_SLU_STR2(ARMA_SUPERLU_INCLUDE_DIR)ARMA_SLU_STR2(superlu_enum_consts.h)
+    #define ARMA_SLU_HEADER_A ARMA_SLU_STR2(ARMA_SUPERLU_INCLUDE_DIR)ARMA_SLU_STR2(supermatrix.h)
+    #define ARMA_SLU_HEADER_B ARMA_SLU_STR2(ARMA_SUPERLU_INCLUDE_DIR)ARMA_SLU_STR2(superlu_enum_consts.h)
   #else
-    #define ARMA_SLU_SUPERMATRIX_H         supermatrix.h
-    #define ARMA_SLU_SUPERLU_ENUM_CONSTS_H superlu_enum_consts.h
+    #define ARMA_SLU_HEADER_A supermatrix.h
+    #define ARMA_SLU_HEADER_B superlu_enum_consts.h
   #endif
   
   #if defined(__has_include)
-    #if __has_include(ARMA_INCFILE_WRAP(ARMA_SLU_SUPERMATRIX_H)) && __has_include(ARMA_INCFILE_WRAP(ARMA_SLU_SUPERLU_ENUM_CONSTS_H))
-      #include ARMA_INCFILE_WRAP(ARMA_SLU_SUPERMATRIX_H)
-      #include ARMA_INCFILE_WRAP(ARMA_SLU_SUPERLU_ENUM_CONSTS_H)
+    #if __has_include(ARMA_INCFILE_WRAP(ARMA_SLU_HEADER_A)) && __has_include(ARMA_INCFILE_WRAP(ARMA_SLU_HEADER_B))
+      #include ARMA_INCFILE_WRAP(ARMA_SLU_HEADER_A)
+      #include ARMA_INCFILE_WRAP(ARMA_SLU_HEADER_B)
       #define  ARMA_SLU_HEADERS_FOUND
     #endif
   #else
-    #include ARMA_INCFILE_WRAP(ARMA_SLU_SUPERMATRIX_H)
-    #include ARMA_INCFILE_WRAP(ARMA_SLU_SUPERLU_ENUM_CONSTS_H)
+    #include ARMA_INCFILE_WRAP(ARMA_SLU_HEADER_A)
+    #include ARMA_INCFILE_WRAP(ARMA_SLU_HEADER_B)
     #define  ARMA_SLU_HEADERS_FOUND
   #endif
   
   #undef ARMA_SLU_STR1
   #undef ARMA_SLU_STR2
     
-  #undef ARMA_SLU_SUPERMATRIX_H
-  #undef ARMA_SLU_SUPERLU_ENUM_CONSTS_H
+  #undef ARMA_SLU_HEADER_A
+  #undef ARMA_SLU_HEADER_B
   
   #if defined(ARMA_SLU_HEADERS_FOUND)
     
