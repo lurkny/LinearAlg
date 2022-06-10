@@ -54,6 +54,7 @@
 
 #if defined(ARMA_USE_SUPERLU)
 
+#undef ARMA_SLU_HEADERS_FOUND
 
 #if defined(ARMA_USE_SUPERLU_HEADERS) || defined(ARMA_SUPERLU_INCLUDE_DIR)
 
@@ -104,13 +105,12 @@ namespace superlu
     #if __has_include(ARMA_INCFILE_WRAP(ARMA_SLU_SUPERMATRIX_H)) && __has_include(ARMA_INCFILE_WRAP(ARMA_SLU_SUPERLU_ENUM_CONSTS_H))
       #include ARMA_INCFILE_WRAP(ARMA_SLU_SUPERMATRIX_H)
       #include ARMA_INCFILE_WRAP(ARMA_SLU_SUPERLU_ENUM_CONSTS_H)
-    #else
-      #undef ARMA_USE_SUPERLU
-      #pragma message ("WARNING: use of SuperLU disabled; required headers not found")
+      #define  ARMA_SLU_HEADERS_FOUND
     #endif
   #else
     #include ARMA_INCFILE_WRAP(ARMA_SLU_SUPERMATRIX_H)
     #include ARMA_INCFILE_WRAP(ARMA_SLU_SUPERLU_ENUM_CONSTS_H)
+    #define  ARMA_SLU_HEADERS_FOUND
   #endif
   
   #undef ARMA_SLU_STR1
@@ -119,7 +119,7 @@ namespace superlu
   #undef ARMA_SLU_SUPERMATRIX_H
   #undef ARMA_SLU_SUPERLU_ENUM_CONSTS_H
   
-  #if defined(ARMA_USE_SUPERLU)
+  #if defined(ARMA_SLU_HEADERS_FOUND)
     
     typedef struct
       {
@@ -213,7 +213,24 @@ namespace superlu
 }
 
 
-#else
+#endif
+
+
+#if defined(ARMA_USE_SUPERLU_HEADERS) && !defined(ARMA_SLU_HEADERS_FOUND)
+  #undef ARMA_USE_SUPERLU
+  #pragma message ("WARNING: use of SuperLU disabled; required headers not found")
+#endif
+
+
+#endif
+
+
+
+#if defined(ARMA_USE_SUPERLU) && !defined(ARMA_SLU_HEADERS_FOUND)
+
+#if defined(ARMA_SUPERLU_INCLUDE_DIR)
+  #pragma message ("WARNING: SuperLU headers not found; using built-in definitions")
+#endif
 
 // Not using any SuperLU headers, so define all required enums and structs.
 // 
@@ -391,8 +408,6 @@ namespace superlu
     } GlobalLU_t;
   }
 }
-
-#endif
 
 
 #endif
