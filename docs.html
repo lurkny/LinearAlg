@@ -7605,12 +7605,16 @@ Usage:
 Examples:
 <ul>
 <pre>
-vec  v = ones&lt;vec&gt;(10);
-uvec u = ones&lt;uvec&gt;(11);
-mat  A = ones&lt;mat&gt;(5,6);
-cube Q = ones&lt;cube&gt;(5,6,7);
+   vec v = ones(10);    // or: vec v(10, fill::ones);
+  uvec u = ones&lt;uvec&gt;(10);
+rowvec r = ones&lt;rowvec&gt;(10);
 
-mat  B = 123.0 * ones&lt;mat&gt;(5,6);
+ mat A = ones(5,6);     // or: mat A(5, 6, fill::ones);
+fmat B = ones&lt;fmat&gt;(5,6);
+umat C = ones&lt;umat&gt;(5,6);
+
+ cube Q = ones(5,6,7);  // or: cube Q(5, 6, 7, fill::ones);
+fcube R = ones&lt;fcube&gt;(5,6,7);
 </pre>
 </ul>
 </li>
@@ -7658,10 +7662,16 @@ Usage:
 Examples:
 <ul>
 <pre>
-vec  v = zeros&lt;vec&gt;(10);
-uvec u = zeros&lt;uvec&gt;(11);
-mat  A = zeros&lt;mat&gt;(5,6);
-cube Q = zeros&lt;cube&gt;(5,6,7);
+   vec v = zeros(10);    // or: vec v(10, fill::zeros);
+  uvec u = zeros&lt;uvec&gt;(10);
+rowvec r = zeros&lt;rowvec&gt;(10);
+
+ mat A = zeros(5,6);     // or: mat A(5, 6, fill::zeros);
+fmat B = zeros&lt;fmat&gt;(5,6);
+umat C = zeros&lt;umat&gt;(5,6);
+
+ cube Q = zeros(5,6,7);  // or: cube Q(5, 6, 7, fill::zeros);
+fcube R = zeros&lt;fcube&gt;(5,6,7);
 </pre>
 </ul>
 </li>
@@ -7732,14 +7742,20 @@ To change the RNG seed, use <i>arma_rng::set_seed(value)</i> or <i>arma_rng::set
 Examples:
 <ul>
 <pre>
-double x = randu&lt;double&gt;();
-double y = randu&lt;double&gt;(distr_param(10,20));
+double a = randu();
+double b = randu(distr_param(10,20));
 
-vec v = randu&lt;vec&gt;(5);
-vec w = randu&lt;vec&gt;(5, distr_param(10,20));
+vec v1 = randu(5);    // or: vec v1(5, fill::randu);
+vec v2 = randu(5, distr_param(10,20));
 
-mat A = randu&lt;mat&gt;(5, 6);
-mat B = randu&lt;mat&gt;(5, 6, distr_param(10,20));
+rowvec r1 = randu&lt;rowvec&gt;(5);
+rowvec r2 = randu&lt;rowvec&gt;(5, distr_param(10,20));
+
+mat A1 = randu(5, 6);  // or: mat A1(5, 6, fill::randu);
+mat A2 = randu(5, 6, distr_param(10,20));
+
+fmat B1 = randu&lt;fmat&gt;(5, 6);
+fmat B2 = randu&lt;fmat&gt;(5, 6, distr_param(10,20));
 
 arma_rng::set_seed_random();  // set the seed to a random value
 </pre>
@@ -7812,14 +7828,20 @@ To change the RNG seed, use <i>arma_rng::set_seed(value)</i> or <i>arma_rng::set
 Examples:
 <ul>
 <pre>
-double x = randn&lt;double&gt;();
-double y = randn&lt;double&gt;(distr_param(10,5));
+double a = randn();
+double b = randn(distr_param(10,5));
 
-vec v = randn&lt;vec&gt;(5);
-vec w = randn&lt;vec&gt;(5, distr_param(10,5));
+vec v1 = randn(5);    // or: vec v1(5, fill::randn);
+vec v2 = randn(5, distr_param(10,5));
 
-mat A = randn&lt;mat&gt;(5, 6);
-mat B = randn&lt;mat&gt;(5, 6, distr_param(10,5));
+rowvec r1 = randn&lt;rowvec&gt;(5);
+rowvec r2 = randn&lt;rowvec&gt;(5, distr_param(10,5));
+
+mat A1 = randn(5, 6);  // or: mat A1(5, 6, fill::randn);
+mat A2 = randn(5, 6, distr_param(10,5));
+
+fmat B1 = randn&lt;fmat&gt;(5, 6);
+fmat B2 = randn&lt;fmat&gt;(5, 6, distr_param(10,5));
 
 arma_rng::set_seed_random();  // set the seed to a random value
 </pre>
@@ -7907,9 +7929,17 @@ To change the RNG seed, use <i>arma_rng::set_seed(value)</i> or <i>arma_rng::set
 Examples:
 <ul>
 <pre>
-vec v = randg&lt;vec&gt;(100, distr_param(2,1));
+vec v1 = randg(100);
+vec v2 = randg(100, distr_param(2,1));
 
-mat X = randg&lt;mat&gt;(10, 10, distr_param(2,1));
+rowvec r1 = randg&lt;rowvec&gt;(100);
+rowvec r2 = randg&lt;rowvec&gt;(100, distr_param(2,1));
+
+mat A1 = randg(10, 10);
+mat A2 = randg(10, 10, distr_param(2,1));
+
+fmat B1 = randg&lt;fmat&gt;(10, 10);
+fmat B2 = randg&lt;fmat&gt;(10, 10, distr_param(2,1));
 </pre>
 </ul>
 </li>
@@ -7980,9 +8010,14 @@ To change the RNG seed, use <i>arma_rng::set_seed(value)</i> or <i>arma_rng::set
 Examples:
 <ul>
 <pre>
-imat A = randi&lt;imat&gt;(5, 6);
+int a = randi();
+int b = randi(distr_param(-10, +20));
 
-imat A = randi&lt;imat&gt;(6, 7, distr_param(-10, +20));
+imat A1 = randi(5, 6);
+imat A2 = randi(5, 6, distr_param(-10, +20));
+
+mat B1 = randi&lt;mat&gt;(5, 6);
+mat B2 = randi&lt;mat&gt;(5, 6, distr_param(-10, +20));
 
 arma_rng::set_seed_random();  // set the seed to a random value
 </pre>
