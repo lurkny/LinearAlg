@@ -14893,9 +14893,21 @@ For vectors, <i>X</i> and <i>Y</i> must have the same number of elements
 </li>
 <br>
 <li>
-The default <i>norm_type&thinsp;=&thinsp;0</i> performs normalisation using <i>N-1</i> (where <i>N</i> is the number of observations),
-providing the best unbiased estimation of the covariance matrix (if the observations are from a normal distribution).
-Using <i>norm_type&thinsp;=&thinsp;1</i> causes normalisation to be done using <i>N</i>, which provides the second moment matrix of the observations about their mean
+The <i>norm_type</i> argument is optional; by default <i>norm_type&thinsp;=&thinsp;0</i> is used
+</li>
+<br>
+<li>
+the <i>norm_type</i> argument controls the type of normalisation used, with <i>N</i> denoting the number of observations:
+<ul>
+<li>
+for <i>norm_type&thinsp;=&thinsp;0</i>, normalisation is done using <i>N-1</i>,
+providing the best unbiased estimation of the covariance matrix (if the observations are from a normal distribution)
+</li>
+<li>
+for <i>norm_type&thinsp;=&thinsp;1</i>, normalisation is done using <i>N</i>,
+which provides the second moment matrix of the observations about their mean
+</li>
+</ul>
 </li>
 <br>
 <li>
@@ -14954,8 +14966,15 @@ For vectors, <i>X</i> and <i>Y</i> must have the same number of elements
 </li>
 <br>
 <li>
-The default <i>norm_type&thinsp;=&thinsp;0</i> performs normalisation of the correlation matrix using <i>N-1</i> (where <i>N</i> is the number of observations).
-Using <i>norm_type&thinsp;=&thinsp;1</i> causes normalisation to be done using <i>N</i>
+The <i>norm_type</i> argument is optional; by default <i>norm_type&thinsp;=&thinsp;0</i> is used
+</li>
+<br>
+<li>
+the <i>norm_type</i> argument controls the type of normalisation used, with <i>N</i> denoting the number of observations:
+<ul>
+<li>for <i>norm_type&thinsp;=&thinsp;0</i>, normalisation is done using <i>N-1</i></li>
+<li>for <i>norm_type&thinsp;=&thinsp;1</i>, normalisation is done using <i>N</i></li>
+</ul>
 </li>
 <br>
 <li>
