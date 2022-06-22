@@ -18540,6 +18540,89 @@ Specific functionality can be enabled or disabled by uncommenting or commenting 
 <tbody>
   <tr>
     <td style="vertical-align: top;">
+<code>ARMA_WARN_LEVEL</code>
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+The level of warning messages printed to <i>ARMA_CERR_STREAM</i>.
+<br>Must be an integer &geq; 0. By default defined to 2.
+<table>
+<tr><td>0</td><td>&nbsp;=&nbsp;</td><td>no warnings; generally not recommended</td></tr>
+<tr><td>1</td><td>&nbsp;=&nbsp;</td><td>only critical warnings about arguments and/or data which are likely to lead to incorrect results</td></tr>
+<tr><td>2</td><td>&nbsp;=&nbsp;</td><td>as per level 1, and warnings about poorly conditioned systems (low rcond) detected by <a href="#solve">solve()</a>, <a href="#spsolve">spsolve()</a>, etc</td></tr>
+<tr><td>3</td><td>&nbsp;=&nbsp;</td><td>as per level 2, and warnings about failed decompositions, failed saving/loading, etc</td></tr>
+</table>
+<br>
+Example usage:
+<pre>
+#define ARMA_WARN_LEVEL 1
+#include &lt;armadillo&gt;
+</pre>
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
+<code>ARMA_CERR_STREAM</code>
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+The default stream used for printing warnings and errors.
+Must be always enabled.
+By default defined to <i>std::cerr</i>
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
+<code>ARMA_COUT_STREAM</code>
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+The default stream used for printing matrices and cubes by <a href="#print">.print()</a>.
+Must be always enabled.
+By default defined to <i>std::cout</i>
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
 <code>ARMA_DONT_USE_WRAPPER</code>
     </td>
     <td style="vertical-align: top;">
@@ -19306,54 +19389,6 @@ If you mainly use lots of very small vectors (eg.&thinsp;&le;&thinsp;4 elements)
       &nbsp;
     </td>
   </tr>
-  <tr>
-    <td style="vertical-align: top;">
-<code>ARMA_COUT_STREAM</code>
-    </td>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-    <td style="vertical-align: top;">
-The default stream used for printing matrices and cubes by <a href="#print">.print()</a>.
-Must be always enabled.
-By default defined to <i>std::cout</i>
-    </td>
-  </tr>
-  <tr>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-  </tr>
-  <tr>
-    <td style="vertical-align: top;">
-<code>ARMA_CERR_STREAM</code>
-    </td>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-    <td style="vertical-align: top;">
-The default stream used for printing warnings and errors.
-Must be always enabled.
-By default defined to <i>std::cerr</i>
-    </td>
-  </tr>
-  <tr>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-  </tr>
 <!--
   <tr>
     <td style="vertical-align: top;">
@@ -19401,24 +19436,6 @@ Do not print errors or warnings; overrides <i>ARMA_PRINT_ERRORS</i>.
     </td>
   </tr>
 -->
-  <tr>
-    <td style="vertical-align: top;">
-<code>ARMA_WARN_LEVEL</code>
-    </td>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-    <td style="vertical-align: top;">
-The level of warning messages printed to <i>ARMA_CERR_STREAM</i>.
-<br>Must be an integer &geq; 0. The default value is 2.
-<table>
-<tr><td>0</td><td>&nbsp;=&nbsp;</td><td>no warnings; generally not recommended</td></tr>
-<tr><td>1</td><td>&nbsp;=&nbsp;</td><td>only critical warnings about arguments and/or data which are likely to lead to incorrect results</td></tr>
-<tr><td>2</td><td>&nbsp;=&nbsp;</td><td>as per level 1, and warnings about poorly conditioned systems (low rcond) detected by <a href="#solve">solve()</a>, <a href="#spsolve">spsolve()</a>, etc</td></tr>
-<tr><td>3</td><td>&nbsp;=&nbsp;</td><td>as per level 2, and warnings about failed decompositions, failed saving/loading, etc</td></tr>
-</table>
-    </td>
-  </tr>
 </tbody>
 </table>
 </li>
