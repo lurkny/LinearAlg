@@ -5334,11 +5334,9 @@ Iterators for sparse matrices traverse over non-zero elements within the specifi
 <li>
 <b>Caveats:</b>
 <ul>
-<li>
-to modify the non-zero elements in a safer manner,
-use <a href="#transform">.transform()</a> or <a href="#for_each">.for_each()</a> instead of iterators;
-<br>
-writing a zero value into a sparse matrix through an iterator will invalidate all current iterators associated with the sparse matrix</li>
+<li>writing a zero value into a sparse matrix through an iterator will invalidate all current iterators associated with the sparse matrix</li>
+<li>to modify the non-zero elements in a safer manner, use <a href="#transform">.transform()</a> or <a href="#for_each">.for_each()</a> instead of iterators
+</li>
 </ul>
 </li>
 <br>
