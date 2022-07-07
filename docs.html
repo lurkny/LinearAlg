@@ -289,9 +289,9 @@ Conrad Sanderson and Ryan Curtin.
 <tr><td><a href="#each_slice">.each_slice</a></td><td>&nbsp;</td><td>repeated operations on each slice of cube (aka "broadcasting")</td></tr>
 <tr><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td></tr>
 <tr><td><a href="#set_imag">.set_imag&nbsp;/&nbsp;.set_real</a></td><td>&nbsp;</td><td>set imaginary/real part</td></tr>
-<tr><td><a href="#insert">.insert_rows/cols/slices</a></td><td>&nbsp;</td><td>insert vector/matrix/cube at specified row/column/slice</td></tr>
-<tr><td><a href="#shed">.shed_rows/cols/slices</a></td><td>&nbsp;</td><td>remove specified rows/columns/slices</td></tr>
-<tr><td><a href="#swap_rows">.swap_rows/cols</a></td><td>&nbsp;</td><td>swap specified rows or columns</td></tr>
+<tr><td><a href="#insert">.insert_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></td><td>&nbsp;</td><td>insert vector/matrix/cube at specified row/column/slice</td></tr>
+<tr><td><a href="#shed">.shed_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></td><td>&nbsp;</td><td>remove specified rows/columns/slices</td></tr>
+<tr><td><a href="#swap_rows">.swap_rows&thinsp;/&thinsp;cols</a></td><td>&nbsp;</td><td>swap specified rows or columns</td></tr>
 <tr><td><a href="#swap">.swap</a></td><td>&nbsp;</td><td>swap contents with given object</td></tr>
 <tr><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td></tr>
 <tr><td><a href="#memptr">.memptr</a></td><td>&nbsp;</td><td>raw pointer to memory</td></tr>
@@ -339,7 +339,7 @@ Conrad Sanderson and Ryan Curtin.
 <br>
 
 <a name="part_gen"></a>
-<b>Generated Vectors/Matrices/Cubes</b>
+<b>Generated Vectors&thinsp;/&thinsp;Matrices&thinsp;/&thinsp;Cubes</b>
 <ul>
 <table>
 <tbody>
@@ -364,7 +364,7 @@ Conrad Sanderson and Ryan Curtin.
 <br>
 
 <a name="part_fns"></a>
-<b>Functions of Vectors/Matrices/Cubes</b>
+<b>Functions of Vectors&thinsp;/&thinsp;Matrices&thinsp;/&thinsp;Cubes</b>
 <ul>
 <table>
 <tbody>
@@ -1835,7 +1835,7 @@ F.save("mat_field");
 <ul>
 <li><a href="#attributes">field attributes</a></li>
 <li><a href="#subfield">subfield views</a></li>
-<li><a href="#save_load_field">saving/loading fields</a></li>
+<li><a href="#save_load_field">saving&thinsp;/&thinsp;loading fields</a></li>
 <li><a href="#Cube">Cube class</a></li>
 </ul>
 </li>
@@ -3623,8 +3623,8 @@ A.resize(7,6);
 <li><a href="#copy_size">.copy_size()</a></li>
 <li><a href="#zeros_member">.zeros()</a></li>
 <li><a href="#reset">.reset()</a></li>
-<li><a href="#insert">.insert_rows/cols/slices</a></li>
-<li><a href="#shed">.shed_rows/cols/slices</a></li>
+<li><a href="#insert">.insert_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
+<li><a href="#shed">.shed_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
 <li><a href="#resize">resize()</a> (standalone function)</li>
 <li><a href="#vectorise">vectorise()</a></li>
 <li><a href="#size">size()</a></li>
@@ -3903,9 +3903,9 @@ See also:
 <li><a href="#colptr">.colptr()</a></li>
 <li><a href="#in_range">.in_range()</a></li>
 <li><a href="#find">find()</a></li>
-<li><a href="#join">join_rows/cols/slices</a></li>
-<li><a href="#shed">.shed_rows/cols/slices</a></li>
-<li><a href="#insert">.insert_rows/cols/slices</a></li>
+<li><a href="#join">join_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
+<li><a href="#shed">.shed_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
+<li><a href="#insert">.insert_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
 <li><a href="#size">size()</a></li>
 <li><a href="#subcube">subcube views</a></li>
 </ul>
@@ -4519,8 +4519,8 @@ B.insert_cols(1, 5);
 <li>
 See also:
 <ul>
-<li><a href="#shed">.shed_rows/cols/slices</a></li>
-<li><a href="#join">join_rows/cols/slices</a></li>
+<li><a href="#shed">.shed_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
+<li><a href="#join">join_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
 <li><a href="#resize_member">.resize()</a></li>
 <li><a href="#submat">submatrix views</a></li>
 <li><a href="#subcube">subcube views</a></li>
@@ -4619,8 +4619,8 @@ B.shed_cols(indices);
 <li>
 See also:
 <ul>
-<li><a href="#insert">.insert_rows/cols/slices</a></li>
-<li><a href="#join">join_rows/cols/slices</a></li>
+<li><a href="#insert">.insert_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
+<li><a href="#join">join_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
 <li><a href="#resize_member">.resize()</a></li>
 <li><a href="#submat">submatrix views</a></li>
 <li><a href="#subcube">subcube views</a></li>
@@ -6889,7 +6889,7 @@ A.brief_print("A:");
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="save_load_mat"></a>
-<b>saving/loading matrices &amp; cubes</b>
+<b>saving&thinsp;/&thinsp;loading matrices &amp; cubes</b>
 <br>
 <br>
 <table>
@@ -7112,7 +7112,7 @@ the above settings can be combined using the <code>+</code> operator; for exampl
 <br>
 <li>
 <b>Caveat</b>:
-for saving/loading HDF5 files, support for HDF5 must be enabled within Armadillo's <a href="#config_hpp">configuration</a>;
+for saving&thinsp;/&thinsp;loading HDF5 files, support for HDF5 must be enabled within Armadillo's <a href="#config_hpp">configuration</a>;
 the <i>hdf5.h</i> header file must be available on your system and you will need to link with the HDF5 library (eg. <code><i>-lhdf5</i></code>)
 </li>
 <br>
@@ -7190,7 +7190,7 @@ if(ok == false)
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Hierarchical_Data_Format">HDF</a> in Wikipedia</li>
 <li><a href="https://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> in Wikipedia
-<li><a href="#save_load_field">saving/loading fields</a></li>
+<li><a href="#save_load_field">saving&thinsp;/&thinsp;loading fields</a></li>
 </ul>
 </li>
 <br>
@@ -7198,7 +7198,7 @@ if(ok == false)
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="save_load_field"></a>
-<b>saving/loading fields</b>
+<b>saving&thinsp;/&thinsp;loading fields</b>
 <br>
 <br>
 <table>
@@ -7308,7 +7308,7 @@ as each matrix element is copied and converted to an 8 bit representation
 <br>
 <li>See also:
 <ul>
-<li><a href="#save_load_mat">saving/loading matrices and cubes</a></li>
+<li><a href="#save_load_mat">saving&thinsp;/&thinsp;loading matrices and cubes</a></li>
 </ul>
 </li>
 <br>
@@ -7321,7 +7321,7 @@ as each matrix element is copied and converted to an 8 bit representation
 <hr class="greyline">
 <br>
 <br>
-<font size=+1><b>Generated Vectors/Matrices/Cubes</b></font>
+<font size=+1><b>Generated Vectors&thinsp;/&thinsp;Matrices&thinsp;/&thinsp;Cubes</b></font>
 <br>
 <br>
 
@@ -8209,7 +8209,7 @@ mat Y = circ_toeplitz(A);
 <hr class="greyline">
 <br>
 <br>
-<font size=+1><b>Functions of Vectors/Matrices/Cubes</b></font>
+<font size=+1><b>Functions of Vectors&thinsp;/&thinsp;Matrices&thinsp;/&thinsp;Cubes</b></font>
 <br>
 <br>
 
@@ -9931,8 +9931,8 @@ mat AC = join_cols(A,C);
 <li>
 See also:
 <ul>
-<li><a href="#shed">.shed_rows/cols/slices</a></li>
-<li><a href="#insert">.insert_rows/cols/slices</a></li>
+<li><a href="#shed">.shed_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
+<li><a href="#insert">.insert_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
 <li><a href="#join_slices">join_slices()</a></li>
 <li><a href="#submat">submatrix views</a></li>
 </ul>
@@ -9987,9 +9987,9 @@ cube S = join_slices(M,Q);
 <li>
 See also:
 <ul>
-<li><a href="#shed">.shed_rows/cols/slices</a></li>
-<li><a href="#insert">.insert_rows/cols/slices</a></li>
-<li><a href="#join">join_rows/cols</a></li>
+<li><a href="#shed">.shed_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
+<li><a href="#insert">.insert_rows&thinsp;/&thinsp;cols&thinsp;/&thinsp;slices</a></li>
+<li><a href="#join">join_rows&thinsp;/&thinsp;cols</a></li>
 <li><a href="#subcube">subcube views</a></li>
 </ul>
 </li>
@@ -19369,7 +19369,7 @@ The level of warning messages printed to <i>ARMA_CERR_STREAM</i>.
 <tr><td>0</td><td>&nbsp;=&nbsp;</td><td>no warnings; generally not recommended</td></tr>
 <tr><td>1</td><td>&nbsp;=&nbsp;</td><td>only critical warnings about arguments and/or data which are likely to lead to incorrect results</td></tr>
 <tr><td>2</td><td>&nbsp;=&nbsp;</td><td>as per level 1, and warnings about poorly conditioned systems (low rcond) detected by <a href="#solve">solve()</a>, <a href="#spsolve">spsolve()</a>, etc</td></tr>
-<tr><td>3</td><td>&nbsp;=&nbsp;</td><td>as per level 2, and warnings about failed decompositions, failed saving/loading, etc</td></tr>
+<tr><td>3</td><td>&nbsp;=&nbsp;</td><td>as per level 2, and warnings about failed decompositions, failed saving&thinsp;/&thinsp;loading, etc</td></tr>
 </table>
 <br>
 Example usage:
@@ -19573,7 +19573,7 @@ List of additions and changes for each version:
 <li>expanded <a href="#chol">chol()</a> to optionally use pivoted decomposition</li>
 <li>expanded vector, matrix and cube constructors to allow element initialisation via <code>fill::value(scalar)</code>, eg. <code>mat X(4,5,fill::value(123))</code></li>
 <li>faster <a href="#save_load_mat">loading</a> of CSV files when using OpenMP
-<li>added <i>csv_opts::semicolon</i> option to allow <a href="#save_load_mat">saving/loading</a> of CSV files with semicolon (;) instead of comma (,) as the separator</li>
+<li>added <i>csv_opts::semicolon</i> option to allow <a href="#save_load_mat">saving&thinsp;/&thinsp;loading</a> of CSV files with semicolon (;) instead of comma (,) as the separator</li>
 </ul>
 </li>
 <br>
@@ -19595,7 +19595,7 @@ List of additions and changes for each version:
 <li>faster handling of triangular matrices by <a href="#log_det">log_det()</a></li>
 <li>added <a href="#log_det_sympd">log_det_sympd()</a> for log determinant of symmetric positive matrices</li>
 <li>added <code>ARMA_WARN_LEVEL</code> <a href="#config_hpp">configuration option</a>, to control the degree of emitted warning messages</li>
-<li>reduced the default degree of warning messages, so that failed decompositions, failed saving/loading, etc, no longer emit warnings</li>
+<li>reduced the default degree of warning messages, so that failed decompositions, failed saving&thinsp;/&thinsp;loading, etc, no longer emit warnings</li>
 </ul>
 </li>
 <br>
