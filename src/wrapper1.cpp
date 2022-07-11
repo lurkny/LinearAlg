@@ -46,8 +46,8 @@
   
   #include <hdf5.h>
   
-  #if defined(H5_USE_16_API_DEFAULT) || defined(H5_USE_16_API)
-    // #pragma message ("disabling use of HDF5 due to its incompatible configuration")
+  #if defined(H5_USE_16_API) || defined(H5_USE_16_API_DEFAULT)
+    #pragma message ("WARNING: use of HDF5 disabled; incompatible configuration: H5_USE_16_API or H5_USE_16_API_DEFAULT")
     #undef ARMA_USE_HDF5_ALT
   #endif
 
