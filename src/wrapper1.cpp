@@ -39,7 +39,7 @@
     }
 #endif
 
-#if defined(ARMA_USE_HDF5_ALT)
+#if defined(ARMA_USE_HDF5_CMAKE)
   
   #undef  H5_USE_110_API
   #define H5_USE_110_API
@@ -48,7 +48,7 @@
   
   #if defined(H5_USE_16_API) || defined(H5_USE_16_API_DEFAULT)
     #pragma message ("WARNING: use of HDF5 disabled; incompatible configuration: H5_USE_16_API or H5_USE_16_API_DEFAULT")
-    #undef ARMA_USE_HDF5_ALT
+    #undef ARMA_USE_HDF5_CMAKE
   #endif
 
 #endif
@@ -61,10 +61,10 @@ namespace arma
 #include "armadillo_bits/def_lapack.hpp"
 #include "armadillo_bits/def_arpack.hpp"
 #include "armadillo_bits/def_superlu.hpp"
-// no need to include def_hdf5.hpp -- it only contains #defines for when ARMA_USE_HDF5_ALT is not defined.
+// no need to include def_hdf5.hpp -- it only contains #defines for when ARMA_USE_HDF5_CMAKE is not defined.
 
 
-#if defined(ARMA_USE_HDF5_ALT)
+#if defined(ARMA_USE_HDF5_CMAKE)
   // Wrapper functions: arma::H5open() and arma::H5check_version() to hijack calls to H5open() and H5check_version()
   herr_t H5open()
     {
@@ -1595,7 +1595,7 @@ extern "C"
   
   
   
-  #if defined(ARMA_USE_HDF5_ALT)
+  #if defined(ARMA_USE_HDF5_CMAKE)
   
     hid_t arma_H5Tcopy(hid_t dtype_id)
       {
