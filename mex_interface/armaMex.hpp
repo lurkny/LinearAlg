@@ -708,7 +708,9 @@ armaSetSparsePr(mxArray *matlabMatrix, const SpMat<double>& armaMatrix)
   double  *sr  = mxGetPr(matlabMatrix);
   mwIndex *irs = mxGetIr(matlabMatrix);
   mwIndex *jcs = mxGetJc(matlabMatrix);
-    
+  
+  armaMatrix.sync();
+  
   mwSize n_nonzero = armaMatrix.n_nonzero;
   mwSize n_cols    = armaMatrix.n_cols;
 
@@ -732,7 +734,9 @@ armaSetSparsePi(mxArray *matlabMatrix, const SpMat<double>& armaMatrix)
   double  *si  = mxGetPi(matlabMatrix);
   mwIndex *irs = mxGetIr(matlabMatrix);
   mwIndex *jcs = mxGetJc(matlabMatrix);
-    
+  
+  armaMatrix.sync();
+  
   mwSize n_nonzero = armaMatrix.n_nonzero;
   mwSize n_cols    = armaMatrix.n_cols;
 
