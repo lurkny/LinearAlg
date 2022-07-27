@@ -1178,7 +1178,7 @@ Examples:
 <ul>
 <pre>
 vec x(10);
-vec y(10, fill::zeros);
+vec y(10, fill::ones);
 
 mat A(10, 10, fill::randu);
 vec z = A.col(5); // extract a column vector
@@ -1443,7 +1443,7 @@ Examples:
 <ul>
 <pre>
 rowvec x(10);
-rowvec y(10, fill::zeros);
+rowvec y(10, fill::ones);
 
 mat    A(10, 10, fill::randu);
 rowvec z = A.row(5); // extract a row vector
