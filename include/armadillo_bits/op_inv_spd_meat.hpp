@@ -149,7 +149,11 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
   
   out = expr.get_ref();
   
-  arma_debug_check( (out.is_square() == false), "inv_sympd(): given matrix must be square sized" );
+  if((arma_config::debug) && (out.is_square() == false))
+    {
+    out.reset();
+    arma_stop_logic_error("inv_sympd(): given matrix must be square sized");
+    }
   
   if((arma_config::debug) && (arma_config::warn_level > 0))
     {
@@ -359,7 +363,11 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, op_inv_spd_stat
   out             = expr.get_ref();
   out_state.rcond = T(0);
   
-  arma_debug_check( (out.is_square() == false), "inv_sympd(): given matrix must be square sized" );
+  if((arma_config::debug) && (out.is_square() == false))
+    {
+    out.reset();
+    arma_stop_logic_error("inv_sympd(): given matrix must be square sized");
+    }
   
   if((arma_config::debug) && (arma_config::warn_level > 0))
     {
