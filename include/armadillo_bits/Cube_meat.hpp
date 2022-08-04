@@ -5782,11 +5782,7 @@ Cube_aux::set_real(Cube< std::complex<T> >& out, const BaseCube<T,T1>& X)
     
     const uword N = out.n_elem;
     
-    for(uword i=0; i<N; ++i)
-      {
-      //out_mem[i].real() = PA[i];
-      out_mem[i] = std::complex<T>( A[i], out_mem[i].imag() );
-      }
+    for(uword i=0; i<N; ++i)  { out_mem[i].real(PA[i]); }
     }
   else
     {
@@ -5794,7 +5790,7 @@ Cube_aux::set_real(Cube< std::complex<T> >& out, const BaseCube<T,T1>& X)
     for(uword col   = 0; col   < local_n_cols;   ++col  )
     for(uword row   = 0; row   < local_n_rows;   ++row  )
       {
-      (*out_mem) = std::complex<T>( P.at(row,col,slice), (*out_mem).imag() );
+      (*out_mem).real(P.at(row,col,slice));
       out_mem++;
       }
     }
@@ -5834,11 +5830,7 @@ Cube_aux::set_imag(Cube< std::complex<T> >& out, const BaseCube<T,T1>& X)
     
     const uword N = out.n_elem;
     
-    for(uword i=0; i<N; ++i)
-      {
-      //out_mem[i].imag() = PA[i];
-      out_mem[i] = std::complex<T>( out_mem[i].real(), A[i] );
-      }
+    for(uword i=0; i<N; ++i)  { out_mem[i].imag(PA[i]); }
     }
   else
     {
@@ -5846,7 +5838,7 @@ Cube_aux::set_imag(Cube< std::complex<T> >& out, const BaseCube<T,T1>& X)
     for(uword col   = 0; col   < local_n_cols;   ++col  )
     for(uword row   = 0; row   < local_n_rows;   ++row  )
       {
-      (*out_mem) = std::complex<T>( (*out_mem).real(), P.at(row,col,slice) );
+      (*out_mem).imag(P.at(row,col,slice));
       out_mem++;
       }
     }
