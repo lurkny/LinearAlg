@@ -95,7 +95,11 @@ chol
   
   out = X.get_ref();
   
-  arma_debug_check( (out.is_square() == false), "chol(): given matrix must be square sized" );
+  if((arma_config::debug) && (out.is_square() == false))
+    {
+    out.reset();
+    arma_stop_logic_error("chol(): given matrix must be square sized");
+    }
   
   if(out.is_empty())
     {
