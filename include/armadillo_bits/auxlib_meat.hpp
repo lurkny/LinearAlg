@@ -3973,9 +3973,13 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
   
   const uword B_n_rows = out.n_rows;
   const uword B_n_cols = out.n_cols;
-    
-  arma_debug_check( (A_n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
-    
+  
+  if((arma_config::debug) && (A_n_rows != B_n_rows))
+    {
+    out.reset();
+    arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
+    }
+  
   if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
   
   #if defined(ARMA_USE_LAPACK)
@@ -4025,7 +4029,11 @@ auxlib::solve_square_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_ty
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
       
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
+  if((arma_config::debug) && (A.n_rows != B_n_rows))
+    {
+    out.reset();
+    arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
+    }
       
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
@@ -4305,7 +4313,11 @@ auxlib::solve_sympd_fast_common(Mat<typename T1::elem_type>& out, Mat<typename T
   const uword B_n_rows = out.n_rows;
   const uword B_n_cols = out.n_cols;
   
-  arma_debug_check( (A_n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
+  if((arma_config::debug) && (A_n_rows != B_n_rows))
+    {
+    out.reset();
+    arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
+    }
   
   if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
   
@@ -4359,7 +4371,11 @@ auxlib::solve_sympd_rcond(Mat<typename T1::pod_type>& out, bool& out_sympd_state
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
+    if((arma_config::debug) && (A.n_rows != B_n_rows))
+      {
+      out.reset();
+      arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
+      }
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
@@ -4437,7 +4453,11 @@ auxlib::solve_sympd_rcond(Mat< std::complex<typename T1::pod_type> >& out, bool&
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
+    if((arma_config::debug) && (A.n_rows != B_n_rows))
+      {
+      out.reset();
+      arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
+      }
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
@@ -5133,7 +5153,11 @@ auxlib::solve_trimat_fast(Mat<typename T1::elem_type>& out, const Mat<typename T
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
+    if((arma_config::debug) && (A.n_rows != B_n_rows))
+      {
+      out.reset();
+      arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
+      }
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
@@ -5183,7 +5207,11 @@ auxlib::solve_trimat_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_ty
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
+    if((arma_config::debug) && (A.n_rows != B_n_rows))
+      {
+      out.reset();
+      arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
+      }
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
@@ -5277,7 +5305,11 @@ auxlib::solve_band_fast_common(Mat<typename T1::elem_type>& out, const Mat<typen
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
+    if((arma_config::debug) && (A.n_rows != B_n_rows))
+      {
+      out.reset();
+      arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
+      }
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_rows, B_n_cols); return true; }
     
@@ -5381,7 +5413,11 @@ auxlib::solve_band_rcond_common(Mat<typename T1::elem_type>& out, typename T1::p
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
+    if((arma_config::debug) && (A.n_rows != B_n_rows))
+      {
+      out.reset();
+      arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
+      }
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_rows, B_n_cols); return true; }
     
@@ -5692,7 +5728,11 @@ auxlib::solve_tridiag_fast_common(Mat<typename T1::elem_type>& out, const Mat<ty
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same" );
+    if((arma_config::debug) && (A.n_rows != B_n_rows))
+      {
+      out.reset();
+      arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
+      }
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_rows, B_n_cols); return true; }
     
