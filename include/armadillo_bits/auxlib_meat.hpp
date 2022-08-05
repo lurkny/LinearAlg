@@ -3967,14 +3967,12 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
   
   typedef typename T1::elem_type eT;
   
-  const uword A_n_rows = A.n_rows;
-  
   out = B_expr.get_ref();
   
   const uword B_n_rows = out.n_rows;
   const uword B_n_cols = out.n_cols;
   
-  if((arma_config::debug) && (A_n_rows != B_n_rows))
+  if((arma_config::debug) && (A.n_rows != B_n_rows))
     {
     out.reset();
     arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
@@ -3986,13 +3984,13 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
     {
     arma_debug_assert_blas_size(A);
     
-    blas_int n    = blas_int(A_n_rows);  // assuming A is square
-    blas_int lda  = blas_int(A_n_rows);
+    blas_int n    = blas_int(A.n_rows);  // assuming A is square
+    blas_int lda  = blas_int(A.n_rows);
     blas_int ldb  = blas_int(B_n_rows);
     blas_int nrhs = blas_int(B_n_cols);
     blas_int info = blas_int(0);
     
-    podarray<blas_int> ipiv(A_n_rows + 2);  // +2 for paranoia: some versions of Lapack might be trashing memory
+    podarray<blas_int> ipiv(A.n_rows + 2);  // +2 for paranoia: some versions of Lapack might be trashing memory
     
     arma_extra_debug_print("lapack::gesv()");
     lapack::gesv<eT>(&n, &nrhs, A.memptr(), &lda, ipiv.memptr(), out.memptr(), &ldb, &info);
@@ -4306,14 +4304,12 @@ auxlib::solve_sympd_fast_common(Mat<typename T1::elem_type>& out, Mat<typename T
   
   typedef typename T1::elem_type eT;
   
-  const uword A_n_rows = A.n_rows;
-  
   out = B_expr.get_ref();
   
   const uword B_n_rows = out.n_rows;
   const uword B_n_cols = out.n_cols;
   
-  if((arma_config::debug) && (A_n_rows != B_n_rows))
+  if((arma_config::debug) && (A.n_rows != B_n_rows))
     {
     out.reset();
     arma_stop_logic_error("solve(): number of rows in the given matrices must be the same");
@@ -4326,9 +4322,9 @@ auxlib::solve_sympd_fast_common(Mat<typename T1::elem_type>& out, Mat<typename T
     arma_debug_assert_blas_size(A, out);
     
     char     uplo = 'L';
-    blas_int n    = blas_int(A_n_rows);  // assuming A is square
+    blas_int n    = blas_int(A.n_rows);  // assuming A is square
     blas_int nrhs = blas_int(B_n_cols);
-    blas_int lda  = blas_int(A_n_rows);
+    blas_int lda  = blas_int(A.n_rows);
     blas_int ldb  = blas_int(B_n_rows);
     blas_int info = blas_int(0);
     
