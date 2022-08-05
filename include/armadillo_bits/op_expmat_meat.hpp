@@ -60,8 +60,12 @@ op_expmat::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1
     {
     out = expr.get_ref();  // force the evaluation of diagmat()
     
-    arma_debug_check( (out.is_square() == false), "expmat(): given matrix must be square sized" );
-    
+    if((arma_config::debug) && (out.is_square() == false))
+      {
+      out.reset();
+      arma_stop_logic_error("expmat(): given matrix must be square sized");
+      }
+      
     const uword N = (std::min)(out.n_rows, out.n_cols);
     
     for(uword i=0; i<N; ++i)  { out.at(i,i) = std::exp( out.at(i,i) ); }
