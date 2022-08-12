@@ -116,4 +116,26 @@ class op_find_nonfinite
 
 
 
+class op_find_nan
+  : public traits_op_col
+  {
+  public:
+  
+  template<typename T1>
+  inline static void apply(Mat<uword>& out, const mtOp<uword, T1, op_find_nan>& X);
+  };
+
+
+
+class op_find_inf
+  : public traits_op_col
+  {
+  public:
+  
+  template<typename T1>
+  inline static void apply(Mat<uword>& out, const mtOp<uword, T1, op_find_inf>& X);
+  };
+
+
+
 //! @}
