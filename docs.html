@@ -4440,8 +4440,6 @@ cx_mat C = cx_mat(A,B);
       <b>.insert_rows(&nbsp;</b>row_number, X<b>&nbsp;)</b>
       <br>
       <b>.insert_rows(&nbsp;</b>row_number, number_of_rows&nbsp;<b>)</b>
-      <br>
-      <b>.insert_rows(&nbsp;</b>row_number, number_of_rows, set_to_zero&nbsp;<b>)</b>
       </td>
       <td>&nbsp;</td>
       <td style="vertical-align: top;">(member functions of <i>Mat</i>, <i>Col</i> and <i>Cube</i>)
@@ -4455,8 +4453,6 @@ cx_mat C = cx_mat(A,B);
       <b>.insert_cols(&nbsp;</b>col_number<b>,</b> X<b>&nbsp;)</b>
       <br>
       <b>.insert_cols(&nbsp;</b>col_number<b>,</b> number_of_cols&nbsp;<b>)</b>
-      <br>
-      <b>.insert_cols(&nbsp;</b>col_number<b>,</b> number_of_cols<b>,</b> set_to_zero&nbsp;<b>)</b>
       </td>
       <td>&nbsp;</td>
       <td style="vertical-align: top;">(member functions of <i>Mat</i>, <i>Row</i> and <i>Cube</i>)
@@ -4470,8 +4466,6 @@ cx_mat C = cx_mat(A,B);
       <b>.insert_slices(&nbsp;</b>slice_number<b>,</b> X<b>&nbsp;)</b>
       <br>
       <b>.insert_slices(&nbsp;</b>slice_number<b>,</b> number_of_slices&nbsp;<b>)</b>
-      <br>
-      <b>.insert_slices(&nbsp;</b>slice_number<b>,</b> number_of_slices<b>,</b> set_to_zero&nbsp;<b>)</b>
       </td>
       <td>&nbsp;</td>
       <td style="vertical-align: top;">(member functions of <i>Cube</i>)
@@ -4493,8 +4487,7 @@ Functions with the <i>X</i> argument: insert a copy of <i>X</i> at the specified
 Functions with the <i>number_of_...</i> argument:
 <ul>
 <li>expand the object by creating new rows/columns/slices</li>
-<li>by default, the new rows/columns/slices are set to zero</li>
-<li>if <i>set_to_zero</i> is <i>false</i>, the memory used by the new rows/columns/slices will not be initialised</li>
+<li>the elements in the new rows/columns/slices are set to zero</li>
 </ul>
 </li>
 <br>
