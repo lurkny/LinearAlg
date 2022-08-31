@@ -4527,12 +4527,25 @@ Mat<eT>::shed_cols(const Base<uword, T1>& indices)
 
 
 
-//! insert N rows at the specified row position,
-//! optionally setting the elements of the inserted rows to zero
 template<typename eT>
+arma_deprecated
 inline
 void
 Mat<eT>::insert_rows(const uword row_num, const uword N, const bool set_to_zero)
+  {
+  arma_extra_debug_sigprint();
+  
+  arma_ignore(set_to_zero);
+  
+  (*this).insert_rows(row_num, N);
+  }
+
+
+
+template<typename eT>
+inline
+void
+Mat<eT>::insert_rows(const uword row_num, const uword N)
   {
   arma_extra_debug_sigprint();
   
@@ -4545,37 +4558,46 @@ Mat<eT>::insert_rows(const uword row_num, const uword N, const bool set_to_zero)
   // insertion at row_num == n_rows is in effect an append operation
   arma_debug_check_bounds( (row_num > t_n_rows), "Mat::insert_rows(): index out of bounds" );
   
-  if(N > 0)
+  if(N == 0)  { return; }
+  
+  Mat<eT> out(t_n_rows + N, t_n_cols, arma_nozeros_indicator());
+  
+  if(A_n_rows > 0)
     {
-    Mat<eT> out(t_n_rows + N, t_n_cols, arma_nozeros_indicator());
-    
-    if(A_n_rows > 0)
-      {
-      out.rows(0, A_n_rows-1) = rows(0, A_n_rows-1);
-      }
-    
-    if(B_n_rows > 0)
-      {
-      out.rows(row_num + N, t_n_rows + N - 1) = rows(row_num, t_n_rows-1);
-      }
-    
-    if(set_to_zero)
-      {
-      out.rows(row_num, row_num + N - 1).zeros();
-      }
-    
-    steal_mem(out);
+    out.rows(0, A_n_rows-1) = rows(0, A_n_rows-1);
     }
+  
+  if(B_n_rows > 0)
+    {
+    out.rows(row_num + N, t_n_rows + N - 1) = rows(row_num, t_n_rows-1);
+    }
+  
+  out.rows(row_num, row_num + N - 1).zeros();
+  
+  steal_mem(out);
   }
 
 
 
-//! insert N columns at the specified column position,
-//! optionally setting the elements of the inserted columns to zero
 template<typename eT>
+arma_deprecated
 inline
 void
 Mat<eT>::insert_cols(const uword col_num, const uword N, const bool set_to_zero)
+  {
+  arma_extra_debug_sigprint();
+  
+  arma_ignore(set_to_zero);
+  
+  (*this).insert_cols(col_num, N);
+  }
+
+
+
+template<typename eT>
+inline
+void
+Mat<eT>::insert_cols(const uword col_num, const uword N)
   {
   arma_extra_debug_sigprint();
   
@@ -4588,27 +4610,23 @@ Mat<eT>::insert_cols(const uword col_num, const uword N, const bool set_to_zero)
   // insertion at col_num == n_cols is in effect an append operation
   arma_debug_check_bounds( (col_num > t_n_cols), "Mat::insert_cols(): index out of bounds" );
   
-  if(N > 0)
+  if(N == 0)  { return; }
+  
+  Mat<eT> out(t_n_rows, t_n_cols + N, arma_nozeros_indicator());
+  
+  if(A_n_cols > 0)
     {
-    Mat<eT> out(t_n_rows, t_n_cols + N, arma_nozeros_indicator());
-    
-    if(A_n_cols > 0)
-      {
-      out.cols(0, A_n_cols-1) = cols(0, A_n_cols-1);
-      }
-    
-    if(B_n_cols > 0)
-      {
-      out.cols(col_num + N, t_n_cols + N - 1) = cols(col_num, t_n_cols-1);
-      }
-    
-    if(set_to_zero)
-      {
-      out.cols(col_num, col_num + N - 1).zeros();
-      }
-    
-    steal_mem(out);
+    out.cols(0, A_n_cols-1) = cols(0, A_n_cols-1);
     }
+  
+  if(B_n_cols > 0)
+    {
+    out.cols(col_num + N, t_n_cols + N - 1) = cols(col_num, t_n_cols-1);
+    }
+  
+  out.cols(col_num, col_num + N - 1).zeros();
+  
+  steal_mem(out);
   }
 
 
