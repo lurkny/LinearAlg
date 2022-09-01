@@ -91,6 +91,8 @@ op_sum::apply_noalias_unwrap(Mat<typename T1::elem_type>& out, const Proxy<T1>& 
   const uword X_n_rows = X.n_rows;
   const uword X_n_cols = X.n_cols;
   
+  const eT* X_colptr = X.memptr();
+    
   if(dim == 0)
     {
     out.set_size(1, X_n_cols);
@@ -99,7 +101,9 @@ op_sum::apply_noalias_unwrap(Mat<typename T1::elem_type>& out, const Proxy<T1>& 
     
     for(uword col=0; col < X_n_cols; ++col)
       {
-      out_mem[col] = arrayops::accumulate( X.colptr(col), X_n_rows );
+      out_mem[col] = arrayops::accumulate( X_colptr, X_n_rows );
+      
+      X_colptr += X_n_rows;
       }
     }
   else
@@ -110,7 +114,9 @@ op_sum::apply_noalias_unwrap(Mat<typename T1::elem_type>& out, const Proxy<T1>& 
     
     for(uword col=0; col < X_n_cols; ++col)
       {
-      arrayops::inplace_plus( out_mem, X.colptr(col), X_n_rows );
+      arrayops::inplace_plus( out_mem, X_colptr, X_n_rows );
+      
+      X_colptr += X_n_rows;
       }
     }
   }
