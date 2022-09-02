@@ -465,3 +465,11 @@
 
 #undef minor
 #undef major
+
+
+// optionally allow disabling of compile-time deprecation messages (not recommended)
+
+#if defined(ARMA_IGNORE_DEPRECATED_MARKER) && (!defined(ARMA_EXTRA_DEBUG))
+  #undef  arma_deprecated
+  #define arma_deprecated
+#endif
