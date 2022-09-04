@@ -50,11 +50,7 @@ op_chol::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
   
   out = A_expr.get_ref();
   
-  if((arma_config::debug) && (out.is_square() == false))
-    {
-    out.reset();
-    arma_stop_logic_error("chol(): given matrix must be square sized");
-    }
+  arma_debug_check( (out.is_square() == false), "chol(): given matrix must be square sized", [&](){ out.reset(); } );
   
   if(out.is_empty())  { return true; }
   
