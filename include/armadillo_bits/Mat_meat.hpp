@@ -792,39 +792,14 @@ Mat<eT>::operator=(Mat<eT>&& X)
   {
   arma_extra_debug_sigprint(arma_str::format("this = %x   X = %x") % this % &X);
   
-  if(this == &X)  { return *this; }
+  (*this).steal_mem(X, true);
   
-  if( (mem_state <= 1) && ((X.n_alloc > arma_config::mat_prealloc) || (X.mem_state == 1) || (X.mem_state == 2)) )
+  if( (X.mem_state == 0) && (X.n_alloc <= arma_config::mat_prealloc) && (this != &X) )
     {
-    (*this).reset();
-    
-    access::rw(n_rows)    = X.n_rows;
-    access::rw(n_cols)    = X.n_cols;
-    access::rw(n_elem)    = X.n_elem;
-    access::rw(n_alloc)   = X.n_alloc;
-    access::rw(mem_state) = X.mem_state;
-    access::rw(mem)       = X.mem;
-    
-    access::rw(X.n_rows)    = 0;
-    access::rw(X.n_cols)    = 0;
-    access::rw(X.n_elem)    = 0;
-    access::rw(X.n_alloc)   = 0;
-    access::rw(X.mem_state) = 0;
-    access::rw(X.mem)       = nullptr;
-    }
-  else
-    {
-    const Mat<eT>& X_plain = X;  // change && to &
-    
-    (*this).operator=(X_plain);
-    
-    if( (X.mem_state == 0) && (X.n_alloc <= arma_config::mat_prealloc) )
-      {
-      access::rw(X.n_rows) = 0;
-      access::rw(X.n_cols) = 0;
-      access::rw(X.n_elem) = 0;
-      access::rw(X.mem)    = nullptr;
-      }
+    access::rw(X.n_rows) = 0;
+    access::rw(X.n_cols) = 0;
+    access::rw(X.n_elem) = 0;
+    access::rw(X.mem)    = nullptr;
     }
   
   return *this;
@@ -1222,6 +1197,18 @@ Mat<eT>::steal_mem(Mat<eT>& x)
   {
   arma_extra_debug_sigprint();
   
+  (*this).steal_mem(x, false);
+  }
+
+
+
+template<typename eT>
+inline
+void
+Mat<eT>::steal_mem(Mat<eT>& x, const bool is_move)
+  {
+  arma_extra_debug_sigprint();
+  
   if(this == &x)  { return; }
   
   const uword  x_n_rows    = x.n_rows;
@@ -1236,7 +1223,7 @@ Mat<eT>::steal_mem(Mat<eT>& x)
   
   const bool layout_ok = (t_vec_state == x_vec_state) || ((t_vec_state == 1) && (x_n_cols == 1)) || ((t_vec_state == 2) && (x_n_rows == 1));
   
-  if( layout_ok && (t_mem_state <= 1) && ((x_n_alloc > arma_config::mat_prealloc) || (x_mem_state == 1)) )
+  if( layout_ok && (t_mem_state <= 1) && ( (x_n_alloc > arma_config::mat_prealloc) || (x_mem_state == 1) || (is_move && (x_mem_state == 2)) ) )
     {
     arma_extra_debug_print("Mat::steal_mem(): stealing memory");
     
