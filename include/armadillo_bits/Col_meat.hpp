@@ -423,14 +423,6 @@ Col<eT>::operator=(Col<eT>&& X)
   
   (*this).steal_mem(X, true);
   
-  if( (X.mem_state == 0) && (X.n_alloc <= arma_config::mat_prealloc) && (this != &X) )
-    {
-    access::rw(X.n_rows) = 0;
-    access::rw(X.n_cols) = 1;
-    access::rw(X.n_elem) = 0;
-    access::rw(X.mem)    = nullptr;
-    }
-  
   return *this;
   }
 

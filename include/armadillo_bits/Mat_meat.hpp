@@ -794,14 +794,6 @@ Mat<eT>::operator=(Mat<eT>&& X)
   
   (*this).steal_mem(X, true);
   
-  if( (X.mem_state == 0) && (X.n_alloc <= arma_config::mat_prealloc) && (this != &X) )
-    {
-    access::rw(X.n_rows) = 0;
-    access::rw(X.n_cols) = 0;
-    access::rw(X.n_elem) = 0;
-    access::rw(X.mem)    = nullptr;
-    }
-  
   return *this;
   }
 
@@ -1248,6 +1240,14 @@ Mat<eT>::steal_mem(Mat<eT>& x, const bool is_move)
     arma_extra_debug_print("Mat::steal_mem(): copying memory");
     
     (*this).operator=(x);
+    
+    if( (is_move) && (x_mem_state == 0) && (x_n_alloc <= arma_config::mat_prealloc) )
+      {
+      access::rw(x.n_rows) = 0;
+      access::rw(x.n_cols) = 0;
+      access::rw(x.n_elem) = 0;
+      access::rw(x.mem)    = nullptr;
+      }
     }
   }
 
