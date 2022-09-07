@@ -1228,8 +1228,8 @@ Mat<eT>::steal_mem(Mat<eT>& x, const bool is_move)
     access::rw(mem_state) = x_mem_state;
     access::rw(mem)       = x.mem;
     
-    access::rw(x.n_rows)    = 0;
-    access::rw(x.n_cols)    = 0;
+    access::rw(x.n_rows)    = (x_vec_state == 2) ? 1 : 0;
+    access::rw(x.n_cols)    = (x_vec_state == 1) ? 1 : 0;
     access::rw(x.n_elem)    = 0;
     access::rw(x.n_alloc)   = 0;
     access::rw(x.mem_state) = 0;
@@ -1243,8 +1243,8 @@ Mat<eT>::steal_mem(Mat<eT>& x, const bool is_move)
     
     if( (is_move) && (x_mem_state == 0) && (x_n_alloc <= arma_config::mat_prealloc) )
       {
-      access::rw(x.n_rows) = 0;
-      access::rw(x.n_cols) = 0;
+      access::rw(x.n_rows) = (x_vec_state == 2) ? 1 : 0;
+      access::rw(x.n_cols) = (x_vec_state == 1) ? 1 : 0;
       access::rw(x.n_elem) = 0;
       access::rw(x.mem)    = nullptr;
       }
