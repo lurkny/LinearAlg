@@ -421,38 +421,14 @@ Row<eT>::operator=(Row<eT>&& X)
   {
   arma_extra_debug_sigprint(arma_str::format("this = %x   X = %x") % this % &X);
   
-  if(this == &X)  { return *this; }
+  (*this).steal_mem(X, true);
   
-  if( (Mat<eT>::mem_state <= 1) && ((X.n_alloc > arma_config::mat_prealloc) || (X.mem_state == 1) || (X.mem_state == 2)) )
+  if( (X.mem_state == 0) && (X.n_alloc <= arma_config::mat_prealloc) && (this != &X) )
     {
-    (*this).reset();
-    
-    access::rw(Mat<eT>::n_cols)    = X.n_cols;
-    access::rw(Mat<eT>::n_elem)    = X.n_elem;
-    access::rw(Mat<eT>::n_alloc)   = X.n_alloc;
-    access::rw(Mat<eT>::mem_state) = X.mem_state;
-    access::rw(Mat<eT>::mem)       = X.mem;
-    
-    access::rw(X.n_rows)    = 1;
-    access::rw(X.n_cols)    = 0;
-    access::rw(X.n_elem)    = 0;
-    access::rw(X.n_alloc)   = 0;
-    access::rw(X.mem_state) = 0;
-    access::rw(X.mem)       = nullptr;
-    }
-  else
-    {
-    const Row<eT>& X_plain = X;  // change && to &
-    
-    (*this).operator=(X_plain);
-    
-    if( (X.mem_state == 0) && (X.n_alloc <= arma_config::mat_prealloc) )
-      {
-      access::rw(X.n_rows) = 1;
-      access::rw(X.n_cols) = 0;
-      access::rw(X.n_elem) = 0;
-      access::rw(X.mem)    = nullptr;
-      }
+    access::rw(X.n_rows) = 1;
+    access::rw(X.n_cols) = 0;
+    access::rw(X.n_elem) = 0;
+    access::rw(X.mem)    = nullptr;
     }
   
   return *this;
