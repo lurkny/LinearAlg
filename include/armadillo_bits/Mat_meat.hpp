@@ -794,7 +794,7 @@ Mat<eT>::operator=(Mat<eT>&& X)
   
   if(this == &X)  { return *this; }
   
-  if( (mem_state <= 1) && (X.n_alloc > arma_config::mat_prealloc) || (X.mem_state == 1) || (X.mem_state == 2))
+  if( (mem_state <= 1) && ((X.n_alloc > arma_config::mat_prealloc) || (X.mem_state == 1) || (X.mem_state == 2)) )
     {
     (*this).reset();
     

@@ -423,7 +423,7 @@ Row<eT>::operator=(Row<eT>&& X)
   
   if(this == &X)  { return *this; }
   
-  if( (Mat<eT>::mem_state <= 1) && (X.n_alloc > arma_config::mat_prealloc) || (X.mem_state == 1) || (X.mem_state == 2))
+  if( (Mat<eT>::mem_state <= 1) && ((X.n_alloc > arma_config::mat_prealloc) || (X.mem_state == 1) || (X.mem_state == 2)) )
     {
     (*this).reset();
     
