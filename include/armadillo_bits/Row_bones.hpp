@@ -64,6 +64,9 @@ class Row : public Mat<eT>
   inline            Row(const std::initializer_list<eT>& list);
   inline Row& operator=(const std::initializer_list<eT>& list);
   
+  inline            Row(const std::initializer_list< std::initializer_list<eT> >& list) = delete;
+  inline Row& operator=(const std::initializer_list< std::initializer_list<eT> >& list) = delete;
+  
   inline            Row(Row&& m);
   inline Row& operator=(Row&& m);
   
