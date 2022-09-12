@@ -358,14 +358,11 @@ Col<eT>::operator=(const std::initializer_list<eT>& list)
   {
   arma_extra_debug_sigprint();
   
-  Mat<eT> tmp(list);
+  const uword N = uword(list.size());
   
-  arma_debug_check( ((tmp.n_elem > 0) && (tmp.is_vec() == false)), "Mat::init(): requested size is not compatible with column vector layout" );
+  (*this).set_size(N,1);
   
-  access::rw(tmp.n_rows) = tmp.n_elem;
-  access::rw(tmp.n_cols) = 1;
-  
-  (*this).steal_mem(tmp);
+  arrayops::copy( (*this).memptr(), list.begin(), N );
   
   return *this;
   }
