@@ -40,7 +40,7 @@ arrayops::fill_zeros(eT* dest, const uword n_elem)
   {
   typedef typename get_pod_type<eT>::result pod_type;
   
-  if(n_elem == 0)  { return; }
+  if( (n_elem == 0) || (dest == nullptr) )  { return; }
   
   if(std::numeric_limits<eT>::is_integer || std::numeric_limits<pod_type>::is_iec559)
     {
