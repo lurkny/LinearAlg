@@ -83,4 +83,69 @@ glue_powext::apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B)
 
 
 
+//
+
+
+
+template<typename T1, typename T2>
+inline
+void
+glue_powext_cx::apply(Mat<typename T1::elem_type>& out, const mtGlue<typename T1::elem_type, T1, T2, glue_powext_cx>& X)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename T1::elem_type eT;
+  typedef typename T1::pod_type   T;
+  
+  const quasi_unwrap<T1> UA(X.A);
+  const quasi_unwrap<T2> UB(X.B);
+  
+  const Mat<eT>& A = UA.M;
+  const Mat< T>& B = UB.M;
+  
+  arma_debug_assert_same_size(A, B, "element-wise pow()");
+  
+  // TODO: investigate use of openmp
+  
+  if(UA.is_alias(out) && (UA.has_subview))
+    {
+    Mat<eT> tmp;
+    
+    glue_powext_cx::apply(tmp, A, B);
+    
+    out.steal_mem(tmp);
+    }
+  else
+    {
+    glue_powext_cx::apply(out, A, B);
+    }
+  }
+
+
+
+template<typename T>
+inline
+void
+glue_powext_cx::apply(Mat< std::complex<T> >& out, const Mat< std::complex<T> >& A, const Mat<T>& B)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename std::complex<T> eT;
+  
+  out.set_size(A.n_rows, A.n_cols);
+  
+  const uword N = out.n_elem;
+  
+        eT* out_mem = out.memptr();
+  const eT*   A_mem =   A.memptr();
+  const  T*   B_mem =   B.memptr();
+  
+  for(uword i=0; i<N; ++i)
+    {
+    out_mem[i] = std::pow(A_mem[i], B_mem[i]);
+    }
+  }
+
+
+
 //! @}

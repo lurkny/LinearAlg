@@ -1,3 +1,4 @@
+
 // SPDX-License-Identifier: Apache-2.0
 // 
 // Copyright 2008-2016 Conrad Sanderson (http://conradsanderson.id.au)
@@ -30,6 +31,18 @@ class glue_powext
   template<typename T1, typename T2> inline static void apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_powext>& X);
   
   template<typename eT> inline static void apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B);
+  };
+
+
+
+class glue_powext_cx
+  : public traits_glue_or
+  {
+  public:
+  
+  template<typename T1, typename T2> inline static void apply(Mat<typename T1::elem_type>& out, const mtGlue<typename T1::elem_type,T1,T2,glue_powext_cx>& X);
+  
+  template<typename T> inline static void apply(Mat< std::complex<T> >& out, const Mat< std::complex<T> >& A, const Mat<T>& B);
   };
 
 

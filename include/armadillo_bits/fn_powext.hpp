@@ -27,7 +27,7 @@ arma_inline
 typename
 enable_if2
   <
-  ( is_arma_type<T1>::value && is_arma_type<T2>::value && is_same_type<typename T1::elem_type, typename T2::elem_type>::value ),
+  ( is_arma_type<T1>::value && is_arma_type<T2>::value && is_same_type<typename T1::elem_type, typename T2::elem_type>::yes ),
   const Glue<T1, T2, glue_powext>
   >::result
 pow
@@ -43,10 +43,30 @@ pow
 
 
 
+template<typename T1, typename T2>
+arma_warn_unused
+arma_inline
+typename
+enable_if2
+  <
+  ( is_arma_type<T1>::value && is_arma_type<T2>::value && is_cx<typename T1::elem_type>::yes && is_same_type<typename T1::pod_type, typename T2::elem_type>::yes ),
+  const mtGlue<typename T1::elem_type, T1, T2, glue_powext_cx>
+  >::result
+pow
+  (
+  const T1& X,
+  const T2& Y
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  return mtGlue<typename T1::elem_type, T1, T2, glue_powext_cx>(X, Y);
+  }
+
+
+
 // TODO:    mat = pow(mat.each_col(),    mat)  (no promotion)
 // TODO:    mat = pow(mat.each_row(),    mat)  (no promotion)
-
-// TODO: cx_mat = pow(cx_mat,            mat)  (promotion; ? implement via mtGlue to allow preservation of vector type info)
 
 // TODO: cx_mat = pow(cx_mat.each_col(), mat)  (promotion)
 // TODO: cx_mat = pow(cx_mat.each_row(), mat)  (promotion)
