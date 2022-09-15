@@ -414,32 +414,33 @@ Conrad Sanderson and Ryan Curtin.
 <tr style="background-color: #F5F5F5;"><td><a href="#norm">norm</a></td><td>&nbsp;</td><td>various norms of vectors and matrices</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#normalise">normalise</a></td><td>&nbsp;</td><td>normalise vectors to unit <i>p</i>-norm</td></tr>
 <tr><td><a href="#prod">prod</a></td><td>&nbsp;</td><td>product of elements</td></tr>
+<tr><td><a href="#pow">pow</a></td><td>&nbsp;</td><td>element-wise power</td></tr>
 <tr><td><a href="#powmat">powmat</a></td><td>&nbsp;</td><td>matrix power</td></tr>
-<tr><td><a href="#rank">rank</a></td><td>&nbsp;</td><td>rank of matrix</td></tr>
+<tr style="background-color: #F5F5F5;"><td><a href="#rank">rank</a></td><td>&nbsp;</td><td>rank of matrix</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#rcond">rcond</a></td><td>&nbsp;</td><td>reciprocal condition number</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#repelem">repelem</a></td><td>&nbsp;</td><td>replicate elements</td></tr>
-<tr style="background-color: #F5F5F5;"><td><a href="#repmat">repmat</a></td><td>&nbsp;</td><td>replicate matrix in block-like fashion</td></tr>
+<tr><td><a href="#repmat">repmat</a></td><td>&nbsp;</td><td>replicate matrix in block-like fashion</td></tr>
 <tr><td><a href="#reshape">reshape</a></td><td>&nbsp;</td><td>change size while keeping elements</td></tr>
 <tr><td><a href="#resize">resize</a></td><td>&nbsp;</td><td>change size while keeping elements and preserving layout</td></tr>
-<tr><td><a href="#reverse">reverse</a></td><td>&nbsp;</td><td>reverse order of elements</td></tr>
+<tr style="background-color: #F5F5F5;"><td><a href="#reverse">reverse</a></td><td>&nbsp;</td><td>reverse order of elements</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#roots">roots</a></td><td>&nbsp;</td><td>roots of polynomial</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#shift">shift</a></td><td>&nbsp;</td><td>shift elements</td></tr>
-<tr style="background-color: #F5F5F5;"><td><a href="#shuffle">shuffle</a></td><td>&nbsp;</td><td>randomly shuffle elements</td></tr>
+<tr><td><a href="#shuffle">shuffle</a></td><td>&nbsp;</td><td>randomly shuffle elements</td></tr>
 <tr><td><a href="#size">size</a></td><td>&nbsp;</td><td>obtain dimensions of given object</td></tr>
 <tr><td><a href="#sort">sort</a></td><td>&nbsp;</td><td>sort elements</td></tr>
-<tr><td><a href="#sort_index">sort_index</a></td><td>&nbsp;</td><td>vector describing sorted order of elements</td></tr>
+<tr style="background-color: #F5F5F5;"><td><a href="#sort_index">sort_index</a></td><td>&nbsp;</td><td>vector describing sorted order of elements</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#sqrtmat">sqrtmat</a></td><td>&nbsp;</td><td>square root of matrix</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#sqrtmat_sympd">sqrtmat_sympd</a></td><td>&nbsp;</td><td>square root of symmetric matrix</td></tr>
-<tr style="background-color: #F5F5F5;"><td><a href="#sum">sum</a></td><td>&nbsp;</td><td>sum of elements</td></tr>
+<tr><td><a href="#sum">sum</a></td><td>&nbsp;</td><td>sum of elements</td></tr>
 <tr><td><a href="#sub2ind">sub2ind</a></td><td>&nbsp;</td><td>convert subscripts to linear index</td></tr>
 <tr><td><a href="#symmat">symmatu&nbsp;/&nbsp;symmatl</a></td><td>&nbsp;</td><td>generate symmetric matrix from given matrix</td></tr>
-<tr><td><a href="#trace">trace</a></td><td>&nbsp;</td><td>sum of diagonal elements</td></tr>
+<tr style="background-color: #F5F5F5;"><td><a href="#trace">trace</a></td><td>&nbsp;</td><td>sum of diagonal elements</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#trans">trans</a></td><td>&nbsp;</td><td>transpose of matrix</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#trapz">trapz</a></td><td>&nbsp;</td><td>trapezoidal numerical integration</td></tr>
-<tr style="background-color: #F5F5F5;"><td><a href="#trimat">trimatu&nbsp;/&nbsp;trimatl</a></td><td>&nbsp;</td><td>copy upper/lower triangular part</td></tr>
+<tr><td><a href="#trimat">trimatu&nbsp;/&nbsp;trimatl</a></td><td>&nbsp;</td><td>copy upper/lower triangular part</td></tr>
 <tr><td><a href="#trimat_ind">trimatu_ind&nbsp;/&nbsp;trimatl_ind</a></td><td>&nbsp;</td><td>obtain indices of upper/lower triangular part</td></tr>
 <tr><td><a href="#unique">unique</a></td><td>&nbsp;</td><td>return unique elements</td></tr>
-<tr><td><a href="#vectorise">vectorise</a></td><td>&nbsp;</td><td>flatten matrix into vector</td></tr>
+<tr style="background-color: #F5F5F5;"><td><a href="#vectorise">vectorise</a></td><td>&nbsp;</td><td>flatten matrix into vector</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#misc_fns">misc&nbsp;functions</a></td><td>&nbsp;</td><td>miscellaneous element-wise functions:&nbsp;exp,&nbsp;log,&nbsp;pow,&nbsp;sqrt,&nbsp;round,&nbsp;sign,&nbsp;...</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#trig_fns">trig&nbsp;functions</a></td><td>&nbsp;</td><td>trigonometric element-wise functions:&nbsp;cos,&nbsp;sin,&nbsp;...</td></tr>
 </tbody>
@@ -2308,7 +2309,7 @@ umat ZZ = (AA >= BB);
 See also:
 <ul>
 <li><a href="#approx_equal">approx_equal()</a></li>
-<li><a href="#powmat">powmat()</a></li>
+<li><a href="#pow">pow()</a></li>
 <li><a href="#any">any()</a></li>
 <li><a href="#all">all()</a></li>
 <li><a href="#affmul">affmul()</a></li>
@@ -4267,6 +4268,7 @@ See also:
 <li><a href="#submat">submatrix views</a></li>
 <li><a href="#diag">diagonal views</a></li>
 <li><a href="#repmat">repmat()</a></li>
+<li><a href="#pow">pow()</a></li>
 <li><a href="#for_each">.for_each()</a></li>
 <li><a href="#each_slice">.each_slice()</a></li>
 </ul>
@@ -8252,7 +8254,8 @@ See also:
 <li><a href="#arg">arg()</a></li>
 <li><a href="#conj">conj()</a></li>
 <li><a href="#imag_real">imag() / real()</a></li>
-<li><a href="#conv_to">conv_to()</a></li>
+<li><a href="#pow">pow()</a></li>
+<li><a href="#misc_fns">miscellaneous element-wise functions</a></li>
 </ul>
 </li>
 <br>
@@ -10589,6 +10592,62 @@ See also:
 </ul>
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="pow"></a>
+<table>
+<tbody>
+<tr><td><b>pow( A, scalar )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
+<tr><td><b>pow( A, B )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td><b>pow( A.each_col(), C )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 3)</td></tr>
+<tr><td><b>pow( A.each_row(), R )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 4)</td></tr>
+</tbody>
+</table>
+<ul>
+<li>Element-wise power operations</li>
+<br>
+<li>form 1: raise all elements in <i>A</i> to the power denoted by the given scalar</li>
+<br>
+<li>form 2: raise each element in <i>A</i> to the power denoted by the corresponding element in <i>B</i>;
+<br>the sizes of <i>A</i> and <i>B</i> must be the same</li>
+<br>
+<li>form 3: for each column vector of <i>A</i>, raise each element to the power denoted by the corresponding element in column vector <i>C</i>;
+<br>the number of rows in <i>A</i> and <i>C</i> must be the same</li>
+<br>
+<li>form 4: for each row vector of <i>A</i>, raise each element to the power denoted by the corresponding element in row vector <i>R</i>;
+<br>the number of columns in <i>A</i> and <i>R</i> must be the same</li>
+<br>
+<li><b>Caveat</b>: for the matrix power operation, which takes into account matrix structure, use <a href="#powmat">powmat()</a> </li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+mat A(5, 6, fill::randu);
+mat B(5, 6, fill::randu);
+
+mat X = pow(A, 2.34);
+mat Y = pow(A, B);
+
+   vec C(5, fill::randu);
+rowvec R(6, fill::randu);
+
+mat Z1 = pow(A.each_col(), C);
+mat Z2 = pow(A.each_row(), R);
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#powmat">powmat()</a></li>
+<li><a href="#abs">abs()</a></li>
+<li><a href="#misc_fns">miscellaneous element-wise functions</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="powmat"></a>
 <b>B = powmat( A, n )</b>
 <br><b>powmat( B, A, n )</b>
@@ -10617,7 +10676,7 @@ See also:
 <li>to find the inverse of a matrix, use <a href="#inv">inv()</a> instead</li>
 <li>to solve a system of linear equations, use <a href="#solve">solve()</a> instead</li>
 <li>to find the matrix square root, use <a href="#sqrtmat">sqrtmat()</a> instead</li>
-<li>the matrix power operation is generally <b>not</b> the same as applying the <a href="#misc_fns">pow()</a> function to each element</li>
+<li>the matrix power operation is generally <b>not</b> the same as applying the <a href="#pow">pow()</a> function to each element</li>
 </ul>
 <br>
 <li>
@@ -10636,6 +10695,7 @@ cx_mat C = powmat(A, 4.56);  // non-integer exponent
 <li>
 See also:
 <ul>
+<li><a href="#pow">pow()</a></li>
 <li><a href="#sqrtmat">sqrtmat()</a></li>
 <li><a href="#inv">inv()</a></li>
 <li><a href="#eye_standalone">eye()</a></li>
@@ -11935,9 +11995,9 @@ See also:
 <b>miscellaneous element-wise functions:</b>
 <ul>
 <table border="0" cellpadding="0" cellspacing="0">
-<tr><td><b>exp      </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log      </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>pow   </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>floor </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>erf   </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>tgamma</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>sign  </b></td></tr>
-<tr><td><b>exp2     </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log2     </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>square</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>ceil  </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>erfc  </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>lgamma</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
-<tr><td><b>exp10    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log10    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>sqrt  </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>round </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
+<tr><td><b>exp      </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log      </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>square</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>floor </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>erf   </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>tgamma</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>sign  </b></td></tr>
+<tr><td><b>exp2     </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log2     </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>sqrt</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>ceil  </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>erfc  </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>lgamma</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
+<tr><td><b>exp10    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log10    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>round </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
 <tr><td><b>expm1    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>log1p    </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>trunc </b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
 <tr><td><b>trunc_exp</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>trunc_log</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td><td>&nbsp;&nbsp;&nbsp;</td><td><b>&nbsp;</b></td></tr>
 </table>
@@ -11989,7 +12049,7 @@ Usage:
       base-10 exponential: <i>10<sup>&thinsp;x</sup></i>
     </td>
   </tr>
-  <tr style="background-color: #F5F5F5;">
+  <tr>
     <td style="vertical-align: top; text-align: right;">
       <code>expm1(A)</code>
     </td>
@@ -12000,7 +12060,7 @@ Usage:
       compute <code>exp(A)-1</code> accurately for values of A close to zero &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
     </td>
   </tr>
-  <tr style="background-color: #F5F5F5;">
+  <tr>
     <td style="vertical-align: top; text-align: right;">
       <code>trunc_exp(A)</code>
     </td>
@@ -12012,7 +12072,7 @@ Usage:
       truncated to avoid infinity &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
     </td>
   </tr>
-  <tr>
+  <tr style="background-color: #F5F5F5;">
     <td style="vertical-align: top; text-align: right;">
        <code>log(A)</code><sub>&nbsp;</sub>
     </td>
@@ -12023,7 +12083,7 @@ Usage:
       natural log: <i>log<sub>e</sub>&thinsp;x</i>
     </td>
   </tr>
-  <tr>
+  <tr style="background-color: #F5F5F5;">
     <td style="vertical-align: top; text-align: right;">
        <code>log2(A)</code><sub>&nbsp;</sub>
     </td>
@@ -12034,7 +12094,7 @@ Usage:
       base-2 log: <i>log<sub><small>2</small></sub>&thinsp;x</i>
     </td>
   </tr>
-  <tr>
+  <tr style="background-color: #F5F5F5;">
     <td style="vertical-align: top; text-align: right;">
        <code>log10(A)</code><sub>&nbsp;</sub>
     </td>
@@ -12066,17 +12126,6 @@ Usage:
     <td style="vertical-align: top;">
       natural log,
       truncated to avoid &plusmn;infinity &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
-    </td>
-  </tr>
-  <tr style="background-color: #F5F5F5;">
-    <td style="vertical-align: top; text-align: right;">
-       <code>pow(A, p)</code>
-    </td>
-    <td style="vertical-align: top;">
-      &nbsp;
-    </td>
-    <td style="vertical-align: top;">
-      raise to the power of p: <i>x<sup><small>&thinsp;p</small></sup></i>
     </td>
   </tr>
   <tr style="background-color: #F5F5F5;">
@@ -12167,7 +12216,7 @@ Usage:
       complementary error function &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
     </td>
   </tr>
-  <tr style="background-color: #F5F5F5;">
+  <tr>
     <td style="vertical-align: top; text-align: right;">
       <code>tgamma(A)</code>
     </td>
@@ -12178,7 +12227,7 @@ Usage:
       gamma function &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
     </td>
   </tr>
-  <tr style="background-color: #F5F5F5;">
+  <tr>
     <td style="vertical-align: top; text-align: right;">
       <code>lgamma(A)</code>
     </td>
@@ -12189,7 +12238,7 @@ Usage:
       natural log of the absolute value of gamma function &nbsp; <font size=-1>(only for <i>float</i> and <i>double</i> elements)</font>
     </td>
   </tr>
-  <tr>
+  <tr style="background-color: #F5F5F5;">
     <td style="vertical-align: top; text-align: right;">
       <code>sign(A)</code>
     </td>
@@ -12220,8 +12269,8 @@ Usage:
 <ul>
 <li>all of the above functions are applied element-wise, where each element is treated independently</li>
 <li>
-the element-wise functions <i>exp()</i>, <i>log()</i>, <i>sqrt()</i> and <i>pow()</i>
-have the corresponding functions <a href="#expmat">expmat()</a>, <a href="#logmat">logmat()</a>, <a href="#sqrtmat">sqrtmat()</a> and <a href="#powmat">powmat()</a> which take into account matrix structure
+the element-wise functions <i>exp()</i>, <i>log()</i> and <i>sqrt()</i>
+have the corresponding functions <a href="#expmat">expmat()</a>, <a href="#logmat">logmat()</a> and <a href="#sqrtmat">sqrtmat()</a> which take into account matrix structure
 </li>
 </ul>
 </li>
@@ -12240,6 +12289,7 @@ mat B = exp(A);
 See also:
 <ul>
 <li><a href="#abs">abs()</a></li>
+<li><a href="#pow">pow()</a></li>
 <li><a href="#clamp">clamp()</a></li>
 <li><a href="#conj">conj()</a></li>
 <li><a href="#imag_real">imag() / real()</a></li>
@@ -12247,7 +12297,6 @@ See also:
 <li><a href="#expmat">expmat()</a></li>
 <li><a href="#logmat">logmat()</a></li>
 <li><a href="#sqrtmat">sqrtmat()</a></li>
-<li><a href="#powmat">powmat()</a></li>
 <li><a href="#trig_fns">trigonometric functions</a></li>
 <li><a href="#stats_fns">statistics functions</a></li>
 <li><a href="#constants">miscellaneous constants</a></li>
