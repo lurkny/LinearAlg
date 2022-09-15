@@ -413,9 +413,9 @@ Conrad Sanderson and Ryan Curtin.
 <tr style="background-color: #F5F5F5;"><td><a href="#nonzeros">nonzeros</a></td><td>&nbsp;</td><td>return non-zero values</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#norm">norm</a></td><td>&nbsp;</td><td>various norms of vectors and matrices</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#normalise">normalise</a></td><td>&nbsp;</td><td>normalise vectors to unit <i>p</i>-norm</td></tr>
-<tr><td><a href="#prod">prod</a></td><td>&nbsp;</td><td>product of elements</td></tr>
 <tr><td><a href="#pow">pow</a></td><td>&nbsp;</td><td>element-wise power</td></tr>
 <tr><td><a href="#powmat">powmat</a></td><td>&nbsp;</td><td>matrix power</td></tr>
+<tr><td><a href="#prod">prod</a></td><td>&nbsp;</td><td>product of elements</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#rank">rank</a></td><td>&nbsp;</td><td>rank of matrix</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#rcond">rcond</a></td><td>&nbsp;</td><td>reciprocal condition number</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#repelem">repelem</a></td><td>&nbsp;</td><td>replicate elements</td></tr>
@@ -10548,50 +10548,6 @@ See also:
 </ul>
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
-<a name="prod"></a>
-<b>prod( V )</b>
-<br><b>prod( M )</b>
-<br><b>prod( M, dim )</b>
-<ul>
-<li>
-For vector <i>V</i>, return the product of all elements
-</li>
-<br>
-<li>
-For matrix <i>M</i>, return the product of elements in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
-</li>
-<br>
-<li>
-The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
-</li>
-<br>
-<li>
-Examples:
-<ul>
-<pre>
-colvec v(10, fill::randu);
-double x = prod(v);
-
-mat M(10, 10, fill::randu);
-
-rowvec a = prod(M);
-rowvec b = prod(M,0);
-colvec c = prod(M,1);
-</pre>
-</ul>
-</li>
-<br>
-<li>
-See also:
-<ul>
-<li><a href="#cumprod">cumprod()</a></li>
-<li><a href="#schur_product">Schur product</a></li>
-</ul>
-</li>
-<br>
-</ul>
-
-<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="pow"></a>
 <table>
 <tbody>
@@ -10701,6 +10657,50 @@ See also:
 <li><a href="#eye_standalone">eye()</a></li>
 <li><a href="#operators">operators</a></li>
 <li><a href="#misc_fns">miscellaneous element-wise functions</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="prod"></a>
+<b>prod( V )</b>
+<br><b>prod( M )</b>
+<br><b>prod( M, dim )</b>
+<ul>
+<li>
+For vector <i>V</i>, return the product of all elements
+</li>
+<br>
+<li>
+For matrix <i>M</i>, return the product of elements in each column (<i>dim&thinsp;=&thinsp;0</i>), or each row (<i>dim&thinsp;=&thinsp;1</i>)
+</li>
+<br>
+<li>
+The <i>dim</i> argument is optional; by default <i>dim&thinsp;=&thinsp;0</i> is used
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+colvec v(10, fill::randu);
+double x = prod(v);
+
+mat M(10, 10, fill::randu);
+
+rowvec a = prod(M);
+rowvec b = prod(M,0);
+colvec c = prod(M,1);
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#cumprod">cumprod()</a></li>
+<li><a href="#operators">Schur product in operators</a></li>
 </ul>
 </li>
 <br>
