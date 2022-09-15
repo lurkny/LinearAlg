@@ -83,6 +83,70 @@ glue_powext::apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B)
 
 
 
+template<typename parent, unsigned int mode, typename T2>
+inline
+Mat<typename parent::elem_type>
+glue_powext::apply
+  (
+  const subview_each1<parent,mode>&          X,
+  const Base<typename parent::elem_type,T2>& Y
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename parent::elem_type eT;
+  
+  const parent& A = X.P;
+  
+  const uword A_n_rows = A.n_rows;
+  const uword A_n_cols = A.n_cols;
+  
+  Mat<eT> out(A_n_rows, A_n_cols, arma_nozeros_indicator());
+  
+  const quasi_unwrap<T2> tmp(Y.get_ref());
+  const Mat<eT>& B     = tmp.M;
+  
+  X.check_size(B);
+  
+  // TODO: investigate use of openmp
+  
+  const eT* B_mem = B.memptr();
+  
+  if(mode == 0) // each column
+    {
+    for(uword i=0; i < A_n_cols; ++i)
+      {
+      const eT*   A_mem =   A.colptr(i);
+            eT* out_mem = out.colptr(i);
+      
+      for(uword row=0; row < A_n_rows; ++row)
+        {
+        out_mem[row] = eop_aux::pow(A_mem[row], B_mem[row]);
+        }
+      }
+    }
+  
+  if(mode == 1) // each row
+    {
+    for(uword i=0; i < A_n_cols; ++i)
+      {
+      const eT*   A_mem =   A.colptr(i);
+            eT* out_mem = out.colptr(i);
+      
+      const eT B_val = B_mem[i];
+      
+      for(uword row=0; row < A_n_rows; ++row)
+        {
+        out_mem[row] = eop_aux::pow(A_mem[row], B_val);
+        }
+      }
+    }
+  
+  return out;
+  }
+
+
+
 //
 
 
@@ -144,6 +208,71 @@ glue_powext_cx::apply(Mat< std::complex<T> >& out, const Mat< std::complex<T> >&
     {
     out_mem[i] = std::pow(A_mem[i], B_mem[i]);
     }
+  }
+
+
+
+template<typename parent, unsigned int mode, typename T2>
+inline
+Mat<typename parent::elem_type>
+glue_powext_cx::apply
+  (
+  const subview_each1<parent,mode>&      X,
+  const Base<typename T2::elem_type,T2>& Y
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename parent::elem_type eT;
+  typedef typename parent::pod_type   T;
+  
+  const parent& A = X.P;
+  
+  const uword A_n_rows = A.n_rows;
+  const uword A_n_cols = A.n_cols;
+  
+  Mat<eT> out(A_n_rows, A_n_cols, arma_nozeros_indicator());
+  
+  const quasi_unwrap<T2> tmp(Y.get_ref());
+  const Mat<T>& B      = tmp.M;
+  
+  X.check_size(B);
+  
+  // TODO: investigate use of openmp
+  
+  const T* B_mem = B.memptr();
+  
+  if(mode == 0) // each column
+    {
+    for(uword i=0; i < A_n_cols; ++i)
+      {
+      const eT*   A_mem =   A.colptr(i);
+            eT* out_mem = out.colptr(i);
+      
+      for(uword row=0; row < A_n_rows; ++row)
+        {
+        out_mem[row] = std::pow(A_mem[row], B_mem[row]);
+        }
+      }
+    }
+  
+  if(mode == 1) // each row
+    {
+    for(uword i=0; i < A_n_cols; ++i)
+      {
+      const eT*   A_mem =   A.colptr(i);
+            eT* out_mem = out.colptr(i);
+      
+      const eT B_val = B_mem[i];
+      
+      for(uword row=0; row < A_n_rows; ++row)
+        {
+        out_mem[row] = std::pow(A_mem[row], B_val);
+        }
+      }
+    }
+  
+  return out;
   }
 
 

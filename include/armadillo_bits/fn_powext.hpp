@@ -65,11 +65,42 @@ pow
 
 
 
-// TODO:    mat = pow(mat.each_col(),    mat)  (no promotion)
-// TODO:    mat = pow(mat.each_row(),    mat)  (no promotion)
+template<typename parent, unsigned int mode, typename T2>
+arma_warn_unused
+inline
+Mat<typename parent::elem_type>
+pow
+  (
+  const subview_each1<parent,mode>&          X,
+  const Base<typename parent::elem_type,T2>& Y
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  return glue_powext::apply(X,Y);
+  }
 
-// TODO: cx_mat = pow(cx_mat.each_col(), mat)  (promotion)
-// TODO: cx_mat = pow(cx_mat.each_row(), mat)  (promotion)
+
+
+template<typename parent, unsigned int mode, typename T2>
+arma_warn_unused
+inline
+typename
+enable_if2
+  <
+  ( is_cx<typename parent::elem_type>::yes && is_same_type<typename parent::pod_type, typename T2::elem_type>::yes ),
+  Mat<typename parent::elem_type>
+  >::result
+pow
+  (
+  const subview_each1<parent,mode>&      X,
+  const Base<typename T2::elem_type,T2>& Y
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  return glue_powext_cx::apply(X,Y);
+  }
 
 
 

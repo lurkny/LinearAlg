@@ -30,7 +30,8 @@ class subview_each_common
   
   const parent& P;
   
-  inline void check_size(const Mat<typename parent::elem_type>& A) const;
+  template<typename eT2>
+  inline void check_size(const Mat<eT2>& A) const;
   
   
   protected:
@@ -43,7 +44,8 @@ class subview_each_common
   
   arma_inline const Mat<typename parent::elem_type>& get_mat_ref() const;
   
-  arma_cold inline const std::string incompat_size_string(const Mat<typename parent::elem_type>& A) const;
+  template<typename eT2>
+  arma_cold inline const std::string incompat_size_string(const Mat<eT2>& A) const;
   };
 
 

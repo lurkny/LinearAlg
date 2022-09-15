@@ -31,6 +31,9 @@ class glue_powext
   template<typename T1, typename T2> inline static void apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_powext>& X);
   
   template<typename eT> inline static void apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B);
+  
+  template<typename parent, unsigned int mode, typename T2> inline static Mat<typename parent::elem_type> apply(const subview_each1<parent,mode>& X, const Base<typename parent::elem_type,T2>& Y);
+
   };
 
 
@@ -43,6 +46,8 @@ class glue_powext_cx
   template<typename T1, typename T2> inline static void apply(Mat<typename T1::elem_type>& out, const mtGlue<typename T1::elem_type,T1,T2,glue_powext_cx>& X);
   
   template<typename T> inline static void apply(Mat< std::complex<T> >& out, const Mat< std::complex<T> >& A, const Mat<T>& B);
+
+  template<typename parent, unsigned int mode, typename T2> inline static Mat<typename parent::elem_type> apply(const subview_each1<parent,mode>& X, const Base<typename T2::elem_type,T2>& Y);
   };
 
 

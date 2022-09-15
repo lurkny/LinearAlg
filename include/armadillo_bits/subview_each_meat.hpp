@@ -65,11 +65,12 @@ subview_each_common<parent,mode>::get_mat_ref() const
 
 
 template<typename parent, unsigned int mode>
+template<typename eT2>
 inline
 void
-subview_each_common<parent,mode>::check_size(const Mat<typename parent::elem_type>& A) const
+subview_each_common<parent,mode>::check_size(const Mat<eT2>& A) const
   {
-  if(arma_config::debug == true)
+  if(arma_config::debug)
     {
     if(mode == 0)
       {
@@ -91,10 +92,11 @@ subview_each_common<parent,mode>::check_size(const Mat<typename parent::elem_typ
 
 
 template<typename parent, unsigned int mode>
+template<typename eT2>
 arma_cold
 inline
 const std::string
-subview_each_common<parent,mode>::incompat_size_string(const Mat<typename parent::elem_type>& A) const
+subview_each_common<parent,mode>::incompat_size_string(const Mat<eT2>& A) const
   {
   std::ostringstream tmp;
   
