@@ -229,8 +229,6 @@ glue_powext_cx::apply(Mat<typename T1::elem_type>& out, const mtGlue<typename T1
   
   arma_debug_assert_same_size(A, B, "element-wise pow()");
   
-  // TODO: investigate use of openmp
-  
   if(UA.is_alias(out) && (UA.has_subview))
     {
     Mat<eT> tmp;
@@ -264,9 +262,26 @@ glue_powext_cx::apply(Mat< std::complex<T> >& out, const Mat< std::complex<T> >&
   const eT*   A_mem =   A.memptr();
   const  T*   B_mem =   B.memptr();
   
-  for(uword i=0; i<N; ++i)
+  if( arma_config::openmp && mp_gate<eT>::eval(N) )
     {
-    out_mem[i] = std::pow(A_mem[i], B_mem[i]);
+    #if defined(ARMA_USE_OPENMP)
+      {
+      const int n_threads = mp_thread_limit::get();
+      
+      #pragma omp parallel for schedule(static) num_threads(n_threads)
+      for(uword i=0; i<N; ++i)
+        {
+        out_mem[i] = std::pow(A_mem[i], B_mem[i]);
+        }
+      }
+    #endif
+    }
+  else
+    {
+    for(uword i=0; i<N; ++i)
+      {
+      out_mem[i] = std::pow(A_mem[i], B_mem[i]);
+      }
     }
   }
 
@@ -298,36 +313,82 @@ glue_powext_cx::apply
   
   X.check_size(B);
   
-  // TODO: investigate use of openmp
-  
   const T* B_mem = B.memptr();
   
   if(mode == 0) // each column
     {
-    for(uword i=0; i < A_n_cols; ++i)
+    if( arma_config::openmp && mp_gate<eT>::eval(A.n_elem) )
       {
-      const eT*   A_mem =   A.colptr(i);
-            eT* out_mem = out.colptr(i);
-      
-      for(uword row=0; row < A_n_rows; ++row)
+      #if defined(ARMA_USE_OPENMP)
         {
-        out_mem[row] = std::pow(A_mem[row], B_mem[row]);
+        const int n_threads = int( (std::min)(uword(mp_thread_limit::get()), A_n_cols) );
+        
+        #pragma omp parallel for schedule(static) num_threads(n_threads)
+        for(uword i=0; i < A_n_cols; ++i)
+          {
+          const eT*   A_mem =   A.colptr(i);
+                eT* out_mem = out.colptr(i);
+          
+          for(uword row=0; row < A_n_rows; ++row)
+            {
+            out_mem[row] = std::pow(A_mem[row], B_mem[row]);
+            }
+          }
+        }
+      #endif
+      }
+    else
+      {
+      for(uword i=0; i < A_n_cols; ++i)
+        {
+        const eT*   A_mem =   A.colptr(i);
+              eT* out_mem = out.colptr(i);
+        
+        for(uword row=0; row < A_n_rows; ++row)
+          {
+          out_mem[row] = std::pow(A_mem[row], B_mem[row]);
+          }
         }
       }
     }
   
   if(mode == 1) // each row
     {
-    for(uword i=0; i < A_n_cols; ++i)
+    if( arma_config::openmp && mp_gate<eT>::eval(A.n_elem) )
       {
-      const eT*   A_mem =   A.colptr(i);
-            eT* out_mem = out.colptr(i);
-      
-      const eT B_val = B_mem[i];
-      
-      for(uword row=0; row < A_n_rows; ++row)
+      #if defined(ARMA_USE_OPENMP)
         {
-        out_mem[row] = std::pow(A_mem[row], B_val);
+        const int n_threads = int( (std::min)(uword(mp_thread_limit::get()), A_n_cols) );
+        
+        #pragma omp parallel for schedule(static) num_threads(n_threads)
+        for(uword i=0; i < A_n_cols; ++i)
+          {
+          const eT*   A_mem =   A.colptr(i);
+                eT* out_mem = out.colptr(i);
+          
+          const eT B_val = B_mem[i];
+          
+          for(uword row=0; row < A_n_rows; ++row)
+            {
+            out_mem[row] = std::pow(A_mem[row], B_val);
+            }
+          }
+        }
+      #endif
+      }
+    else
+      {
+      for(uword i=0; i < A_n_cols; ++i)
+        {
+        const eT*   A_mem =   A.colptr(i);
+              eT* out_mem = out.colptr(i);
+        
+        const eT B_val = B_mem[i];
+        
+        for(uword row=0; row < A_n_rows; ++row)
+          {
+          out_mem[row] = std::pow(A_mem[row], B_val);
+          }
         }
       }
     }
