@@ -10571,7 +10571,11 @@ See also:
 <li>form 4: for each row vector of <i>A</i>, raise each element to the power denoted by the corresponding element in row vector <i>R</i>;
 <br>the number of columns in <i>A</i> and <i>R</i> must be the same</li>
 <br>
-<li><b>Caveat</b>: for the matrix power operation, which takes into account matrix structure, use <a href="#powmat">powmat()</a> </li>
+<li><b>Caveats</b>:
+<ul>
+<li>to raise all elements to the power 2, use <a href="#misc_fns">square()</a> instead</li>
+<li>for the matrix power operation, which takes into account matrix structure, use <a href="#powmat">powmat()</a></li>
+</ul>
 <br>
 <li>
 Examples:
@@ -10580,7 +10584,7 @@ Examples:
 mat A(5, 6, fill::randu);
 mat B(5, 6, fill::randu);
 
-mat X = pow(A, 2.34);
+mat X = pow(A, 3.45);
 mat Y = pow(A, B);
 
    vec C(5, fill::randu);
