@@ -64,9 +64,6 @@ class Col : public Mat<eT>
   inline            Col(const std::initializer_list<eT>& list);
   inline Col& operator=(const std::initializer_list<eT>& list);
   
-  inline            Col(const std::initializer_list< std::initializer_list<eT> >& list) = delete;
-  inline Col& operator=(const std::initializer_list< std::initializer_list<eT> >& list) = delete;
-  
   inline            Col(Col&& m);
   inline Col& operator=(Col&& m);
   
