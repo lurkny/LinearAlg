@@ -311,10 +311,9 @@ Col<eT>::Col(const std::vector<eT>& x)
   {
   arma_extra_debug_sigprint_this(this);
   
-  if(x.size() > 0)
-    {
-    arrayops::copy( Mat<eT>::memptr(), &(x[0]), uword(x.size()) );
-    }
+  const uword N = uword(x.size());
+  
+  if(N > 0)  { arrayops::copy( Mat<eT>::memptr(), &(x[0]), N ); }
   }
   
   
@@ -327,12 +326,11 @@ Col<eT>::operator=(const std::vector<eT>& x)
   {
   arma_extra_debug_sigprint();
   
-  Mat<eT>::init_warm(uword(x.size()), 1);
+  const uword N = uword(x.size());
   
-  if(x.size() > 0)
-    {
-    arrayops::copy( Mat<eT>::memptr(), &(x[0]), uword(x.size()) );
-    }
+  Mat<eT>::init_warm(N, 1);
+  
+  if(N > 0)  { arrayops::copy( Mat<eT>::memptr(), &(x[0]), N ); }
   
   return *this;
   }
@@ -342,11 +340,13 @@ Col<eT>::operator=(const std::vector<eT>& x)
 template<typename eT>
 inline
 Col<eT>::Col(const std::initializer_list<eT>& list)
-  : Mat<eT>(arma_vec_indicator(), 1)
+  : Mat<eT>(arma_vec_indicator(), uword(list.size()), 1, 1)
   {
-  arma_extra_debug_sigprint();
+  arma_extra_debug_sigprint_this(this);
   
-  (*this).operator=(list);
+  const uword N = uword(list.size());
+  
+  if(N > 0)  { arrayops::copy( Mat<eT>::memptr(), list.begin(), N ); }
   }
 
 
@@ -360,7 +360,7 @@ Col<eT>::operator=(const std::initializer_list<eT>& list)
   
   const uword N = uword(list.size());
   
-  (*this).set_size(N,1);
+  Mat<eT>::init_warm(N, 1);
   
   if(N > 0)  { arrayops::copy( (*this).memptr(), list.begin(), N ); }
   
