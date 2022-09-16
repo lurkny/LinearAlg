@@ -362,7 +362,7 @@ Row<eT>::operator=(const std::initializer_list<eT>& list)
   
   (*this).set_size(1, N);
   
-  arrayops::copy( (*this).memptr(), list.begin(), N );
+  if(N > 0)  { arrayops::copy( (*this).memptr(), list.begin(), N ); }
   
   return *this;
   }
