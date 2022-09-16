@@ -929,7 +929,7 @@ Mat<eT>::init(const std::initializer_list<eT>& list)
   
   set_size(1, N);
   
-  arrayops::copy( memptr(), list.begin(), N );
+  if(N > 0)  { arrayops::copy( memptr(), list.begin(), N ); }
   }
 
 
