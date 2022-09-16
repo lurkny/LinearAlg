@@ -3972,7 +3972,7 @@ auxlib::solve_square_fast(Mat<typename T1::elem_type>& out, Mat<typename T1::ele
   const uword B_n_rows = out.n_rows;
   const uword B_n_cols = out.n_cols;
   
-  arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.reset(); } );
+  arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.soft_reset(); } );
   
   if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
   
@@ -4301,7 +4301,7 @@ auxlib::solve_sympd_fast_common(Mat<typename T1::elem_type>& out, Mat<typename T
   const uword B_n_rows = out.n_rows;
   const uword B_n_cols = out.n_cols;
   
-  arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.reset(); } );
+  arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.soft_reset(); } );
   
   if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
   
@@ -4355,7 +4355,7 @@ auxlib::solve_sympd_rcond(Mat<typename T1::pod_type>& out, bool& out_sympd_state
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.reset(); } );
+    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.soft_reset(); } );
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
@@ -4433,7 +4433,7 @@ auxlib::solve_sympd_rcond(Mat< std::complex<typename T1::pod_type> >& out, bool&
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.reset(); } );
+    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.soft_reset(); } );
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
@@ -5129,7 +5129,7 @@ auxlib::solve_trimat_fast(Mat<typename T1::elem_type>& out, const Mat<typename T
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.reset(); } );
+    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.soft_reset(); } );
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
@@ -5179,7 +5179,7 @@ auxlib::solve_trimat_rcond(Mat<typename T1::elem_type>& out, typename T1::pod_ty
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.reset(); } );
+    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.soft_reset(); } );
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_cols, B_n_cols); return true; }
     
@@ -5273,7 +5273,7 @@ auxlib::solve_band_fast_common(Mat<typename T1::elem_type>& out, const Mat<typen
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.reset(); } );
+    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.soft_reset(); } );
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_rows, B_n_cols); return true; }
     
@@ -5377,7 +5377,7 @@ auxlib::solve_band_rcond_common(Mat<typename T1::elem_type>& out, typename T1::p
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.reset(); } );
+    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.soft_reset(); } );
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_rows, B_n_cols); return true; }
     
@@ -5688,7 +5688,7 @@ auxlib::solve_tridiag_fast_common(Mat<typename T1::elem_type>& out, const Mat<ty
     const uword B_n_rows = out.n_rows;
     const uword B_n_cols = out.n_cols;
     
-    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.reset(); } );
+    arma_debug_check( (A.n_rows != B_n_rows), "solve(): number of rows in the given matrices must be the same", [&](){ out.soft_reset(); } );
     
     if(A.is_empty() || out.is_empty())  { out.zeros(A.n_rows, B_n_cols); return true; }
     
@@ -5922,7 +5922,7 @@ auxlib::qz(Mat<T>& A, Mat<T>& B, Mat<T>& vsl, Mat<T>& vsr, const Base<T,T1>& X_e
     A = X_expr.get_ref();
     B = Y_expr.get_ref();
     
-    arma_debug_check( ((A.is_square() == false) || (B.is_square() == false)), "qz(): given matrices must be square sized", [&](){ A.reset(); B.reset(); } );
+    arma_debug_check( ((A.is_square() == false) || (B.is_square() == false)), "qz(): given matrices must be square sized", [&](){ A.soft_reset(); B.soft_reset(); } );
     
     arma_debug_check( (A.n_rows != B.n_rows), "qz(): given matrices must have the same size" );
     
@@ -6009,7 +6009,7 @@ auxlib::qz(Mat< std::complex<T> >& A, Mat< std::complex<T> >& B, Mat< std::compl
     A = X_expr.get_ref();
     B = Y_expr.get_ref();
     
-    arma_debug_check( ((A.is_square() == false) || (B.is_square() == false)), "qz(): given matrices must be square sized", [&](){ A.reset(); B.reset(); } );
+    arma_debug_check( ((A.is_square() == false) || (B.is_square() == false)), "qz(): given matrices must be square sized", [&](){ A.soft_reset(); B.soft_reset(); } );
     
     arma_debug_check( (A.n_rows != B.n_rows), "qz(): given matrices must have the same size" );
     
