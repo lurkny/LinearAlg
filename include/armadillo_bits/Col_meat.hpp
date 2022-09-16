@@ -362,7 +362,7 @@ Col<eT>::operator=(const std::initializer_list<eT>& list)
   
   Mat<eT>::init_warm(N, 1);
   
-  if(N > 0)  { arrayops::copy( (*this).memptr(), list.begin(), N ); }
+  if(N > 0)  { arrayops::copy( Mat<eT>::memptr(), list.begin(), N ); }
   
   return *this;
   }
