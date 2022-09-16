@@ -27,18 +27,18 @@ arma_inline
 typename
 enable_if2
   <
-  ( is_arma_type<T1>::value && is_arma_type<T2>::value && is_same_type<typename T1::elem_type, typename T2::elem_type>::yes ),
+  is_arma_type<T1>::value,
   const Glue<T1, T2, glue_powext>
   >::result
 pow
   (
-  const T1& X,
-  const T2& Y
+  const T1&                               X,
+  const Base<typename T1::elem_type, T2>& Y
   )
   {
   arma_extra_debug_sigprint();
   
-  return Glue<T1, T2, glue_powext>(X, Y);
+  return Glue<T1, T2, glue_powext>(X, Y.get_ref());
   }
 
 
@@ -49,18 +49,18 @@ arma_inline
 typename
 enable_if2
   <
-  ( is_arma_type<T1>::value && is_arma_type<T2>::value && is_cx<typename T1::elem_type>::yes && is_same_type<typename T1::pod_type, typename T2::elem_type>::yes ),
+  ( is_arma_type<T1>::value && is_cx<typename T1::elem_type>::yes ),
   const mtGlue<typename T1::elem_type, T1, T2, glue_powext_cx>
   >::result
 pow
   (
-  const T1& X,
-  const T2& Y
+  const T1&                              X,
+  const Base<typename T1::pod_type, T2>& Y
   )
   {
   arma_extra_debug_sigprint();
   
-  return mtGlue<typename T1::elem_type, T1, T2, glue_powext_cx>(X, Y);
+  return mtGlue<typename T1::elem_type, T1, T2, glue_powext_cx>(X, Y.get_ref());
   }
 
 
@@ -88,13 +88,13 @@ inline
 typename
 enable_if2
   <
-  ( is_cx<typename parent::elem_type>::yes && is_same_type<typename parent::pod_type, typename T2::elem_type>::yes ),
+  is_cx<typename parent::elem_type>::yes,
   Mat<typename parent::elem_type>
   >::result
 pow
   (
-  const subview_each1<parent,mode>&      X,
-  const Base<typename T2::elem_type,T2>& Y
+  const subview_each1<parent,mode>&         X,
+  const Base<typename parent::pod_type,T2>& Y
   )
   {
   arma_extra_debug_sigprint();

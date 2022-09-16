@@ -33,7 +33,6 @@ class glue_powext
   template<typename eT> inline static void apply(Mat<eT>& out, const Mat<eT>& A, const Mat<eT>& B);
   
   template<typename parent, unsigned int mode, typename T2> inline static Mat<typename parent::elem_type> apply(const subview_each1<parent,mode>& X, const Base<typename parent::elem_type,T2>& Y);
-
   };
 
 
