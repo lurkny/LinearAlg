@@ -5922,7 +5922,7 @@ auxlib::qz(Mat<T>& A, Mat<T>& B, Mat<T>& vsl, Mat<T>& vsr, const Base<T,T1>& X_e
     A = X_expr.get_ref();
     B = Y_expr.get_ref();
     
-    arma_debug_check( ((A.is_square() == false) || (B.is_square() == false)), "qz(): given matrices must be square sized" );
+    arma_debug_check( ((A.is_square() == false) || (B.is_square() == false)), "qz(): given matrices must be square sized", [&](){ A.reset(); B.reset(); } );
     
     arma_debug_check( (A.n_rows != B.n_rows), "qz(): given matrices must have the same size" );
     
@@ -6009,7 +6009,7 @@ auxlib::qz(Mat< std::complex<T> >& A, Mat< std::complex<T> >& B, Mat< std::compl
     A = X_expr.get_ref();
     B = Y_expr.get_ref();
     
-    arma_debug_check( ((A.is_square() == false) || (B.is_square() == false)), "qz(): given matrices must be square sized" );
+    arma_debug_check( ((A.is_square() == false) || (B.is_square() == false)), "qz(): given matrices must be square sized", [&](){ A.reset(); B.reset(); } );
     
     arma_debug_check( (A.n_rows != B.n_rows), "qz(): given matrices must have the same size" );
     
