@@ -104,4 +104,38 @@ pow
 
 
 
+template<typename T1, typename T2>
+arma_warn_unused
+arma_inline
+const GlueCube<T1, T2, glue_powext>
+pow
+  (
+  const BaseCube<typename T1::elem_type, T1>& X,
+  const BaseCube<typename T1::elem_type, T2>& Y
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  return GlueCube<T1, T2, glue_powext>(X.get_ref(), Y.get_ref());
+  }
+
+
+
+template<typename eT, typename T2>
+arma_warn_unused
+inline
+Cube<eT>
+pow
+  (
+  const subview_cube_each1<eT>& X,
+  const Base<eT,T2>&            Y
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  return glue_powext::apply(X,Y);
+  }
+
+
+
 //! @}
