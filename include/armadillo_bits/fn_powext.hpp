@@ -43,28 +43,6 @@ pow
 
 
 
-template<typename T1, typename T2>
-arma_warn_unused
-arma_inline
-typename
-enable_if2
-  <
-  ( is_arma_type<T1>::value && is_cx<typename T1::elem_type>::yes ),
-  const mtGlue<typename T1::elem_type, T1, T2, glue_powext_cx>
-  >::result
-pow
-  (
-  const T1&                              X,
-  const Base<typename T1::pod_type, T2>& Y
-  )
-  {
-  arma_extra_debug_sigprint();
-  
-  return mtGlue<typename T1::elem_type, T1, T2, glue_powext_cx>(X, Y.get_ref());
-  }
-
-
-
 template<typename parent, unsigned int mode, typename T2>
 arma_warn_unused
 inline
@@ -78,28 +56,6 @@ pow
   arma_extra_debug_sigprint();
   
   return glue_powext::apply(X,Y);
-  }
-
-
-
-template<typename parent, unsigned int mode, typename T2>
-arma_warn_unused
-inline
-typename
-enable_if2
-  <
-  is_cx<typename parent::elem_type>::yes,
-  Mat<typename parent::elem_type>
-  >::result
-pow
-  (
-  const subview_each1<parent,mode>&         X,
-  const Base<typename parent::pod_type,T2>& Y
-  )
-  {
-  arma_extra_debug_sigprint();
-  
-  return glue_powext_cx::apply(X,Y);
   }
 
 
@@ -134,6 +90,54 @@ pow
   arma_extra_debug_sigprint();
   
   return glue_powext::apply(X,Y);
+  }
+
+
+
+//
+
+
+
+template<typename T1, typename T2>
+arma_warn_unused
+arma_inline
+typename
+enable_if2
+  <
+  ( is_arma_type<T1>::value && is_cx<typename T1::elem_type>::yes ),
+  const mtGlue<typename T1::elem_type, T1, T2, glue_powext_cx>
+  >::result
+pow
+  (
+  const T1&                              X,
+  const Base<typename T1::pod_type, T2>& Y
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  return mtGlue<typename T1::elem_type, T1, T2, glue_powext_cx>(X, Y.get_ref());
+  }
+
+
+
+template<typename parent, unsigned int mode, typename T2>
+arma_warn_unused
+inline
+typename
+enable_if2
+  <
+  is_cx<typename parent::elem_type>::yes,
+  Mat<typename parent::elem_type>
+  >::result
+pow
+  (
+  const subview_each1<parent,mode>&         X,
+  const Base<typename parent::pod_type,T2>& Y
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  return glue_powext_cx::apply(X,Y);
   }
 
 
