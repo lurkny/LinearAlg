@@ -11,5 +11,3 @@ InstallFiles/
 tmp/
 tests1/smoke_test
 tests2/main
-
-# TODO: examples/Makefile is overwritten by the cmake installer, but we need to keep track of the default version
