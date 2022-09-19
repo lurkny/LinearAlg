@@ -4372,6 +4372,7 @@ See also:
 <ul>
 <li><a href="#operators">math &amp; relational operators</a></li>
 <li><a href="#subcube">subcube views</a></li>
+<li><a href="#pow">pow()</a></li>
 <li><a href="#for_each">.for_each()</a></li>
 <li><a href="#each_colrow">.each_col() &amp; .each_row()</a> &nbsp;</li>
 <li><a href="http://www.cprogramming.com/c++11/c++11-lambda-closures.html">lambda function</a> at cprogramming.com</li>
@@ -10553,8 +10554,9 @@ See also:
 <tbody>
 <tr><td><b>pow( A, scalar )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
 <tr><td><b>pow( A, B )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
-<tr><td><b>pow( A.each_col(), C )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 3)</td></tr>
-<tr><td><b>pow( A.each_row(), R )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 4)</td></tr>
+<tr><td><b>pow( M.each_col(), C )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 3)</td></tr>
+<tr><td><b>pow( M.each_row(), R )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 4)</td></tr>
+<tr><td><b>pow( Q.each_slice(), M )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 5)</td></tr>
 </tbody>
 </table>
 <ul>
@@ -10565,11 +10567,14 @@ See also:
 <li>form 2: raise each element in <i>A</i> to the power denoted by the corresponding element in <i>B</i>;
 <br>the sizes of <i>A</i> and <i>B</i> must be the same</li>
 <br>
-<li>form 3: for each column vector of <i>A</i>, raise each element to the power denoted by the corresponding element in column vector <i>C</i>;
-<br>the number of rows in <i>A</i> and <i>C</i> must be the same</li>
+<li>form 3: for each column vector of matrix <i>M</i>, raise each element to the power denoted by the corresponding element in column vector <i>C</i>;
+<br>the number of rows in <i>M</i> and <i>C</i> must be the same</li>
 <br>
-<li>form 4: for each row vector of <i>A</i>, raise each element to the power denoted by the corresponding element in row vector <i>R</i>;
-<br>the number of columns in <i>A</i> and <i>R</i> must be the same</li>
+<li>form 4: for each row vector of matrix <i>M</i>, raise each element to the power denoted by the corresponding element in row vector <i>R</i>;
+<br>the number of columns in <i>M</i> and <i>R</i> must be the same</li>
+<br>
+<li>form 5: for each slice of cube <i>Q</i>, raise each element to the power denoted by the corresponding element in matrix <i>M</i>;
+<br>the number of rows and columns in <i>Q</i> and <i>M</i> must be the same</li>
 <br>
 <li><b>Caveats</b>:
 <ul>
@@ -10603,6 +10608,7 @@ See also:
 <li><a href="#abs">abs()</a></li>
 <li><a href="#misc_fns">miscellaneous element-wise functions</a></li>
 <li><a href="#each_colrow">.each_col() &amp; .each_row()</a></li>
+<li><a href="#each_slice">.each_slice()</a></li>
 </ul>
 </li>
 <br>
