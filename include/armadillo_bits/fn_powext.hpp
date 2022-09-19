@@ -142,4 +142,38 @@ pow
 
 
 
+template<typename T1, typename T2>
+arma_warn_unused
+arma_inline
+const mtGlueCube<typename T1::elem_type, T1, T2, glue_powext_cx>
+pow
+  (
+  const BaseCube< std::complex<typename T1::pod_type>, T1>& X,
+  const BaseCube<              typename T1::pod_type , T2>& Y
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  return mtGlueCube<typename T1::elem_type, T1, T2, glue_powext_cx>(X.get_ref(), Y.get_ref());
+  }
+
+
+
+template<typename T, typename T2>
+arma_warn_unused
+inline
+Cube< std::complex<T> >
+pow
+  (
+  const subview_cube_each1< std::complex<T> >& X,
+  const Base<T,T2>&                            Y
+  )
+  {
+  arma_extra_debug_sigprint();
+  
+  return glue_powext_cx::apply(X,Y);
+  }
+
+
+
 //! @}

@@ -35,9 +35,10 @@ subview_cube_each_common<eT>::subview_cube_each_common(const Cube<eT>& in_p)
 
 
 template<typename eT>
+template<typename eT2>
 inline
 void
-subview_cube_each_common<eT>::check_size(const Mat<eT>& A) const
+subview_cube_each_common<eT>::check_size(const Mat<eT2>& A) const
   {
   if(arma_config::debug)
     {
@@ -51,10 +52,11 @@ subview_cube_each_common<eT>::check_size(const Mat<eT>& A) const
 
 
 template<typename eT>
+template<typename eT2>
 arma_cold
 inline
 const std::string
-subview_cube_each_common<eT>::incompat_size_string(const Mat<eT>& A) const
+subview_cube_each_common<eT>::incompat_size_string(const Mat<eT2>& A) const
   {
   std::ostringstream tmp;
   
