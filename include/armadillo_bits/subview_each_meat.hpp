@@ -194,7 +194,7 @@ subview_each1<parent,mode>::operator+= (const Base<eT,T1>& in)
   const eT*   A_mem    = A.memptr();
   const uword p_n_rows = p.n_rows;
   const uword p_n_cols = p.n_cols;
-    
+  
   if(mode == 0) // each column
     {
     for(uword i=0; i < p_n_cols; ++i)
@@ -231,7 +231,7 @@ subview_each1<parent,mode>::operator-= (const Base<eT,T1>& in)
   const eT*   A_mem    = A.memptr();
   const uword p_n_rows = p.n_rows;
   const uword p_n_cols = p.n_cols;
-    
+  
   if(mode == 0) // each column
     {
     for(uword i=0; i < p_n_cols; ++i)
