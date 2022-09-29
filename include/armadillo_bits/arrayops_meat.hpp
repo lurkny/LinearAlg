@@ -26,7 +26,7 @@ arma_inline
 void
 arrayops::copy(eT* dest, const eT* src, const uword n_elem)
   {
-  if( (n_elem == 0) || (dest == src) )  { return; }
+  if( (dest == src) || (n_elem == 0) )  { return; }
   
   std::memcpy(dest, src, n_elem*sizeof(eT));
   }
