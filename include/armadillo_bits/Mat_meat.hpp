@@ -2762,7 +2762,7 @@ Mat<eT>::operator%=(const SpBase<eT, T1>& m)
   typename SpProxy<T1>::const_iterator_type it_end = p.end();
   
   // We have to zero everything that isn't being used.
-  arrayops::inplace_set(memptr(), eT(0), (it.col() * n_rows) + it.row());
+  arrayops::fill_zeros(memptr(), (it.col() * n_rows) + it.row());
   
   while(it != it_end)
     {
@@ -2776,7 +2776,7 @@ Mat<eT>::operator%=(const SpBase<eT, T1>& m)
       ? (p.get_n_cols() * n_rows)
       : (it.col() * n_rows) + it.row();
     
-    arrayops::inplace_set(memptr() + cur_loc + 1, eT(0), (next_loc - cur_loc - 1));
+    arrayops::fill_zeros(memptr() + cur_loc + 1, (next_loc - cur_loc - 1));
     }
   
   return *this;
