@@ -37,8 +37,9 @@ Cube<eT>::~Cube()
   // try to expose buggy user code that accesses deleted objects
   if(arma_config::debug)
     {
-    access::rw(mem)      = nullptr;
-    access::rw(mat_ptrs) = nullptr;
+    access::rw(mem)            = nullptr;
+    access::rw(mat_ptrs)       = nullptr;
+    access::rw(mat_ptrs_state) = nullptr;
     }
   
   arma_type_check(( is_supported_elem_type<eT>::value == false ));
@@ -540,11 +541,13 @@ Cube<eT>::delete_mat()
   {
   arma_extra_debug_sigprint();
   
-  if((n_slices > 0) && (mat_ptrs != nullptr))
+  if(n_slices == 0)  { return; }
+  
+  if(mat_ptrs != nullptr)
     {
-    for(uword uslice = 0; uslice < n_slices; ++uslice)
+    for(uword s = 0; s < n_slices; ++s)
       {
-      if(mat_ptrs[uslice] != nullptr)  { delete access::rw(mat_ptrs[uslice]); }
+      if(mat_ptrs[s] != nullptr)  { delete access::rw(mat_ptrs[s]); }
       }
     
     if( (mem_state <= 2) && (n_slices > Cube_prealloc::mat_ptrs_size) )
@@ -552,6 +555,8 @@ Cube<eT>::delete_mat()
       delete [] mat_ptrs;
       }
     }
+  
+  if(mat_ptrs_state != nullptr)  { delete [] mat_ptrs_state; }
   }
 
 
@@ -566,28 +571,50 @@ Cube<eT>::create_mat()
   if(n_slices == 0)
     {
     access::rw(mat_ptrs) = nullptr;
-    }
-  else
-    {
-    if(mem_state <= 2)
-      {
-      if(n_slices <= Cube_prealloc::mat_ptrs_size)
-        {
-        access::rw(mat_ptrs) = const_cast< const Mat<eT>** >(mat_ptrs_local);
-        }
-      else
-        {
-        access::rw(mat_ptrs) = new(std::nothrow) const Mat<eT>*[n_slices];
-        
-        arma_check_bad_alloc( (mat_ptrs == nullptr), "Cube::create_mat(): out of memory" );
-        }
-      }
+    mat_ptrs_state       = nullptr;
     
-    for(uword uslice = 0; uslice < n_slices; ++uslice)
+    return;
+    }
+  
+  if(mem_state <= 2)
+    {
+    if(n_slices <= Cube_prealloc::mat_ptrs_size)
       {
-      mat_ptrs[uslice] = nullptr;
+      access::rw(mat_ptrs) = const_cast< const Mat<eT>** >(mat_ptrs_local);
+      }
+    else
+      {
+      access::rw(mat_ptrs) = new(std::nothrow) const Mat<eT>*[n_slices];
+      
+      arma_check_bad_alloc( (mat_ptrs == nullptr), "Cube::create_mat(): out of memory" );
       }
     }
+  
+  mat_ptrs_state = new(std::nothrow) arma_atomic_bool[n_slices];
+  
+  arma_check_bad_alloc( (mat_ptrs_state == nullptr), "Cube::create_mat(): out of memory" );
+  
+  for(uword s=0; s < n_slices; ++s)
+    {
+    mat_ptrs[s]       = nullptr;
+    mat_ptrs_state[s] = false;
+    }
+  }
+
+
+
+template<typename eT>
+inline
+void
+Cube<eT>::create_mat_ptr(const uword in_slice) const
+  {
+  arma_extra_debug_sigprint();
+  
+  if(mat_ptrs[in_slice] != nullptr)  { return; }
+  
+  const eT* ptr = (n_elem_slice > 0) ? slice_memptr(in_slice) : nullptr;
+  
+  mat_ptrs[in_slice] = new Mat<eT>('j', ptr, n_rows, n_cols);
   }
 
 
@@ -1154,11 +1181,63 @@ Cube<eT>::slice(const uword in_slice)
   
   arma_debug_check_bounds( (in_slice >= n_slices), "Cube::slice(): index out of bounds" );
   
-  if(mat_ptrs[in_slice] == nullptr)
+  bool state = false;
+  
+  #if defined(ARMA_USE_OPENMP)
     {
-    const eT* ptr = (n_elem_slice > 0) ? slice_memptr(in_slice) : nullptr;
-    
-    mat_ptrs[in_slice] = new Mat<eT>('j', ptr, n_rows, n_cols);
+    #pragma omp atomic read
+    state = mat_ptrs_state[in_slice];
+    }
+  #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
+    {
+    state = mat_ptrs_state[in_slice].load();
+    }
+  #else
+    {
+    state = mat_ptrs_state[in_slice];
+    }
+  #endif
+  
+  if(state == false)
+    {
+    #if defined(ARMA_USE_OPENMP)
+      {
+      #pragma omp critical (arma_Cube_mat_ptrs)
+        {
+        #pragma omp atomic read
+        state = mat_ptrs_state[in_slice];
+        
+        if(state == false)
+          {
+          create_mat_ptr(in_slice);
+          
+          #pragma omp atomic write
+          mat_ptrs_state[in_slice] = true;
+          }
+        }
+      }
+    #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
+      {
+      mat_ptrs_mutex.lock();
+      
+      state = mat_ptrs_state[in_slice].load();
+      
+      if(state == false)
+        {
+        create_mat_ptr(in_slice);
+        
+        mat_ptrs_state[in_slice].store(true);
+        }
+      
+      mat_ptrs_mutex.unlock();
+      }
+    #else
+      {
+      create_mat_ptr(in_slice);
+      
+      mat_ptrs_state[in_slice] = true;
+      }
+    #endif
     }
   
   return const_cast< Mat<eT>& >( *(mat_ptrs[in_slice]) );
@@ -1176,11 +1255,63 @@ Cube<eT>::slice(const uword in_slice) const
   
   arma_debug_check_bounds( (in_slice >= n_slices), "Cube::slice(): index out of bounds" );
   
-  if(mat_ptrs[in_slice] == nullptr)
+  bool state = false;
+  
+  #if defined(ARMA_USE_OPENMP)
     {
-    const eT* ptr = (n_elem_slice > 0) ? slice_memptr(in_slice) : nullptr;
-    
-    mat_ptrs[in_slice] = new Mat<eT>('j', ptr, n_rows, n_cols);
+    #pragma omp atomic read
+    state = mat_ptrs_state[in_slice];
+    }
+  #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
+    {
+    state = mat_ptrs_state[in_slice].load();
+    }
+  #else
+    {
+    state = mat_ptrs_state[in_slice];
+    }
+  #endif
+  
+  if(state == false)
+    {
+    #if defined(ARMA_USE_OPENMP)
+      {
+      #pragma omp critical (arma_Cube_mat_ptrs)
+        {
+        #pragma omp atomic read
+        state = mat_ptrs_state[in_slice];
+        
+        if(state == false)
+          {
+          create_mat_ptr(in_slice);
+          
+          #pragma omp atomic write
+          mat_ptrs_state[in_slice] = true;
+          }
+        }
+      }
+    #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
+      {
+      mat_ptrs_mutex.lock();
+      
+      state = mat_ptrs_state[in_slice].load();
+      
+      if(state == false)
+        {
+        create_mat_ptr(in_slice);
+        
+        mat_ptrs_state[in_slice].store(true);
+        }
+      
+      mat_ptrs_mutex.unlock();
+      }
+    #else
+      {
+      create_mat_ptr(in_slice);
+      
+      mat_ptrs_state[in_slice] = true;
+      }
+    #endif
     }
   
   return *(mat_ptrs[in_slice]);

@@ -63,6 +63,15 @@ class Cube : public BaseCube< eT, Cube<eT> >
   arma_align_mem eT            mem_local[ Cube_prealloc::mem_n_elem    ];  // local storage, for small cubes
   
   
+  private:
+  
+  arma_aligned arma_atomic_bool* mat_ptrs_state = nullptr;
+  
+  #if (!defined(ARMA_DONT_USE_STD_MUTEX))
+  arma_aligned mutable std::mutex mat_ptrs_mutex;
+  #endif
+  
+  
   public:
   
   inline ~Cube();
@@ -444,6 +453,7 @@ class Cube : public BaseCube< eT, Cube<eT> >
   
   inline void delete_mat();
   inline void create_mat();
+  inline void create_mat_ptr(const uword in_slice) const;
   
   friend class glue_join;
   friend class op_reshape;

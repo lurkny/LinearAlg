@@ -270,6 +270,15 @@ template<typename T1> struct unwrap_spmat;
 
 
 
+#if   defined(ARMA_USE_OPENMP)
+  typedef bool              arma_atomic_bool;
+#elif (!defined(ARMA_DONT_USE_STD_MUTEX))
+  typedef std::atomic<bool> arma_atomic_bool;
+#else
+  typedef bool              arma_atomic_bool;
+#endif
+
+
 
 struct state_type
   {
