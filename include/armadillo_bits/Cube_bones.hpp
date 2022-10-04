@@ -39,13 +39,13 @@ class Cube : public BaseCube< eT, Cube<eT> >
   typedef eT                                elem_type; //!< the type of elements stored in the cube
   typedef typename get_pod_type<eT>::result  pod_type; //!< if eT is std::complex<T>, pod_type is T; otherwise pod_type is eT
   
-  const uword  n_rows;       //!< number of rows     in each slice (read-only)
-  const uword  n_cols;       //!< number of columns  in each slice (read-only)
-  const uword  n_elem_slice; //!< number of elements in each slice (read-only)
-  const uword  n_slices;     //!< number of slices   in the cube   (read-only)
-  const uword  n_elem;       //!< number of elements in the cube   (read-only)
-  const uword  n_alloc;      //!< number of allocated elements     (read-only); NOTE: n_alloc can be 0, even if n_elem > 0
-  const uword  mem_state;
+  const uword n_rows;       //!< number of rows     in each slice (read-only)
+  const uword n_cols;       //!< number of columns  in each slice (read-only)
+  const uword n_elem_slice; //!< number of elements in each slice (read-only)
+  const uword n_slices;     //!< number of slices   in the cube   (read-only)
+  const uword n_elem;       //!< number of elements in the cube   (read-only)
+  const uword n_alloc;      //!< number of allocated elements     (read-only); NOTE: n_alloc can be 0, even if n_elem > 0
+  const uword mem_state;
   
   // mem_state = 0: normal cube which manages its own memory
   // mem_state = 1: use auxiliary memory until a size change
@@ -57,15 +57,16 @@ class Cube : public BaseCube< eT, Cube<eT> >
   
   protected:
   
-  const Mat<eT>** const mat_ptrs       = nullptr;
-  arma_atomic_bool*     mat_ptrs_state = nullptr;
-  
   #if (!defined(ARMA_DONT_USE_STD_MUTEX))
-  mutable std::mutex    mat_ptrs_mutex;
+  mutable std::mutex mat_mutex;
   #endif
   
-  arma_align_mem Mat<eT>* mat_ptrs_local[ Cube_prealloc::mat_ptrs_size ];
-  arma_align_mem eT            mem_local[ Cube_prealloc::mem_n_elem    ];  // local storage, for small cubes
+  Mat<eT>**          mat_ptrs = nullptr;
+  arma_atomic_bool*  mat_flag = nullptr;
+  
+  arma_align_mem Mat<eT>*         mat_ptrs_local[ Cube_prealloc::mat_ptrs_size ];
+  arma_align_mem arma_atomic_bool mat_flag_local[ Cube_prealloc::mat_ptrs_size ];
+  arma_align_mem eT                    mem_local[ Cube_prealloc::mem_n_elem    ];  // local storage, for small cubes
   
   
   public:
@@ -477,8 +478,9 @@ class Cube<eT>::fixed : public Cube<eT>
   
   static constexpr bool use_extra = (fixed_n_elem > Cube_prealloc::mem_n_elem);
   
-  arma_aligned   Mat<eT>* mat_ptrs_local_extra[ (fixed_n_slices > Cube_prealloc::mat_ptrs_size) ? fixed_n_slices : 1 ];
-  arma_align_mem eT       mem_local_extra     [ use_extra                                       ? fixed_n_elem   : 1 ];
+  arma_aligned   Mat<eT>*         mat_ptrs_local_extra[ (fixed_n_slices > Cube_prealloc::mat_ptrs_size) ? fixed_n_slices : 1 ];
+  arma_aligned   arma_atomic_bool mat_flag_local_extra[ (fixed_n_slices > Cube_prealloc::mat_ptrs_size) ? fixed_n_slices : 1 ];
+  arma_align_mem eT                    mem_local_extra[ use_extra                                       ? fixed_n_elem   : 1 ];
   
   arma_inline void mem_setup();
   
