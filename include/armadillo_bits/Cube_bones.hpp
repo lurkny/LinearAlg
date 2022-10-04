@@ -57,19 +57,15 @@ class Cube : public BaseCube< eT, Cube<eT> >
   
   protected:
   
-  arma_aligned const Mat<eT>** const mat_ptrs;
+  const Mat<eT>** const mat_ptrs       = nullptr;
+  arma_atomic_bool*     mat_ptrs_state = nullptr;
+  
+  #if (!defined(ARMA_DONT_USE_STD_MUTEX))
+  mutable std::mutex    mat_ptrs_mutex;
+  #endif
   
   arma_align_mem Mat<eT>* mat_ptrs_local[ Cube_prealloc::mat_ptrs_size ];
   arma_align_mem eT            mem_local[ Cube_prealloc::mem_n_elem    ];  // local storage, for small cubes
-  
-  
-  private:
-  
-  arma_aligned arma_atomic_bool* mat_ptrs_state = nullptr;
-  
-  #if (!defined(ARMA_DONT_USE_STD_MUTEX))
-  arma_aligned mutable std::mutex mat_ptrs_mutex;
-  #endif
   
   
   public:
