@@ -58,7 +58,6 @@ Cube<eT>::Cube()
   , n_alloc(0)
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   }
@@ -77,7 +76,6 @@ Cube<eT>::Cube(const uword in_n_rows, const uword in_n_cols, const uword in_n_sl
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -103,7 +101,6 @@ Cube<eT>::Cube(const SizeCube& s)
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -131,7 +128,6 @@ Cube<eT>::Cube(const uword in_n_rows, const uword in_n_cols, const uword in_n_sl
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -159,7 +155,6 @@ Cube<eT>::Cube(const SizeCube& s, const arma_initmode_indicator<do_zeros>&)
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -187,7 +182,6 @@ Cube<eT>::Cube(const uword in_n_rows, const uword in_n_cols, const uword in_n_sl
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -215,7 +209,6 @@ Cube<eT>::Cube(const SizeCube& s, const fill::fill_class<fill_type>&)
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -243,7 +236,6 @@ Cube<eT>::Cube(const uword in_n_rows, const uword in_n_cols, const uword in_n_sl
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -265,7 +257,6 @@ Cube<eT>::Cube(const SizeCube& s, const fill::scalar_holder<eT> f)
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -287,7 +278,6 @@ Cube<eT>::Cube(Cube<eT>&& in_cube)
   , n_alloc(0)
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   arma_extra_debug_sigprint(arma_str::format("this = %x   in_cube = %x") % this % &in_cube);
@@ -709,7 +699,6 @@ Cube<eT>::Cube(const Cube<eT>& x)
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   arma_extra_debug_sigprint(arma_str::format("this = %x   in_cube = %x") % this % &x);
@@ -788,7 +777,6 @@ Cube<eT>::Cube(const eT* aux_mem, const uword aux_n_rows, const uword aux_n_cols
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -884,7 +872,6 @@ Cube<eT>::Cube
   , n_alloc(0)
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -905,7 +892,6 @@ Cube<eT>::Cube(const subview_cube<eT>& X)
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -1016,7 +1002,6 @@ Cube<eT>::Cube(const subview_cube_slices<eT,T1>& X)
   , n_alloc(0)
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -2725,7 +2710,6 @@ Cube<eT>::Cube(const GenCube<eT, gen_type>& X)
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -2826,7 +2810,6 @@ Cube<eT>::Cube(const OpCube<T1, op_type>& X)
   , n_alloc(0)
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
 
@@ -2940,7 +2923,6 @@ Cube<eT>::Cube(const eOpCube<T1, eop_type>& X)
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -3068,7 +3050,6 @@ Cube<eT>::Cube(const mtOpCube<eT, T1, op_type>& X)
   , n_alloc(0)
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -3165,7 +3146,6 @@ Cube<eT>::Cube(const GlueCube<T1, T2, glue_type>& X)
   , n_alloc(0)
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -3281,7 +3261,6 @@ Cube<eT>::Cube(const eGlueCube<T1, T2, eglue_type>& X)
   , n_alloc()
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
@@ -3415,7 +3394,6 @@ Cube<eT>::Cube(const mtGlueCube<eT, T1, T2, glue_type>& X)
   , n_alloc(0)
   , mem_state(0)
   , mem()
-  , mat_ptrs(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
   
