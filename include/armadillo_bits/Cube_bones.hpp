@@ -130,7 +130,7 @@ class Cube : public BaseCube< eT, Cube<eT> >
   
   inline       Mat<eT>& slice(const uword in_slice);
   inline const Mat<eT>& slice(const uword in_slice) const;
-
+  
   arma_inline       subview_cube<eT> rows(const uword in_row1, const uword in_row2);
   arma_inline const subview_cube<eT> rows(const uword in_row1, const uword in_row2) const;
   
@@ -450,7 +450,9 @@ class Cube : public BaseCube< eT, Cube<eT> >
   
   inline void delete_mat();
   inline void create_mat();
-  inline void create_mat_ptr(const uword in_slice) const;
+  
+  inline void     create_mat_ptr(const uword in_slice) const;
+  inline Mat<eT>*    get_mat_ptr(const uword in_slice) const;
   
   friend class glue_join;
   friend class op_reshape;

@@ -35,12 +35,7 @@ Cube<eT>::~Cube()
     }
   
   // try to expose buggy user code that accesses deleted objects
-  if(arma_config::debug)
-    {
-    access::rw(mem) = nullptr;
-    mat_ptrs        = nullptr;
-    mat_flag        = nullptr;
-    }
+  if(arma_config::debug)  { access::rw(mem) = nullptr; }
   
   arma_type_check(( is_supported_elem_type<eT>::value == false ));
   }
@@ -549,6 +544,8 @@ Cube<eT>::delete_mat()
   
   if(mat_flag != nullptr)
     {
+    for(uword s=0; s < n_slices; ++s)  { mat_flag[s] = false; }
+    
     if( (mem_state <= 2) && (n_slices > Cube_prealloc::mat_ptrs_size) )
       {
       delete [] mat_flag;
@@ -615,6 +612,77 @@ Cube<eT>::create_mat_ptr(const uword in_slice) const
   const eT* ptr = (n_elem_slice > 0) ? slice_memptr(in_slice) : nullptr;
   
   mat_ptrs[in_slice] = new Mat<eT>('j', ptr, n_rows, n_cols);
+  }
+
+
+
+template<typename eT>
+inline
+Mat<eT>*
+Cube<eT>::get_mat_ptr(const uword in_slice) const
+  {
+  arma_extra_debug_sigprint();
+  
+  bool flag = false;
+  
+  #if defined(ARMA_USE_OPENMP)
+    {
+    #pragma omp atomic read
+    flag = mat_flag[in_slice];
+    }
+  #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
+    {
+    flag = mat_flag[in_slice].load();
+    }
+  #else
+    {
+    flag = mat_flag[in_slice];
+    }
+  #endif
+  
+  if(flag == false)
+    {
+    #if defined(ARMA_USE_OPENMP)
+      {
+      #pragma omp critical (arma_Cube_mat_ptrs)
+        {
+        #pragma omp atomic read
+        flag = mat_flag[in_slice];
+        
+        if(flag == false)
+          {
+          create_mat_ptr(in_slice);
+          
+          #pragma omp atomic write
+          mat_flag[in_slice] = true;
+          }
+        }
+      }
+    #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
+      {
+      mat_mutex.lock();
+      
+      flag = mat_flag[in_slice].load();
+      
+      if(flag == false)
+        {
+        create_mat_ptr(in_slice);
+        
+        mat_flag[in_slice].store(true);
+        }
+      
+      mat_mutex.unlock();
+      }
+    #else
+      {
+      create_mat_ptr(in_slice);
+      
+      mat_flag[in_slice] = true;
+      }
+    #endif
+    }
+  
+  return mat_ptrs[in_slice];
   }
 
 
@@ -1175,66 +1243,7 @@ Cube<eT>::slice(const uword in_slice)
   
   arma_debug_check_bounds( (in_slice >= n_slices), "Cube::slice(): index out of bounds" );
   
-  bool flag = false;
-  
-  #if defined(ARMA_USE_OPENMP)
-    {
-    #pragma omp atomic read
-    flag = mat_flag[in_slice];
-    }
-  #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
-    {
-    flag = mat_flag[in_slice].load();
-    }
-  #else
-    {
-    flag = mat_flag[in_slice];
-    }
-  #endif
-  
-  if(flag == false)
-    {
-    #if defined(ARMA_USE_OPENMP)
-      {
-      #pragma omp critical (arma_Cube_mat_ptrs)
-        {
-        #pragma omp atomic read
-        flag = mat_flag[in_slice];
-        
-        if(flag == false)
-          {
-          create_mat_ptr(in_slice);
-          
-          #pragma omp atomic write
-          mat_flag[in_slice] = true;
-          }
-        }
-      }
-    #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
-      {
-      mat_mutex.lock();
-      
-      flag = mat_flag[in_slice].load();
-      
-      if(flag == false)
-        {
-        create_mat_ptr(in_slice);
-        
-        mat_flag[in_slice].store(true);
-        }
-      
-      mat_mutex.unlock();
-      }
-    #else
-      {
-      create_mat_ptr(in_slice);
-      
-      mat_flag[in_slice] = true;
-      }
-    #endif
-    }
-  
-  return *(mat_ptrs[in_slice]);
+  return *(get_mat_ptr(in_slice));
   }
 
 
@@ -1249,66 +1258,7 @@ Cube<eT>::slice(const uword in_slice) const
   
   arma_debug_check_bounds( (in_slice >= n_slices), "Cube::slice(): index out of bounds" );
   
-  bool flag = false;
-  
-  #if defined(ARMA_USE_OPENMP)
-    {
-    #pragma omp atomic read
-    flag = mat_flag[in_slice];
-    }
-  #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
-    {
-    flag = mat_flag[in_slice].load();
-    }
-  #else
-    {
-    flag = mat_flag[in_slice];
-    }
-  #endif
-  
-  if(flag == false)
-    {
-    #if defined(ARMA_USE_OPENMP)
-      {
-      #pragma omp critical (arma_Cube_mat_ptrs)
-        {
-        #pragma omp atomic read
-        flag = mat_flag[in_slice];
-        
-        if(flag == false)
-          {
-          create_mat_ptr(in_slice);
-          
-          #pragma omp atomic write
-          mat_flag[in_slice] = true;
-          }
-        }
-      }
-    #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
-      {
-      mat_mutex.lock();
-      
-      flag = mat_flag[in_slice].load();
-      
-      if(flag == false)
-        {
-        create_mat_ptr(in_slice);
-        
-        mat_flag[in_slice].store(true);
-        }
-      
-      mat_mutex.unlock();
-      }
-    #else
-      {
-      create_mat_ptr(in_slice);
-      
-      mat_flag[in_slice] = true;
-      }
-    #endif
-    }
-  
-  return *(mat_ptrs[in_slice]);
+  return *(get_mat_ptr(in_slice));
   }
 
 
