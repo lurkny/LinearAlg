@@ -1028,6 +1028,8 @@ Cube<eT>::slice(const uword in_slice)
   
   arma_debug_check( (in_slice >= n_slices), "Cube::slice(): index out of bounds" );
   
+  // BUG: data race when accessed from multiple threads; causes memory leakage
+  
   if(mat_ptrs[in_slice] == nullptr)
     {
     const eT* ptr = (n_elem_slice > 0) ? slice_memptr(in_slice) : nullptr;
@@ -1049,6 +1051,8 @@ Cube<eT>::slice(const uword in_slice) const
   arma_extra_debug_sigprint();
   
   arma_debug_check( (in_slice >= n_slices), "Cube::slice(): index out of bounds" );
+  
+  // BUG: data race when accessed from multiple threads; causes memory leakage
   
   if(mat_ptrs[in_slice] == nullptr)
     {
