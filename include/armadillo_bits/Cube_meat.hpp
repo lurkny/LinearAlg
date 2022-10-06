@@ -622,6 +622,8 @@ Cube<eT>::create_mat_ptr(const uword in_slice) const
   
   const eT* ptr = (n_elem_slice > 0) ? slice_memptr(in_slice) : nullptr;
   
+  arma_extra_debug_print( arma_str::format("Cube::create_mat_ptr(): creating matrix %d") % in_slice );
+  
   mat_ptrs[in_slice] = new Mat<eT>('j', ptr, n_rows, n_cols);
   }
 
