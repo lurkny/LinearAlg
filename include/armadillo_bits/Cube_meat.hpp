@@ -531,10 +531,12 @@ Cube<eT>::delete_mat()
     {
     for(uword s=0; s < n_slices; ++s)
       {
-      if(mat_ptrs[s] != nullptr)
+      raw_mat_ptr_type mat_ptr = raw_mat_ptr_type(mat_ptrs[s]);
+      
+      if(mat_ptr != nullptr)
         {
         arma_extra_debug_print( arma_str::format("Cube::delete_mat(): destroying matrix %d") % s );
-        delete mat_ptrs[s];
+        delete mat_ptr;
         mat_ptrs[s] = nullptr;
         }
       }
@@ -544,18 +546,6 @@ Cube<eT>::delete_mat()
       arma_extra_debug_print("Cube::delete_mat(): freeing mat_ptrs array");
       delete [] mat_ptrs;
       mat_ptrs = nullptr;
-      }
-    }
-  
-  if(mat_flag != nullptr)
-    {
-    for(uword s=0; s < n_slices; ++s)  { mat_flag[s] = false; }
-    
-    if( (mem_state <= 2) && (n_slices > Cube_prealloc::mat_ptrs_size) )
-      {
-      arma_extra_debug_print("Cube::delete_mat(): freeing mat_flag array");
-      delete [] mat_flag;
-      mat_flag = nullptr;
       }
     }
   }
@@ -569,44 +559,27 @@ Cube<eT>::create_mat()
   {
   arma_extra_debug_sigprint();
   
-  if(n_slices == 0)
-    {
-    mat_ptrs = nullptr;
-    mat_flag = nullptr;
-    
-    return;
-    }
+  if(n_slices == 0)  { mat_ptrs = nullptr; return; }
   
   if(mem_state <= 2)
     {
     if(n_slices <= Cube_prealloc::mat_ptrs_size)
       {
-      arma_extra_debug_print("Cube::create_mat(): using local memory for mat_ptrs and mat_flag arrays");
+      arma_extra_debug_print("Cube::create_mat(): using local memory for mat_ptrs array");
+      
       mat_ptrs = mat_ptrs_local;
-      mat_flag = mat_flag_local;
       }
     else
       {
       arma_extra_debug_print("Cube::create_mat(): allocating mat_ptrs array");
       
-      mat_ptrs = new(std::nothrow) Mat<eT>*[n_slices];
+      mat_ptrs = new(std::nothrow) atomic_mat_ptr_type[n_slices];
       
       arma_check_bad_alloc( (mat_ptrs == nullptr), "Cube::create_mat(): out of memory" );
-      
-      
-      arma_extra_debug_print("Cube::create_mat(): allocating mat_flag array");
-      
-      mat_flag = new(std::nothrow) arma_atomic_bool[n_slices];
-      
-      arma_check_bad_alloc( (mat_flag == nullptr), "Cube::create_mat(): out of memory" );
       }
     }
   
-  for(uword s=0; s < n_slices; ++s)
-    {
-    mat_ptrs[s] = nullptr;
-    mat_flag[s] = false;
-    }
+  for(uword s=0; s < n_slices; ++s)  { mat_ptrs[s] = nullptr; }
   }
 
 
@@ -618,13 +591,11 @@ Cube<eT>::create_mat_ptr(const uword in_slice) const
   {
   arma_extra_debug_sigprint();
   
-  if(mat_ptrs[in_slice] != nullptr)  { return; }
-  
-  const eT* ptr = (n_elem_slice > 0) ? slice_memptr(in_slice) : nullptr;
-  
   arma_extra_debug_print( arma_str::format("Cube::create_mat_ptr(): creating matrix %d") % in_slice );
   
-  mat_ptrs[in_slice] = new Mat<eT>('j', ptr, n_rows, n_cols);
+  const eT* mat_mem = (n_elem_slice > 0) ? slice_memptr(in_slice) : nullptr;
+  
+  mat_ptrs[in_slice] = new Mat<eT>('j', mat_mem, n_rows, n_cols);
   }
 
 
@@ -636,66 +607,53 @@ Cube<eT>::get_mat_ptr(const uword in_slice) const
   {
   arma_extra_debug_sigprint();
   
-  bool flag = false;
+  raw_mat_ptr_type mat_ptr = nullptr;
   
   #if defined(ARMA_USE_OPENMP)
     {
     #pragma omp atomic read
-    flag = mat_flag[in_slice];
+    mat_ptr = mat_ptrs[in_slice];
     }
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     {
-    flag = mat_flag[in_slice].load();
+    mat_ptr = mat_ptrs[in_slice].load();
     }
   #else
     {
-    flag = mat_flag[in_slice];
+    mat_ptr = mat_ptrs[in_slice];
     }
   #endif
   
-  if(flag == false)
+  if(mat_ptr == nullptr)
     {
     #if defined(ARMA_USE_OPENMP)
       {
       #pragma omp critical (arma_Cube_mat_ptrs)
         {
         #pragma omp atomic read
-        flag = mat_flag[in_slice];
+        mat_ptr = mat_ptrs[in_slice];
         
-        if(flag == false)
-          {
-          create_mat_ptr(in_slice);
-          
-          #pragma omp atomic write
-          mat_flag[in_slice] = true;
-          }
+        if(mat_ptr == nullptr)  { create_mat_ptr(in_slice); }
         }
       }
     #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
       {
       mat_mutex.lock();
       
-      flag = mat_flag[in_slice].load();
+      mat_ptr = mat_ptrs[in_slice].load();
       
-      if(flag == false)
-        {
-        create_mat_ptr(in_slice);
-        
-        mat_flag[in_slice].store(true);
-        }
+      if(mat_ptr == nullptr)  { create_mat_ptr(in_slice); }
       
       mat_mutex.unlock();
       }
     #else
       {
       create_mat_ptr(in_slice);
-      
-      mat_flag[in_slice] = true;
       }
     #endif
     }
   
-  return mat_ptrs[in_slice];
+  return raw_mat_ptr_type(mat_ptrs[in_slice]);
   }
 
 
@@ -5318,28 +5276,21 @@ Cube<eT>::steal_mem(Cube<eT>& x, const bool is_move)
     
     if(x_n_slices > Cube_prealloc::mat_ptrs_size)
       {
-      arma_extra_debug_print("Cube::steal_mem(): stealing mat_ptrs and mat_flag arrays");
+      arma_extra_debug_print("Cube::steal_mem(): stealing mat_ptrs array");
       
-      mat_ptrs = x.mat_ptrs;
-      mat_flag = x.mat_flag;
-      
+        mat_ptrs = x.mat_ptrs;
       x.mat_ptrs = nullptr;
-      x.mat_flag = nullptr;
       }
     else
       {
-      arma_extra_debug_print("Cube::steal_mem(): copying mat_ptrs and mat_flag arrays");
+      arma_extra_debug_print("Cube::steal_mem(): copying mat_ptrs array");
       
       mat_ptrs = mat_ptrs_local;
-      mat_flag = mat_flag_local;
       
       for(uword i=0; i < x_n_slices; ++i)
         {
-        mat_ptrs[i] =      x.mat_ptrs[i];
-        mat_flag[i] = bool(x.mat_flag[i]);
-        
+          mat_ptrs[i] = raw_mat_ptr_type(x.mat_ptrs[i]);
         x.mat_ptrs[i] = nullptr;
-        x.mat_flag[i] = false;
         }
       }
     
@@ -5391,7 +5342,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::mem_setup()
     access::rw(Cube<eT>::mem_state)    = 3;
     access::rw(Cube<eT>::mem)          = (fixed_n_elem   > Cube_prealloc::mem_n_elem)    ? mem_local_extra      : mem_local;
                Cube<eT>::mat_ptrs      = (fixed_n_slices > Cube_prealloc::mat_ptrs_size) ? mat_ptrs_local_extra : mat_ptrs_local;
-               Cube<eT>::mat_flag      = (fixed_n_slices > Cube_prealloc::mat_ptrs_size) ? mat_flag_local_extra : mat_flag_local;
     
     create_mat();
     }
@@ -5406,7 +5356,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::mem_setup()
     access::rw(Cube<eT>::mem_state)    = 3;
     access::rw(Cube<eT>::mem)          = nullptr;
                Cube<eT>::mat_ptrs      = nullptr;
-               Cube<eT>::mat_flag      = nullptr;
     }
   }
 

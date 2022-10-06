@@ -60,13 +60,24 @@ class Cube : public BaseCube< eT, Cube<eT> >
   #if (!defined(ARMA_DONT_USE_STD_MUTEX))
   mutable std::mutex mat_mutex;
   #endif
+
+  using mat_type = Mat<eT>;
   
-  Mat<eT>**          mat_ptrs = nullptr;
-  arma_atomic_bool*  mat_flag = nullptr;
+  #if defined(ARMA_USE_OPENMP)
+  using    raw_mat_ptr_type = mat_type*;
+  using atomic_mat_ptr_type = mat_type*;
+  #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
+  using    raw_mat_ptr_type = mat_type*;
+  using atomic_mat_ptr_type = std::atomic<mat_type*>;
+  #else
+  using    raw_mat_ptr_type = mat_type*;
+  using atomic_mat_ptr_type = mat_type*;
+  #endif
   
-  arma_align_mem Mat<eT>*         mat_ptrs_local[ Cube_prealloc::mat_ptrs_size ];
-  arma_align_mem arma_atomic_bool mat_flag_local[ Cube_prealloc::mat_ptrs_size ];
-  arma_align_mem eT                    mem_local[ Cube_prealloc::mem_n_elem    ];  // local storage, for small cubes
+  atomic_mat_ptr_type* mat_ptrs = nullptr;
+  
+  arma_align_mem atomic_mat_ptr_type mat_ptrs_local[ Cube_prealloc::mat_ptrs_size ];
+  arma_align_mem eT                       mem_local[ Cube_prealloc::mem_n_elem    ];  // local storage, for small cubes
   
   
   public:
@@ -480,9 +491,8 @@ class Cube<eT>::fixed : public Cube<eT>
   
   static constexpr bool use_extra = (fixed_n_elem > Cube_prealloc::mem_n_elem);
   
-  arma_aligned   Mat<eT>*         mat_ptrs_local_extra[ (fixed_n_slices > Cube_prealloc::mat_ptrs_size) ? fixed_n_slices : 1 ];
-  arma_aligned   arma_atomic_bool mat_flag_local_extra[ (fixed_n_slices > Cube_prealloc::mat_ptrs_size) ? fixed_n_slices : 1 ];
-  arma_align_mem eT                    mem_local_extra[ use_extra                                       ? fixed_n_elem   : 1 ];
+  arma_aligned   atomic_mat_ptr_type mat_ptrs_local_extra[ (fixed_n_slices > Cube_prealloc::mat_ptrs_size) ? fixed_n_slices : 1 ];
+  arma_align_mem eT                       mem_local_extra[ use_extra                                       ? fixed_n_elem   : 1 ];
   
   arma_inline void mem_setup();
   
