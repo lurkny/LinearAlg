@@ -274,7 +274,6 @@ Cube<eT>::Cube(Cube<eT>&& in_cube)
   , mem_state(0)
   , mem()
   {
-  arma_extra_debug_sigprint_this(this);
   arma_extra_debug_sigprint(arma_str::format("this = %x   in_cube = %x") % this % &in_cube);
   
   (*this).steal_mem(in_cube, true);
@@ -532,11 +531,17 @@ Cube<eT>::delete_mat()
     {
     for(uword s=0; s < n_slices; ++s)
       {
-      if(mat_ptrs[s] != nullptr)  { delete mat_ptrs[s]; mat_ptrs[s] = nullptr; }
+      if(mat_ptrs[s] != nullptr)
+        {
+        arma_extra_debug_print( arma_str::format("Cube::delete_mat(): destroying matrix %d") % s );
+        delete mat_ptrs[s];
+        mat_ptrs[s] = nullptr;
+        }
       }
     
     if( (mem_state <= 2) && (n_slices > Cube_prealloc::mat_ptrs_size) )
       {
+      arma_extra_debug_print("Cube::delete_mat(): freeing mat_ptrs array");
       delete [] mat_ptrs;
       mat_ptrs = nullptr;
       }
@@ -548,6 +553,7 @@ Cube<eT>::delete_mat()
     
     if( (mem_state <= 2) && (n_slices > Cube_prealloc::mat_ptrs_size) )
       {
+      arma_extra_debug_print("Cube::delete_mat(): freeing mat_flag array");
       delete [] mat_flag;
       mat_flag = nullptr;
       }
@@ -575,15 +581,20 @@ Cube<eT>::create_mat()
     {
     if(n_slices <= Cube_prealloc::mat_ptrs_size)
       {
+      arma_extra_debug_print("Cube::create_mat(): using local memory for mat_ptrs and mat_flag arrays");
       mat_ptrs = mat_ptrs_local;
       mat_flag = mat_flag_local;
       }
     else
       {
+      arma_extra_debug_print("Cube::create_mat(): allocating mat_ptrs array");
+      
       mat_ptrs = new(std::nothrow) Mat<eT>*[n_slices];
       
       arma_check_bad_alloc( (mat_ptrs == nullptr), "Cube::create_mat(): out of memory" );
       
+      
+      arma_extra_debug_print("Cube::create_mat(): allocating mat_flag array");
       
       mat_flag = new(std::nothrow) arma_atomic_bool[n_slices];
       
@@ -5305,6 +5316,8 @@ Cube<eT>::steal_mem(Cube<eT>& x, const bool is_move)
     
     if(x_n_slices > Cube_prealloc::mat_ptrs_size)
       {
+      arma_extra_debug_print("Cube::steal_mem(): stealing mat_ptrs and mat_flag arrays");
+      
       mat_ptrs = x.mat_ptrs;
       mat_flag = x.mat_flag;
       
@@ -5313,6 +5326,8 @@ Cube<eT>::steal_mem(Cube<eT>& x, const bool is_move)
       }
     else
       {
+      arma_extra_debug_print("Cube::steal_mem(): copying mat_ptrs and mat_flag arrays");
+      
       mat_ptrs = mat_ptrs_local;
       mat_flag = mat_flag_local;
       
@@ -5340,6 +5355,11 @@ Cube<eT>::steal_mem(Cube<eT>& x, const bool is_move)
     arma_extra_debug_print("Cube::steal_mem(): copying memory");
     
     (*this).operator=(x);
+    
+    if( (is_move) && (x.mem_state == 0) && (x.n_alloc <= Cube_prealloc::mem_n_elem) )
+      {
+      x.reset();
+      }
     }
   }
 
