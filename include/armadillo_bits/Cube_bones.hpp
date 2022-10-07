@@ -76,8 +76,8 @@ class Cube : public BaseCube< eT, Cube<eT> >
   
   atomic_mat_ptr_type* mat_ptrs = nullptr;
   
-  atomic_mat_ptr_type mat_ptrs_local[ Cube_prealloc::mat_ptrs_size ];
-  eT                       mem_local[ Cube_prealloc::mem_n_elem    ];  // local storage, for small cubes
+  arma_aligned   atomic_mat_ptr_type mat_ptrs_local[ Cube_prealloc::mat_ptrs_size ];
+  arma_align_mem eT                       mem_local[ Cube_prealloc::mem_n_elem    ];  // local storage, for small cubes
   
   
   public:
