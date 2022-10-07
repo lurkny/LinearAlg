@@ -525,9 +525,7 @@ Cube<eT>::delete_mat()
   {
   arma_extra_debug_sigprint();
   
-  if(n_slices == 0)  { return; }
-  
-  if(mat_ptrs != nullptr)
+  if((n_slices > 0) && (mat_ptrs != nullptr))
     {
     for(uword s=0; s < n_slices; ++s)
       {
