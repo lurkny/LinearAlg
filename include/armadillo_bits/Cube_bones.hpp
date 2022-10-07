@@ -58,20 +58,20 @@ class Cube : public BaseCube< eT, Cube<eT> >
   protected:
   
   #if (!defined(ARMA_DONT_USE_STD_MUTEX))
-  mutable std::mutex mat_mutex;
+    mutable std::mutex mat_mutex;   // required for slice()
   #endif
-
+  
   using mat_type = Mat<eT>;
   
   #if defined(ARMA_USE_OPENMP)
-  using    raw_mat_ptr_type = mat_type*;
-  using atomic_mat_ptr_type = mat_type*;
+    using    raw_mat_ptr_type = mat_type*;
+    using atomic_mat_ptr_type = mat_type*;
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
-  using    raw_mat_ptr_type = mat_type*;
-  using atomic_mat_ptr_type = std::atomic<mat_type*>;
+    using    raw_mat_ptr_type = mat_type*;
+    using atomic_mat_ptr_type = std::atomic<mat_type*>;
   #else
-  using    raw_mat_ptr_type = mat_type*;
-  using atomic_mat_ptr_type = mat_type*;
+    using    raw_mat_ptr_type = mat_type*;
+    using atomic_mat_ptr_type = mat_type*;
   #endif
   
   atomic_mat_ptr_type* mat_ptrs = nullptr;

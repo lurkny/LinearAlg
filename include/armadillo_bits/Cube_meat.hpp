@@ -531,7 +531,7 @@ Cube<eT>::delete_mat()
     {
     for(uword s=0; s < n_slices; ++s)
       {
-      raw_mat_ptr_type mat_ptr = raw_mat_ptr_type(mat_ptrs[s]);
+      raw_mat_ptr_type mat_ptr = raw_mat_ptr_type(mat_ptrs[s]);  // explicit cast to indicate load from std::atomic<Mat<eT>*>
       
       if(mat_ptr != nullptr)
         {
@@ -653,7 +653,7 @@ Cube<eT>::get_mat_ptr(const uword in_slice) const
     #endif
     }
   
-  return raw_mat_ptr_type(mat_ptrs[in_slice]);
+  return raw_mat_ptr_type(mat_ptrs[in_slice]);  // explicit cast to indicate load from std::atomic<Mat<eT>*>
   }
 
 
@@ -5289,7 +5289,7 @@ Cube<eT>::steal_mem(Cube<eT>& x, const bool is_move)
       
       for(uword i=0; i < x_n_slices; ++i)
         {
-          mat_ptrs[i] = raw_mat_ptr_type(x.mat_ptrs[i]);
+          mat_ptrs[i] = raw_mat_ptr_type(x.mat_ptrs[i]);  // cast required by std::atomic
         x.mat_ptrs[i] = nullptr;
         }
       }
