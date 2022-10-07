@@ -57,10 +57,6 @@ class Cube : public BaseCube< eT, Cube<eT> >
   
   protected:
   
-  #if (!defined(ARMA_DONT_USE_STD_MUTEX))
-    mutable std::mutex mat_mutex;   // required for slice()
-  #endif
-  
   using mat_type = Mat<eT>;
   
   #if defined(ARMA_USE_OPENMP)
@@ -75,6 +71,10 @@ class Cube : public BaseCube< eT, Cube<eT> >
   #endif
   
   atomic_mat_ptr_type* mat_ptrs = nullptr;
+  
+  #if (!defined(ARMA_DONT_USE_STD_MUTEX))
+    mutable std::mutex mat_mutex;   // required for slice()
+  #endif
   
   arma_aligned   atomic_mat_ptr_type mat_ptrs_local[ Cube_prealloc::mat_ptrs_size ];
   arma_align_mem eT                       mem_local[ Cube_prealloc::mem_n_elem    ];  // local storage, for small cubes
