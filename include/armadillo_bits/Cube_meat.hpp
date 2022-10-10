@@ -794,7 +794,7 @@ Cube<eT>::Cube(eT* aux_mem, const uword aux_n_rows, const uword aux_n_cols, cons
   {
   arma_extra_debug_sigprint_this(this);
   
-  arma_ignore(prealloc_mat);
+  arma_ignore(prealloc_mat);  // kept only for compatibility with old user code
   
   if(copy_aux_mem)
     {
