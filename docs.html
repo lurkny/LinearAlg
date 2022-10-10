@@ -1496,6 +1496,11 @@ Classes for cubes (quasi 3rd order tensors), also known as "3D matrices"
 </li>
 <br>
 <li>
+Data is stored as a set of slices (matrices) stored contiguously within memory;
+within each slice, elements are stored with column-major ordering (ie. column by column)
+</li>
+<br>
+<li>
 The cube class is <b>Cube&lt;</b><i>type</i><b>&gt;</b>, where <i>type</i> is one of:
 <ul>
 <li>
@@ -1608,15 +1613,6 @@ In this documentation the <i>cube</i> type is used for convenience;
 it is possible to use other types instead, eg. <i>fcube</i>
 </li>
 <br>
-<li>
-Cube data is stored as a set of slices (matrices) stored contiguously within memory.
-Within each slice, elements are stored with column-major ordering (ie. column by column)
-</li>
-<br>
-<li>
-Each slice can be interpreted as a matrix, hence functions which take <i>Mat</i> as input can generally also take cube slices as input
-</li>
-<br>
 <a name="constructors_cube"></a>
 <li>
 Constructors:
@@ -1636,10 +1632,27 @@ Constructors:
 </li>
 <br>
 <li>
+The elements can be explicitly initialised during construction by specifying <i>fill_form</i>,
+which is one of:
+<ul>
+<table>
+<tbody>
+<tr><td><code>fill::zeros</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>set all elements to 0</td></tr>
+<tr><td><code>fill::ones</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>set all elements to 1</td></tr>
+<tr><td><code>fill::randu</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>set all elements to random values from a uniform distribution in the [0,1] interval</td></tr>
+<tr><td><code>fill::randn</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>set all elements to random values from a normal/Gaussian distribution with zero mean and unit variance</td></tr>
+<tr><td><code>fill::value(scalar)</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>set all elements to specified scalar (Armadillo 10.6 and later)</td></tr>
+<tr><td><code>fill::none</code></td><td>&nbsp;&mapsto;&nbsp;</td><td>do not initialise the elements</td></tr>
+</tbody>
+</table>
+</ul>
+</li>
+<br>
+<li>
 <b>Caveat:</b>
 <ul>
 <li>
-in Armadillo 10.4 and earlier versions, the elements are not initialised during construction unless <i>fill_form</i> is specified, as per the <a href="#Mat">Mat class</a> (except for <i>fill::eye</i>)
+in Armadillo 10.4 and earlier versions, the elements are not initialised during construction unless <i>fill_form</i> is specified
 <br>(ie. without specifying <i>fill_form</i>, the elements may contain garbage values, including NaN)
 </li>
 <li>in Armadillo 10.5 and later versions, by default the elements are initialised to zero during construction</li>
@@ -1726,10 +1739,14 @@ f.ones();
 </li>
 <br>
 <li>
-<b>Caveats:</b>
+<b>Notes:</b>
 <br>
 <br>
 <ul>
+<li>
+Each cube slice can be interpreted as a matrix, hence functions which take <i>Mat</i> as input can generally also take cube slices as input
+</li>
+<br>
 <li>
 The size of individual slices can't be changed.
 For example, the following <b>will not</b> work:
@@ -3929,14 +3946,14 @@ See also:
 <br>
 <br>
 <ul>
+Q.<b>slice(&nbsp;</b>slice_number&nbsp;<b>)</b><br>
+Q.<b>slices(&nbsp;</b>first_slice<b>,</b> last_slice&nbsp;<b>)</b><br>
+<br>
 Q.<b>row(&nbsp;</b>row_number&nbsp;<b>)</b><br>
 Q.<b>rows(&nbsp;</b>first_row<b>,</b> last_row&nbsp;<b>)</b><br>
 <br>
 Q.<b>col(&nbsp;</b>col_number&nbsp;<b>)</b><br>
 Q.<b>cols(&nbsp;</b>first_col<b>,</b> last_col&nbsp;<b>)</b><br>
-<br>
-Q.<b>slice(&nbsp;</b>slice_number&nbsp;<b>)</b><br>
-Q.<b>slices(&nbsp;</b>first_slice<b>,</b> last_slice&nbsp;<b>)</b><br>
 <br>
 Q.<b>subcube(&nbsp;</b>first_row<b>,</b> first_col<b>,</b> first_slice<b>, </b>last_row<b>,</b> last_col<b>, </b>last_slice&nbsp;<b>)</b><br>
 <br>
