@@ -634,6 +634,9 @@ Cube<eT>::get_mat_ptr(const uword in_slice) const
         mat_ptr = mat_ptrs[in_slice];
         
         if(mat_ptr == nullptr)  { mat_ptr = create_mat_ptr(in_slice); }
+        
+        #pragma omp atomic write
+        mat_ptrs[in_slice] = mat_ptr;
         }
       }
     #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
@@ -644,17 +647,19 @@ Cube<eT>::get_mat_ptr(const uword in_slice) const
       
       if(mat_ptr == nullptr)  { mat_ptr = create_mat_ptr(in_slice); }
       
+      mat_ptrs[in_slice].store(mat_ptr);
+      
       mat_mutex.unlock();
       }
     #else
       {
       mat_ptr = create_mat_ptr(in_slice);
+      
+      mat_ptrs[in_slice] = mat_ptr;
       }
     #endif
     
     arma_check_bad_alloc( (mat_ptr == nullptr), "Cube::get_mat_ptr(): out of memory" );
-    
-    mat_ptrs[in_slice] = mat_ptr;
     }
   
   return mat_ptr;
