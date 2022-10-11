@@ -648,7 +648,7 @@ Cube<eT>::get_mat_ptr(const uword in_slice) const
       }
     #else
       {
-      if(mat_ptr == nullptr)  { mat_ptr = create_mat_ptr(in_slice); }
+      mat_ptr = create_mat_ptr(in_slice);
       }
     #endif
     
