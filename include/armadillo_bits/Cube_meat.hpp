@@ -641,7 +641,7 @@ Cube<eT>::get_mat_ptr(const uword in_slice) const
       }
     #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
       {
-      mat_mutex.lock();
+      mat_mutex.lock();  // TODO: use std::lock_guard instead of .lock()
       
       mat_ptr = mat_ptrs[in_slice].load();
       

@@ -1186,7 +1186,7 @@ SpMat_MapMat_val<eT>::operator=(const eT in_val)
     }
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     {
-    s_parent.cache_mutex.lock();
+    s_parent.cache_mutex.lock();  // TODO: use std::lock_guard instead of .lock()
     
     (*this).set(in_val);
     
@@ -1221,7 +1221,7 @@ SpMat_MapMat_val<eT>::operator+=(const eT in_val)
     }
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     {
-    s_parent.cache_mutex.lock();
+    s_parent.cache_mutex.lock();  // TODO: use std::lock_guard instead of .lock()
     
     (*this).add(in_val);
     
@@ -1256,7 +1256,7 @@ SpMat_MapMat_val<eT>::operator-=(const eT in_val)
     }
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     {
-    s_parent.cache_mutex.lock();
+    s_parent.cache_mutex.lock();  // TODO: use std::lock_guard instead of .lock()
     
     (*this).sub(in_val);
     
@@ -1289,7 +1289,7 @@ SpMat_MapMat_val<eT>::operator*=(const eT in_val)
     }
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     {
-    s_parent.cache_mutex.lock();
+    s_parent.cache_mutex.lock();  // TODO: use std::lock_guard instead of .lock()
     
     (*this).mul(in_val);
     
@@ -1322,7 +1322,7 @@ SpMat_MapMat_val<eT>::operator/=(const eT in_val)
     }
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     {
-    s_parent.cache_mutex.lock();
+    s_parent.cache_mutex.lock();  // TODO: use std::lock_guard instead of .lock()
     
     (*this).div(in_val);
     

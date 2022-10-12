@@ -4558,7 +4558,7 @@ SpMat<eT>::reset_cache()
     }
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     {
-    cache_mutex.lock();
+    cache_mutex.lock();  // TODO: use std::lock_guard instead of .lock()
     
     cache.reset();
     
@@ -5193,7 +5193,7 @@ SpMat<eT>::init(const SpMat<eT>& x)
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     if(x.sync_state == 1)
       {
-      x.cache_mutex.lock();
+      x.cache_mutex.lock();  // TODO: use std::lock_guard instead of .lock()
       if(x.sync_state == 1)
         {
         (*this).init(x.cache);
@@ -6801,7 +6801,7 @@ SpMat<eT>::sync_cache() const
     {
     if(sync_state == 0)
       {
-      cache_mutex.lock();
+      cache_mutex.lock();  // TODO: use std::lock_guard instead of .lock()
       
       sync_cache_simple();
       
@@ -6853,7 +6853,7 @@ SpMat<eT>::sync_csc() const
   #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
     if(sync_state == 1)
       {
-      cache_mutex.lock();
+      cache_mutex.lock();  // TODO: use std::lock_guard instead of .lock()
       
       sync_csc_simple();
       
