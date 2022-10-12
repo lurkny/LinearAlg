@@ -641,15 +641,13 @@ Cube<eT>::get_mat_ptr(const uword in_slice) const
       }
     #elif (!defined(ARMA_DONT_USE_STD_MUTEX))
       {
-      mat_mutex.lock();  // TODO: use std::lock_guard instead of .lock()
+      const std::lock_guard<std::mutex> lock(mat_mutex);
       
       mat_ptr = mat_ptrs[in_slice].load();
       
       if(mat_ptr == nullptr)  { mat_ptr = create_mat_ptr(in_slice); }
       
       mat_ptrs[in_slice].store(mat_ptr);
-      
-      mat_mutex.unlock();
       }
     #else
       {
