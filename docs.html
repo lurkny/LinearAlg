@@ -2572,7 +2572,7 @@ can be disabled by defining the <a href="#config_hpp_arma_no_debug">ARMA_NO_DEBU
 before including the <i>armadillo</i> header file (eg. <code>#define ARMA_NO_DEBUG</code>).
 Alternatively, the <code>.at(n)</code>, <code>.at(i,j)</code> and <code>.at(i,j,k)</code> element access forms can be used,
 which do not have bounds checks.
-Either way, <b>disabling the bounds checks is not recommended</b> until your code has been thoroughly tested and debugged
+Either way, <b>disabling the bounds checks is strongly not recommended</b> until your code has been thoroughly tested and debugged
 -- it is better to write correct code first, and then maximise its speed.
 </li>
 <br>
@@ -19362,11 +19362,8 @@ This can also be enabled by adding <i>#define&nbsp;ARMA_64BIT_WORD</i> before ea
     </td>
     <td style="vertical-align: top;">
 Disable all run-time checks, such as <a href="#element_access">bounds checking</a>.
-This will result in faster code, but you first need to make sure that your code runs correctly!
-We strongly recommend to have the run-time checks enabled during development,
-as this greatly aids in finding mistakes in your code, and hence speeds up development.
-We recommend that run-time checks be disabled <b>only</b> for the shipped version of your program
-(ie. final release build).
+It is strongly recommended that run-time checks are enabled during development,
+as this greatly aids in finding mistakes in your code.
     </td>
   </tr>
   <tr>
