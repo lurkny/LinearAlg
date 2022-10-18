@@ -2463,19 +2463,18 @@ Provide access to individual elements or objects stored in a container object
 <ul>
 <table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2">
 <tbody>
-  <tr>
-    <td style="vertical-align: top;">
-    <code>(n)</code>
-    </td>
-    <td style="vertical-align: top;">&nbsp;<br>
-    </td>
-    <td style="vertical-align: top;">
+<tr>
+<td style="vertical-align: top;">
+<code>(n)</code>
+</td>
+<td style="vertical-align: top;">&nbsp;<br>
+</td>
+<td style="vertical-align: top;">
 For <i>vec</i> and <i>rowvec</i>, access the <i>n</i>-th element.
 For <i>mat</i>, <i>cube</i> and <i>field</i>, access the <i>n</i>-th element/object under the assumption of a flat layout,
 with column-major ordering of data (ie. column by column).
 An exception is thrown if the requested element is out of bounds.
-The bounds check can be <a href="#element_access_bounds_check_note">optionally disabled</a> at compile-time to get more speed.
-  </td>
+</td>
 </tr>
 <tr>
 <td>&nbsp;</td>
@@ -2483,15 +2482,14 @@ The bounds check can be <a href="#element_access_bounds_check_note">optionally d
 <td>&nbsp;</td>
 </tr>
 <tr>
-  <td style="vertical-align: top;">
-  <code>.at(n)</code>&nbsp;&nbsp;or&nbsp;&nbsp;<code>[n]</code>&nbsp;
-  </td>
-  <td style="vertical-align: top;"><br>
-  </td>
-  <td style="vertical-align: top;">
-As for <code>(n)</code>, but without a bounds check.
-Not recommended for use unless your code has been thoroughly debugged.
-  </td>
+<td style="vertical-align: top;">
+<code>.at(n)</code>&nbsp;&nbsp;or&nbsp;&nbsp;<code>[n]</code>&nbsp;
+</td>
+<td style="vertical-align: top;"><br>
+</td>
+<td style="vertical-align: top;">
+As for <code>(n)</code>, but without a bounds check; not recommended; see the caveats below
+</td>
 </tr>
 <tr>
 <td>&nbsp;</td>
@@ -2499,34 +2497,15 @@ Not recommended for use unless your code has been thoroughly debugged.
 <td>&nbsp;</td>
 </tr>
 <tr>
-  <td style="vertical-align: top;">
-  <code>(i,j)</code>
-  </td>
-  <td style="vertical-align: top;"><br>
-  </td>
-  <td style="vertical-align: top;">
+<td style="vertical-align: top;">
+<code>(i,j)</code>
+</td>
+<td style="vertical-align: top;"><br>
+</td>
+<td style="vertical-align: top;">
 For <i>mat</i> and <i>2D field</i> classes, access the element/object stored at the <i>i</i>-th row and <i>j</i>-th column.
 An exception is thrown if the requested element is out of bounds.
-The bounds check can be <a href="#element_access_bounds_check_note">optionally disabled</a> at compile-time to get more speed.
-  </td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-  <td style="vertical-align: top;">
-  <code>.at(i,j)</code>
-  </td>
-  <td style="vertical-align: top;"><br>
-  </td>
-  <td style="vertical-align: top;">
-As for <code>(i,j)</code>, but without a bounds check.
-Not recommended for use unless your code has been thoroughly debugged.
 </td>
-  <td style="vertical-align: top;"><br>
-  </td>
 </tr>
 <tr>
 <td>&nbsp;</td>
@@ -2534,16 +2513,32 @@ Not recommended for use unless your code has been thoroughly debugged.
 <td>&nbsp;</td>
 </tr>
 <tr>
-  <td style="vertical-align: top;">
-  <code>(i,j,k)</code>
-  </td>
-  <td style="vertical-align: top;"><br>
-  </td>
-  <td style="vertical-align: top;">
+<td style="vertical-align: top;">
+<code>.at(i,j)</code>
+</td>
+<td style="vertical-align: top;"><br>
+</td>
+<td style="vertical-align: top;">
+As for <code>(i,j)</code>, but without a bounds check; not recommended; see the caveats below
+</td>
+<td style="vertical-align: top;"><br>
+</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">
+<code>(i,j,k)</code>
+</td>
+<td style="vertical-align: top;"><br>
+</td>
+<td style="vertical-align: top;">
 For <i>cube</i> and <i>3D field</i> classes, access the element/object stored at the <i>i</i>-th row, <i>j</i>-th column and <i>k</i>-th slice.
 An exception is thrown if the requested element is out of bounds.
-The bounds check can be <a href="#element_access_bounds_check_note">optionally disabled</a> at compile-time to get more speed.
-  </td>
+</td>
 </tr>
 <tr>
 <td>&nbsp;</td>
@@ -2551,35 +2546,18 @@ The bounds check can be <a href="#element_access_bounds_check_note">optionally d
 <td>&nbsp;</td>
 </tr>
 <tr>
-  <td style="vertical-align: top;">
-  <code>.at(i,j,k)</code>
-  </td>
-  <td style="vertical-align: top;"><br>
-  </td>
-  <td style="vertical-align: top;">
-As for <code>(i,j,k)</code>, but without a bounds check.
-Not recommended for use unless your code has been thoroughly debugged.</td>
-    </tr>
-  </tbody>
+<td style="vertical-align: top;">
+<code>.at(i,j,k)</code>
+</td>
+<td style="vertical-align: top;"><br>
+</td>
+<td style="vertical-align: top;">
+As for <code>(i,j,k)</code>, but without a bounds check; not recommended; see the caveats below
+</td>
+</tr>
+</tbody>
 </table>
 </ul>
-</li>
-<br>
-<a name="element_access_bounds_check_note"></a>
-<li>
-The bounds checks used by the <code>(n)</code>, <code>(i,j)</code> and <code>(i,j,k)</code> element access forms
-can be disabled by defining the <a href="#config_hpp_arma_no_debug">ARMA_NO_DEBUG</a> macro
-before including the <i>armadillo</i> header file (eg. <code>#define ARMA_NO_DEBUG</code>).
-Alternatively, the <code>.at(n)</code>, <code>.at(i,j)</code> and <code>.at(i,j,k)</code> element access forms can be used,
-which do not have bounds checks.
-Either way, <b>disabling the bounds checks is strongly not recommended</b> until your code has been thoroughly tested and debugged
--- it is better to write correct code first, and then maximise its speed.
-</li>
-<br>
-<li>
-Armadillo &geq; 10.3: the bounds checks throw <i>std::out_of_range</i>, derived from <i>std::logic_error</i>
-<br>
-Armadillo &leq; 10.2: the bounds checks throw <i>std::logic_error</i>
 </li>
 <br>
 <li>
@@ -2589,26 +2567,34 @@ For example: <code>for(uword&nbsp;i=0;&nbsp;i&lt;X.n_elem;&nbsp;++i)&nbsp;{&nbsp
 </li>
 <br>
 <li>
-<b>Caveat:</b>
-accessing elements via <code>[i,j]</code> and <code>[i,j,k]</code> does not work correctly in C++;
+<b>Caveats:</b>
+<ul>
+<li>
+accessing elements without bounds checks is slightly faster, but is not recommended until your code has been thoroughly debugged first
+</li>
+<li>
+indexing in C++ starts at 0
+</li>
+<li>accessing elements via <code>[i,j]</code> and <code>[i,j,k]</code> does not work correctly in C++;
 instead use <code>(i,j)</code> and <code>(i,j,k)</code> 
+</li>
+</ul>
 </li>
 <br>
 <li>
 Examples:
 <ul>
 <pre>
-mat A(10, 10, fill::randu);
-A(9,9) = 123.0;
-double x = A.at(9,9);
-double y = A[99];
+mat M(10, 10, fill::randu);
+M(9,9) = 123.0;
+double x = M(1,2);
 
-vec p(10, fill::randu);
-p(9) = 123.0;
-double z = p[9];
+vec v(10, fill::randu);
+v(9) = 123.0;
+double y = v(0);
 </pre>
 </ul>
-</li>                  
+</li>
 <br>
 <li>See also:
 <ul>
@@ -19361,9 +19347,9 @@ This can also be enabled by adding <i>#define&nbsp;ARMA_64BIT_WORD</i> before ea
       &nbsp;
     </td>
     <td style="vertical-align: top;">
-Disable all run-time checks, such as <a href="#element_access">bounds checking</a>.
-It is strongly recommended that run-time checks are enabled during development,
-as this greatly aids in finding mistakes in your code.
+Disable all run-time checks, including size conformance and <a href="#element_access">bounds checks</a>.
+NOT RECOMMENDED.
+Keeping run-time checks enabled during development greatly aids in finding mistakes in your code.
     </td>
   </tr>
   <tr>
