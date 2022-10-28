@@ -821,6 +821,13 @@ examples: <i>mat33</i> is equivalent to <i>mat::fixed&lt;3,3&gt;</i>,
 while <i>cx_mat44</i> is equivalent to <i>cx_mat::fixed&lt;4,4&gt;</i>.
 </ul>
 <br>
+<code>mat::fixed&lt;n_rows, n_cols&gt;(<i>fill_form</i>)</code>
+<br>
+<br>
+<ul>
+Create a fixed size matrix, with the elements explicitly initialised according to <i>fill_form</i>
+</ul>
+<br>
 <code>mat::fixed&lt;n_rows, n_cols&gt;(const ptr_aux_mem)</code>
 <br>
 <br>
@@ -1164,6 +1171,13 @@ examples: <i>vec3</i> is equivalent to <i>vec::fixed&lt;3&gt;</i>,
 while <i>cx_vec4</i> is equivalent to <i>cx_vec::fixed&lt;4&gt;</i>.
 </ul>
 <br>
+<code>vec::fixed&lt;number_of_elements&gt;(<i>fill_form</i>)</code>
+<br>
+<br>
+<ul>
+Create a fixed size column vector, with the elements explicitly initialised according to <i>fill_form</i>
+</ul>
+<br>
 <code>vec::fixed&lt;number_of_elements&gt;(const ptr_aux_mem)</code>
 <br>
 <br>
@@ -1427,6 +1441,13 @@ The pre-defined typedefs specify vector sizes ranging from 2 to 9.
 The typedefs were defined by appending a single digit form of the size to the vector type;
 examples: <i>rowvec3</i> is equivalent to <i>rowvec::fixed&lt;3&gt;</i>,
 while <i>cx_rowvec4</i> is equivalent to <i>cx_rowvec::fixed&lt;4&gt;</i>.
+</ul>
+<br>
+<code>rowvec::fixed&lt;number_of_elements&gt;(<i>fill_form</i>)</code>
+<br>
+<br>
+<ul>
+Create a fixed size row vector, with the elements explicitly initialised according to <i>fill_form</i>
 </ul>
 <br>
 <code>rowvec::fixed&lt;number_of_elements&gt;(const ptr_aux_mem)</code>
