@@ -9058,11 +9058,15 @@ See also:
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="diagvec"></a>
-<b>diagvec( A )</b>
-<br><b>diagvec( A, k )</b>
+<b>diagvec( X )</b>
+<br><b>diagvec( X, k )</b>
 <ul>
 <li>
-Extract the <i>k</i>-th diagonal from matrix <i>A</i>
+Extract the <i>k</i>-th diagonal from matrix <i>X</i>
+</li>
+<br>
+<li>
+If <i>X</i> is an expression, the function aims to use optimised expression evaluation to calculate only the diagonal elements
 </li>
 <br>
 <li>
