@@ -570,6 +570,22 @@ diskio::convert_token(std::complex<T>& val, const std::string& token)
 
 template<typename eT>
 inline
+bool
+diskio::convert_token_strict(eT& val, const std::string& token)
+  {
+  const size_t N = size_t(token.length());
+  
+  const bool status = (N > 0) ? diskio::convert_token(val, token) : false;
+  
+  if(status == false)  { val = Datum<eT>::nan; }
+  
+  return status;
+  }
+
+
+
+template<typename eT>
+inline
 std::streamsize
 diskio::prepare_stream(std::ostream& f)
   {
@@ -1566,7 +1582,7 @@ diskio::load_arma_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg)
 template<typename eT>
 inline
 bool
-diskio::load_csv_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg, field<std::string>& header, const bool with_header, const char separator)
+diskio::load_csv_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg, field<std::string>& header, const bool with_header, const char separator, const bool strict)
   {
   arma_extra_debug_sigprint();
   
@@ -1620,7 +1636,7 @@ diskio::load_csv_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg
   
   if(load_okay)
     {
-    load_okay = diskio::load_csv_ascii(x, f, err_msg, separator);
+    load_okay = diskio::load_csv_ascii(x, f, err_msg, separator, strict);
     }
   
   f.close();
@@ -1634,7 +1650,7 @@ diskio::load_csv_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg
 template<typename eT>
 inline
 bool
-diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg, const char separator)
+diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg, const char separator, const bool strict)
   {
   arma_extra_debug_sigprint();
   
@@ -1682,6 +1698,8 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg, const 
   f.seekg(pos1);
   
   try { x.zeros(f_n_rows, f_n_cols); } catch(...) { err_msg = "not enough memory"; return false; }
+  
+  if(strict)  { x.fill(Datum<eT>::nan); }   // take into account that each row may have a unique number of columns
   
   const bool use_mp = (arma_config::openmp) && (f_n_rows >= 2) && (f_n_cols >= 64);
   
@@ -1736,7 +1754,9 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg, const 
         #pragma omp parallel for schedule(static) num_threads(n_threads)
         for(uword col=0; col < line_stream_col; ++col)
           {
-          diskio::convert_token( x.at(row,col), token_array(col) );
+          eT& out_val = x.at(row,col);
+          
+          (strict) ? diskio::convert_token_strict( out_val, token_array(col) ) : diskio::convert_token( out_val, token_array(col) );
           }
         
         ++row;
@@ -1763,7 +1783,9 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg, const 
         {
         std::getline(line_stream, token, separator);
         
-        diskio::convert_token( x.at(row,col), token );
+        eT& out_val = x.at(row,col);
+        
+        (strict) ? diskio::convert_token_strict( out_val, token ) : diskio::convert_token( out_val, token );
         
         ++col;
         }
@@ -1781,7 +1803,7 @@ diskio::load_csv_ascii(Mat<eT>& x, std::istream& f, std::string& err_msg, const 
 template<typename T>
 inline
 bool
-diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string& err_msg, const char separator)
+diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string& err_msg, const char separator, const bool strict)
   {
   arma_extra_debug_sigprint();
   
@@ -1829,6 +1851,8 @@ diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string& 
   f.seekg(pos1);
   
   try { x.zeros(f_n_rows, f_n_cols); } catch(...) { err_msg = "not enough memory"; return false; }
+  
+  if(strict)  { x.fill(Datum< std::complex<T> >::nan); }   // take into account that each row may have a unique number of columns
   
   uword row = 0;
   
@@ -1899,7 +1923,9 @@ diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string& 
         
         if(found_val_real)
           {
-          x.at(row,col) = std::complex<T>(val_real, T(0));
+          const T val_imag = (strict) ? T(Datum<T>::nan) : T(0);
+          
+          x.at(row,col) = std::complex<T>(val_real, val_imag);
           
           col++; continue;  // get next token
           }
@@ -2003,8 +2029,8 @@ diskio::load_csv_ascii(Mat< std::complex<T> >& x, std::istream& f, std::string& 
       T val_real = T(0);
       T val_imag = T(0);
       
-      diskio::convert_token(val_real, str_real);
-      diskio::convert_token(val_imag, str_imag);
+      (strict) ? diskio::convert_token_strict(val_real, str_real) : diskio::convert_token(val_real, str_real);
+      (strict) ? diskio::convert_token_strict(val_imag, str_imag) : diskio::convert_token(val_imag, str_imag);
       
       x.at(row,col) = std::complex<T>(val_real, val_imag);
       
@@ -2722,11 +2748,11 @@ diskio::load_auto_detect(Mat<eT>& x, std::istream& f, std::string& err_msg)
     switch(ft)
       {
       case csv_ascii:
-        return load_csv_ascii(x, f, err_msg, char(','));
+        return load_csv_ascii(x, f, err_msg, char(','), false);
         break;
       
       case ssv_ascii:
-        return load_csv_ascii(x, f, err_msg, char(';'));
+        return load_csv_ascii(x, f, err_msg, char(';'), false);
         break;
       
       case raw_binary:

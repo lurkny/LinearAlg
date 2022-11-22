@@ -7651,10 +7651,11 @@ Mat<eT>::save(const csv_name& spec, const file_type type) const
     return false;
     }
   
-  const bool   do_trans     = bool(spec.opts.flags & csv_opts::flag_trans      );
-  const bool   no_header    = bool(spec.opts.flags & csv_opts::flag_no_header  );
-        bool with_header    = bool(spec.opts.flags & csv_opts::flag_with_header);
-  const bool  use_semicolon = bool(spec.opts.flags & csv_opts::flag_semicolon  ) || (type == ssv_ascii);
+  const bool do_trans      = bool(spec.opts.flags & csv_opts::flag_trans      );
+  const bool no_header     = bool(spec.opts.flags & csv_opts::flag_no_header  );
+  const bool with_header   = bool(spec.opts.flags & csv_opts::flag_with_header) && (no_header == false);
+  const bool use_semicolon = bool(spec.opts.flags & csv_opts::flag_semicolon  ) || (type == ssv_ascii);
+  const bool strict        = bool(spec.opts.flags & csv_opts::flag_strict     );
   
   arma_extra_debug_print("Mat::save(csv_name): enabled flags:");
   
@@ -7662,10 +7663,9 @@ Mat<eT>::save(const csv_name& spec, const file_type type) const
   if(no_header    )  { arma_extra_debug_print("no_header");   }
   if(with_header  )  { arma_extra_debug_print("with_header"); }
   if(use_semicolon)  { arma_extra_debug_print("semicolon");   }
+  if(strict       )  { arma_extra_debug_print("strict");      }
   
   const char separator = (use_semicolon) ? char(';') : char(',');
-  
-  if(no_header)  { with_header = false; }
   
   if(with_header)
     {
@@ -7920,21 +7920,21 @@ Mat<eT>::load(const csv_name& spec, const file_type type)
     return false;
     }
   
-  const bool   do_trans     = bool(spec.opts.flags & csv_opts::flag_trans      );
-  const bool   no_header    = bool(spec.opts.flags & csv_opts::flag_no_header  );
-        bool with_header    = bool(spec.opts.flags & csv_opts::flag_with_header);
-  const bool  use_semicolon = bool(spec.opts.flags & csv_opts::flag_semicolon  ) || (type == ssv_ascii);
+  const bool do_trans      = bool(spec.opts.flags & csv_opts::flag_trans      );
+  const bool no_header     = bool(spec.opts.flags & csv_opts::flag_no_header  );
+  const bool with_header   = bool(spec.opts.flags & csv_opts::flag_with_header) && (no_header == false);
+  const bool use_semicolon = bool(spec.opts.flags & csv_opts::flag_semicolon  ) || (type == ssv_ascii);
+  const bool strict        = bool(spec.opts.flags & csv_opts::flag_strict     );
   
   arma_extra_debug_print("Mat::load(csv_name): enabled flags:");
   
-  if(do_trans     )  { arma_extra_debug_print("trans");       }
-  if(no_header    )  { arma_extra_debug_print("no_header");   }
-  if(with_header  )  { arma_extra_debug_print("with_header"); }
-  if(use_semicolon)  { arma_extra_debug_print("semicolon");   }
+  if(do_trans      )  { arma_extra_debug_print("trans");       }
+  if(no_header     )  { arma_extra_debug_print("no_header");   }
+  if(with_header   )  { arma_extra_debug_print("with_header"); }
+  if(use_semicolon )  { arma_extra_debug_print("semicolon");   }
+  if(strict        )  { arma_extra_debug_print("strict");      }
   
   const char separator = (use_semicolon) ? char(';') : char(',');
-  
-  if(no_header)  { with_header = false; }
   
   bool load_okay = false;
   std::string err_msg;
@@ -7943,7 +7943,7 @@ Mat<eT>::load(const csv_name& spec, const file_type type)
     {
     Mat<eT> tmp_mat;
     
-    load_okay = diskio::load_csv_ascii(tmp_mat, spec.filename, err_msg, spec.header_rw, with_header, separator);
+    load_okay = diskio::load_csv_ascii(tmp_mat, spec.filename, err_msg, spec.header_rw, with_header, separator, strict);
     
     if(load_okay)
       {
@@ -7958,7 +7958,7 @@ Mat<eT>::load(const csv_name& spec, const file_type type)
     }
   else
     {
-    load_okay = diskio::load_csv_ascii(*this, spec.filename, err_msg, spec.header_rw, with_header, separator);
+    load_okay = diskio::load_csv_ascii(*this, spec.filename, err_msg, spec.header_rw, with_header, separator, strict);
     }
   
   if(load_okay == false)

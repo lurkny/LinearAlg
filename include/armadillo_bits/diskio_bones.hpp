@@ -57,6 +57,8 @@ class diskio
   template<typename eT> inline static bool convert_token(eT&              val, const std::string& token);
   template<typename  T> inline static bool convert_token(std::complex<T>& val, const std::string& token);
   
+  template<typename eT> inline static bool convert_token_strict(eT& val, const std::string& token);
+  
   template<typename eT> inline static std::streamsize prepare_stream(std::ostream& f);
   
   
@@ -91,7 +93,7 @@ class diskio
   template<typename eT> inline static bool load_raw_ascii  (Mat<eT>&                x, const std::string& name, std::string& err_msg);
   template<typename eT> inline static bool load_raw_binary (Mat<eT>&                x, const std::string& name, std::string& err_msg);
   template<typename eT> inline static bool load_arma_ascii (Mat<eT>&                x, const std::string& name, std::string& err_msg);
-  template<typename eT> inline static bool load_csv_ascii  (Mat<eT>&                x, const std::string& name, std::string& err_msg, field<std::string>& header, const bool with_header, const char separator);
+  template<typename eT> inline static bool load_csv_ascii  (Mat<eT>&                x, const std::string& name, std::string& err_msg, field<std::string>& header, const bool with_header, const char separator, const bool strict);
   template<typename eT> inline static bool load_coord_ascii(Mat<eT>&                x, const std::string& name, std::string& err_msg);
   template<typename eT> inline static bool load_arma_binary(Mat<eT>&                x, const std::string& name, std::string& err_msg);
   template<typename eT> inline static bool load_pgm_binary (Mat<eT>&                x, const std::string& name, std::string& err_msg);
@@ -102,8 +104,8 @@ class diskio
   template<typename eT> inline static bool load_raw_ascii  (Mat<eT>&                x, std::istream& f,  std::string& err_msg);
   template<typename eT> inline static bool load_raw_binary (Mat<eT>&                x, std::istream& f,  std::string& err_msg);
   template<typename eT> inline static bool load_arma_ascii (Mat<eT>&                x, std::istream& f,  std::string& err_msg);
-  template<typename eT> inline static bool load_csv_ascii  (Mat<eT>&                x, std::istream& f,  std::string& err_msg, const char separator);
-  template<typename  T> inline static bool load_csv_ascii  (Mat< std::complex<T> >& x, std::istream& f,  std::string& err_msg, const char separator);
+  template<typename eT> inline static bool load_csv_ascii  (Mat<eT>&                x, std::istream& f,  std::string& err_msg, const char separator, const bool strict);
+  template<typename  T> inline static bool load_csv_ascii  (Mat< std::complex<T> >& x, std::istream& f,  std::string& err_msg, const char separator, const bool strict);
   template<typename eT> inline static bool load_coord_ascii(Mat<eT>&                x, std::istream& f,  std::string& err_msg);
   template<typename  T> inline static bool load_coord_ascii(Mat< std::complex<T> >& x, std::istream& f,  std::string& err_msg);
   template<typename eT> inline static bool load_arma_binary(Mat<eT>&                x, std::istream& f,  std::string& err_msg);
