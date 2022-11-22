@@ -7928,11 +7928,11 @@ Mat<eT>::load(const csv_name& spec, const file_type type)
   
   arma_extra_debug_print("Mat::load(csv_name): enabled flags:");
   
-  if(do_trans      )  { arma_extra_debug_print("trans");       }
-  if(no_header     )  { arma_extra_debug_print("no_header");   }
-  if(with_header   )  { arma_extra_debug_print("with_header"); }
-  if(use_semicolon )  { arma_extra_debug_print("semicolon");   }
-  if(strict        )  { arma_extra_debug_print("strict");      }
+  if(do_trans     )  { arma_extra_debug_print("trans");       }
+  if(no_header    )  { arma_extra_debug_print("no_header");   }
+  if(with_header  )  { arma_extra_debug_print("with_header"); }
+  if(use_semicolon)  { arma_extra_debug_print("semicolon");   }
+  if(strict       )  { arma_extra_debug_print("strict");      }
   
   const char separator = (use_semicolon) ? char(';') : char(',');
   
