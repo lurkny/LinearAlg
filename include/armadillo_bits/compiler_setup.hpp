@@ -162,8 +162,8 @@
   #undef  ARMA_GCC_VERSION
   #define ARMA_GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
   
-  #if (ARMA_GCC_VERSION < 40800)
-    #error "*** newer compiler required; need gcc 4.8 or later ***"
+  #if (ARMA_GCC_VERSION < 60100)
+    #error "*** newer compiler required; need gcc 6.1 or later ***"
   #endif
   
   #define ARMA_GOOD_COMPILER
@@ -289,7 +289,7 @@
     #error "*** newer compiler required ***"
   #endif
   
-  #if (__INTEL_COMPILER < 1500)
+  #if (__INTEL_COMPILER < 1600)
     #error "*** newer compiler required ***"
   #endif
   
@@ -368,15 +368,10 @@
   // http://www.oracle.com/technetwork/server-storage/solarisstudio/training/index-jsp-141991.html
   // http://www.oracle.com/technetwork/server-storage/solarisstudio/documentation/cplusplus-faq-355066.html
   
-  #if (__SUNPRO_CC < 0x5140)
+  #if (__SUNPRO_CC < 0x5150)
     #error "*** newer compiler required ***"
   #endif
   
-#endif
-
-
-#if defined(__CYGWIN__) && !defined(ARMA_DONT_PRINT_CXX11_WARNING)
-  #pragma message ("WARNING: Cygwin may have incomplete support for C++11 features.")
 #endif
 
 
@@ -403,18 +398,6 @@
   #if (defined(_OPENMP) && (_OPENMP < 201107))
     #pragma message ("NOTE: your compiler appears to have an ancient version of OpenMP")
     #pragma message ("NOTE: consider upgrading to a better compiler")
-  #endif
-#endif
-
-
-#if defined(ARMA_USE_OPENMP)
-  #if (defined(ARMA_GCC_VERSION) && (ARMA_GCC_VERSION < 50400))
-    // due to https://gcc.gnu.org/bugzilla/show_bug.cgi?id=57580
-    // TODO: gcc 4.9.4 is also fixed, so use a more fine-grained gcc version check?
-    #undef ARMA_USE_OPENMP
-    #if !defined(ARMA_DONT_PRINT_OPENMP_WARNING)
-      #pragma message ("WARNING: use of OpenMP disabled due to compiler bug in gcc <= 5.3")
-    #endif
   #endif
 #endif
 
