@@ -28,22 +28,18 @@
 ## NOTE: More details: http://arma.sourceforge.net/faq.html
 
 
-cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
 
-if(NOT (${CMAKE_MAJOR_VERSION} LESS 3))
-  if(POLICY CMP0025)
-    # enable differentiation between vanilla Clang and AppleClang
-    cmake_policy(SET CMP0025 NEW)
-    message(STATUS "*** set cmake policy CMP0025 to NEW")
-  endif()
+if(POLICY CMP0025)
+  # enable differentiation between vanilla Clang and AppleClang
+  cmake_policy(SET CMP0025 NEW)
+  message(STATUS "*** set cmake policy CMP0025 to NEW")
 endif()
 
-if(NOT (CMAKE_VERSION VERSION_LESS "3.1"))
-  set(CMAKE_CXX_STANDARD 11)
-  set(CMAKE_CXX_STANDARD_REQUIRED ON)
-  set(CMAKE_CXX_EXTENSIONS OFF)
-  message(STATUS "CMAKE_CXX_STANDARD = ${CMAKE_CXX_STANDARD}")
-endif()
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+message(STATUS "CMAKE_CXX_STANDARD = ${CMAKE_CXX_STANDARD}")
 
 project(armadillo CXX C)
 include(CheckIncludeFileCXX)
