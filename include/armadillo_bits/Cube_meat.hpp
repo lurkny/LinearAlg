@@ -2314,7 +2314,6 @@ Cube<eT>::shed_slices(const Base<uword, T1>& indices)
 
 
 template<typename eT>
-arma_deprecated
 inline
 void
 Cube<eT>::insert_rows(const uword row_num, const uword N, const bool set_to_zero)
@@ -2365,7 +2364,6 @@ Cube<eT>::insert_rows(const uword row_num, const uword N)
 
 
 template<typename eT>
-arma_deprecated
 inline
 void
 Cube<eT>::insert_cols(const uword col_num, const uword N, const bool set_to_zero)
@@ -2416,7 +2414,6 @@ Cube<eT>::insert_cols(const uword col_num, const uword N)
 
 
 template<typename eT>
-arma_deprecated
 inline
 void
 Cube<eT>::insert_slices(const uword slice_num, const uword N, const bool set_to_zero)

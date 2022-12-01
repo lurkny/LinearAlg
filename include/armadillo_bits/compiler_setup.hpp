@@ -39,6 +39,9 @@
 #define arma_noinline
 #define arma_ignore(variable)  ((void)(variable))
 
+// NOTE: arma_deprecated is kept only for compatibility;
+// NOTE: since C++14 the [[deprecated]] and [[deprecated("reason")]] attributes are used instead
+
 #undef arma_fortran_sans_prefix_B
 #undef arma_fortran_with_prefix_B
  
@@ -173,7 +176,6 @@
   #undef  arma_aligned
   #undef  arma_align_mem
   #undef  arma_warn_unused
-  #undef  arma_deprecated
   #undef  arma_malloc
   #undef  arma_inline
   #undef  arma_noinline
@@ -183,7 +185,6 @@
   #define arma_aligned            __attribute__((__aligned__))
   #define arma_align_mem          __attribute__((__aligned__(16)))
   #define arma_warn_unused        __attribute__((__warn_unused_result__))
-  #define arma_deprecated         __attribute__((__deprecated__))
   #define arma_malloc             __attribute__((__malloc__))
   #define arma_inline      inline __attribute__((__always_inline__))
   #define arma_noinline           __attribute__((__noinline__))
@@ -240,11 +241,6 @@
   #if __has_attribute(__warn_unused_result__)
     #undef  arma_warn_unused
     #define arma_warn_unused __attribute__((__warn_unused_result__))
-  #endif
-  
-  #if __has_attribute(__deprecated__)
-    #undef  arma_deprecated
-    #define arma_deprecated __attribute__((__deprecated__))
   #endif
   
   #if __has_attribute(__malloc__)
@@ -306,8 +302,6 @@
     #error "*** newer compiler required ***"
   #endif
   
-  #undef  arma_deprecated
-  #define arma_deprecated __declspec(deprecated)
   // #undef  arma_inline
   // #define arma_inline inline __forceinline
   
@@ -448,11 +442,3 @@
 
 #undef minor
 #undef major
-
-
-// optionally allow disabling of compile-time deprecation messages (not recommended)
-
-#if defined(ARMA_IGNORE_DEPRECATED_MARKER) && (!defined(ARMA_DONT_IGNORE_DEPRECATED_MARKER)) && (!defined(ARMA_EXTRA_DEBUG))
-  #undef  arma_deprecated
-  #define arma_deprecated
-#endif

@@ -2995,7 +2995,6 @@ Mat<eT>::operator/=(const spdiagview<eT>& X)
 
 
 template<typename eT>
-arma_deprecated
 inline
 mat_injector< Mat<eT> >
 Mat<eT>::operator<<(const eT val)
@@ -3006,7 +3005,6 @@ Mat<eT>::operator<<(const eT val)
 
 
 template<typename eT>
-arma_deprecated
 inline
 mat_injector< Mat<eT> >
 Mat<eT>::operator<<(const injector_end_of_row<>& x)
@@ -4544,7 +4542,6 @@ Mat<eT>::shed_cols(const Base<uword, T1>& indices)
 
 
 template<typename eT>
-arma_deprecated
 inline
 void
 Mat<eT>::insert_rows(const uword row_num, const uword N, const bool set_to_zero)
@@ -4596,7 +4593,6 @@ Mat<eT>::insert_rows(const uword row_num, const uword N)
 
 
 template<typename eT>
-arma_deprecated
 inline
 void
 Mat<eT>::insert_cols(const uword col_num, const uword N, const bool set_to_zero)
@@ -6797,7 +6793,6 @@ Mat<eT>::reshape(const SizeMat& s)
 
 //! NOTE: don't use this form; it's deprecated and will be removed
 template<typename eT>
-arma_deprecated
 inline
 void
 Mat<eT>::reshape(const uword new_n_rows, const uword new_n_cols, const uword dim)

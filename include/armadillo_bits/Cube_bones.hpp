@@ -218,9 +218,9 @@ class Cube : public BaseCube< eT, Cube<eT> >
   
   template<typename T1> inline void shed_slices(const Base<uword, T1>& indices);
   
-  arma_deprecated inline void insert_rows(const uword row_num, const uword N, const bool set_to_zero);
-  arma_deprecated inline void insert_cols(const uword row_num, const uword N, const bool set_to_zero);
-  arma_deprecated inline void insert_slices(const uword slice_num, const uword N, const bool set_to_zero);
+  [[deprecated]] inline void insert_rows(const uword row_num, const uword N, const bool set_to_zero);
+  [[deprecated]] inline void insert_cols(const uword row_num, const uword N, const bool set_to_zero);
+  [[deprecated]] inline void insert_slices(const uword slice_num, const uword N, const bool set_to_zero);
   
   inline void insert_rows(const uword row_num, const uword N);
   inline void insert_cols(const uword row_num, const uword N);

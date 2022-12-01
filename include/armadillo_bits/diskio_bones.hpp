@@ -25,7 +25,7 @@ class diskio
   {
   public:
   
-  inline arma_deprecated static file_type guess_file_type(std::istream& f);
+  [[deprecated]] inline static file_type guess_file_type(std::istream& f);
   
   
   private:

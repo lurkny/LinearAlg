@@ -188,8 +188,8 @@ class Mat : public Base< eT, Mat<eT> >
   inline Mat& operator/=(const spdiagview<eT>& X);
   
   
-  arma_deprecated inline mat_injector<Mat> operator<<(const eT val);
-  arma_deprecated inline mat_injector<Mat> operator<<(const injector_end_of_row<>& x);
+  [[deprecated("use braced initialiser list instead")]] inline mat_injector<Mat> operator<<(const eT val);
+  [[deprecated("use braced initialiser list instead")]] inline mat_injector<Mat> operator<<(const injector_end_of_row<>& x);
   
   
   arma_inline       subview_row<eT> row(const uword row_num);
@@ -308,8 +308,8 @@ class Mat : public Base< eT, Mat<eT> >
   template<typename T1> inline void shed_rows(const Base<uword, T1>& indices);
   template<typename T1> inline void shed_cols(const Base<uword, T1>& indices);
   
-  arma_deprecated inline void insert_rows(const uword row_num, const uword N, const bool set_to_zero);
-  arma_deprecated inline void insert_cols(const uword col_num, const uword N, const bool set_to_zero);
+  [[deprecated]] inline void insert_rows(const uword row_num, const uword N, const bool set_to_zero);
+  [[deprecated]] inline void insert_cols(const uword col_num, const uword N, const bool set_to_zero);
   
   inline void insert_rows(const uword row_num, const uword N);
   inline void insert_cols(const uword col_num, const uword N);
@@ -467,7 +467,7 @@ class Mat : public Base< eT, Mat<eT> >
   inline void  reshape(const uword new_n_rows, const uword new_n_cols);
   inline void  reshape(const SizeMat& s);
   
-  arma_deprecated inline void reshape(const uword new_n_rows, const uword new_n_cols, const uword dim);  //!< NOTE: don't use this form: it will be removed
+  [[deprecated]] inline void reshape(const uword new_n_rows, const uword new_n_cols, const uword dim);  //!< NOTE: don't use this form: it will be removed
   
   
   template<typename functor> inline const Mat&  for_each(functor F);

@@ -760,7 +760,6 @@ field<oT>::back() const
 
 
 template<typename oT>
-arma_deprecated
 inline
 field_injector< field<oT> >
 field<oT>::operator<<(const oT& val)
@@ -771,7 +770,6 @@ field<oT>::operator<<(const oT& val)
 
 
 template<typename oT>
-arma_deprecated
 inline
 field_injector< field<oT> >
 field<oT>::operator<<(const injector_end_of_row<>& x)

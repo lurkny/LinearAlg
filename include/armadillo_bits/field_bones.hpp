@@ -127,8 +127,8 @@ class field
   arma_inline arma_warn_unused const oT& back() const;
   
   
-  arma_deprecated inline field_injector<field> operator<<(const oT& val);
-  arma_deprecated inline field_injector<field> operator<<(const injector_end_of_row<>& x);
+  [[deprecated("use braced initialiser list instead")]] inline field_injector<field> operator<<(const oT& val);
+  [[deprecated("use braced initialiser list instead")]] inline field_injector<field> operator<<(const injector_end_of_row<>& x);
   
   
   inline       subview_field<oT> row(const uword row_num);

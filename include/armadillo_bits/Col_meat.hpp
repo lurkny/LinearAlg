@@ -611,7 +611,6 @@ Col<eT>::operator=(const subview_cube<eT>& X)
 
 template<typename eT>
 inline
-arma_deprecated
 mat_injector< Col<eT> >
 Col<eT>::operator<<(const eT val)
   {
@@ -1055,7 +1054,6 @@ Col<eT>::shed_rows(const Base<uword, T1>& indices)
 
 
 template<typename eT>
-arma_deprecated
 inline
 void
 Col<eT>::insert_rows(const uword row_num, const uword N, const bool set_to_zero)

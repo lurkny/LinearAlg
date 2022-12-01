@@ -270,7 +270,6 @@ diskio::gen_bin_header(const Cube<eT>&)
 
 
 inline
-arma_deprecated
 file_type
 diskio::guess_file_type(std::istream& f)
   {
