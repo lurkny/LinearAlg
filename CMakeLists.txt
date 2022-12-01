@@ -52,7 +52,6 @@ set(ARMA_USE_WRAPPER true)
 set(ARMA_USE_LAPACK     false)
 set(ARMA_USE_BLAS       false)
 set(ARMA_USE_ATLAS      false)
-set(ARMA_USE_HDF5_CMAKE false)
 set(ARMA_USE_ARPACK     false)
 set(ARMA_USE_EXTERN_RNG false)
 set(ARMA_USE_SUPERLU    false)  # Caveat: only SuperLU version 5.x can be used!
@@ -188,12 +187,6 @@ else()
   option(BUILD_SHARED_LIBS "build shared library" ON)
 endif()
 
-option(DETECT_HDF5 "Detect HDF5 and include HDF5 support, if found" ON)
-# set(DETECT_HDF5 false)
-## uncomment the above line to disable the detection of the HDF5 library;
-## you can also disable HDF5 detection directly on the command line:
-## cmake -D DETECT_HDF5=false .
-
 option(OPENBLAS_PROVIDES_LAPACK "Assume that OpenBLAS provides LAPACK functions" OFF)
 ## Example use on the command line:
 ## cmake -D OPENBLAS_PROVIDES_LAPACK=true .
@@ -247,7 +240,6 @@ message(STATUS "CMAKE_COMPILER_IS_GNUCXX   = ${CMAKE_COMPILER_IS_GNUCXX}"  )
 message(STATUS "")
 message(STATUS "*** Options:"                                           )
 message(STATUS "BUILD_SHARED_LIBS         = ${BUILD_SHARED_LIBS}"       )
-message(STATUS "DETECT_HDF5               = ${DETECT_HDF5}"             )
 message(STATUS "OPENBLAS_PROVIDES_LAPACK  = ${OPENBLAS_PROVIDES_LAPACK}")
 message(STATUS "ALLOW_FLEXIBLAS_LINUX     = ${ALLOW_FLEXIBLAS_LINUX}"   )
 message(STATUS "ALLOW_OPENBLAS_MACOS      = ${ALLOW_OPENBLAS_MACOS}"    )
@@ -453,49 +445,6 @@ endif()
 find_package(PkgConfig)
 
 
-if(DETECT_HDF5)
-  find_package(HDF5 QUIET COMPONENTS C)
-
-  if(NOT HDF5_FOUND)
-    # On Debian systems, the HDF5 package has been split into multiple packages
-    # so that it is co-installable.  But this may mean that the include files
-    # are hidden somewhere very odd that the FindHDF5.cmake script will not
-    # find.  Thus, we'll also quickly check pkgconfig to see if there is
-    # information on what to use there.
-    if (PKG_CONFIG_FOUND)
-      pkg_check_modules(HDF5 hdf5)
-      # But using pkgconfig is a little weird because HDF5_LIBRARIES won't be
-      # filled with exact library paths, like the other scripts.  So instead
-      # what we get is HDF5_LIBRARY_DIRS which is the equivalent of what we'd
-      # pass to -L.  So we have to add those...
-      if (HDF5_FOUND)
-        link_directories("${HDF5_LIBRARY_DIRS}")
-      endif()
-    endif()
-  endif()
- 
-  message(STATUS "HDF5_FOUND = ${HDF5_FOUND}")
-  if(HDF5_FOUND)
-    set(ARMA_USE_HDF5_CMAKE true)
-    set(CMAKE_REQUIRED_INCLUDES ${CMAKE_REQUIRED_INCLUDES} ${HDF5_INCLUDE_DIRS})
-    set(ARMA_LIBS ${ARMA_LIBS} ${HDF5_LIBRARIES})
-    # Since we called HDF5 with no arguments, the script will find only the C
-    # bindings.  So HDF5_INCLUDE_DIRS may now contain one or two elements; if it
-    # contains two, the first is what the user passed as HDF5_INCLUDE_DIR and we
-    # should use that as ARMA_HDF5_INCLUDE_DIR.  Otherwise, the one entry in
-    # HDF5_INCLUDE_DIRS is the correct include directory.  So, in either case we
-    # can use the first element in the list.  Issue a status message, too, just
-    # for good measure.
-    list(GET HDF5_INCLUDE_DIRS 0 ARMA_HDF5_INCLUDE_DIR)
-    message(STATUS "ARMA_HDF5_INCLUDE_DIR = ${ARMA_HDF5_INCLUDE_DIR}")
-    message(STATUS "")
-    message(STATUS "*** If use of HDF5 is causing problems,")
-    message(STATUS "*** rerun cmake with HDF5 detection disabled:")
-    message(STATUS "*** cmake -D DETECT_HDF5=false .")
-    message(STATUS "")
-  endif()
-endif()
-
 include(ARMA_FindARPACK)
 message(STATUS "ARPACK_FOUND = ${ARPACK_FOUND}")
 
@@ -539,7 +488,6 @@ message(STATUS "*** ARMA_USE_WRAPPER    = ${ARMA_USE_WRAPPER}")
 message(STATUS "*** ARMA_USE_LAPACK     = ${ARMA_USE_LAPACK}")
 message(STATUS "*** ARMA_USE_BLAS       = ${ARMA_USE_BLAS}")
 message(STATUS "*** ARMA_USE_ATLAS      = ${ARMA_USE_ATLAS}")
-message(STATUS "*** ARMA_USE_HDF5_CMAKE = ${ARMA_USE_HDF5_CMAKE}")
 message(STATUS "*** ARMA_USE_ARPACK     = ${ARMA_USE_ARPACK}")
 message(STATUS "*** ARMA_USE_EXTERN_RNG = ${ARMA_USE_EXTERN_RNG}")
 message(STATUS "*** ARMA_USE_SUPERLU    = ${ARMA_USE_SUPERLU}")

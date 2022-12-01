@@ -152,7 +152,6 @@ namespace arma
   #include "armadillo_bits/def_lapack.hpp"
   #include "armadillo_bits/def_arpack.hpp"
   #include "armadillo_bits/def_superlu.hpp"
-  #include "armadillo_bits/def_hdf5.hpp"
   
   #include "armadillo_bits/translate_blas.hpp"
   #include "armadillo_bits/translate_atlas.hpp"

@@ -7,7 +7,7 @@ License:        ASL 2.0
 URL:            http://arma.sourceforge.net/
 Source:         http://sourceforge.net/projects/arma/files/%{name}-%{version}.tar.xz
 
-BuildRequires:  gcc-c++, cmake, lapack-devel, arpack-devel, hdf5-devel
+BuildRequires:  gcc-c++, cmake, lapack-devel, arpack-devel
 %{!?openblas_arches:%global openblas_arches x86_64 %{ix86} armv7hl %{power64} aarch64}
 %ifarch %{openblas_arches}
 BuildRequires:  openblas-devel
@@ -36,7 +36,7 @@ computer vision, signal processing, bioinformatics, statistics, finance, etc.
 %package devel
 Summary:        Development headers and documentation for the Armadillo C++ library
 Requires:       %{name} = %{version}-%{release}
-Requires:       lapack-devel,  arpack-devel, hdf5-devel, libstdc++-devel
+Requires:       lapack-devel,  arpack-devel, libstdc++-devel
 %ifarch %{openblas_arches}
 Requires:       openblas-devel
 %endif

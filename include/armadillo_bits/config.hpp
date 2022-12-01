@@ -159,14 +159,6 @@
   //// Comment out the above line to disable checking for nonfinite matrices
 #endif
 
-// #define ARMA_USE_HDF5_CMAKE
-#if defined(ARMA_USE_HDF5_CMAKE) && defined(ARMA_USE_WRAPPER)
-  #undef  ARMA_USE_HDF5
-  #define ARMA_USE_HDF5
-  
-  // #define ARMA_HDF5_INCLUDE_DIR /usr/include/
-#endif
-
 #if !defined(ARMA_MAT_PREALLOC)
   #define ARMA_MAT_PREALLOC 16
 #endif
@@ -268,7 +260,6 @@
 
 #if defined(ARMA_DONT_USE_WRAPPER)
   #undef ARMA_USE_WRAPPER
-  #undef ARMA_USE_HDF5_CMAKE
 #endif
 
 #if defined(ARMA_DONT_USE_FORTRAN_HIDDEN_ARGS)
@@ -315,7 +306,6 @@
 
 #if defined(ARMA_DONT_USE_HDF5)
   #undef ARMA_USE_HDF5
-  #undef ARMA_USE_HDF5_CMAKE
 #endif
 
 #if defined(ARMA_DONT_OPTIMISE_BAND) || defined(ARMA_DONT_OPTIMISE_SOLVE_BAND)

@@ -1204,12 +1204,12 @@ diskio::save_hdf5_binary(const Mat<eT>& x, const hdf5_name& spec, std::string& e
     const bool append  = bool(spec.opts.flags & hdf5_opts::flag_append);
     const bool replace = bool(spec.opts.flags & hdf5_opts::flag_replace);
     
-    const bool use_existing_file = ((append || replace) && (arma_H5Fis_hdf5(spec.filename.c_str()) > 0));
+    const bool use_existing_file = ((append || replace) && (H5Fis_hdf5(spec.filename.c_str()) > 0));
     
     const std::string tmp_name = (use_existing_file) ? std::string() : diskio::gen_tmp_name(spec.filename);
     
     // Set up the file according to HDF5's preferences
-    hid_t file = (use_existing_file) ? arma_H5Fopen(spec.filename.c_str(), H5F_ACC_RDWR, H5P_DEFAULT) : arma_H5Fcreate(tmp_name.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
+    hid_t file = (use_existing_file) ? H5Fopen(spec.filename.c_str(), H5F_ACC_RDWR, H5P_DEFAULT) : H5Fcreate(tmp_name.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
     
     if(file < 0)  { return false; }
     
@@ -1218,7 +1218,7 @@ diskio::save_hdf5_binary(const Mat<eT>& x, const hdf5_name& spec, std::string& e
     dims[1] = x.n_rows;
     dims[0] = x.n_cols;
     
-    hid_t dataspace = arma_H5Screate_simple(2, dims, NULL);   // treat the matrix as a 2d array dataspace
+    hid_t dataspace = H5Screate_simple(2, dims, NULL);   // treat the matrix as a 2d array dataspace
     hid_t datatype  = hdf5_misc::get_hdf5_type<eT>();
     
     // If this returned something invalid, well, it's time to crash.
@@ -1236,11 +1236,11 @@ diskio::save_hdf5_binary(const Mat<eT>& x, const hdf5_name& spec, std::string& e
       // Create another group...
       if(loc != 0) // Ignore the first /, if there is a leading /.
         {
-        hid_t gid = arma_H5Gcreate((groups.size() == 0) ? file : groups[groups.size() - 1], full_name.substr(0, loc).c_str(), H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
+        hid_t gid = H5Gcreate((groups.size() == 0) ? file : groups[groups.size() - 1], full_name.substr(0, loc).c_str(), H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
         
         if((gid < 0) && use_existing_file)
           {
-          gid = arma_H5Gopen((groups.size() == 0) ? file : groups[groups.size() - 1], full_name.substr(0, loc).c_str(), H5P_DEFAULT);
+          gid = H5Gopen((groups.size() == 0) ? file : groups[groups.size() - 1], full_name.substr(0, loc).c_str(), H5P_DEFAULT);
           }
         
         groups.push_back(gid);
@@ -1255,14 +1255,14 @@ diskio::save_hdf5_binary(const Mat<eT>& x, const hdf5_name& spec, std::string& e
     
     if(use_existing_file && replace)
       {
-      arma_H5Ldelete(last_group, dataset_name.c_str(), H5P_DEFAULT);
+      H5Ldelete(last_group, dataset_name.c_str(), H5P_DEFAULT);
       // NOTE: H5Ldelete() in HDF5 v1.8 doesn't reclaim the deleted space; use h5repack to reclaim space: h5repack oldfile.h5 newfile.h5
       // NOTE: has this behaviour changed in HDF5 1.10 ?
       // NOTE: https://lists.hdfgroup.org/pipermail/hdf-forum_lists.hdfgroup.org/2017-August/010482.html
       // NOTE: https://lists.hdfgroup.org/pipermail/hdf-forum_lists.hdfgroup.org/2017-August/010486.html
       }
     
-    hid_t dataset = arma_H5Dcreate(last_group, dataset_name.c_str(), datatype, dataspace, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
+    hid_t dataset = H5Dcreate(last_group, dataset_name.c_str(), datatype, dataspace, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
     
     if(dataset < 0)
       {
@@ -1272,15 +1272,15 @@ diskio::save_hdf5_binary(const Mat<eT>& x, const hdf5_name& spec, std::string& e
       }
     else
       {
-      save_okay = (arma_H5Dwrite(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, x.mem) >= 0);
+      save_okay = (H5Dwrite(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, x.mem) >= 0);
       
-      arma_H5Dclose(dataset);
+      H5Dclose(dataset);
       }
     
-    arma_H5Tclose(datatype);
-    arma_H5Sclose(dataspace);
-    for(size_t i = 0; i < groups.size(); ++i)  { arma_H5Gclose(groups[i]); }
-    arma_H5Fclose(file);
+    H5Tclose(datatype);
+    H5Sclose(dataspace);
+    for(size_t i = 0; i < groups.size(); ++i)  { H5Gclose(groups[i]); }
+    H5Fclose(file);
     
     if((use_existing_file == false) && (save_okay == true))  { save_okay = diskio::safe_rename(tmp_name, spec.filename); }
     
@@ -2562,7 +2562,7 @@ diskio::load_hdf5_binary(Mat<eT>& x, const hdf5_name& spec, std::string& err_msg
     
     bool load_okay = false;
     
-    hid_t fid = arma_H5Fopen(spec.filename.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
+    hid_t fid = H5Fopen(spec.filename.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
     
     if(fid >= 0)
       {
@@ -2589,22 +2589,22 @@ diskio::load_hdf5_binary(Mat<eT>& x, const hdf5_name& spec, std::string& err_msg
       
       if(dataset >= 0)
         {
-        hid_t filespace = arma_H5Dget_space(dataset);
+        hid_t filespace = H5Dget_space(dataset);
         
         // This must be <= 2 due to our search rules.
-        const int ndims = arma_H5Sget_simple_extent_ndims(filespace);
+        const int ndims = H5Sget_simple_extent_ndims(filespace);
         
         hsize_t dims[2];
-        const herr_t query_status = arma_H5Sget_simple_extent_dims(filespace, dims, NULL);
+        const herr_t query_status = H5Sget_simple_extent_dims(filespace, dims, NULL);
         
         // arma_check(query_status < 0, "Mat::load(): cannot get size of HDF5 dataset");
         if(query_status < 0)
           {
           err_msg = "cannot get size of HDF5 dataset";
           
-          arma_H5Sclose(filespace);
-          arma_H5Dclose(dataset);
-          arma_H5Fclose(fid);
+          H5Sclose(filespace);
+          H5Dclose(dataset);
+          H5Fclose(fid);
           
           return false;
           }
@@ -2614,14 +2614,14 @@ diskio::load_hdf5_binary(Mat<eT>& x, const hdf5_name& spec, std::string& err_msg
         try { x.set_size(dims[1], dims[0]); } catch(...) { err_msg = "not enough memory"; return false; }
         
         // Now we have to see what type is stored to figure out how to load it.
-        hid_t datatype = arma_H5Dget_type(dataset);
+        hid_t datatype = H5Dget_type(dataset);
         hid_t mat_type = hdf5_misc::get_hdf5_type<eT>();
         
         // If these are the same type, it is simple.
-        if(arma_H5Tequal(datatype, mat_type) > 0)
+        if(H5Tequal(datatype, mat_type) > 0)
           {
           // Load directly; H5S_ALL used so that we load the entire dataset.
-          hid_t read_status = arma_H5Dread(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, void_ptr(x.memptr()));
+          hid_t read_status = H5Dread(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, void_ptr(x.memptr()));
           
           if(read_status >= 0) { load_okay = true; }
           }
@@ -2634,14 +2634,14 @@ diskio::load_hdf5_binary(Mat<eT>& x, const hdf5_name& spec, std::string& err_msg
           }
         
         // Now clean up.
-        arma_H5Tclose(datatype);
-        arma_H5Tclose(mat_type);
-        arma_H5Sclose(filespace);
+        H5Tclose(datatype);
+        H5Tclose(mat_type);
+        H5Sclose(filespace);
         }
       
-      arma_H5Dclose(dataset);
+      H5Dclose(dataset);
       
-      arma_H5Fclose(fid);
+      H5Fclose(fid);
       
       if(load_okay == false)
         {
@@ -2680,7 +2680,7 @@ diskio::load_auto_detect(Mat<eT>& x, const std::string& name, std::string& err_m
   
   #if defined(ARMA_USE_HDF5)
     // We're currently using the C bindings for the HDF5 library, which don't support C++ streams
-    if( arma_H5Fis_hdf5(name.c_str()) ) { return load_hdf5_binary(x, name, err_msg); }
+    if( H5Fis_hdf5(name.c_str()) ) { return load_hdf5_binary(x, name, err_msg); }
   #endif
   
   std::fstream f;
@@ -3844,12 +3844,12 @@ diskio::save_hdf5_binary(const Cube<eT>& x, const hdf5_name& spec, std::string& 
     const bool append  = bool(spec.opts.flags & hdf5_opts::flag_append);
     const bool replace = bool(spec.opts.flags & hdf5_opts::flag_replace);
     
-    const bool use_existing_file = ((append || replace) && (arma_H5Fis_hdf5(spec.filename.c_str()) > 0));
+    const bool use_existing_file = ((append || replace) && (H5Fis_hdf5(spec.filename.c_str()) > 0));
     
     const std::string tmp_name = (use_existing_file) ? std::string() : diskio::gen_tmp_name(spec.filename);
     
     // Set up the file according to HDF5's preferences
-    hid_t file = (use_existing_file) ? arma_H5Fopen(spec.filename.c_str(), H5F_ACC_RDWR, H5P_DEFAULT) : arma_H5Fcreate(tmp_name.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
+    hid_t file = (use_existing_file) ? H5Fopen(spec.filename.c_str(), H5F_ACC_RDWR, H5P_DEFAULT) : H5Fcreate(tmp_name.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
     
     if(file < 0)  { return false; }
     
@@ -3859,7 +3859,7 @@ diskio::save_hdf5_binary(const Cube<eT>& x, const hdf5_name& spec, std::string& 
     dims[1] = x.n_cols;
     dims[0] = x.n_slices;
     
-    hid_t dataspace = arma_H5Screate_simple(3, dims, NULL);   // treat the cube as a 3d array dataspace
+    hid_t dataspace = H5Screate_simple(3, dims, NULL);   // treat the cube as a 3d array dataspace
     hid_t datatype  = hdf5_misc::get_hdf5_type<eT>();
     
     // If this returned something invalid, well, it's time to crash.
@@ -3877,11 +3877,11 @@ diskio::save_hdf5_binary(const Cube<eT>& x, const hdf5_name& spec, std::string& 
       // Create another group...
       if(loc != 0) // Ignore the first /, if there is a leading /.
         {
-        hid_t gid = arma_H5Gcreate((groups.size() == 0) ? file : groups[groups.size() - 1], full_name.substr(0, loc).c_str(), H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
+        hid_t gid = H5Gcreate((groups.size() == 0) ? file : groups[groups.size() - 1], full_name.substr(0, loc).c_str(), H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
         
         if((gid < 0) && use_existing_file)
           {
-          gid = arma_H5Gopen((groups.size() == 0) ? file : groups[groups.size() - 1], full_name.substr(0, loc).c_str(), H5P_DEFAULT);
+          gid = H5Gopen((groups.size() == 0) ? file : groups[groups.size() - 1], full_name.substr(0, loc).c_str(), H5P_DEFAULT);
           }
         
         groups.push_back(gid);
@@ -3896,14 +3896,14 @@ diskio::save_hdf5_binary(const Cube<eT>& x, const hdf5_name& spec, std::string& 
     
     if(use_existing_file && replace)
       {
-      arma_H5Ldelete(last_group, dataset_name.c_str(), H5P_DEFAULT);
+      H5Ldelete(last_group, dataset_name.c_str(), H5P_DEFAULT);
       // NOTE: H5Ldelete() in HDF5 v1.8 doesn't reclaim the deleted space; use h5repack to reclaim space: h5repack oldfile.h5 newfile.h5
       // NOTE: has this behaviour changed in HDF5 1.10 ?
       // NOTE: https://lists.hdfgroup.org/pipermail/hdf-forum_lists.hdfgroup.org/2017-August/010482.html
       // NOTE: https://lists.hdfgroup.org/pipermail/hdf-forum_lists.hdfgroup.org/2017-August/010486.html
       }
     
-    hid_t dataset = arma_H5Dcreate(last_group, dataset_name.c_str(), datatype, dataspace, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
+    hid_t dataset = H5Dcreate(last_group, dataset_name.c_str(), datatype, dataspace, H5P_DEFAULT, H5P_DEFAULT, H5P_DEFAULT);
     
     if(dataset < 0)
       {
@@ -3913,15 +3913,15 @@ diskio::save_hdf5_binary(const Cube<eT>& x, const hdf5_name& spec, std::string& 
       }
     else
       {
-      save_okay = (arma_H5Dwrite(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, x.mem) >= 0);
+      save_okay = (H5Dwrite(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, x.mem) >= 0);
       
-      arma_H5Dclose(dataset);
+      H5Dclose(dataset);
       }
     
-    arma_H5Tclose(datatype);
-    arma_H5Sclose(dataspace);
-    for(size_t i = 0; i < groups.size(); ++i)  { arma_H5Gclose(groups[i]); }
-    arma_H5Fclose(file);
+    H5Tclose(datatype);
+    H5Sclose(dataspace);
+    for(size_t i = 0; i < groups.size(); ++i)  { H5Gclose(groups[i]); }
+    H5Fclose(file);
     
     if((use_existing_file == false) && (save_okay == true))  { save_okay = diskio::safe_rename(tmp_name, spec.filename); }
     
@@ -4278,7 +4278,7 @@ diskio::load_hdf5_binary(Cube<eT>& x, const hdf5_name& spec, std::string& err_ms
     
     bool load_okay = false;
     
-    hid_t fid = arma_H5Fopen(spec.filename.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
+    hid_t fid = H5Fopen(spec.filename.c_str(), H5F_ACC_RDONLY, H5P_DEFAULT);
     
     if(fid >= 0)
       {
@@ -4305,22 +4305,22 @@ diskio::load_hdf5_binary(Cube<eT>& x, const hdf5_name& spec, std::string& err_ms
       
       if(dataset >= 0)
         {
-        hid_t filespace = arma_H5Dget_space(dataset);
+        hid_t filespace = H5Dget_space(dataset);
         
         // This must be <= 3 due to our search rules.
-        const int ndims = arma_H5Sget_simple_extent_ndims(filespace);
+        const int ndims = H5Sget_simple_extent_ndims(filespace);
         
         hsize_t dims[3];
-        const herr_t query_status = arma_H5Sget_simple_extent_dims(filespace, dims, NULL);
+        const herr_t query_status = H5Sget_simple_extent_dims(filespace, dims, NULL);
         
         // arma_check(query_status < 0, "Cube::load(): cannot get size of HDF5 dataset");
         if(query_status < 0)
           {
           err_msg = "cannot get size of HDF5 dataset";
           
-          arma_H5Sclose(filespace);
-          arma_H5Dclose(dataset);
-          arma_H5Fclose(fid);
+          H5Sclose(filespace);
+          H5Dclose(dataset);
+          H5Fclose(fid);
           
           return false;
           }
@@ -4331,14 +4331,14 @@ diskio::load_hdf5_binary(Cube<eT>& x, const hdf5_name& spec, std::string& err_ms
         try { x.set_size(dims[2], dims[1], dims[0]); } catch(...) { err_msg = "not enough memory"; return false; }
         
         // Now we have to see what type is stored to figure out how to load it.
-        hid_t datatype = arma_H5Dget_type(dataset);
+        hid_t datatype = H5Dget_type(dataset);
         hid_t mat_type = hdf5_misc::get_hdf5_type<eT>();
         
         // If these are the same type, it is simple.
-        if(arma_H5Tequal(datatype, mat_type) > 0)
+        if(H5Tequal(datatype, mat_type) > 0)
           {
           // Load directly; H5S_ALL used so that we load the entire dataset.
-          hid_t read_status = arma_H5Dread(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, void_ptr(x.memptr()));
+          hid_t read_status = H5Dread(dataset, datatype, H5S_ALL, H5S_ALL, H5P_DEFAULT, void_ptr(x.memptr()));
           
           if(read_status >= 0) { load_okay = true; }
           }
@@ -4351,14 +4351,14 @@ diskio::load_hdf5_binary(Cube<eT>& x, const hdf5_name& spec, std::string& err_ms
           }
         
         // Now clean up.
-        arma_H5Tclose(datatype);
-        arma_H5Tclose(mat_type);
-        arma_H5Sclose(filespace);
+        H5Tclose(datatype);
+        H5Tclose(mat_type);
+        H5Sclose(filespace);
         }
       
-      arma_H5Dclose(dataset);
+      H5Dclose(dataset);
       
-      arma_H5Fclose(fid);
+      H5Fclose(fid);
       
       if(load_okay == false)
         {
@@ -4397,7 +4397,7 @@ diskio::load_auto_detect(Cube<eT>& x, const std::string& name, std::string& err_
   
   #if defined(ARMA_USE_HDF5)
     // We're currently using the C bindings for the HDF5 library, which don't support C++ streams
-    if( arma_H5Fis_hdf5(name.c_str()) ) { return load_hdf5_binary(x, name, err_msg); }
+    if( H5Fis_hdf5(name.c_str()) ) { return load_hdf5_binary(x, name, err_msg); }
   #endif
   
   std::fstream f;
