@@ -532,7 +532,8 @@ SpMat<eT>::SpMat
   const Base<uword,T2>& colptr_expr, 
   const Base<eT,   T3>& values_expr, 
   const uword           in_n_rows, 
-  const uword           in_n_cols
+  const uword           in_n_cols,
+  const bool            check_for_zeros
   )
   : n_rows(0)
   , n_cols(0)
@@ -572,7 +573,7 @@ SpMat<eT>::SpMat
   access::rw(col_ptrs[n_cols + 1]) = std::numeric_limits<uword>::max();
   
   // make sure no zeros are stored
-  remove_zeros();
+  if(check_for_zeros)  { remove_zeros(); }
   }
 
 

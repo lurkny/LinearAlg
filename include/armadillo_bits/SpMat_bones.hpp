@@ -101,7 +101,7 @@ class SpMat : public SpBase< eT, SpMat<eT> >
   inline SpMat& operator= (const MapMat<eT>& x);
   
   template<typename T1, typename T2, typename T3>
-  inline SpMat(const Base<uword,T1>& rowind, const Base<uword,T2>& colptr, const Base<eT,T3>& values, const uword n_rows, const uword n_cols);
+  inline SpMat(const Base<uword,T1>& rowind, const Base<uword,T2>& colptr, const Base<eT,T3>& values, const uword n_rows, const uword n_cols, const bool check_for_zeros = true);
   
   template<typename T1, typename T2>
   inline SpMat(const Base<uword,T1>& locations, const Base<eT,T2>& values, const bool sort_locations = true);
