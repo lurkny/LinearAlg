@@ -21,48 +21,20 @@
 
 
 
-template<typename T>
-inline
-std::ostream&
-arma_cout_stream(std::ostream* user_stream)
-  {
-  static std::ostream* cout_stream = &(ARMA_COUT_STREAM);
-  
-  if(user_stream != nullptr)  { cout_stream = user_stream; }
-  
-  return (*cout_stream);
-  }
-
-
-
-template<typename T>
-inline
-std::ostream&
-arma_cerr_stream(std::ostream* user_stream)
-  {
-  static std::ostream* cerr_stream = &(ARMA_CERR_STREAM);
-  
-  if(user_stream != nullptr)  { cerr_stream = user_stream; }
-  
-  return (*cerr_stream);
-  }
-
-
-
+[[deprecated("this function does nothing; instead use ARMA_COUT_STREAM or ARMA_WARN_LEVEL; see documentation")]]
 inline
 void
-set_cout_stream(std::ostream& user_stream)
+set_cout_stream(const std::ostream&)
   {
-  arma_cout_stream<char>(&user_stream);
   }
 
 
 
+[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
 inline
 void
-set_cerr_stream(std::ostream& user_stream)
+set_cerr_stream(const std::ostream&)
   {
-  arma_cerr_stream<char>(&user_stream);
   }
 
 
@@ -71,7 +43,7 @@ inline
 std::ostream&
 get_cout_stream()
   {
-  return arma_cout_stream<char>(nullptr);
+  return (ARMA_COUT_STREAM);
   }
 
 
@@ -80,34 +52,29 @@ inline
 std::ostream&
 get_cerr_stream()
   {
-  return arma_cerr_stream<char>(nullptr);
+  return (ARMA_CERR_STREAM);
   }
 
 
 
-//! do not use this function - it's deprecated and will be removed
-[[deprecated]]
+[[deprecated("this function does nothing; instead use ARMA_COUT_STREAM or ARMA_WARN_LEVEL; see documentation")]]
 inline
 void
-set_stream_err1(std::ostream& user_stream)
+set_stream_err1(const std::ostream&)
   {
-  set_cerr_stream(user_stream);
   }
 
 
 
-//! do not use this function - it's deprecated and will be removed
-[[deprecated]]
+[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
 inline
 void
-set_stream_err2(std::ostream& user_stream)
+set_stream_err2(const std::ostream&)
   {
-  set_cerr_stream(user_stream);
   }
 
 
 
-//! do not use this function - it's deprecated and will be removed
 [[deprecated]]
 inline
 std::ostream&
@@ -118,7 +85,6 @@ get_stream_err1()
 
 
 
-//! do not use this function - it's deprecated and will be removed
 [[deprecated]]
 inline
 std::ostream&
