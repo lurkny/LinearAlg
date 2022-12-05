@@ -17613,95 +17613,35 @@ See also:
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="output_streams"></a>
 <a name="logging"></a>
-<b>std::ostream&amp; x = get_cout_stream()</b>
-<br><b>std::ostream&amp; x = get_cerr_stream()</b>
-<br>
-<br><b>set_cout_stream( user_stream )</b>
-<br><b>set_cerr_stream( user_stream )</b>
-<br>
-<ul>
-<li><b>get_cout_stream()</b>:
-<ul>
-<li>get a reference to the stream used for printing matrices and cubes with <a href="#print">.print()</a> and <a href="#raw_print">.raw_print()</a></li>
-<li>by default this is <i>std::cout</i></li>
-</ul>
-<br>
-<li><b>get_cerr_stream()</b>:
-<ul>
-<li>get a reference to the stream used for printing warnings and errors involving out of bounds accesses, failed decompositions, failed loading/saving, out of memory conditions, etc</li>
-<li>by default this is <i>std::cerr</i></li>
-</ul>
-<br>
-<li><b>set_cout_stream( custom_stream )</b>:
-<ul>
-<li>set the stream used for printing matrices and cubes</li>
-<li>the stream can also be changed via the ARMA_COUT_STREAM define; see <a href="#config_hpp">config.hpp</a></li>
-</ul>
-</li>
-<br>
-<li><b>set_cerr_stream( custom_stream )</b>:
-<ul>
-<li>change the stream for printing warnings and errors 
-<li>the stream can also be changed via the ARMA_CERR_STREAM define; see <a href="#config_hpp">config.hpp</a></li>
-</ul>
-</li>
-<br>
-<!--
-<li>
-<b>Caveats:</b>
+<b>output streams</b>
 <ul>
 <li>
-in Armadillo 10.4 and later versions:
-<ul>
-<li>the default degree of emitted warnings about failed decompositions has been considerably reduced compared to earlier versions</li>
-<li>the <i><a href="#config_hpp">ARMA_WARN_LEVEL</a></i> option allows fine-grained control over the degree of emitted warnings</li>
-</ul>
-</li>
-<li>
-in Armadillo 10.3 and earlier versions:
-<ul>
-<li>all failed decompositions print warnings</li>
-<li>a blunt method to disable printing of all warnings and errors is via placing <i>#define <a href="#config_hpp">ARMA_DONT_PRINT_ERRORS</a></i> before <i>#include&nbsp;&lt;armadillo&gt;</i>
-</ul>
-</li>
-<li>
-detailed information about errors is always reported via the base <i>std::exception</i> class
-</li>
-</ul>
+The default stream for printing matrices and cubes is <code>std::cout</code>
+<br>the stream can be changed via the <code>ARMA_COUT_STREAM</code> define; see <a href="#config_hpp">config.hpp</a>
 </li>
 <br>
--->
-<!--
 <li>
-Examples:
-<ul>
+The default stream for printing warnings and errors is <code>std::cerr</code>
+<br>the stream can be changed via the <code>ARMA_CERR_STREAM</code> define; see <a href="#config_hpp">config.hpp</a>
+</li>
+<br>
+<li>
+The degree of printed warnings is controlled by the <code>ARMA_WARN_LEVEL</code> define; see <a href="#config_hpp">config.hpp</a>
+</li>
+<br>
+<li>Example of changing the warning level:
 <pre>
-// print error messages to a log file
-ofstream f("my_log.txt");
-set_cerr_stream(f);
-
-// trying to invert a singular matrix
-// will print an error message and throw an exception
-mat X(5, 5, fill::zeros);
-mat Y = inv(X);
-
-// disable printing of error messages
-std::ostream nullstream(0);
-set_cerr_stream(nullstream);
+#define ARMA_WARN_LEVEL 1
+#include &lt;armadillo&gt;
 </pre>
-</ul>
-</li>
-<br>
--->
 <li>
 See also:
 <ul>
 <li><a href="#config_hpp">config.hpp</a></li>
 <li><a href="#print">.print()</a></li>
 <li><a href="https://cplusplus.com/reference/iostream/cout/">std::cout</a></li>
+<li><a href="https://cplusplus.com/reference/iostream/cerr/">std::cerr</a></li>
 <li><a href="https://cplusplus.com/reference/ostream/ostream/">std::ostream</a></li>
-<li><a href="https://cplusplus.com/reference/exception/exception/">std::exception</a></li>
-<li><a href="https://cplusplus.com/doc/tutorial/exceptions/">tutorial on exceptions</a></li>
 </ul>
 </li>
 <br>
@@ -19656,6 +19596,7 @@ List of additions and changes for each version:
 <ul>
 <li>C++14 is now the minimum required C++ standard</li>
 <li>added <code>check_for_zeros</code> option to form 4 of <a href="#batch_constructors_sp_mat">sparse matrix batch constructors</a></li>
+<li><code>set_cout_stream()</code> and <code>set_cerr_stream()</code> are now no-ops; instead use <a href="#config_hpp">ARMA_COUT_STREAM</a>, or <a href="#config_hpp">ARMA_CERR_STREAM</a>, or <a href="#config_hpp">ARMA_WARN_LEVEL</a></li>
 </ul>
 </li>
 <br>
