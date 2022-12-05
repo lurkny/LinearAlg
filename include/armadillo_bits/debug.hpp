@@ -21,24 +21,6 @@
 
 
 
-[[deprecated("this function does nothing; instead use ARMA_COUT_STREAM or ARMA_WARN_LEVEL; see documentation")]]
-inline
-void
-set_cout_stream(const std::ostream&)
-  {
-  }
-
-
-
-[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
-inline
-void
-set_cerr_stream(const std::ostream&)
-  {
-  }
-
-
-
 inline
 std::ostream&
 get_cout_stream()
@@ -53,24 +35,6 @@ std::ostream&
 get_cerr_stream()
   {
   return (ARMA_CERR_STREAM);
-  }
-
-
-
-[[deprecated("this function does nothing; instead use ARMA_COUT_STREAM or ARMA_WARN_LEVEL; see documentation")]]
-inline
-void
-set_stream_err1(const std::ostream&)
-  {
-  }
-
-
-
-[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
-inline
-void
-set_stream_err2(const std::ostream&)
-  {
   }
 
 
@@ -91,6 +55,42 @@ std::ostream&
 get_stream_err2()
   {
   return get_cerr_stream();
+  }
+
+
+
+[[deprecated("this function does nothing; instead use ARMA_COUT_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+inline
+void
+set_cout_stream(const std::ostream&)
+  {
+  }
+
+
+
+[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+inline
+void
+set_cerr_stream(const std::ostream&)
+  {
+  }
+
+
+
+[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+inline
+void
+set_stream_err1(const std::ostream&)
+  {
+  }
+
+
+
+[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+inline
+void
+set_stream_err2(const std::ostream&)
+  {
   }
 
 
