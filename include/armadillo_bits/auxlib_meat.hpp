@@ -4946,7 +4946,6 @@ auxlib::solve_approx_svd(Mat<typename T1::pod_type>& out, Mat<typename T1::pod_t
     blas_int liwork = (std::max)( blas_int(1), (blas_int(3)*min_mn*nlvl + blas_int(11)*min_mn) );
     
     podarray<blas_int> iwork( static_cast<uword>(liwork) );
-    iwork.zeros();
     
     blas_int lwork_min = blas_int(12)*min_mn + blas_int(2)*min_mn*smlsiz + blas_int(8)*min_mn*nlvl + min_mn*nrhs + smlsiz_p1*smlsiz_p1;
     
