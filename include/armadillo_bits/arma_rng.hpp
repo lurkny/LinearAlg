@@ -633,16 +633,64 @@ struct arma_rng::randn
   void
   fill(eT* mem, const uword N, const double mu, const double sd)
     {
-    arma_rng::randn<eT>::fill(mem, N);
-    
-    if( (mu == double(0)) && (sd == double(1)) )  { return; }
-    
-    for(uword i=0; i<N; ++i)
+    if( (mu == double(0)) && (sd == double(1)) )
       {
-      const eT val = mem[i];
+      arma_rng::randn<eT>::fill(mem, N);
       
-      mem[i] = (val * sd) + mu;
+      return;
       }
+    
+    #if defined(ARMA_RNG_ALT)
+      {
+      // NOTE: old method to avoid regressions in user code that assumes specific sequence
+      
+      uword i, j;
+      
+      for(i=0, j=1; j < N; i+=2, j+=2)
+        {
+        eT val_i = eT(0);
+        eT val_j = eT(0);
+        
+        arma_rng_alt::randn_dual_val( val_i, val_j );
+        
+        mem[i] = (val_i * sd) + mu;
+        mem[j] = (val_j * sd) + mu;
+        }
+      
+      if(i < N)
+        {
+        const eT val_i = eT( arma_rng_alt::randn_val() );
+         
+        mem[i] = (val_i * sd) + mu;
+        }
+      }
+    #elif defined(ARMA_USE_EXTERN_RNG)
+      {
+      std::normal_distribution<double> local_n_distr(mu, sd);
+      
+      for(uword i=0; i < N; ++i)  { mem[i] = eT( local_n_distr(mt19937_64_instance) ); }
+      }
+    #else
+      {
+      if(N == uword(1))
+        {
+        const eT val = eT( arma_rng_cxx03::randn_val() );
+        
+        mem[0] = (val * sd) + mu;
+        
+        return;
+        }
+      
+      typedef typename std::mt19937_64::result_type local_seed_type;
+      
+      std::mt19937_64                  local_engine;
+      std::normal_distribution<double> local_n_distr(mu, sd);
+      
+      local_engine.seed( local_seed_type(std::rand()) );
+      
+      for(uword i=0; i < N; ++i)  { mem[i] = eT( local_n_distr(local_engine) ); }
+      }
+    #endif
     }
   };
 
