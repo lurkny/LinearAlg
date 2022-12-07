@@ -1435,6 +1435,7 @@ arma_assert_atlas_size(const T1& A, const T2& B)
         out << "@ arma_config::wrapper          = " << arma_config::wrapper          << '\n';
         out << "@ arma_config::cxx14            = " << arma_config::cxx14            << '\n';
         out << "@ arma_config::cxx17            = " << arma_config::cxx17            << '\n';
+        out << "@ arma_config::cxx20            = " << arma_config::cxx20            << '\n';
         out << "@ arma_config::std_mutex        = " << arma_config::std_mutex        << '\n';
         out << "@ arma_config::posix            = " << arma_config::posix            << '\n';
         out << "@ arma_config::openmp           = " << arma_config::openmp           << '\n';
