@@ -7105,6 +7105,18 @@ to explicitly control the dataset name, specify it via the <b>hdf5_name()</b> ar
 </li>
 <br>
 <li>
+<b>Caveat:</b>
+for saving&thinsp;/&thinsp;loading HDF5 files, support for HDF5 must be enabled within Armadillo's <a href="#config_hpp">configuration</a>;
+the <i>hdf5.h</i> header file must be available on your system and you will need to link with the HDF5 library (eg. <code><i>-lhdf5</i></code>).
+HDF5 support can be enabled by defining <a href="#config_hpp">ARMA_USE_HDF5</a> before including the armadillo header:
+<br>
+<code>
+#define ARMA_USE_HDF5
+<br>#include &lt;armadillo&gt;
+</code>
+</li>
+<br>
+<li>
 By providing either <b>hdf5_name(</b>filename<b>,</b> dataset<b>)</b> or <b>hdf5_name(</b>filename<b>,</b> dataset<b>,</b> settings<b>)</b>, the <i>file_type</i> type is assumed to be <i>hdf5_binary</i>
 <br>
 <br>
@@ -7127,12 +7139,6 @@ if a blank dataset name is specified (ie.&nbsp;""), it is assumed to be "dataset
 the above settings can be combined using the <code>+</code> operator; for example: <code>hdf5_opts::trans&nbsp;+&nbsp;hdf5_opts::append</code>
 </li>
 </ul>
-</li>
-<br>
-<li>
-<b>Caveat:</b>
-for saving&thinsp;/&thinsp;loading HDF5 files, support for HDF5 must be enabled within Armadillo's <a href="#config_hpp">configuration</a>;
-the <i>hdf5.h</i> header file must be available on your system and you will need to link with the HDF5 library (eg. <code><i>-lhdf5</i></code>)
 </li>
 <br>
 <li>
