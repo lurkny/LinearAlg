@@ -633,13 +633,6 @@ struct arma_rng::randn
   void
   fill(eT* mem, const uword N, const double mu, const double sd)
     {
-    if( (mu == double(0)) && (sd == double(1)) )
-      {
-      arma_rng::randn<eT>::fill(mem, N);
-      
-      return;
-      }
-    
     #if defined(ARMA_RNG_ALT)
       {
       // NOTE: old method to avoid regressions in user code that assumes specific sequence
