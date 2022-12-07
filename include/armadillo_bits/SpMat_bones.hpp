@@ -452,7 +452,9 @@ class SpMat : public SpBase< eT, SpMat<eT> >
     inline const_iterator(const SpMat& in_M, uword in_row, uword in_col);
     //! if you know the exact position of the iterator;  in_row is a dummy argument
     inline const_iterator(const SpMat& in_M, uword in_row, uword in_col, uword in_pos);
-    inline const_iterator(const const_iterator& other);
+    
+    inline                 const_iterator(const const_iterator& other);
+    inline const_iterator& operator=     (const const_iterator& other) = default;
     
     inline arma_hot         const_iterator& operator++();
     inline arma_warn_unused const_iterator  operator++(int);
@@ -486,7 +488,9 @@ class SpMat : public SpBase< eT, SpMat<eT> >
     inline iterator(SpMat& in_M, uword initial_pos = 0) : const_iterator(in_M, initial_pos) { }
     inline iterator(SpMat& in_M, uword in_row, uword in_col) : const_iterator(in_M, in_row, in_col) { }
     inline iterator(SpMat& in_M, uword in_row, uword in_col, uword in_pos) : const_iterator(in_M, in_row, in_col, in_pos) { }
-    inline iterator(const iterator& other) : const_iterator(other) { }
+    
+    inline           iterator (const iterator& other) : const_iterator(other) { }
+    inline iterator& operator=(const iterator& other) = default;
     
     inline arma_hot SpValProxy< SpMat<eT> > operator*();
     
@@ -511,7 +515,9 @@ class SpMat : public SpBase< eT, SpMat<eT> >
     inline const_row_iterator(const SpMat& in_M, uword initial_pos = 0);
     //! once initialised, will be at the first nonzero value after the given position (using forward row-wise traversal)
     inline const_row_iterator(const SpMat& in_M, uword in_row, uword in_col);
-    inline const_row_iterator(const const_row_iterator& other);
+    
+    inline                     const_row_iterator(const const_row_iterator& other);
+    inline const_row_iterator& operator=         (const const_row_iterator& other) = default;
     
     inline arma_hot         const_row_iterator& operator++();
     inline arma_warn_unused const_row_iterator  operator++(int);
@@ -547,7 +553,9 @@ class SpMat : public SpBase< eT, SpMat<eT> >
     inline row_iterator(SpMat& in_M, uword initial_pos = 0) : const_row_iterator(in_M, initial_pos) { }
     //! once initialised, will be at the first nonzero value after the given position (using forward row-wise traversal)
     inline row_iterator(SpMat& in_M, uword in_row, uword in_col) : const_row_iterator(in_M, in_row, in_col) { }
-    inline row_iterator(const row_iterator& other) : const_row_iterator(other) { }
+    
+    inline               row_iterator(const row_iterator& other) : const_row_iterator(other) { }
+    inline row_iterator& operator=   (const row_iterator& other) = default;
     
     inline arma_hot SpValProxy< SpMat<eT> > operator*();
     
