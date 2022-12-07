@@ -4942,10 +4942,11 @@ auxlib::solve_approx_svd(Mat<typename T1::pod_type>& out, Mat<typename T1::pod_t
     blas_int smlsiz    = (std::max)( blas_int(25), laenv_result );
     blas_int smlsiz_p1 = blas_int(1) + smlsiz;
     
-    blas_int nlvl   = (std::max)( blas_int(0), blas_int(1) + blas_int( std::log(double(min_mn) / double(smlsiz_p1))/double(0.69314718055994530942) ) );
+    blas_int nlvl   = (std::max)( blas_int(0), blas_int(1) + blas_int( std::log2( double(min_mn)/double(smlsiz_p1) ) ) );
     blas_int liwork = (std::max)( blas_int(1), (blas_int(3)*min_mn*nlvl + blas_int(11)*min_mn) );
     
     podarray<blas_int> iwork( static_cast<uword>(liwork) );
+    iwork.zeros();
     
     blas_int lwork_min = blas_int(12)*min_mn + blas_int(2)*min_mn*smlsiz + blas_int(8)*min_mn*nlvl + min_mn*nrhs + smlsiz_p1*smlsiz_p1;
     
@@ -5060,7 +5061,7 @@ auxlib::solve_approx_svd(Mat< std::complex<typename T1::pod_type> >& out, Mat< s
     blas_int smlsiz    = (std::max)( blas_int(25), laenv_result );
     blas_int smlsiz_p1 = blas_int(1) + smlsiz;
     
-    blas_int nlvl = (std::max)( blas_int(0), blas_int(1) + blas_int( std::log(double(min_mn) / double(smlsiz_p1))/double(0.69314718055994530942) ) );
+    blas_int nlvl = (std::max)( blas_int(0), blas_int(1) + blas_int( std::log2( double(min_mn)/double(smlsiz_p1) ) ) );
     
     blas_int lrwork = (m >= n)
       ? blas_int(10)*n + blas_int(2)*n*smlsiz + blas_int(8)*n*nlvl + blas_int(3)*smlsiz*nrhs + (std::max)( (smlsiz_p1)*(smlsiz_p1), n*(blas_int(1)+nrhs) + blas_int(2)*nrhs )
