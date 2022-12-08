@@ -534,7 +534,8 @@ op_min::min(const Base<typename T1::elem_type,T1>& X)
     return Datum<eT>::nan;
     }
   
-  eT min_val = priv::most_pos<eT>();
+  eT min_val_i = priv::most_pos<eT>();
+  eT min_val_j = priv::most_pos<eT>();
   
   if(Proxy<T1>::use_at == false)
     {
@@ -549,15 +550,15 @@ op_min::min(const Base<typename T1::elem_type,T1>& X)
       const eT tmp_i = A[i];
       const eT tmp_j = A[j];
       
-      if(tmp_i < min_val) { min_val = tmp_i; }
-      if(tmp_j < min_val) { min_val = tmp_j; }
+      if(tmp_i < min_val_i) { min_val_i = tmp_i; }
+      if(tmp_j < min_val_j) { min_val_j = tmp_j; }
       }
     
     if(i < n_elem)
       {
       const eT tmp_i = A[i];
       
-      if(tmp_i < min_val) { min_val = tmp_i; }
+      if(tmp_i < min_val_i) { min_val_i = tmp_i; }
       }
     }
   else
@@ -573,15 +574,15 @@ op_min::min(const Base<typename T1::elem_type,T1>& X)
         const eT tmp_i = P.at(0,i);
         const eT tmp_j = P.at(0,j);
         
-        if(tmp_i < min_val) { min_val = tmp_i; }
-        if(tmp_j < min_val) { min_val = tmp_j; }
+        if(tmp_i < min_val_i) { min_val_i = tmp_i; }
+        if(tmp_j < min_val_j) { min_val_j = tmp_j; }
         }
       
       if(i < n_cols)
         {
         const eT tmp_i = P.at(0,i);
         
-        if(tmp_i < min_val) { min_val = tmp_i; }
+        if(tmp_i < min_val_i) { min_val_i = tmp_i; }
         }
       }
     else
@@ -594,21 +595,21 @@ op_min::min(const Base<typename T1::elem_type,T1>& X)
           const eT tmp_i = P.at(i,col);
           const eT tmp_j = P.at(j,col);
           
-          if(tmp_i < min_val) { min_val = tmp_i; }
-          if(tmp_j < min_val) { min_val = tmp_j; }
+          if(tmp_i < min_val_i) { min_val_i = tmp_i; }
+          if(tmp_j < min_val_j) { min_val_j = tmp_j; }
           }
           
         if(i < n_rows)
           {
           const eT tmp_i = P.at(i,col);
           
-          if(tmp_i < min_val) { min_val = tmp_i; }
+          if(tmp_i < min_val_i) { min_val_i = tmp_i; }
           }
         }
       }
     }
   
-  return min_val;
+  return (min_val_i < min_val_j) ? min_val_i : min_val_j;
   }
 
 
