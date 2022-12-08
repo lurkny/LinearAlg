@@ -88,8 +88,8 @@ get_cerr_stream()
 
 
 //! do not use this function - it's deprecated and will be removed
-inline
 arma_deprecated
+inline
 void
 set_stream_err1(std::ostream& user_stream)
   {
@@ -99,8 +99,8 @@ set_stream_err1(std::ostream& user_stream)
 
 
 //! do not use this function - it's deprecated and will be removed
-inline
 arma_deprecated
+inline
 void
 set_stream_err2(std::ostream& user_stream)
   {
@@ -110,8 +110,8 @@ set_stream_err2(std::ostream& user_stream)
 
 
 //! do not use this function - it's deprecated and will be removed
-inline
 arma_deprecated
+inline
 std::ostream&
 get_stream_err1()
   {
@@ -121,8 +121,8 @@ get_stream_err1()
 
 
 //! do not use this function - it's deprecated and will be removed
-inline
 arma_deprecated
+inline
 std::ostream&
 get_stream_err2()
   {
