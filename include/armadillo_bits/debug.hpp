@@ -49,6 +49,7 @@ arma_cerr_stream(std::ostream* user_stream)
 
 
 
+arma_deprecated
 inline
 void
 set_cout_stream(std::ostream& user_stream)
@@ -58,6 +59,7 @@ set_cout_stream(std::ostream& user_stream)
 
 
 
+arma_deprecated
 inline
 void
 set_cerr_stream(std::ostream& user_stream)
