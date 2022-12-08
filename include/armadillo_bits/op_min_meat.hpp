@@ -361,7 +361,8 @@ op_min::direct_min(const eT* const X, const uword n_elem)
   {
   arma_extra_debug_sigprint();
   
-  eT min_val = priv::most_pos<eT>();
+  eT min_val_i = priv::most_pos<eT>();
+  eT min_val_j = priv::most_pos<eT>();
   
   uword i,j;
   for(i=0, j=1; j<n_elem; i+=2, j+=2)
@@ -369,18 +370,18 @@ op_min::direct_min(const eT* const X, const uword n_elem)
     const eT X_i = X[i];
     const eT X_j = X[j];
     
-    if(X_i < min_val) { min_val = X_i; }
-    if(X_j < min_val) { min_val = X_j; }
+    if(X_i < min_val_i) { min_val_i = X_i; }
+    if(X_j < min_val_j) { min_val_j = X_j; }
     }
   
   if(i < n_elem)
     {
     const eT X_i = X[i];
     
-    if(X_i < min_val) { min_val = X_i; }
+    if(X_i < min_val_i) { min_val_i = X_i; }
     }
   
-  return min_val;
+  return (min_val_i < min_val_j) ? min_val_i : min_val_j;
   }
 
 

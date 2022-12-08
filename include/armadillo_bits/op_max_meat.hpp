@@ -361,7 +361,8 @@ op_max::direct_max(const eT* const X, const uword n_elem)
   {
   arma_extra_debug_sigprint();
   
-  eT max_val = priv::most_neg<eT>();
+  eT max_val_i = priv::most_neg<eT>();
+  eT max_val_j = priv::most_neg<eT>();
   
   uword i,j;
   for(i=0, j=1; j<n_elem; i+=2, j+=2)
@@ -369,18 +370,18 @@ op_max::direct_max(const eT* const X, const uword n_elem)
     const eT X_i = X[i];
     const eT X_j = X[j];
     
-    if(X_i > max_val) { max_val = X_i; }
-    if(X_j > max_val) { max_val = X_j; }
+    if(X_i > max_val_i) { max_val_i = X_i; }
+    if(X_j > max_val_j) { max_val_j = X_j; }
     }
   
   if(i < n_elem)
     {
     const eT X_i = X[i];
     
-    if(X_i > max_val) { max_val = X_i; }
+    if(X_i > max_val_i) { max_val_i = X_i; }
     }
   
-  return max_val;
+  return (max_val_i > max_val_j) ? max_val_i : max_val_j;
   }
 
 
