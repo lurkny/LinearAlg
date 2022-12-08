@@ -47,12 +47,11 @@ reshape(const T1& X, const SizeMat& s)
 
 
 
-//! NOTE: don't use this form: it will be removed
 template<typename T1>
-[[deprecated]]
+[[deprecated("don't use this form: it will be removed")]]
 inline
 const Op<T1, op_reshape_old>
-reshape(const Base<typename T1::elem_type,T1>& X, const uword new_n_rows, const uword new_n_cols, const uword dim)  //!< NOTE: don't use this form: it will be removed
+reshape(const Base<typename T1::elem_type,T1>& X, const uword new_n_rows, const uword new_n_cols, const uword dim)
   {
   arma_extra_debug_sigprint();
   
