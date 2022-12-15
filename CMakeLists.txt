@@ -458,6 +458,9 @@ find_package(PkgConfig)
 
 
 if(DETECT_HDF5)
+  message(STATUS "")
+  message(STATUS "*** NOTE: detection of HDF5 is deprecated")
+  
   find_package(HDF5 QUIET COMPONENTS C)
 
   if(NOT HDF5_FOUND)
