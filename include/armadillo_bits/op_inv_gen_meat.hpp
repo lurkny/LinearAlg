@@ -474,7 +474,7 @@ op_inv_gen_rcond::apply_direct(Mat<typename T1::elem_type>& out, op_inv_gen_stat
     
     bool sympd_state = false;
     
-    const bool status = auxlib::inv_sympd_rcond(tmp, sympd_state, out_state.rcond, T(-1));
+    const bool status = auxlib::inv_sympd_rcond(tmp, sympd_state, out_state.rcond);
     
     if(status)  { out.steal_mem(tmp); return true; }
     
