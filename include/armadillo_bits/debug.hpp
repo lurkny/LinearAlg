@@ -93,7 +93,7 @@ inline
 void
 set_stream_err1(std::ostream& user_stream)
   {
-  set_cerr_stream(user_stream);
+  arma_cerr_stream<char>(&user_stream);
   }
 
 
@@ -104,7 +104,7 @@ inline
 void
 set_stream_err2(std::ostream& user_stream)
   {
-  set_cerr_stream(user_stream);
+  arma_cerr_stream<char>(&user_stream);
   }
 
 

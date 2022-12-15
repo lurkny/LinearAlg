@@ -111,23 +111,23 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     return op_pinv::apply_diag(out, A, tol);
     }
   
-  bool do_sym   = false;
-  bool do_sympd = false;
-  
-  const bool is_sym_size_ok = (A.n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)));
-  const bool is_arg_default = ((tol == T(0)) && (method_id == uword(0)));
-  
-  if( (arma_config::optimise_sympd) && (auxlib::crippled_lapack(A) == false) && (is_arg_default || is_sym_size_ok) )
-    {
-    bool is_approx_sym   = false;
-    bool is_approx_sympd = false;
-    
-    sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
-    
-    do_sym   = is_sym_size_ok && ((is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd));
-    do_sympd = is_arg_default && is_approx_sympd;
-    }
-  
+  // bool do_sym   = false;
+  // bool do_sympd = false;
+  // 
+  // const bool is_sym_size_ok = (A.n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)));
+  // const bool is_arg_default = ((tol == T(0)) && (method_id == uword(0)));
+  // 
+  // if( (arma_config::optimise_sympd) && (auxlib::crippled_lapack(A) == false) && (is_arg_default || is_sym_size_ok) )
+  //   {
+  //   bool is_approx_sym   = false;
+  //   bool is_approx_sympd = false;
+  //   
+  //   sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
+  //   
+  //   do_sym   = is_sym_size_ok && ((is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd));
+  //   do_sympd = is_arg_default && is_approx_sympd;
+  //   }
+  // 
   // if(do_sympd)
   //   {
   //   arma_extra_debug_print("op_pinv: attempting sympd optimisation");
@@ -145,6 +145,20 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
   //   arma_extra_debug_print("op_pinv: sympd optimisation failed");
   //   // auxlib::inv_sympd_rcond() will fail if A isn't really positive definite or its rcond is below rcond_threshold
   //   }
+  
+  bool do_sym = false;
+  
+  const bool is_sym_size_ok = (A.n_rows > (is_cx<eT>::yes ? uword(20) : uword(40)));
+  
+  if( (arma_config::optimise_sympd) && (auxlib::crippled_lapack(A) == false) && (is_sym_size_ok) )
+    {
+    bool is_approx_sym   = false;
+    bool is_approx_sympd = false;
+    
+    sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
+    
+    do_sym = is_sym_size_ok && ((is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd));
+    }
   
   if(do_sym)
     {
