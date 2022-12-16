@@ -157,7 +157,7 @@ op_pinv::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1::
     
     sympd_helper::analyse_matrix(is_approx_sym, is_approx_sympd, A);
     
-    do_sym = is_sym_size_ok && ((is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd));
+    do_sym = ((is_cx<eT>::no) ? (is_approx_sym) : (is_approx_sym && is_approx_sympd));
     }
   
   if(do_sym)
