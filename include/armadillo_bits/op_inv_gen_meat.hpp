@@ -276,7 +276,7 @@ op_inv_gen_full::apply_tiny_2x2(Mat<eT>& X)
   const eT     det_val = (a*d - b*c);
   const  T abs_det_val = std::abs(det_val);
   
-  if((abs_det_val < det_min) || (abs_det_val > det_max))  { return false; }
+  if((abs_det_val < det_min) || (abs_det_val > det_max) || arma_isnan(det_val))  { return false; }
   
   Xm[pos<0,0>::n2] =  d / det_val;
   Xm[pos<0,1>::n2] = -b / det_val;
@@ -311,7 +311,7 @@ op_inv_gen_full::apply_tiny_3x3(Mat<eT>& X)
   const eT     det_val = op_det::apply_tiny_3x3(X);
   const  T abs_det_val = std::abs(det_val);
   
-  if((abs_det_val < det_min) || (abs_det_val > det_max))  { return false; }
+  if((abs_det_val < det_min) || (abs_det_val > det_max) || arma_isnan(det_val))  { return false; }
   
   Ym[pos<0,0>::n3] =  (Xm[pos<2,2>::n3]*Xm[pos<1,1>::n3] - Xm[pos<2,1>::n3]*Xm[pos<1,2>::n3]) / det_val;
   Ym[pos<1,0>::n3] = -(Xm[pos<2,2>::n3]*Xm[pos<1,0>::n3] - Xm[pos<2,0>::n3]*Xm[pos<1,2>::n3]) / det_val;
@@ -361,7 +361,7 @@ op_inv_gen_full::apply_tiny_4x4(Mat<eT>& X)
   const eT     det_val = op_det::apply_tiny_4x4(X);
   const  T abs_det_val = std::abs(det_val);
   
-  if((abs_det_val < det_min) || (abs_det_val > det_max))  { return false; }
+  if((abs_det_val < det_min) || (abs_det_val > det_max) || arma_isnan(det_val))  { return false; }
   
   Ym[pos<0,0>::n4] = ( Xm[pos<1,2>::n4]*Xm[pos<2,3>::n4]*Xm[pos<3,1>::n4] - Xm[pos<1,3>::n4]*Xm[pos<2,2>::n4]*Xm[pos<3,1>::n4] + Xm[pos<1,3>::n4]*Xm[pos<2,1>::n4]*Xm[pos<3,2>::n4] - Xm[pos<1,1>::n4]*Xm[pos<2,3>::n4]*Xm[pos<3,2>::n4] - Xm[pos<1,2>::n4]*Xm[pos<2,1>::n4]*Xm[pos<3,3>::n4] + Xm[pos<1,1>::n4]*Xm[pos<2,2>::n4]*Xm[pos<3,3>::n4] ) / det_val;
   Ym[pos<1,0>::n4] = ( Xm[pos<1,3>::n4]*Xm[pos<2,2>::n4]*Xm[pos<3,0>::n4] - Xm[pos<1,2>::n4]*Xm[pos<2,3>::n4]*Xm[pos<3,0>::n4] - Xm[pos<1,3>::n4]*Xm[pos<2,0>::n4]*Xm[pos<3,2>::n4] + Xm[pos<1,0>::n4]*Xm[pos<2,3>::n4]*Xm[pos<3,2>::n4] + Xm[pos<1,2>::n4]*Xm[pos<2,0>::n4]*Xm[pos<3,3>::n4] - Xm[pos<1,0>::n4]*Xm[pos<2,2>::n4]*Xm[pos<3,3>::n4] ) / det_val;

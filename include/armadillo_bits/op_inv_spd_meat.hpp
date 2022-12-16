@@ -264,7 +264,7 @@ op_inv_spd_full::apply_tiny_2x2(Mat<eT>& X)
   if(a <= T(0))  { return false; }
   
   // NOTE: since det_min is positive, this also checks whether det_val is positive
-  if((det_val < det_min) || (det_val > det_max))  { return false; }
+  if((det_val < det_min) || (det_val > det_max) || arma_isnan(det_val))  { return false; }
   
   d /= det_val;
   c /= det_val;
