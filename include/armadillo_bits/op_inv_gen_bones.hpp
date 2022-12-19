@@ -93,12 +93,13 @@ namespace inv_opts
     {
     const uword flags;
     
-    inline explicit opts(const uword in_flags);
+    inline constexpr explicit opts(const uword in_flags);
     
     inline const opts operator+(const opts& rhs) const;
     };
   
   inline
+  constexpr
   opts::opts(const uword in_flags)
     : flags(in_flags)
     {}
@@ -122,19 +123,19 @@ namespace inv_opts
   static constexpr uword flag_no_sympd     = uword(1u <<  3);
   static constexpr uword flag_no_ugly      = uword(1u <<  4);
   
-  struct opts_none         : public opts { inline opts_none()         : opts(flag_none        ) {} };
-  struct opts_tiny         : public opts { inline opts_tiny()         : opts(flag_tiny        ) {} };
-  struct opts_allow_approx : public opts { inline opts_allow_approx() : opts(flag_allow_approx) {} };
-  struct opts_likely_sympd : public opts { inline opts_likely_sympd() : opts(flag_likely_sympd) {} };
-  struct opts_no_sympd     : public opts { inline opts_no_sympd()     : opts(flag_no_sympd    ) {} };
-  struct opts_no_ugly      : public opts { inline opts_no_ugly()      : opts(flag_no_ugly     ) {} };
+  struct opts_none         : public opts { inline constexpr opts_none()         : opts(flag_none        ) {} };
+  struct opts_tiny         : public opts { inline constexpr opts_tiny()         : opts(flag_tiny        ) {} };
+  struct opts_allow_approx : public opts { inline constexpr opts_allow_approx() : opts(flag_allow_approx) {} };
+  struct opts_likely_sympd : public opts { inline constexpr opts_likely_sympd() : opts(flag_likely_sympd) {} };
+  struct opts_no_sympd     : public opts { inline constexpr opts_no_sympd()     : opts(flag_no_sympd    ) {} };
+  struct opts_no_ugly      : public opts { inline constexpr opts_no_ugly()      : opts(flag_no_ugly     ) {} };
   
-  static const opts_none         none;
-  static const opts_tiny         tiny;
-  static const opts_allow_approx allow_approx;
-  static const opts_likely_sympd likely_sympd;
-  static const opts_no_sympd     no_sympd;
-  static const opts_no_ugly      no_ugly;
+  static constexpr opts_none         none;
+  static constexpr opts_tiny         tiny;
+  static constexpr opts_allow_approx allow_approx;
+  static constexpr opts_likely_sympd likely_sympd;
+  static constexpr opts_no_sympd     no_sympd;
+  static constexpr opts_no_ugly      no_ugly;
   }
 
 
