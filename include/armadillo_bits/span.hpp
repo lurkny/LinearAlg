@@ -21,30 +21,31 @@
 //! @{
 
 
-struct span_alt {};
+struct span_alt { };
 
 
 template<typename junk = int>
 class span_base
   {
   public:
-  static const span_alt all;
+  static constexpr span_alt all = span_alt();
   };
 
 
-template<typename junk>
-const span_alt span_base<junk>::all = span_alt();
+// template<typename junk>
+// constexpr span_alt span_base<junk>::all = span_alt();
 
 
 class span : public span_base<>
   {
   public:
 
-  uword a;
-  uword b;
-  bool  whole;
+  const uword a;
+  const uword b;
+  const bool  whole;
   
   inline
+  constexpr
   span()
     : a(0)
     , b(0)
@@ -54,6 +55,7 @@ class span : public span_base<>
   
   
   inline
+  constexpr
   span(const span_alt&)
     : a(0)
     , b(0)
@@ -63,6 +65,7 @@ class span : public span_base<>
   
   
   inline
+  constexpr
   explicit
   span(const uword in_a)
     : a(in_a)
@@ -75,6 +78,7 @@ class span : public span_base<>
   // the "explicit" keyword is required here to prevent automatic conversion of {a,b}
   // into an instance of span() when submatrices are specified
   inline
+  constexpr
   explicit
   span(const uword in_a, const uword in_b)
     : a(in_a)
