@@ -13222,11 +13222,12 @@ the divide-and-conquer method provides slightly different results than the stand
 <b>Caveats:</b>
 <ul>
 <li>
-to find approximate solutions to underdetermined, overdetermined, or rank deficient systems of linear equations,
+to find approximate solutions to under-/over-determined or rank deficient systems of linear equations,
 using <a href="#solve">solve()</a> can be considerably faster and/or more accurate
 </li>
 <li>
-if the given matrix <i>A</i> is square-sized and seldom rank deficient, using <a href="#inv">inv()</a> or <a href="#inv_sympd">inv_sympd()</a> with the <code>inv_opts::allow_approx</code> option is faster
+if the given matrix <i>A</i> is square-sized and only occasionally rank deficient,
+using <a href="#inv">inv()</a> or <a href="#inv_sympd">inv_sympd()</a> with the <code>inv_opts::allow_approx</code> option is faster
 </li>
 </ul>
 </li>
