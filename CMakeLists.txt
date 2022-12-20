@@ -442,9 +442,6 @@ else()
 endif()
 
 
-find_package(PkgConfig)
-
-
 include(ARMA_FindARPACK)
 message(STATUS "ARPACK_FOUND = ${ARPACK_FOUND}")
 
