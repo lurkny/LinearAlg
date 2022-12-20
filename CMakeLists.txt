@@ -192,7 +192,7 @@ else()
   option(BUILD_SHARED_LIBS "build shared library" ON)
 endif()
 
-option(DETECT_HDF5 "Detect HDF5 and include HDF5 support, if found" ON)
+option(DETECT_HDF5 "Detect HDF5 (deprecated)" ON)
 # set(DETECT_HDF5 false)
 ## uncomment the above line to disable the detection of the HDF5 library;
 ## you can also disable HDF5 detection directly on the command line:
