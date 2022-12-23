@@ -19613,6 +19613,7 @@ List of additions and changes for each version:
 <li>faster <a href="#min_and_max">min()</a> and <a href="#min_and_max">max()</a></li>
 <li>faster <a href="#index_min_and_index_max_standalone">index_min()</a> and <a href="#index_min_and_index_max_standalone">index_max()</a></li>
 <li>added <code>check_for_zeros</code> option to form 4 of <a href="#batch_constructors_sp_mat">sparse matrix batch constructors</a></li>
+<li><a href="#inv">inv()</a> and <a href="#inv_sympd">inv_sympd()</a> with options <code>inv_opts::no_ugly</code> or <code>inv_opts::allow_approx</code> now use a scaled threshold similar to <a href="#pinv">pinv()</a></li>
 <li><code>set_cout_stream()</code> and <code>set_cerr_stream()</code> are now no-ops; instead use <a href="#config_hpp">ARMA_COUT_STREAM</a>, or <a href="#config_hpp">ARMA_CERR_STREAM</a>, or <a href="#config_hpp">ARMA_WARN_LEVEL</a></li>
 </ul>
 </li>
