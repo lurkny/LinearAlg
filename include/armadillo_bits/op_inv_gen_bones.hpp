@@ -69,9 +69,10 @@ class op_inv_gen_full
 template<typename T>
 struct op_inv_gen_state
   {
-  T    rcond   = T(0);
-  bool is_diag = false;
-  bool is_sym  = false;
+  uword size    = uword(0);
+  T     rcond   = T(0);
+  bool  is_diag = false;
+  bool  is_sym  = false;
   };
 
 

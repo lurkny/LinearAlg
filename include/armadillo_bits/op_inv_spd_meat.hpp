@@ -116,9 +116,11 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     
     const bool status = op_inv_spd_rcond::apply_direct(out, inv_state, expr);
     
-    const T local_rcond = inv_state.rcond;  // workaround for bug in gcc 4.8
+    // workaround for bug in gcc 4.8
+    const uword local_size  = inv_state.size;
+    const T     local_rcond = inv_state.rcond;
     
-    if((status == false) || (local_rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(local_rcond))  { return false; }
+    if((status == false) || (local_rcond < ((std::max)(local_size, uword(1)) * std::numeric_limits<T>::epsilon())) || arma_isnan(local_rcond))  { return false; }
     
     return true;
     }
@@ -131,9 +133,11 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
     
     const bool status = op_inv_spd_rcond::apply_direct(tmp, inv_state, expr);
     
-    const T local_rcond = inv_state.rcond;  // workaround for bug in gcc 4.8
+    // workaround for bug in gcc 4.8
+    const uword local_size  = inv_state.size;
+    const T     local_rcond = inv_state.rcond;
     
-    if((status == false) || (local_rcond < std::numeric_limits<T>::epsilon()) || arma_isnan(local_rcond))
+    if((status == false) || (local_rcond < ((std::max)(local_size, uword(1)) * std::numeric_limits<T>::epsilon())) || arma_isnan(local_rcond))
       {
       const Mat<eT> A = expr.get_ref();
       
@@ -357,6 +361,7 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, op_inv_spd_stat
   typedef typename T1::pod_type   T;
   
   out             = expr.get_ref();
+  out_state.size  = out.n_rows;
   out_state.rcond = T(0);
   
   arma_debug_check( (out.is_square() == false), "inv_sympd(): given matrix must be square sized", [&](){ out.soft_reset(); } );
