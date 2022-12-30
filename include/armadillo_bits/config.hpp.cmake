@@ -27,6 +27,11 @@
 //// 2 = as per level 1, and warnings about poorly conditioned systems (low rcond) detected by solve(), spsolve(), etc
 //// 3 = as per level 2, and warnings about failed decompositions, failed saving/loading, etc
 
+#cmakedefine ARMA_USE_WRAPPER
+//// Comment out the above line if you prefer to directly link with BLAS, LAPACK, etc
+//// instead of the Armadillo runtime library.
+//// You will need to link your programs directly with -lopenblas -llapack instead of -larmadillo
+
 #if !defined(ARMA_USE_LAPACK)
 #cmakedefine ARMA_USE_LAPACK
 //// Comment out the above line if you don't have LAPACK or a high-speed replacement for LAPACK,
@@ -89,11 +94,6 @@
 #if defined(ARMA_USE_FFTW)
   #error "use ARMA_USE_FFTW3 instead of ARMA_USE_FFTW"
 #endif
-
-#cmakedefine ARMA_USE_WRAPPER
-//// Comment out the above line if you're getting linking errors when compiling your programs,
-//// or if you prefer to directly link with LAPACK, BLAS + etc instead of the Armadillo runtime library.
-//// You will then need to link your programs directly with -llapack -lblas instead of -larmadillo
 
 // #define ARMA_BLAS_CAPITALS
 //// Uncomment the above line if your BLAS and LAPACK libraries have capitalised function names
