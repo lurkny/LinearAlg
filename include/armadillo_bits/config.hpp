@@ -80,6 +80,16 @@
 //// and you will need to link with the hdf5 library (eg. -lhdf5)
 #endif
 
+#if !defined(ARMA_USE_FFTW3)
+// #define ARMA_USE_FFTW3
+//// Uncomment the above line to allow the use of the FFTW3 library by fft() and ifft() functions;
+//// you will need to link with the FFTW3 library (eg. -lfftw3)
+#endif
+
+#if defined(ARMA_USE_FFTW)
+  #error "use ARMA_USE_FFTW3 instead of ARMA_USE_FFTW"
+#endif
+
 // #define ARMA_USE_WRAPPER
 //// Comment out the above line if you're getting linking errors when compiling your programs,
 //// or if you prefer to directly link with LAPACK, BLAS + etc instead of the Armadillo runtime library.
@@ -260,6 +270,10 @@
 
 #if defined(ARMA_DONT_USE_HDF5)
   #undef ARMA_USE_HDF5
+#endif
+
+#if defined(ARMA_DONT_USE_FFTW3)
+  #undef ARMA_USE_FFTW3
 #endif
 
 #if defined(ARMA_DONT_USE_WRAPPER)
