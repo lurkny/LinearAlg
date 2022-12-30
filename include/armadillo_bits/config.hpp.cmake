@@ -73,6 +73,13 @@
 //// NOTE: support for ATLAS is deprecated and will be removed.
 #endif
 
+#if !defined(ARMA_USE_HDF5)
+// #define ARMA_USE_HDF5
+//// Uncomment the above line to allow the ability to save and load matrices stored in HDF5 format;
+//// the hdf5.h header file must be available on your system,
+//// and you will need to link with the hdf5 library (eg. -lhdf5)
+#endif
+
 #cmakedefine ARMA_USE_WRAPPER
 //// Comment out the above line if you're getting linking errors when compiling your programs,
 //// or if you prefer to directly link with LAPACK, BLAS + etc instead of the Armadillo runtime library.
@@ -126,13 +133,6 @@
 // #define ARMA_64BIT_WORD
 //// Uncomment the above line if you require matrices/vectors capable of holding more than 4 billion elements.
 //// Note that ARMA_64BIT_WORD is automatically enabled when std::size_t has 64 bits and ARMA_32BIT_WORD is not defined.
-#endif
-
-#if !defined(ARMA_USE_HDF5)
-// #define ARMA_USE_HDF5
-//// Uncomment the above line to allow the ability to save and load matrices stored in HDF5 format;
-//// the hdf5.h header file must be available on your system,
-//// and you will need to link with the hdf5 library (eg. -lhdf5)
 #endif
 
 #if !defined(ARMA_OPTIMISE_BAND)
@@ -258,6 +258,10 @@
   #undef ARMA_USE_ATLAS
 #endif
 
+#if defined(ARMA_DONT_USE_HDF5)
+  #undef ARMA_USE_HDF5
+#endif
+
 #if defined(ARMA_DONT_USE_WRAPPER)
   #undef ARMA_USE_WRAPPER
 #endif
@@ -302,10 +306,6 @@
 
 #if defined(ARMA_32BIT_WORD)
   #undef ARMA_64BIT_WORD
-#endif
-
-#if defined(ARMA_DONT_USE_HDF5)
-  #undef ARMA_USE_HDF5
 #endif
 
 #if defined(ARMA_DONT_OPTIMISE_BAND) || defined(ARMA_DONT_OPTIMISE_SOLVE_BAND)
