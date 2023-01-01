@@ -429,13 +429,13 @@
   #pragma message ("WARNING: undefined conflicting 'check' macro")
 #endif
 
-// https://sourceware.org/bugzilla/show_bug.cgi?id=19239
-#undef minor
-#undef major
-
 #if defined(min) || defined(max)
   #undef min
   #undef max
   #pragma message ("WARNING: undefined conflicting 'min' and/or 'max' macros;")
   #pragma message ("WARNING: suggest to define NOMINMAX before including any windows header")
 #endif
+
+// https://sourceware.org/bugzilla/show_bug.cgi?id=19239
+#undef minor
+#undef major
