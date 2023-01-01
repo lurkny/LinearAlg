@@ -421,12 +421,12 @@
 
 #if defined(log2)
   #undef log2
-  #pragma message ("WARNING: detected 'log2' macro and undefined it")
+  #pragma message ("WARNING: undefined conflicting 'log2' macro")
 #endif
 
 #if defined(check)
   #undef check
-  #pragma message ("WARNING: detected 'check' macro and undefined it")
+  #pragma message ("WARNING: undefined conflicting 'check' macro")
 #endif
 
 // https://sourceware.org/bugzilla/show_bug.cgi?id=19239
@@ -436,6 +436,6 @@
 #if defined(min) || defined(max)
   #undef min
   #undef max
-  #pragma message ("WARNING: detected 'min' and/or 'max' macros and undefined them;")
+  #pragma message ("WARNING: undefined conflicting 'min' and/or 'max' macros;")
   #pragma message ("WARNING: suggest to define NOMINMAX before including any windows header")
 #endif
