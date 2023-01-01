@@ -39,7 +39,7 @@
 #define arma_noinline
 #define arma_ignore(variable)  ((void)(variable))
 
-// NOTE: arma_deprecated is kept only for compatibility;
+// NOTE: arma_deprecated is a no-op and is kept only for compatibility;
 // NOTE: since C++14 the [[deprecated]] and [[deprecated("reason")]] attributes are used instead
 
 #undef arma_fortran_sans_prefix_B
