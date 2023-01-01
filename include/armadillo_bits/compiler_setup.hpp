@@ -445,6 +445,11 @@
   #pragma message ("WARNING: detected 'log2' macro and undefined it")
 #endif
 
+#if defined(check)
+  #undef check
+  #pragma message ("WARNING: detected 'check' macro and undefined it")
+#endif
+
 
 
 // 
