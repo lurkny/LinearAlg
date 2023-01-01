@@ -417,6 +417,8 @@
 
 
 
+// undefine conflicting macros
+
 #if defined(log2)
   #undef log2
   #pragma message ("WARNING: detected 'log2' macro and undefined it")
@@ -427,10 +429,9 @@
   #pragma message ("WARNING: detected 'check' macro and undefined it")
 #endif
 
-
-
-// 
-// whoever defined macros with the names "min" and "max" should be permanently removed from the gene pool
+// https://sourceware.org/bugzilla/show_bug.cgi?id=19239
+#undef minor
+#undef major
 
 #if defined(min) || defined(max)
   #undef min
@@ -438,12 +439,3 @@
   #pragma message ("WARNING: detected 'min' and/or 'max' macros and undefined them;")
   #pragma message ("WARNING: suggest to define NOMINMAX before including any windows header")
 #endif
-
-
-
-//
-// handle more stupid macros
-// https://sourceware.org/bugzilla/show_bug.cgi?id=19239
-
-#undef minor
-#undef major
