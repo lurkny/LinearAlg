@@ -163,7 +163,7 @@ op_inv_spd_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
       if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
       }
     else
-    if((is_cx<eT>::yes) && (sympd_helper::check_diag_imag(out) == false))
+    if((is_cx<eT>::yes) && (sym_helper::check_diag_imag(out) == false))
       {
       arma_debug_warn_level(1, "inv_sympd(): imaginary components on diagonal are non-zero");
       }
@@ -374,7 +374,7 @@ op_inv_spd_rcond::apply_direct(Mat<typename T1::elem_type>& out, op_inv_spd_stat
       if(is_cx<eT>::yes)  { arma_debug_warn_level(1, "inv_sympd(): given matrix is not hermitian"); }
       }
     else
-    if((is_cx<eT>::yes) && (sympd_helper::check_diag_imag(out) == false))
+    if((is_cx<eT>::yes) && (sym_helper::check_diag_imag(out) == false))
       {
       arma_debug_warn_level(1, "inv_sympd(): imaginary components on diagonal are non-zero");
       }

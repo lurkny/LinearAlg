@@ -86,7 +86,7 @@ op_expmat::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1
     return true;
     }
   
-  const bool try_sympd = arma_config::optimise_sym && sympd_helper::guess_sympd(A);
+  const bool try_sympd = arma_config::optimise_sym && sym_helper::guess_sympd(A);
   
   if(try_sympd)
     {
@@ -195,7 +195,7 @@ op_expmat_sym::apply_direct(Mat<typename T1::elem_type>& out, const Base<typenam
     
     arma_debug_check( (X.is_square() == false), "expmat_sym(): given matrix must be square sized" );
     
-    if((arma_config::debug) && (arma_config::warn_level > 0) && (is_cx<eT>::yes) && (sympd_helper::check_diag_imag(X) == false))
+    if((arma_config::debug) && (arma_config::warn_level > 0) && (is_cx<eT>::yes) && (sym_helper::check_diag_imag(X) == false))
       {
       arma_debug_warn_level(1, "inv_sympd(): imaginary components on diagonal are non-zero");
       }
