@@ -151,10 +151,10 @@
   //// of band matrices by solve() and chol()
 #endif
 
-#if !defined(ARMA_OPTIMISE_SYMPD)
-  #define ARMA_OPTIMISE_SYMPD
+#if !defined(ARMA_OPTIMISE_SYM)
+  #define ARMA_OPTIMISE_SYM
   //// Comment out the above line to disable optimised handling
-  //// of symmetric/hermitian positive definite matrices by various functions:
+  //// of symmetric/hermitian matrices by various functions:
   //// solve(), inv(), pinv(), expmat(), logmat(), sqrtmat(), rcond(), rank()
 #endif
 
@@ -326,8 +326,8 @@
   #undef ARMA_OPTIMISE_BAND
 #endif
 
-#if defined(ARMA_DONT_OPTIMISE_SYMPD) || defined(ARMA_DONT_OPTIMISE_SOLVE_SYMPD)
-  #undef ARMA_OPTIMISE_SYMPD
+#if defined(ARMA_DONT_OPTIMISE_SYM) || defined(ARMA_DONT_OPTIMISE_SYMPD) || defined(ARMA_DONT_OPTIMISE_SOLVE_SYMPD)
+  #undef ARMA_OPTIMISE_SYM
 #endif
 
 #if defined(ARMA_DONT_OPTIMISE_INVEXPR)
