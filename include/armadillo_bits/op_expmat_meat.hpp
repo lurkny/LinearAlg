@@ -118,6 +118,8 @@ op_expmat::apply_direct(Mat<typename T1::elem_type>& out, const Base<typename T1
   
   const T norm_val = arma::norm(A, "inf");
   
+  if(arma_isfinite(norm_val) == false)  { return false; }
+  
   const double log2_val = (norm_val > T(0)) ? double(eop_aux::log2(norm_val)) : double(0);
   
   int exponent = int(0);  std::frexp(log2_val, &exponent);
