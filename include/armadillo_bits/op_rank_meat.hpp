@@ -44,7 +44,7 @@ op_rank::apply(uword& out, const Base<typename T1::elem_type,T1>& expr, const ty
   
   bool do_sym = false;
   
-  if((arma_config::optimise_sympd) && (auxlib::crippled_lapack(A) == false) && (A.n_rows >= (is_cx<eT>::yes ? uword(64) : uword(128))))
+  if((arma_config::optimise_sym) && (auxlib::crippled_lapack(A) == false) && (A.n_rows >= (is_cx<eT>::yes ? uword(64) : uword(128))))
     {
     bool is_approx_sym   = false;
     bool is_approx_sympd = false;
