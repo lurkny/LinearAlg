@@ -99,7 +99,7 @@ shift
   
   typedef typename T1::elem_type eT;
   
-  arma_debug_check( (dim > 1), "vectorise(): parameter 'dim' must be 0 or 1" );
+  arma_debug_check( (dim > 1), "shift(): parameter 'dim' must be 0 or 1" );
   
   const uword len = (N < 0) ? uword(-N) : uword(N);
   const uword neg = (N < 0) ? uword( 1) : uword(0);
