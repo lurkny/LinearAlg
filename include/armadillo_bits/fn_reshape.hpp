@@ -50,16 +50,35 @@ reshape(const T1& X, const SizeMat& s)
 template<typename T1>
 [[deprecated("don't use this form: it will be removed")]]
 inline
-const Op<T1, op_reshape_old>
+Mat<typename T1::elem_type>
 reshape(const Base<typename T1::elem_type,T1>& X, const uword new_n_rows, const uword new_n_cols, const uword dim)
   {
   arma_extra_debug_sigprint();
   
-  // arma_debug_warn_level(1, "this form of reshape() is deprecated and will be removed");
+  typedef typename T1::elem_type eT;
   
   arma_debug_check( (dim > 1), "reshape(): parameter 'dim' must be 0 or 1" );
   
-  return Op<T1, op_reshape_old>(X.get_ref(), new_n_rows, new_n_cols, dim, 'j');
+  const quasi_unwrap<T1> U(X.get_ref());
+  const Mat<eT>& A     = U.M;
+  
+  Mat<eT> out;
+  
+  if(dim == 0)
+    {
+    op_reshape::apply_mat_noalias(out, A, new_n_rows, new_n_cols);
+    }
+  else
+  if(dim == 1)
+    {
+    Mat<eT> tmp;
+    
+    op_strans::apply_mat_noalias(tmp, A);
+    
+    op_reshape::apply_mat_noalias(out, tmp, new_n_rows, new_n_cols);
+    }
+  
+  return out;
   }
 
 

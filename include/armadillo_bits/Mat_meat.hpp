@@ -6799,11 +6799,21 @@ Mat<eT>::reshape(const uword new_n_rows, const uword new_n_cols, const uword dim
   {
   arma_extra_debug_sigprint();
   
-  // arma_debug_warn_level(1, "this form of reshape() is deprecated and will be removed");
-  
   arma_debug_check( (dim > 1), "reshape(): parameter 'dim' must be 0 or 1" );
   
-  op_reshape_old::apply_mat_inplace((*this), new_n_rows, new_n_cols, dim);
+  if(dim == 0)
+    {
+    op_reshape::apply_mat_inplace((*this), new_n_rows, new_n_cols);
+    }
+  else
+  if(dim == 1)
+    {
+    Mat<eT> tmp;
+    
+    op_strans::apply_mat_noalias(tmp, (*this));
+    
+    op_reshape::apply_mat_noalias((*this), tmp, new_n_rows, new_n_cols);
+    }
   }
 
 
