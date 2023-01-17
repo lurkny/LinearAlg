@@ -95,6 +95,28 @@ set_stream_err2(const std::ostream&)
 
 
 
+template<typename T>
+[[deprecated("this function does nothing; instead use ARMA_COUT_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+inline
+std::ostream&
+arma_cout_stream(std::ostream*)
+  {
+  return (ARMA_COUT_STREAM);
+  }
+
+
+
+template<typename T>
+[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+inline
+std::ostream&
+arma_cerr_stream(std::ostream*)
+  {
+  return (ARMA_CERR_STREAM);
+  }
+
+
+
 //! print a message to get_cerr_stream() and throw logic_error exception
 template<typename T1>
 arma_cold
