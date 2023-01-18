@@ -229,6 +229,7 @@ interp1_helper(const Mat<eT>& X, const Mat<eT>& Y, const Mat<eT>& XI, Mat<eT>& Y
     Y_sanitised_mem[i] = Y_mem[j];
     }
   
+  
   Mat<eT> XI_tmp;
   uvec    XI_indices;
   
