@@ -1,7 +1,7 @@
 ### Armadillo: C++ Library for Linear Algebra & Scientific Computing  
-http://arma.sourceforge.net
+https://arma.sourceforge.net
 
-Copyright 2008-2023 Conrad Sanderson (http://conradsanderson.id.au)  
+Copyright 2008-2023 Conrad Sanderson (https://conradsanderson.id.au)  
 Copyright 2008-2016 National ICT Australia (NICTA)  
 Copyright 2017-2023 Data61 / CSIRO  
 
@@ -9,9 +9,9 @@ Copyright 2017-2023 Data61 / CSIRO
 
 ### Quick Links  
 
-- [download latest stable release](http://arma.sourceforge.net/download.html)
-- [documentation for functions and classes](http://arma.sourceforge.net/docs.html)
-- [bug reports & questions](http://arma.sourceforge.net/faq.html)  
+- [download latest stable release](https://arma.sourceforge.net/download.html)
+- [documentation for functions and classes](https://arma.sourceforge.net/docs.html)
+- [bug reports & questions](https://arma.sourceforge.net/faq.html)  
 
 ---
  
@@ -67,8 +67,8 @@ The library can be used for machine learning, pattern recognition, computer visi
 signal processing, bioinformatics, statistics, finance, etc.
 
 Authors:
-  * Conrad Sanderson - http://conradsanderson.id.au
-  * Ryan Curtin      - http://ratml.org
+  * Conrad Sanderson - https://conradsanderson.id.au
+  * Ryan Curtin      - https://ratml.org
 
 ---
 
@@ -134,7 +134,7 @@ On Windows systems, the MinGW toolset or Visual Studio C++ 2019 (MSVC) can be us
 
 Armadillo can be installed in several ways: either manually or via cmake, with or without root access.
 The cmake based installation is preferred.
-The cmake tool can be downloaded from http://www.cmake.org
+The cmake tool can be downloaded from https://www.cmake.org
 or (preferably) installed using the package manager on your system;
 on macOS systems, cmake can be installed through MacPorts or Homebrew.
 
@@ -257,7 +257,7 @@ techniques employed in Armadillo.
 For GCC and Clang compilers use `-O2` or `-O3` to enable optimisation.
 
 For more information on compiling and linking, see the Questions page: 
-http://arma.sourceforge.net/faq.html
+https://arma.sourceforge.net/faq.html
 
 ---
 
@@ -309,10 +309,10 @@ The compilation was done by a third party.  USE AT YOUR OWN RISK.
 
 **Caveat:** 
 for any high performance scientific/engineering workloads,
-we strongly recommend using a Linux-based operating system:
-  * Fedora  http://fedoraproject.org/
-  * Ubuntu  http://www.ubuntu.com/
-  * CentOS  http://centos.org/
+we strongly recommend using a Linux-based operating system, such as:
+  * Fedora  https://fedoraproject.org/
+  * Ubuntu  https://www.ubuntu.com/
+  * CentOS  https://centos.org/
 
 ---
 
@@ -384,7 +384,7 @@ For GCC and Clang compilers, use the following option to enable OpenMP:
 ### 12: Documentation of Functions and Classes
 
 The documentation of Armadillo functions and classes is available at:  
-http://arma.sourceforge.net/docs.html
+https://arma.sourceforge.net/docs.html
 
 The documentation is also in the `docs.html` file distributed with Armadillo.
 Use a web browser to view it.
@@ -439,10 +439,10 @@ to the developers. The small program must have a main() function and use only
 functions/classes from Armadillo and the standard C++ library (no other libraries).
 
 The contact details are at:  
-http://arma.sourceforge.net/contact.html
+https://arma.sourceforge.net/contact.html
 
 Further information about Armadillo is on the frequently asked questions page:  
-http://arma.sourceforge.net/faq.html
+https://arma.sourceforge.net/faq.html
 
 ---
 
@@ -456,16 +456,16 @@ Octave/Matlab with C++ code that uses Armadillo matrices.
 ### 16: Related Software Using Armadillo
 
 * ensmallen: fast and flexible library for numerical optimisation  
-  http://ensmallen.org/
+  https://ensmallen.org/
 
 * MLPACK: extensive library of machine learning algorithms  
-  http://mlpack.org
+  https://mlpack.org
 
 * CARMA: bidirectional interface between Python and Armadillo  
   https://github.com/RUrlus/carma
 
 * RcppArmadillo: integration of Armadillo with the R system and environment  
-  http://dirk.eddelbuettel.com/code/rcpp.armadillo.html
+  https://dirk.eddelbuettel.com/code/rcpp.armadillo.html
 
 * PyArmadillo: streamlined linear algebra library for Python  
   https://pyarma.sourceforge.io
