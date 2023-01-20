@@ -56,6 +56,10 @@
   #include <atomic>
 #endif
 
+#if ( defined(__unix__) || defined(__unix) || defined(_POSIX_C_SOURCE) || (defined(__APPLE__) && defined(__MACH__)) ) && !defined(_WIN32)
+  #include <unistd.h>
+#endif
+
 #if defined(ARMA_USE_TBB_ALLOC)
   #if defined(__has_include)
     #if __has_include(<tbb/scalable_allocator.h>)
@@ -80,10 +84,6 @@
   #else
     #include <mkl_service.h>
   #endif
-#endif
-
-#if ( defined(__unix__) || defined(__unix) || defined(_POSIX_C_SOURCE) || (defined(__APPLE__) && defined(__MACH__)) ) && !defined(_WIN32)
-  #include <unistd.h>
 #endif
 
 
