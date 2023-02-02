@@ -4673,7 +4673,7 @@ SpMat<eT>::save(const csv_name& spec, const file_type type) const
   
   const bool do_trans      = bool(spec.opts.flags & csv_opts::flag_trans      );
   const bool no_header     = bool(spec.opts.flags & csv_opts::flag_no_header  );
-        bool with_header   = bool(spec.opts.flags & csv_opts::flag_with_header);
+  const bool with_header   = bool(spec.opts.flags & csv_opts::flag_with_header) && (no_header == false);
   const bool use_semicolon = bool(spec.opts.flags & csv_opts::flag_semicolon  ) || (type == ssv_ascii);
   
   arma_extra_debug_print("SpMat::save(csv_name): enabled flags:");
@@ -4684,8 +4684,6 @@ SpMat<eT>::save(const csv_name& spec, const file_type type) const
   if(use_semicolon)  { arma_extra_debug_print("semicolon");   }
   
   const char separator = (use_semicolon) ? char(';') : char(',');
-  
-  if(no_header)  { with_header = false; }
   
   if(with_header)
     {
@@ -4854,7 +4852,7 @@ SpMat<eT>::load(const csv_name& spec, const file_type type)
   
   const bool do_trans      = bool(spec.opts.flags & csv_opts::flag_trans      );
   const bool no_header     = bool(spec.opts.flags & csv_opts::flag_no_header  );
-        bool with_header   = bool(spec.opts.flags & csv_opts::flag_with_header);
+  const bool with_header   = bool(spec.opts.flags & csv_opts::flag_with_header) && (no_header == false);
   const bool use_semicolon = bool(spec.opts.flags & csv_opts::flag_semicolon  ) || (type == ssv_ascii);
   const bool strict        = bool(spec.opts.flags & csv_opts::flag_strict     );
   
@@ -4869,8 +4867,6 @@ SpMat<eT>::load(const csv_name& spec, const file_type type)
   if(strict)  { arma_debug_warn_level(1, "SpMat::load(): option 'strict' not implemented for sparse matrices"); }
   
   const char separator = (use_semicolon) ? char(';') : char(',');
-  
-  if(no_header)  { with_header = false; }
   
   bool load_okay = false;
   std::string err_msg;
