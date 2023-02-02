@@ -7660,7 +7660,6 @@ Mat<eT>::save(const csv_name& spec, const file_type type) const
   const bool no_header     = bool(spec.opts.flags & csv_opts::flag_no_header  );
   const bool with_header   = bool(spec.opts.flags & csv_opts::flag_with_header) && (no_header == false);
   const bool use_semicolon = bool(spec.opts.flags & csv_opts::flag_semicolon  ) || (type == ssv_ascii);
-  const bool strict        = bool(spec.opts.flags & csv_opts::flag_strict     );
   
   arma_extra_debug_print("Mat::save(csv_name): enabled flags:");
   
@@ -7668,7 +7667,6 @@ Mat<eT>::save(const csv_name& spec, const file_type type) const
   if(no_header    )  { arma_extra_debug_print("no_header");   }
   if(with_header  )  { arma_extra_debug_print("with_header"); }
   if(use_semicolon)  { arma_extra_debug_print("semicolon");   }
-  if(strict       )  { arma_extra_debug_print("strict");      }
   
   const char separator = (use_semicolon) ? char(';') : char(',');
   
