@@ -97,5 +97,5 @@ rm -rf examples/lib_win64
 %doc armadillo_nicta_2010.pdf
 %doc armadillo_solver_2020.pdf
 %doc armadillo_spcs_2017.pdf
-%doc rcpp_armadillo_csda_2014.pdf
+%doc armadillo_rcpp_2014.pdf
 %doc mex_interface
