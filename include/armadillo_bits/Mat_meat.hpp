@@ -8107,7 +8107,6 @@ Mat<eT>::quiet_save(const csv_name& spec, const file_type type) const
 
 
 
-//! save the matrix to a stream, without printing any error messages
 template<typename eT>
 arma_deprecated
 inline
