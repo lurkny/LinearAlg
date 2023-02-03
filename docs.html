@@ -7159,6 +7159,7 @@ the <i>header</i> argument specifies the object which stores the separate elemen
 <tr style="vertical-align: top;"><td><code>csv_opts::trans    </code></td><td>&nbsp;&nbsp;&nbsp;</td><td>save/load the data with columns transposed to rows (and vice versa)</td></tr>
 <tr style="vertical-align: top;"><td><code>csv_opts::no_header</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>assume there is no header line; the <i>header</i> argument is not referenced</td></tr>
 <tr style="vertical-align: top;"><td><code>csv_opts::semicolon</code></td><td>&nbsp;&nbsp;&nbsp;</td><td>use semicolon (;) instead of comma (,) as the separator character (Armadillo 10.6 and later)</td></tr>
+<tr style="vertical-align: top;"><td><code>csv_opts::strict   </code></td><td>&nbsp;&nbsp;&nbsp;</td><td>interpret missing values as NaN (not applicable to sparse matrices)</td></tr>
 </table>
 <br>
 the above settings can be combined using the <code>+</code> operator; for example: <code>csv_opts::trans&nbsp;+&nbsp;csv_opts::no_header</code>
