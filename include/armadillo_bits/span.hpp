@@ -21,7 +21,7 @@
 //! @{
 
 
-struct span_alt { };
+struct span_alt {};
 
 
 template<typename junk = int>
