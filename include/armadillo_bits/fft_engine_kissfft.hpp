@@ -51,7 +51,7 @@
 // ------------------------------------------------------------------------
 
 
-//! \addtogroup fft_engine
+//! \addtogroup fft_engine_kissfft
 //! @{
 
 
@@ -90,7 +90,7 @@ struct fft_store<cx_type, fixed_N, false>
 
 
 template<typename cx_type, bool inverse, uword fixed_N = 0>
-class fft_engine : public fft_store<cx_type, fixed_N, (fixed_N > 0)>
+class fft_engine_kissfft : public fft_store<cx_type, fixed_N, (fixed_N > 0)>
   {
   public:
   
@@ -141,7 +141,7 @@ class fft_engine : public fft_store<cx_type, fixed_N, (fixed_N > 0)>
   
   
   inline
-  fft_engine(const uword in_N)
+  fft_engine_kissfft(const uword in_N)
     : fft_store< cx_type, fixed_N, (fixed_N > 0) >(in_N)
     {
     arma_extra_debug_sigprint();
