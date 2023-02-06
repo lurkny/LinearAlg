@@ -48,7 +48,11 @@ op_fft_real::apply( Mat< std::complex<typename T1::pod_type> >& out, const mtOp<
   const uword N_orig = (is_vec)              ? n_elem         : n_rows;
   const uword N_user = (in.aux_uword_b == 0) ? in.aux_uword_a : N_orig;
   
-  fft_engine<out_eT,false> worker(N_user);
+  #if defined(ARMA_USE_FFTW3)
+    fft_engine_fftw3<out_eT,false> worker(N_user);
+  #else
+    fft_engine<out_eT,false> worker(N_user);
+  #endif
   
   // no need to worry about aliasing, as we're going from a real object to complex complex, which by definition cannot alias
   
@@ -183,7 +187,11 @@ op_fft_cx::apply_noalias(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, c
   const uword N_orig = (is_vec) ? n_elem : n_rows;
   const uword N_user = (b == 0) ? a      : N_orig;
   
-  fft_engine<eT,inverse> worker(N_user);
+  #if defined(ARMA_USE_FFTW3)
+    fft_engine_fftw3<eT,inverse> worker(N_user);
+  #else
+    fft_engine<eT,inverse> worker(N_user);
+  #endif
   
   if(is_vec)
     {

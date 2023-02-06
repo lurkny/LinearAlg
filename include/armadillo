@@ -156,12 +156,14 @@ namespace arma
   #include "armadillo_bits/def_lapack.hpp"
   #include "armadillo_bits/def_arpack.hpp"
   #include "armadillo_bits/def_superlu.hpp"
+  #include "armadillo_bits/def_fftw3.hpp"
   
   #include "armadillo_bits/translate_blas.hpp"
   #include "armadillo_bits/translate_atlas.hpp"
   #include "armadillo_bits/translate_lapack.hpp"
   #include "armadillo_bits/translate_arpack.hpp"
   #include "armadillo_bits/translate_superlu.hpp"
+  #include "armadillo_bits/translate_fftw3.hpp"
   
   #include "armadillo_bits/cond_rel_bones.hpp"
   #include "armadillo_bits/arrayops_bones.hpp"
@@ -579,6 +581,7 @@ namespace arma
   
   #include "armadillo_bits/hdf5_misc.hpp"
   #include "armadillo_bits/fft_engine.hpp"
+  #include "armadillo_bits/fft_engine_fftw3.hpp"
   #include "armadillo_bits/band_helper.hpp"
   #include "armadillo_bits/sym_helper.hpp"
   #include "armadillo_bits/trimat_helper.hpp"
