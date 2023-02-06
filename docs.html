@@ -4305,10 +4305,10 @@ See also:
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="each_slice"></a>
 <table>
-<tr><td><b>.each_slice()</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td><b>.each_slice(</b>&nbsp;vector_of_indices&nbsp;<b>)</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
-<tr><td><b>.each_slice(</b>&nbsp;lambda_function&nbsp;<b>)</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 3)</td></tr>
-<tr><td><b>.each_slice(</b>&nbsp;lambda_function, use_mp&nbsp;<b>)</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 4)</td></tr>
+<tr><td><b>.each_slice()</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;1)</td></tr>
+<tr><td><b>.each_slice(</b>&nbsp;vector_of_indices&nbsp;<b>)</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;2)</td></tr>
+<tr><td><b>.each_slice(</b>&nbsp;lambda_function&nbsp;<b>)</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;3)</td></tr>
+<tr><td><b>.each_slice(</b>&nbsp;lambda_function, use_mp&nbsp;<b>)</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;4)</td></tr>
 </table>
 <ul>
 <li>
@@ -8949,8 +8949,8 @@ See also:
 <a name="det"></a>
 <table>
 <tbody>
-<tr><td><b>val = det( A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td><b>det( val, A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td><b>val = det( A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;1)</td></tr>
+<tr><td><b>det( val, A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;2)</td></tr>
 </tbody>
 </table>
 <ul>
@@ -9686,8 +9686,8 @@ mat    B = real(C);
 <a name="ind2sub"></a>
 <table>
 <tbody>
-<tr><td>uvec</td><td>&nbsp;sub&nbsp;=&nbsp;<b>ind2sub(&nbsp;size(</b>X<b>),</b>&nbsp;index&nbsp;<b>)</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td>umat</td><td>&nbsp;sub&nbsp;=&nbsp;<b>ind2sub(&nbsp;size(</b>X<b>),</b>&nbsp;vector_of_indices&nbsp;<b>)</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td>uvec</td><td>&nbsp;sub&nbsp;=&nbsp;<b>ind2sub(&nbsp;size(</b>X<b>),</b>&nbsp;index&nbsp;<b>)</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;1)</td></tr>
+<tr><td>umat</td><td>&nbsp;sub&nbsp;=&nbsp;<b>ind2sub(&nbsp;size(</b>X<b>),</b>&nbsp;vector_of_indices&nbsp;<b>)</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;2)</td></tr>
 </tbody>
 </table>
 <ul>
@@ -9704,11 +9704,11 @@ If an index is out of range, a <i>std::logic_error</i> exception is thrown
 </li>
 <br>
 <li>
-When only one index is given (form 1), the subscripts are returned in a vector of type <a href="#Col">uvec</a>
+When only one index is given (form&nbsp;1), the subscripts are returned in a vector of type <a href="#Col">uvec</a>
 </li>
 <br>
 <li>
-When a vector of indices (of type <a href="#Col">uvec</a>) is given (form 2), the corresponding subscripts are returned in each column of an <i>m&nbsp;x&nbsp;n</i> matrix of type <a href="#Mat">umat</a>;
+When a vector of indices (of type <a href="#Col">uvec</a>) is given (form&nbsp;2), the corresponding subscripts are returned in each column of an <i>m&nbsp;x&nbsp;n</i> matrix of type <a href="#Mat">umat</a>;
 <i>m=2</i> for matrix subscripts, while <i>m=3</i> for cube subscripts
 </li>
 <br>
@@ -9912,8 +9912,8 @@ inplace_trans(Y, "lowmem");  // use low-memory (and slow) algorithm
 <a name="intersect"></a>
 <table>
 <tbody>
-<tr><td><b>C = intersect( A, B )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td><b>intersect( C, iA, iB, A, B )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td><b>C = intersect( A, B )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;1)</td></tr>
+<tr><td><b>intersect( C, iA, iB, A, B )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;2)</td></tr>
 </tbody>
 </table>
 <ul>
@@ -10131,8 +10131,8 @@ See also:
 <a name="log_det"></a>
 <table>
 <tbody>
-<tr><td><b>complex result = log_det( A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td><b>log_det( val, sign, A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td><b>complex result = log_det( A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;1)</td></tr>
+<tr><td><b>log_det( val, sign, A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;2)</td></tr>
 </tbody>
 </table>
 <ul>
@@ -10203,8 +10203,8 @@ See also:
 <a name="log_det_sympd"></a>
 <table>
 <tbody>
-<tr><td><b>result = log_det_sympd( A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td><b>log_det_sympd( result, A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td><b>result = log_det_sympd( A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;1)</td></tr>
+<tr><td><b>log_det_sympd( result, A )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;2)</td></tr>
 </tbody>
 </table>
 <ul>
@@ -10604,11 +10604,11 @@ See also:
 <a name="pow"></a>
 <table>
 <tbody>
-<tr><td><b>pow( A, scalar )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td><b>pow( A, B )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
-<tr><td><b>pow( M.each_col(), C )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 3)</td></tr>
-<tr><td><b>pow( M.each_row(), R )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 4)</td></tr>
-<tr><td><b>pow( Q.each_slice(), M )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 5)</td></tr>
+<tr><td><b>pow( A, scalar )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;1)</td></tr>
+<tr><td><b>pow( A, B )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;2)</td></tr>
+<tr><td><b>pow( M.each_col(), C )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;3)</td></tr>
+<tr><td><b>pow( M.each_row(), R )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;4)</td></tr>
+<tr><td><b>pow( Q.each_slice(), M )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;5)</td></tr>
 </tbody>
 </table>
 <ul>
@@ -10773,10 +10773,10 @@ See also:
 <a name="rank"></a>
 <table>
 <tbody>
-<tr><td><b>r = rank( X )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
+<tr><td><b>r = rank( X )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;1)</td></tr>
 <tr><td><b>r = rank( X, tolerance )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;</td></tr>
 <tr><td>&nbsp;</td><td>&nbsp;</td></tr>
-<tr><td><b>rank( r, X )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td><b>rank( r, X )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;2)</td></tr>
 <tr><td><b>rank( r, X, tolerance )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>&nbsp;</td></tr>
 </tbody>
 </table>
@@ -12437,14 +12437,14 @@ See also:
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="chol"></a>
 <table>
-<tr><td><b>R = chol(       X                   )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td><b>R = chol(       X, layout           )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
+<tr><td><b>R = chol(       X                   )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;1)</td></tr>
+<tr><td><b>R = chol(       X, layout           )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;2)</td></tr>
 <tr><td>                                            </td><td>&nbsp;&nbsp;&nbsp;</td><td>        </td></tr>
-<tr><td><b>    chol( R,    X                   )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 3)</td></tr>
-<tr><td><b>    chol( R,    X, layout           )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 4)</td></tr>
+<tr><td><b>    chol( R,    X                   )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;3)</td></tr>
+<tr><td><b>    chol( R,    X, layout           )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;4)</td></tr>
 <tr><td>                                            </td><td>&nbsp;&nbsp;&nbsp;</td><td>        </td></tr>
-<tr><td><b>    chol( R, P, X, layout, "vector" )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 5)</td></tr>
-<tr><td><b>    chol( R, P, X, layout, "matrix" )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 6)</td></tr>
+<tr><td><b>    chol( R, P, X, layout, "vector" )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;5)</td></tr>
+<tr><td><b>    chol( R, P, X, layout, "matrix" )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;6)</td></tr>
 </table>
 <ul>
 <li>
@@ -13275,9 +13275,9 @@ See also:
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="qr"></a>
 <table>
-<tr><td><b>qr( Q, R,    X           )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 1)</td></tr>
-<tr><td><b>qr( Q, R, P, X, "vector" )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 2)</td></tr>
-<tr><td><b>qr( Q, R, P, X, "matrix" )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form 3)</td></tr>
+<tr><td><b>qr( Q, R,    X           )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;1)</td></tr>
+<tr><td><b>qr( Q, R, P, X, "vector" )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;2)</td></tr>
+<tr><td><b>qr( Q, R, P, X, "matrix" )</b></td><td>&nbsp;&nbsp;&nbsp;</td><td>(form&nbsp;3)</td></tr>
 </table>
 <ul>
 <li>
