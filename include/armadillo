@@ -580,7 +580,7 @@ namespace arma
   // misc stuff
   
   #include "armadillo_bits/hdf5_misc.hpp"
-  #include "armadillo_bits/fft_engine.hpp"
+  #include "armadillo_bits/fft_engine_kissfft.hpp"
   #include "armadillo_bits/fft_engine_fftw3.hpp"
   #include "armadillo_bits/band_helper.hpp"
   #include "armadillo_bits/sym_helper.hpp"
