@@ -49,7 +49,7 @@ class fft_engine_fftw3
     
     if(fftw3_plan != nullptr)  { fftw3::destroy_plan<cx_type>(fftw3_plan); }
     
-    fftw3::cleanup<cx_type>();
+    // fftw3::cleanup<cx_type>();
     }
   
   inline
