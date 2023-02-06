@@ -37,11 +37,12 @@ op_fft_real::apply( Mat< std::complex<typename T1::pod_type> >& out, const mtOp<
   typedef typename T1::pod_type         in_eT;
   typedef typename std::complex<in_eT> out_eT;
   
-  const Proxy<T1> P(in.m);
+  const quasi_unwrap<T1> U(in.m);
+  const Mat<in_eT>& X  = U.M;
   
-  const uword n_rows = P.get_n_rows();
-  const uword n_cols = P.get_n_cols();
-  const uword n_elem = P.get_n_elem();
+  const uword n_rows = X.n_rows;
+  const uword n_cols = X.n_cols;
+  const uword n_elem = X.n_elem;
   
   const bool is_vec = ( (n_rows == 1) || (n_cols == 1) );
   
@@ -60,43 +61,20 @@ op_fft_real::apply( Mat< std::complex<typename T1::pod_type> >& out, const mtOp<
     {
     (n_cols == 1) ? out.set_size(N_user, 1) : out.set_size(1, N_user);
     
-    if( (out.n_elem == 0) || (N_orig == 0) )
-      {
-      out.zeros();
-      return;
-      }
+    if( (out.n_elem == 0) || (N_orig == 0) )  { out.zeros(); return; }
     
-    if( (N_user == 1) && (N_orig >= 1) )
-      {
-      out[0] = out_eT( P[0] );
-      return;
-      }
+    if( (N_user == 1) && (N_orig >= 1) )  { out[0] = out_eT( X[0] ); return; }
     
     podarray<out_eT> data(N_user);
     
-    out_eT* data_mem = data.memptr();
+    data.zeros();
     
-    if(N_user > N_orig)  { arrayops::fill_zeros( &data_mem[N_orig], (N_user - N_orig) ); }
+          out_eT* data_mem = data.memptr();
+    const  in_eT*    X_mem =    X.memptr();
     
     const uword N = (std::min)(N_user, N_orig);
     
-    if(Proxy<T1>::use_at == false)
-      {
-      typename Proxy<T1>::ea_type X = P.get_ea();
-      
-      for(uword i=0; i < N; ++i)  { data_mem[i] = out_eT( X[i], in_eT(0) ); }
-      }
-    else
-      {
-      if(n_cols == 1)
-        {
-        for(uword i=0; i < N; ++i)  { data_mem[i] = out_eT( P.at(i,0), in_eT(0) ); }
-        }
-      else
-        {
-        for(uword i=0; i < N; ++i)  { data_mem[i] = out_eT( P.at(0,i), in_eT(0) ); }
-        }
-      }
+    for(uword i=0; i < N; ++i)  { data_mem[i].real(X_mem[i]); }
     
     worker.run( out.memptr(), data_mem );
     }
@@ -106,30 +84,26 @@ op_fft_real::apply( Mat< std::complex<typename T1::pod_type> >& out, const mtOp<
     
     out.set_size(N_user, n_cols);
     
-    if( (out.n_elem == 0) || (N_orig == 0) )
-      {
-      out.zeros();
-      return;
-      }
+    if( (out.n_elem == 0) || (N_orig == 0) )  { out.zeros(); return; }
     
     if( (N_user == 1) && (N_orig >= 1) )
       {
-      for(uword col=0; col < n_cols; ++col)  { out.at(0,col) = out_eT( P.at(0,col) ); }
+      for(uword col=0; col < n_cols; ++col)  { out.at(0,col).real( X.at(0,col) ); }
       
       return;
       }
     
     podarray<out_eT> data(N_user);
     
-    out_eT* data_mem = data.memptr();
+    data.zeros();
     
-    if(N_user > N_orig)  { arrayops::fill_zeros( &data_mem[N_orig], (N_user - N_orig) ); }
+    out_eT* data_mem = data.memptr();
     
     const uword N = (std::min)(N_user, N_orig);
     
     for(uword col=0; col < n_cols; ++col)
       {
-      for(uword i=0; i < N; ++i)  { data_mem[i] = P.at(i, col); }
+      for(uword i=0; i < N; ++i)  { data_mem[i].real( X.at(i, col) ); }
       
       worker.run( out.colptr(col), data_mem );
       }
@@ -151,36 +125,34 @@ op_fft_cx::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_fft_cx>& in)
   
   typedef typename T1::elem_type eT;
   
-  const Proxy<T1> P(in.m);
+  const quasi_unwrap<T1> U(in.m);
   
-  if(P.is_alias(out) == false)
-    {
-    op_fft_cx::apply_noalias<T1,false>(out, P, in.aux_uword_a, in.aux_uword_b);
-    }
-  else
+  if(U.is_alias(out))
     {
     Mat<eT> tmp;
     
-    op_fft_cx::apply_noalias<T1,false>(tmp, P, in.aux_uword_a, in.aux_uword_b);
+    op_fft_cx::apply_noalias<eT,false>(tmp, U.M, in.aux_uword_a, in.aux_uword_b);
     
     out.steal_mem(tmp);
+    }
+  else
+    {
+    op_fft_cx::apply_noalias<eT,false>(out, U.M, in.aux_uword_a, in.aux_uword_b);
     }
   }
   
 
 
-template<typename T1, bool inverse>
+template<typename eT, bool inverse>
 inline
 void
-op_fft_cx::apply_noalias(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, const uword a, const uword b)
+op_fft_cx::apply_noalias(Mat<eT>& out, const Mat<eT>& X, const uword a, const uword b)
   {
   arma_extra_debug_sigprint();
   
-  typedef typename T1::elem_type eT;
-  
-  const uword n_rows = P.get_n_rows();
-  const uword n_cols = P.get_n_cols();
-  const uword n_elem = P.get_n_elem();
+  const uword n_rows = X.n_rows;
+  const uword n_cols = X.n_cols;
+  const uword n_elem = X.n_elem;
   
   const bool is_vec = ( (n_rows == 1) || (n_cols == 1) );
   
@@ -197,35 +169,25 @@ op_fft_cx::apply_noalias(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, c
     {
     (n_cols == 1) ? out.set_size(N_user, 1) : out.set_size(1, N_user);
     
-    if( (out.n_elem == 0) || (N_orig == 0) )
-      {
-      out.zeros();
-      return;
-      }
+    if( (out.n_elem == 0) || (N_orig == 0) )  { out.zeros(); return; }
     
-    if( (N_user == 1) && (N_orig >= 1) )
-      {
-      out[0] = P[0];
-      return;
-      }
+    if( (N_user == 1) && (N_orig >= 1) )  { out[0] = X[0]; return; }
     
-    if( (N_user > N_orig) || (is_Mat<typename Proxy<T1>::stored_type>::value == false) )
+    if(N_user > N_orig)
       {
       podarray<eT> data(N_user);
       
       eT* data_mem = data.memptr();
       
-      if(N_user > N_orig)  { arrayops::fill_zeros( &data_mem[N_orig], (N_user - N_orig) ); }
+      arrayops::fill_zeros( &data_mem[N_orig], (N_user - N_orig) );
       
-      op_fft_cx::copy_vec( data_mem, P, (std::min)(N_user, N_orig) );
+      arrayops::copy(data_mem, X.memptr(), (std::min)(N_user, N_orig));
       
       worker.run( out.memptr(), data_mem );
       }
     else
       {
-      const unwrap< typename Proxy<T1>::stored_type > tmp(P.Q);
-      
-      worker.run( out.memptr(), tmp.M.memptr() );
+      worker.run( out.memptr(), X.memptr() );
       }
     }
   else
@@ -234,43 +196,37 @@ op_fft_cx::apply_noalias(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, c
     
     out.set_size(N_user, n_cols);
     
-    if( (out.n_elem == 0) || (N_orig == 0) )
-      {
-      out.zeros();
-      return;
-      }
+    if( (out.n_elem == 0) || (N_orig == 0) )  { out.zeros(); return; }
     
     if( (N_user == 1) && (N_orig >= 1) )
       {
-      for(uword col=0; col < n_cols; ++col)  { out.at(0,col) = P.at(0,col); }
+      for(uword col=0; col < n_cols; ++col)  { out.at(0,col) = X.at(0,col); }
       
       return;
       }
     
-    if( (N_user > N_orig) || (is_Mat<typename Proxy<T1>::stored_type>::value == false) )
+    if(N_user > N_orig)
       {
       podarray<eT> data(N_user);
       
       eT* data_mem = data.memptr();
       
-      if(N_user > N_orig)  { arrayops::fill_zeros( &data_mem[N_orig], (N_user - N_orig) ); }
+      arrayops::fill_zeros( &data_mem[N_orig], (N_user - N_orig) );
       
       const uword N = (std::min)(N_user, N_orig);
       
       for(uword col=0; col < n_cols; ++col)
         {
-        for(uword i=0; i < N; ++i)  { data_mem[i] = P.at(i, col); }
+        arrayops::copy(data_mem, X.colptr(col), N);
         
         worker.run( out.colptr(col), data_mem );
         }
       }
     else
       {
-      const unwrap< typename Proxy<T1>::stored_type > tmp(P.Q);
-      
       for(uword col=0; col < n_cols; ++col)
         {
-        worker.run( out.colptr(col), tmp.M.colptr(col) );
+        worker.run( out.colptr(col), X.colptr(col) );
         }
       }
     }
@@ -293,70 +249,6 @@ op_fft_cx::apply_noalias(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, c
 
 
 
-template<typename T1>
-arma_hot
-inline
-void
-op_fft_cx::copy_vec(typename Proxy<T1>::elem_type* dest, const Proxy<T1>& P, const uword N)
-  {
-  arma_extra_debug_sigprint();
-  
-  if(is_Mat< typename Proxy<T1>::stored_type >::value)
-    {
-    op_fft_cx::copy_vec_unwrap(dest, P, N);
-    }
-  else
-    {
-    op_fft_cx::copy_vec_proxy(dest, P, N);
-    }
-  }
-
-
-
-template<typename T1>
-arma_hot
-inline
-void
-op_fft_cx::copy_vec_unwrap(typename Proxy<T1>::elem_type* dest, const Proxy<T1>& P, const uword N)
-  {
-  arma_extra_debug_sigprint();
-  
-  const unwrap< typename Proxy<T1>::stored_type > tmp(P.Q);
-  
-  arrayops::copy(dest, tmp.M.memptr(), N);
-  }
-
-
-
-template<typename T1>
-arma_hot
-inline
-void
-op_fft_cx::copy_vec_proxy(typename Proxy<T1>::elem_type* dest, const Proxy<T1>& P, const uword N)
-  {
-  arma_extra_debug_sigprint();
-  
-  if(Proxy<T1>::use_at == false)
-    {
-    typename Proxy<T1>::ea_type X = P.get_ea();
-    
-    for(uword i=0; i < N; ++i)  { dest[i] = X[i]; }
-    }
-  else
-    {
-    if(P.get_n_cols() == 1)
-      {
-      for(uword i=0; i < N; ++i)  { dest[i] = P.at(i,0); }
-      }
-    else
-      {
-      for(uword i=0; i < N; ++i)  { dest[i] = P.at(0,i); }
-      }
-    }
-  }
-
-
-
 //
 // op_ifft_cx
 
@@ -370,19 +262,19 @@ op_ifft_cx::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_ifft_cx>& in)
   
   typedef typename T1::elem_type eT;
   
-  const Proxy<T1> P(in.m);
+  const quasi_unwrap<T1> U(in.m);
   
-  if(P.is_alias(out) == false)
-    {
-    op_fft_cx::apply_noalias<T1,true>(out, P, in.aux_uword_a, in.aux_uword_b);
-    }
-  else
+  if(U.is_alias(out))
     {
     Mat<eT> tmp;
     
-    op_fft_cx::apply_noalias<T1,true>(tmp, P, in.aux_uword_a, in.aux_uword_b);
+    op_fft_cx::apply_noalias<eT,true>(tmp, U.M, in.aux_uword_a, in.aux_uword_b);
     
     out.steal_mem(tmp);
+    }
+  else
+    {
+    op_fft_cx::apply_noalias<eT,true>(out, U.M, in.aux_uword_a, in.aux_uword_b);
     }
   }
   
