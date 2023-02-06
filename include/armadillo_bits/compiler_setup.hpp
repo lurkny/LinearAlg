@@ -441,3 +441,8 @@
 // https://sourceware.org/bugzilla/show_bug.cgi?id=19239
 #undef minor
 #undef major
+
+#if defined(ARMA_IGNORE_DEPRECATED_MARKER)
+  #pragma message ("NOTE: option 'ARMA_IGNORE_DEPRECATED_MARKER' removed")
+  #pragma message ("NOTE: disabling deprecation messages is counter-productive")
+#endif
