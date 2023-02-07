@@ -135,6 +135,10 @@
 //// and you will need to link with the hdf5 library (eg. -lhdf5)
 #endif
 
+#if defined(ARMA_USE_FFTW3)
+  #pragma message ("WARNING: use of FFTW3 is not supported in this version of Armadillo")
+#endif
+
 #if !defined(ARMA_OPTIMISE_BAND)
   #define ARMA_OPTIMISE_BAND
   //// Comment out the above line to disable optimised handling
