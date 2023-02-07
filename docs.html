@@ -14484,9 +14484,17 @@ The optional <i>n</i> argument specifies the transform length:
 If <i>n</i> is not specified, the transform length is the same as the length of the input vector
 </li>
 <br>
-<li><b>Caveat:</b> the transform is fastest when the transform length is a power of 2, eg. 64, 128, 256, 512, 1024, ...</li>
+<li>
+By default, an internal FFT algorithm based on <a href="https://github.com/mborgerding/kissfft">KISS FFT</a> is used;
+the <a href="https://www.fftw.org/">FFTW3 library</a> can be optionally used instead by defining <a href="#config_hpp">ARMA_USE_FFTW3</a> before including the armadillo header:
 <br>
-<li>The implementation of the transform in this version is preliminary; it is not yet fully optimised</li>
+<code>
+#define ARMA_USE_FFTW3
+<br>#include &lt;armadillo&gt;
+</code>
+</li>
+<br>
+<li><b>Caveat:</b> the transform is fastest when the transform length is a power of 2, eg. 64, 128, 256, 512, 1024, ...</li>
 <br>
 <li>
 Examples:
@@ -18949,6 +18957,51 @@ Disable the use of the HDF5 library; overrides <i>ARMA_USE_HDF5</i>
   </tr>
   <tr>
     <td style="vertical-align: top;">
+<code>ARMA_USE_FFTW3</code>
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+Enable use of the FFTW3 library by <a href="#fft">fft()</a> and <a href="#fft">ifft()</a>;
+you will need to link with the FFTW3 library (eg. <code><i>-lfftw3</i></code>)
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
+<code>ARMA_DONT_USE_FFTW3</code>
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+Disable the use of the FFTW3 library; overrides <i>ARMA_USE_FFTW3</i>
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+    <td style="vertical-align: top;">
+      &nbsp;
+    </td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;">
 <code>ARMA_DONT_USE_STD_MUTEX</code>
     </td>
     <td style="vertical-align: top;">
@@ -19625,6 +19678,7 @@ List of additions and changes for each version:
 <li>Version 12.0:
 <ul>
 <li>C++14 is now the minimum required C++ standard</li>
+<li>faster <a href="#fft">fft()</a> and <a href="#fft">ifft()</a> via optional use of FFTW3</li>
 <li>faster <a href="#min_and_max">min()</a> and <a href="#min_and_max">max()</a></li>
 <li>faster <a href="#index_min_and_index_max_standalone">index_min()</a> and <a href="#index_min_and_index_max_standalone">index_max()</a></li>
 <li>added <code>csv_opts::strict</code> option to <a href="#save_load_mat">loading CSV files</a> to interpret missing values as NaN</li>
