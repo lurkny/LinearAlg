@@ -412,6 +412,22 @@ diskio::safe_rename(const std::string& old_name, const std::string& new_name)
 
 
 
+inline
+arma_cold
+bool
+diskio::is_readable(const std::string& name)
+  {
+  std::ifstream f;
+  
+  f.open(name, std::fstream::binary);
+  
+  // std::ifstream destructor will close the file
+  
+  return (f.is_open());
+  }
+
+
+
 template<typename eT>
 inline
 bool
@@ -2557,6 +2573,8 @@ diskio::load_hdf5_binary(Mat<eT>& x, const hdf5_name& spec, std::string& err_msg
   
   #if defined(ARMA_USE_HDF5)
     {
+    if(diskio::is_readable(spec.filename) == false)  { return false; }
+    
     hdf5_misc::hdf5_suspend_printing_errors hdf5_print_suspender;
     
     bool load_okay = false;
@@ -2676,6 +2694,8 @@ bool
 diskio::load_auto_detect(Mat<eT>& x, const std::string& name, std::string& err_msg)
   {
   arma_extra_debug_sigprint();
+  
+  if(diskio::is_readable(name) == false)  { return false; }
   
   #if defined(ARMA_USE_HDF5)
     // We're currently using the C bindings for the HDF5 library, which don't support C++ streams
@@ -4273,6 +4293,8 @@ diskio::load_hdf5_binary(Cube<eT>& x, const hdf5_name& spec, std::string& err_ms
   
   #if defined(ARMA_USE_HDF5)
     {
+    if(diskio::is_readable(spec.filename) == false)  { return false; }
+    
     hdf5_misc::hdf5_suspend_printing_errors hdf5_print_suspender;
     
     bool load_okay = false;
@@ -4393,6 +4415,8 @@ bool
 diskio::load_auto_detect(Cube<eT>& x, const std::string& name, std::string& err_msg)
   {
   arma_extra_debug_sigprint();
+  
+  if(diskio::is_readable(name) == false)  { return false; }
   
   #if defined(ARMA_USE_HDF5)
     // We're currently using the C bindings for the HDF5 library, which don't support C++ streams
