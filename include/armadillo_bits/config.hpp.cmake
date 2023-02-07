@@ -240,7 +240,9 @@
 #endif
 
 #if !defined(ARMA_PRINT_HDF5_ERRORS)
-// #define ARMA_PRINT_HDF5_ERRORS
+  #if (ARMA_WARN_LEVEL >= 3)
+    #define ARMA_PRINT_HDF5_ERRORS
+  #endif
 #endif
 
 #if defined(ARMA_DONT_USE_LAPACK)
