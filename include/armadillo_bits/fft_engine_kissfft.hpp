@@ -136,7 +136,7 @@ class fft_engine_kissfft
   arma_hot
   inline
   void
-  butterfly_2(cx_type* Y, const uword stride, const uword m)
+  butterfly_2(cx_type* Y, const uword stride, const uword m) const
     {
     arma_extra_debug_sigprint();
     
@@ -156,14 +156,14 @@ class fft_engine_kissfft
   arma_hot
   inline
   void
-  butterfly_3(cx_type* Y, const uword stride, const uword m)
+  butterfly_3(cx_type* Y, const uword stride, const uword m) const
     {
     arma_extra_debug_sigprint();
     
     arma_aligned cx_type tmp[5];
     
-    cx_type* coeffs1 = coeffs_array.memptr();
-    cx_type* coeffs2 = coeffs1;
+    const cx_type* coeffs1 = coeffs_array.memptr();
+    const cx_type* coeffs2 = coeffs1;
     
     const T coeff_sm_imag = coeffs1[stride*m].imag();
     
@@ -202,7 +202,7 @@ class fft_engine_kissfft
   arma_hot
   inline
   void
-  butterfly_4(cx_type* Y, const uword stride, const uword m)
+  butterfly_4(cx_type* Y, const uword stride, const uword m) const
     {
     arma_extra_debug_sigprint();
     
@@ -245,7 +245,7 @@ class fft_engine_kissfft
   inline
   arma_hot
   void
-  butterfly_5(cx_type* Y, const uword stride, const uword m)
+  butterfly_5(cx_type* Y, const uword stride, const uword m) const
     {
     arma_extra_debug_sigprint();
     
