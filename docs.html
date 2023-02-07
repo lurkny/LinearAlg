@@ -865,6 +865,7 @@ mat H(&amp;aux_mem[0], 4, 6, false);  // use auxiliary memory
 </ul>
 </li>
 <br>
+<!--
 <li><b>Caveat:</b>
 For mathematical correctness, scalars are treated as 1x1 matrices during initialisation.
 As such, the code below <b>will not</b> generate a 5x5 matrix with every element equal to 123.0:
@@ -886,6 +887,7 @@ mat A(5,5,fill::none); A.fill(123.0);  // Armadillo 10.5 and earlier
 </pre>
 </ul>
 <br>
+-->
 <li>
 See also:
 <ul>
@@ -1201,6 +1203,7 @@ vec z = A.col(5); // extract a column vector
 </ul>
 </li>
 <br>
+<!--
 <li><b>Caveat:</b>
 For mathematical correctness, scalars are treated as 1x1 matrices during initialisation.
 As such, the code below <b>will not</b> generate a column vector with every element equal to 123.0:
@@ -1223,6 +1226,7 @@ vec v(5, fill::none); v.fill(123.0);  // Armadillo 10.5 and earlier
 </ul>
 </li>
 <br>
+-->
 <li>See also:
 <ul>
 <li><a href="#element_initialisation">element initialisation</a></li>
@@ -1473,6 +1477,7 @@ rowvec z = A.row(5); // extract a row vector
 </ul>
 </li>
 <br>
+<!--
 <li>
 <b>Caveat:</b>
 For mathematical correctness, scalars are treated as 1x1 matrices during initialisation.
@@ -1495,6 +1500,7 @@ rowvec r(5, fill::none); r.fill(123.0);  // Armadillo 10.5 and earlier
 </pre>
 </ul>
 <br>
+-->
 <li>See also:
 <ul>
 <li><a href="#element_initialisation">element initialisation</a></li>
@@ -1777,6 +1783,7 @@ c.slice(0) = randu&lt;mat&gt;(10,20); // wrong size
 </pre>
 </ul>
 </li>
+<!--
 <li>
 For mathematical correctness, scalars are treated as 1x1x1 cubes during initialisation.
 As such, the code below <b>will not</b> generate a cube with every element equal to 123.0:
@@ -1798,6 +1805,7 @@ cube c(5,6,7,fill::none); c.fill(123.0);  // Armadillo 10.5 and earlier
 </pre>
 </ul>
 <br>
+-->
 </ul>
 <li>
 See also:
