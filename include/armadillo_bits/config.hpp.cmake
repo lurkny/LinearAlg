@@ -239,12 +239,6 @@
   #endif
 #endif
 
-#if !defined(ARMA_PRINT_HDF5_ERRORS)
-  #if (ARMA_WARN_LEVEL >= 3)
-    #define ARMA_PRINT_HDF5_ERRORS
-  #endif
-#endif
-
 #if defined(ARMA_DONT_USE_LAPACK)
   #undef ARMA_USE_LAPACK
 #endif
@@ -359,10 +353,6 @@
 #if !defined(ARMA_DONT_ZERO_INIT)
   // #define ARMA_DONT_ZERO_INIT
   //// Uncomment the above line to disable initialising elements to zero during construction of dense matrices and cubes
-#endif
-
-#if defined(ARMA_DONT_PRINT_HDF5_ERRORS)
-  #undef ARMA_PRINT_HDF5_ERRORS
 #endif
 
 #if defined(ARMA_NO_CRIPPLED_LAPACK)

@@ -733,7 +733,7 @@ load_and_convert_hdf5
 
 struct hdf5_suspend_printing_errors
   {
-  #if defined(ARMA_PRINT_HDF5_ERRORS)
+  #if (ARMA_WARN_LEVEL >= 3)
     
     inline
     hdf5_suspend_printing_errors() {}
