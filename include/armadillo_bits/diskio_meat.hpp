@@ -645,7 +645,7 @@ diskio::save_raw_ascii(const Mat<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::fstream f(tmp_name.c_str(), std::fstream::out);
+  std::fstream f(tmp_name, std::fstream::out);
   
   bool save_okay = f.is_open();
   
@@ -710,7 +710,7 @@ diskio::save_raw_binary(const Mat<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f(tmp_name.c_str(), std::fstream::binary);
+  std::ofstream f(tmp_name, std::fstream::binary);
   
   bool save_okay = f.is_open();
   
@@ -754,7 +754,7 @@ diskio::save_arma_ascii(const Mat<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f(tmp_name.c_str());
+  std::ofstream f(tmp_name);
   
   bool save_okay = f.is_open();
   
@@ -822,7 +822,7 @@ diskio::save_csv_ascii(const Mat<eT>& x, const std::string& final_name, const fi
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f(tmp_name.c_str());
+  std::ofstream f(tmp_name);
   
   bool save_okay = f.is_open();
   
@@ -949,7 +949,7 @@ diskio::save_coord_ascii(const Mat<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f(tmp_name.c_str());
+  std::ofstream f(tmp_name);
   
   bool save_okay = f.is_open();
   
@@ -1069,7 +1069,7 @@ diskio::save_arma_binary(const Mat<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f(tmp_name.c_str(), std::fstream::binary);
+  std::ofstream f(tmp_name, std::fstream::binary);
   
   bool save_okay = f.is_open();
   
@@ -1117,7 +1117,7 @@ diskio::save_pgm_binary(const Mat<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::fstream f(tmp_name.c_str(), std::fstream::out | std::fstream::binary);
+  std::fstream f(tmp_name, std::fstream::out | std::fstream::binary);
   
   bool save_okay = f.is_open();
   
@@ -1327,7 +1327,7 @@ diskio::load_raw_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg
   arma_extra_debug_sigprint();
   
   std::fstream f;
-  f.open(name.c_str(), std::fstream::in);
+  f.open(name, std::fstream::in);
   
   bool load_okay = f.is_open();
   
@@ -1442,7 +1442,7 @@ diskio::load_raw_binary(Mat<eT>& x, const std::string& name, std::string& err_ms
   arma_extra_debug_sigprint();
   
   std::ifstream f;
-  f.open(name.c_str(), std::fstream::binary);
+  f.open(name, std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -1498,7 +1498,7 @@ diskio::load_arma_ascii(Mat<eT>& x, const std::string& name, std::string& err_ms
   {
   arma_extra_debug_sigprint();
   
-  std::ifstream f(name.c_str());
+  std::ifstream f(name);
   
   bool load_okay = f.is_open();
   
@@ -1602,7 +1602,7 @@ diskio::load_csv_ascii(Mat<eT>& x, const std::string& name, std::string& err_msg
   arma_extra_debug_sigprint();
   
   std::fstream f;
-  f.open(name.c_str(), std::fstream::in);
+  f.open(name, std::fstream::in);
   
   bool load_okay = f.is_open();
   
@@ -2068,7 +2068,7 @@ diskio::load_coord_ascii(Mat<eT>& x, const std::string& name, std::string& err_m
   arma_extra_debug_sigprint();
   
   std::fstream f;
-  f.open(name.c_str(), std::fstream::in);
+  f.open(name, std::fstream::in);
   
   bool load_okay = f.is_open();
   
@@ -2310,7 +2310,7 @@ diskio::load_arma_binary(Mat<eT>& x, const std::string& name, std::string& err_m
   arma_extra_debug_sigprint();
   
   std::ifstream f;
-  f.open(name.c_str(), std::fstream::binary);
+  f.open(name, std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -2424,7 +2424,7 @@ diskio::load_pgm_binary(Mat<eT>& x, const std::string& name, std::string& err_ms
   arma_extra_debug_sigprint();
   
   std::fstream f;
-  f.open(name.c_str(), std::fstream::in | std::fstream::binary);
+  f.open(name, std::fstream::in | std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -2703,7 +2703,7 @@ diskio::load_auto_detect(Mat<eT>& x, const std::string& name, std::string& err_m
   #endif
   
   std::fstream f;
-  f.open(name.c_str(), std::fstream::in | std::fstream::binary);
+  f.open(name, std::fstream::in | std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -2809,7 +2809,7 @@ diskio::save_csv_ascii(const SpMat<eT>& x, const std::string& final_name, const 
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f(tmp_name.c_str());
+  std::ofstream f(tmp_name);
   
   bool save_okay = f.is_open();
   
@@ -2912,7 +2912,7 @@ diskio::save_coord_ascii(const SpMat<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f(tmp_name.c_str());
+  std::ofstream f(tmp_name);
   
   bool save_okay = f.is_open();
   
@@ -3031,7 +3031,7 @@ diskio::save_arma_binary(const SpMat<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f(tmp_name.c_str(), std::fstream::binary);
+  std::ofstream f(tmp_name, std::fstream::binary);
   
   bool save_okay = f.is_open();
   
@@ -3079,7 +3079,7 @@ diskio::load_csv_ascii(SpMat<eT>& x, const std::string& name, std::string& err_m
   arma_extra_debug_sigprint();
   
   std::fstream f;
-  f.open(name.c_str(), std::fstream::in);
+  f.open(name, std::fstream::in);
   
   bool load_okay = f.is_open();
   
@@ -3261,7 +3261,7 @@ diskio::load_coord_ascii(SpMat<eT>& x, const std::string& name, std::string& err
   arma_extra_debug_sigprint();
   
   std::fstream f;
-  f.open(name.c_str(), std::fstream::in | std::fstream::binary);
+  f.open(name, std::fstream::in | std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -3499,7 +3499,7 @@ diskio::load_arma_binary(SpMat<eT>& x, const std::string& name, std::string& err
   arma_extra_debug_sigprint();
   
   std::ifstream f;
-  f.open(name.c_str(), std::fstream::binary);
+  f.open(name, std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -3625,7 +3625,7 @@ diskio::save_raw_ascii(const Cube<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::fstream f(tmp_name.c_str(), std::fstream::out);
+  std::fstream f(tmp_name, std::fstream::out);
   
   bool save_okay = f.is_open();
   
@@ -3692,7 +3692,7 @@ diskio::save_raw_binary(const Cube<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f(tmp_name.c_str(), std::fstream::binary);
+  std::ofstream f(tmp_name, std::fstream::binary);
   
   bool save_okay = f.is_open();
   
@@ -3736,7 +3736,7 @@ diskio::save_arma_ascii(const Cube<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f(tmp_name.c_str());
+  std::ofstream f(tmp_name);
   
   bool save_okay = f.is_open();
   
@@ -3808,7 +3808,7 @@ diskio::save_arma_binary(const Cube<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f(tmp_name.c_str(), std::fstream::binary);
+  std::ofstream f(tmp_name, std::fstream::binary);
   
   bool save_okay = f.is_open();
   
@@ -4033,7 +4033,7 @@ diskio::load_raw_binary(Cube<eT>& x, const std::string& name, std::string& err_m
   arma_extra_debug_sigprint();
   
   std::ifstream f;
-  f.open(name.c_str(), std::fstream::binary);
+  f.open(name, std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -4089,7 +4089,7 @@ diskio::load_arma_ascii(Cube<eT>& x, const std::string& name, std::string& err_m
   {
   arma_extra_debug_sigprint();
   
-  std::ifstream f(name.c_str());
+  std::ifstream f(name);
   
   bool load_okay = f.is_open();
   
@@ -4193,7 +4193,7 @@ diskio::load_arma_binary(Cube<eT>& x, const std::string& name, std::string& err_
   arma_extra_debug_sigprint();
   
   std::ifstream f;
-  f.open(name.c_str(), std::fstream::binary);
+  f.open(name, std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -4424,7 +4424,7 @@ diskio::load_auto_detect(Cube<eT>& x, const std::string& name, std::string& err_
   #endif
   
   std::fstream f;
-  f.open(name.c_str(), std::fstream::in | std::fstream::binary);
+  f.open(name, std::fstream::in | std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -4525,7 +4525,7 @@ diskio::save_arma_binary(const field<T1>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f( tmp_name.c_str(), std::fstream::binary );
+  std::ofstream f( tmp_name, std::fstream::binary );
   
   bool save_okay = f.is_open();
   
@@ -4588,7 +4588,7 @@ diskio::load_arma_binary(field<T1>& x, const std::string& name, std::string& err
   {
   arma_extra_debug_sigprint();
   
-  std::ifstream f( name.c_str(), std::fstream::binary );
+  std::ifstream f( name, std::fstream::binary );
   
   bool load_okay = f.is_open();
   
@@ -4677,7 +4677,7 @@ diskio::save_std_string(const field<std::string>& x, const std::string& final_na
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f( tmp_name.c_str(), std::fstream::binary );
+  std::ofstream f( tmp_name, std::fstream::binary );
   
   bool save_okay = f.is_open();
   
@@ -4728,7 +4728,7 @@ diskio::load_std_string(field<std::string>& x, const std::string& name, std::str
   {
   arma_extra_debug_sigprint();
   
-  std::ifstream f( name.c_str() );
+  std::ifstream f(name);
   
   bool load_okay = f.is_open();
   
@@ -4822,7 +4822,7 @@ diskio::load_auto_detect(field<T1>& x, const std::string& name, std::string& err
   arma_extra_debug_sigprint();
   
   std::fstream f;
-  f.open(name.c_str(), std::fstream::in | std::fstream::binary);
+  f.open(name, std::fstream::in | std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -4899,7 +4899,7 @@ diskio::load_ppm_binary(Cube<eT>& x, const std::string& name, std::string& err_m
   arma_extra_debug_sigprint();
   
   std::fstream f;
-  f.open(name.c_str(), std::fstream::in | std::fstream::binary);
+  f.open(name, std::fstream::in | std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -5016,7 +5016,7 @@ diskio::save_ppm_binary(const Cube<eT>& x, const std::string& final_name)
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
   
-  std::ofstream f( tmp_name.c_str(), std::fstream::binary );
+  std::ofstream f( tmp_name, std::fstream::binary );
   
   bool save_okay = f.is_open();
   
@@ -5085,7 +5085,7 @@ diskio::load_ppm_binary(field<T1>& x, const std::string& name, std::string& err_
   arma_extra_debug_sigprint();
   
   std::fstream f;
-  f.open(name.c_str(), std::fstream::in | std::fstream::binary);
+  f.open(name, std::fstream::in | std::fstream::binary);
   
   bool load_okay = f.is_open();
   
@@ -5215,7 +5215,7 @@ diskio::save_ppm_binary(const field<T1>& x, const std::string& final_name)
   arma_extra_debug_sigprint();
   
   const std::string tmp_name = diskio::gen_tmp_name(final_name);
-  std::ofstream f( tmp_name.c_str(), std::fstream::binary );
+  std::ofstream f( tmp_name, std::fstream::binary );
   
   bool save_okay = f.is_open();
   
