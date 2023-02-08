@@ -3056,13 +3056,14 @@ Examples:
 <ul>
 <pre>
 mat A(5, 6);
-A.fill(123.0);
+
+A.fill(123.0);   // or:  mat A(5, 6, fill::value(123.0));
 </pre>
 </ul>
 </li>
 <br>
 <li>
-<b>Note:</b> to explicitly set all elements to zero during object construction, use the following more compact form:
+<b>Note:</b> to set all elements to zero during matrix construction, use the following more compact form:
 <ul>
 <pre>
 mat A(5, 6, fill::zeros);
