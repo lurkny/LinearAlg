@@ -8024,11 +8024,11 @@ Mat<eT>::load(std::istream& is, const file_type type)
       break;
     
     case csv_ascii:
-      load_okay = diskio::load_csv_ascii(*this, is, err_msg, char(','));
+      load_okay = diskio::load_csv_ascii(*this, is, err_msg, char(','), false);
       break;
     
     case ssv_ascii:
-      load_okay = diskio::load_csv_ascii(*this, is, err_msg, char(';'));
+      load_okay = diskio::load_csv_ascii(*this, is, err_msg, char(';'), false);
       break;
     
     case coord_ascii:
