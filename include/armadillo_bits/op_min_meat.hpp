@@ -387,7 +387,7 @@ op_min::direct_min(const eT* const X, const uword n_elem)
 
 
 template<typename eT>
-inline 
+inline
 eT
 op_min::direct_min(const eT* const X, const uword n_elem, uword& index_of_min_val)
   {
@@ -470,7 +470,7 @@ op_min::min(const subview<eT>& X)
     
     return Datum<eT>::nan;
     }
-    
+  
   const uword X_n_rows = X.n_rows;
   const uword X_n_cols = X.n_cols;
   
@@ -644,7 +644,7 @@ op_min::min(const BaseCube<typename T1::elem_type,T1>& X)
     {
     eT min_val_i = priv::most_pos<eT>();
     eT min_val_j = priv::most_pos<eT>();
-  
+    
     typedef typename ProxyCube<T1>::ea_type ea_type;
     
     ea_type A = P.get_ea();
