@@ -432,7 +432,8 @@ op_max::direct_max(const Mat<eT>& X, const uword row)
   
   const uword X_n_cols = X.n_cols;
   
-  eT max_val = priv::most_neg<eT>();
+  eT max_val_i = priv::most_neg<eT>();
+  eT max_val_j = priv::most_neg<eT>();
   
   uword i,j;
   for(i=0, j=1; j < X_n_cols; i+=2, j+=2)
@@ -440,18 +441,18 @@ op_max::direct_max(const Mat<eT>& X, const uword row)
     const eT tmp_i = X.at(row,i);
     const eT tmp_j = X.at(row,j);
     
-    if(tmp_i > max_val) { max_val = tmp_i; }
-    if(tmp_j > max_val) { max_val = tmp_j; }
+    if(tmp_i > max_val_i) { max_val_i = tmp_i; }
+    if(tmp_j > max_val_j) { max_val_j = tmp_j; }
     }
   
   if(i < X_n_cols)
     {
     const eT tmp_i = X.at(row,i);
     
-    if(tmp_i > max_val) { max_val = tmp_i; }
+    if(tmp_i > max_val_i) { max_val_i = tmp_i; }
     }
   
-  return max_val;
+  return (max_val_i > max_val_j) ? max_val_i : max_val_j;
   }
 
 
@@ -473,10 +474,11 @@ op_max::max(const subview<eT>& X)
   const uword X_n_rows = X.n_rows;
   const uword X_n_cols = X.n_cols;
   
-  eT max_val = priv::most_neg<eT>();
-  
   if(X_n_rows == 1)
     {
+    eT max_val_i = priv::most_neg<eT>();
+    eT max_val_j = priv::most_neg<eT>();
+    
     const Mat<eT>& A = X.m;
     
     const uword start_row = X.aux_row1;
@@ -490,23 +492,25 @@ op_max::max(const subview<eT>& X)
       const eT tmp_i = A.at(start_row, i);
       const eT tmp_j = A.at(start_row, j);
       
-      if(tmp_i > max_val) { max_val = tmp_i; }
-      if(tmp_j > max_val) { max_val = tmp_j; }
+      if(tmp_i > max_val_i) { max_val_i = tmp_i; }
+      if(tmp_j > max_val_j) { max_val_j = tmp_j; }
       }
     
     if(i < end_col_p1)
       {
       const eT tmp_i = A.at(start_row, i);
       
-      if(tmp_i > max_val) { max_val = tmp_i; }
+      if(tmp_i > max_val_i) { max_val_i = tmp_i; }
       }
+    
+    return (max_val_i > max_val_j) ? max_val_i : max_val_j;
     }
-  else
+  
+  eT max_val = priv::most_neg<eT>();
+  
+  for(uword col=0; col < X_n_cols; ++col)
     {
-    for(uword col=0; col < X_n_cols; ++col)
-      {
-      max_val = (std::max)(max_val, op_max::direct_max(X.colptr(col), X_n_rows));
-      }
+    max_val = (std::max)(max_val, op_max::direct_max(X.colptr(col), X_n_rows));
     }
   
   return max_val;
@@ -638,6 +642,9 @@ op_max::max(const BaseCube<typename T1::elem_type,T1>& X)
   
   if(ProxyCube<T1>::use_at == false)
     {
+    eT max_val_i = priv::most_neg<eT>();
+    eT max_val_j = priv::most_neg<eT>();
+    
     typedef typename ProxyCube<T1>::ea_type ea_type;
     
     ea_type A = P.get_ea();
@@ -649,16 +656,18 @@ op_max::max(const BaseCube<typename T1::elem_type,T1>& X)
       const eT tmp_i = A[i];
       const eT tmp_j = A[j];
       
-      if(tmp_i > max_val) { max_val = tmp_i; }
-      if(tmp_j > max_val) { max_val = tmp_j; }
+      if(tmp_i > max_val_i) { max_val_i = tmp_i; }
+      if(tmp_j > max_val_j) { max_val_j = tmp_j; }
       }
     
     if(i < n_elem)
       {
       const eT tmp_i = A[i];
       
-      if(tmp_i > max_val) { max_val = tmp_i; }
+      if(tmp_i > max_val_i) { max_val_i = tmp_i; }
       }
+    
+    max_val = (max_val_i > max_val_j) ? max_val_i : max_val_j;
     }
   else
     {
