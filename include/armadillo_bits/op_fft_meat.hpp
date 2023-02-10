@@ -21,6 +21,8 @@
 //! @{
 
 
+#if defined(ARMA_USE_FFTW3)
+
 template<typename cx_type, bool inverse>
 class fft_engine_wrapper
   {
@@ -28,41 +30,26 @@ class fft_engine_wrapper
   
   static constexpr uword threshold = 512;
   
-  #if defined(ARMA_USE_FFTW3)
-    fft_engine_kissfft<cx_type,inverse>* worker_kissfft = nullptr;
-    fft_engine_fftw3  <cx_type,inverse>* worker_fftw3   = nullptr;
-  #else
-    fft_engine_kissfft<cx_type,inverse>* worker_kissfft = nullptr;
-  #endif
-  
+  fft_engine_kissfft<cx_type,inverse>* worker_kissfft = nullptr;
+  fft_engine_fftw3  <cx_type,inverse>* worker_fftw3   = nullptr;
   
   inline
   ~fft_engine_wrapper()
     {
     arma_extra_debug_sigprint();
     
-    #if defined(ARMA_USE_FFTW3)
-      if(worker_kissfft != nullptr)  { delete worker_kissfft; }
-      if(worker_fftw3   != nullptr)  { delete worker_fftw3;   }
-    #else
-      if(worker_kissfft != nullptr)  { delete worker_kissfft; }
-    #endif
+    if(worker_kissfft != nullptr)  { delete worker_kissfft; }
+    if(worker_fftw3   != nullptr)  { delete worker_fftw3;   }
     }
-  
   
   inline
   fft_engine_wrapper(const uword N)
     {
     arma_extra_debug_sigprint();
     
-    #if defined(ARMA_USE_FFTW3)
-      worker_kissfft = (N <  threshold) ? new fft_engine_kissfft<cx_type,inverse>(N) : nullptr;
-      worker_fftw3   = (N >= threshold) ? new fft_engine_fftw3  <cx_type,inverse>(N) : nullptr;
-    #else
-      worker_kissfft = new fft_engine_kissfft<cx_type,inverse>(N);
-    #endif
+    worker_kissfft = (N <  threshold) ? new fft_engine_kissfft<cx_type,inverse>(N) : nullptr;
+    worker_fftw3   = (N >= threshold) ? new fft_engine_fftw3  <cx_type,inverse>(N) : nullptr;
     }
-  
   
   inline
   void
@@ -70,19 +57,12 @@ class fft_engine_wrapper
     {
     arma_extra_debug_sigprint();
     
-    #if defined(ARMA_USE_FFTW3)
-      {
-           if(worker_kissfft != nullptr)  { (*worker_kissfft).run(Y,X); }
-      else if(worker_fftw3   != nullptr)  {   (*worker_fftw3).run(Y,X); }
-      }
-    #else
-      {
-      if(worker_kissfft != nullptr)  { (*worker_kissfft).run(Y,X); }
-      }
-    #endif
+         if(worker_kissfft != nullptr)  { (*worker_kissfft).run(Y,X); }
+    else if(worker_fftw3   != nullptr)  {   (*worker_fftw3).run(Y,X); }
     }
   };
 
+#endif
 
 
 //
@@ -113,15 +93,12 @@ op_fft_real::apply( Mat< std::complex<typename T1::pod_type> >& out, const mtOp<
   const uword N_orig = (is_vec)              ? n_elem         : n_rows;
   const uword N_user = (in.aux_uword_b == 0) ? in.aux_uword_a : N_orig;
   
-  // #if defined(ARMA_USE_FFTW3)
-  //   fft_engine_fftw3<eT,false> worker(N_user);
-  // #else
-  //   fft_engine_kissfft<eT,false> worker(N_user);
-  // #endif
+  #if defined(ARMA_USE_FFTW3)
+    fft_engine_wrapper<out_eT,false> worker(N_user);
+  #else
+    fft_engine_kissfft<out_eT,false> worker(N_user);
+  #endif
   
-  fft_engine_wrapper<out_eT,false> worker(N_user);
-
-
   if(is_vec)
     {
     (n_cols == 1) ? out.set_size(N_user, 1) : out.set_size(1, N_user);
@@ -224,13 +201,11 @@ op_fft_cx::apply_noalias(Mat<eT>& out, const Mat<eT>& X, const uword a, const uw
   const uword N_orig = (is_vec) ? n_elem : n_rows;
   const uword N_user = (b == 0) ? a      : N_orig;
   
-  // #if defined(ARMA_USE_FFTW3)
-  //   fft_engine_fftw3<eT,inverse> worker(N_user);
-  // #else
-  //   fft_engine_kissfft<eT,inverse> worker(N_user);
-  // #endif
-  
-  fft_engine_wrapper<eT,inverse> worker(N_user);
+  #if defined(ARMA_USE_FFTW3)
+    fft_engine_wrapper<eT,inverse> worker(N_user);
+  #else
+    fft_engine_kissfft<eT,inverse> worker(N_user);
+  #endif
   
   if(is_vec)
     {
