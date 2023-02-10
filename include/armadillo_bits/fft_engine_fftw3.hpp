@@ -31,9 +31,9 @@ class fft_engine_fftw3
   constexpr static int fftw3_sign_forward  = -1;
   constexpr static int fftw3_sign_backward = +1;
   
-  constexpr static unsigned int fftw3_flag_destroy  = (1U << 0);
-  constexpr static unsigned int fftw3_flag_preserve = (1U << 4);
-  constexpr static unsigned int fftw3_flag_estimate = (1U << 6);
+  constexpr static unsigned int fftw3_flag_destroy  = (1u << 0);
+  constexpr static unsigned int fftw3_flag_preserve = (1u << 4);
+  constexpr static unsigned int fftw3_flag_estimate = (1u << 6);
   
   const uword N;
   
@@ -49,7 +49,7 @@ class fft_engine_fftw3
     
     if(fftw3_plan != nullptr)  { fftw3::destroy_plan<cx_type>(fftw3_plan); }
     
-    // fftw3::cleanup<cx_type>();
+    // fftw3::cleanup<cx_type>();  // NOTE: this also removes any wisdom acquired by FFTW3 
     }
   
   inline
