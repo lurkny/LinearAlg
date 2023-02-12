@@ -28,18 +28,22 @@
 ## NOTE: More details: http://arma.sourceforge.net/faq.html
 
 
-cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.12 FATAL_ERROR)
 
-if(POLICY CMP0025)
-  # enable differentiation between vanilla Clang and AppleClang
-  cmake_policy(SET CMP0025 NEW)
-  message(STATUS "*** set cmake policy CMP0025 to NEW")
+if(NOT (${CMAKE_MAJOR_VERSION} LESS 3))
+  if(POLICY CMP0025)
+    # enable differentiation between vanilla Clang and AppleClang
+    cmake_policy(SET CMP0025 NEW)
+    message(STATUS "*** set cmake policy CMP0025 to NEW")
+  endif()
 endif()
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-message(STATUS "CMAKE_CXX_STANDARD = ${CMAKE_CXX_STANDARD}")
+if(NOT (CMAKE_VERSION VERSION_LESS "3.1"))
+  set(CMAKE_CXX_STANDARD 11)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+  set(CMAKE_CXX_EXTENSIONS OFF)
+  message(STATUS "CMAKE_CXX_STANDARD = ${CMAKE_CXX_STANDARD}")
+endif()
 
 project(armadillo CXX C)
 include(CheckIncludeFileCXX)
@@ -89,12 +93,12 @@ endif()
 
 if(DEFINED CMAKE_CXX_COMPILER_ID AND DEFINED CMAKE_CXX_COMPILER_VERSION)
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    if(NOT (${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 6.1.0))
+    if(NOT (${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.8.3))
       set(ARMA_USE_EXTERN_RNG true)
-      message(STATUS "Detected gcc 6.1.0 or later")
+      message(STATUS "Detected gcc 4.8.3 or later")
       if(NOT DEFINED CMAKE_CXX_STANDARD)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
-        message(STATUS "Added '-std=c++14' to compiler flags")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+        message(STATUS "Added '-std=c++11' to compiler flags")
       endif()
     else()
       message(FATAL_ERROR "Compiler too old")
