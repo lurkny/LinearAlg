@@ -3,7 +3,7 @@ LIB_FLAGS = -larmadillo
 #LIB_FLAGS = -lblas -llapack 
 #LIB_FLAGS = -lopenblas -llapack 
 
-#CXX_FLAGS = -std=c++11 -Wshadow -Wall -pedantic -Og
+#CXX_FLAGS = -std=c++11 -Wshadow -Wall -pedantic -O0
 CXX_FLAGS = -std=c++11 -Wshadow -Wall -pedantic -Og
 #CXX_FLAGS = -std=c++11 -Wshadow -Wall -pedantic -Og -fopenmp
 #CXX_FLAGS = -std=c++11 -Wshadow -Wall -pedantic -Og -DARMA_DONT_USE_WRAPPER
