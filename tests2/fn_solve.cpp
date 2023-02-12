@@ -47,7 +47,7 @@ TEST_CASE("fn_solve_1")
   mat X2;
   
   bool status1 = solve(X1, A, B);
-  bool status2 = solve(X1, A, B, solve_opts::fast + solve_opts::no_approx);
+  bool status2 = solve(X2, A, B, solve_opts::fast + solve_opts::no_approx);
   
   REQUIRE( status1 == true );
   REQUIRE( status2 == true );
@@ -91,7 +91,7 @@ TEST_CASE("fn_solve_2")
   mat X2;
   
   bool status1 = solve(X1, A, B);
-  bool status2 = solve(X1, A, B, solve_opts::no_approx);
+  bool status2 = solve(X2, A, B, solve_opts::no_approx);
   
   REQUIRE( status1 == true  );
   REQUIRE( status2 == false );
@@ -131,7 +131,7 @@ TEST_CASE("fn_solve_3")
   mat X2;
   
   bool status1 = solve(X1, A, B);
-  bool status2 = solve(X1, A, B, solve_opts::fast + solve_opts::no_approx);
+  bool status2 = solve(X2, A, B, solve_opts::fast + solve_opts::no_approx);
   
   REQUIRE( status1 == true );
   REQUIRE( status2 == true );
