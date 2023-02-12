@@ -30,7 +30,7 @@ Copyright 2017-2023 Data61 / CSIRO
 8.  [Windows: Compiling and Linking](#8-windows-compiling-and-linking)
 
 9.  [Support for OpenBLAS and Intel MKL](#9-support-for-openblas-and-intel-mkl)
-10. [Caveat on use of C++11/C++14 auto Keyword](#10-caveat-on-use-of-c11c14-auto-keyword)
+10. [Caveat on use of C++11 auto Keyword](#10-caveat-on-use-of-c11-auto-keyword)
 11. [Support for OpenMP](#11-support-for-openmp)
 
 12. [Documentation of Functions and Classes](#12-documentation-of-functions-and-classes)
@@ -116,7 +116,7 @@ On macOS, the Accelerate framework can be used for BLAS and LAPACK functions.
 If sparse matrices are not needed, ARPACK and SuperLU are not required.
 Caveat: only SuperLU versions 5.2.x and 5.3.x can be used; SuperLU must be available as a shared library.
 
-Armadillo requires a C++ compiler that supports at least the C++14 standard.
+Armadillo requires a C++ compiler that supports at least the C++11 standard.
 
 On Linux-based systems, install the GCC C++ compiler, which is available as a pre-built package.
 The package name might be `g++` or `gcc-c++` depending on your system.
@@ -226,12 +226,12 @@ and hence you will need to link your programs directly with OpenBLAS, LAPACK, et
 If you have installed Armadillo via the cmake installer,
 use the following command to compile your programs:
 
-    g++ prog.cpp -o prog -O2 -std=c++14 -larmadillo
+    g++ prog.cpp -o prog -O2 -std=c++11 -larmadillo
 
 If you have installed Armadillo manually, link with OpenBLAS and LAPACK
 instead of the Armadillo runtime library:
 
-    g++ prog.cpp -o prog -O2 -std=c++14 -lopenblas -llapack
+    g++ prog.cpp -o prog -O2 -std=c++11 -lopenblas -llapack
 
 If you have manually installed Armadillo in a non-standard location,
 such as `/home/blah/include/`, you will need to make sure 
@@ -239,12 +239,12 @@ that your C++ compiler searches `/home/blah/include/`
 by explicitly specifying the directory as an argument/option. 
 For example, using the `-I` switch in GCC and Clang:
 
-    g++ prog.cpp -o prog -O2 -std=c++14 -I /home/blah/include/ -lopenblas -llapack
+    g++ prog.cpp -o prog -O2 -std=c++11 -I /home/blah/include/ -lopenblas -llapack
 
 If you're getting linking issues (unresolved symbols),
 enable the `ARMA_DONT_USE_WRAPPER` option:
 
-    g++ prog.cpp -o prog -O2 -std=c++14 -I /home/blah/include/ -DARMA_DONT_USE_WRAPPER -lopenblas -llapack
+    g++ prog.cpp -o prog -O2 -std=c++11 -I /home/blah/include/ -DARMA_DONT_USE_WRAPPER -lopenblas -llapack
 
 If you don't have OpenBLAS, on Linux change `-lopenblas` to `-lblas`;
 on macOS change `-lopenblas -llapack` to `-framework Accelerate`
@@ -361,9 +361,9 @@ Comment out the line containing:
 
 ---
 
-### 10: Caveat on use of C++11/C++14 auto Keyword
+### 10: Caveat on use of C++11 auto Keyword
 
-Use of the C++11/C++14 `auto` keyword is not recommended with Armadillo objects and expressions.
+Use of the C++11 `auto` keyword is not recommended with Armadillo objects and expressions.
 
 Armadillo has a template meta-programming framework which creates lots of short lived temporaries
 that are not properly handled by `auto`.
