@@ -390,7 +390,7 @@
   #define arma_deprecated [[deprecated]]
 
   #undef  arma_frown
-  #define arma_frowm(msg) [[deprecated(msg)]]
+  #define arma_frown(msg) [[deprecated(msg)]]
 #endif
 
 
@@ -492,5 +492,5 @@
   #define arma_deprecated
 
   #undef  arma_frown
-  #define arma_frowm(msg)
+  #define arma_frown(msg)
 #endif
