@@ -40,21 +40,21 @@ class diskio
   friend class SpMat_aux;
   friend class field_aux;
   
-  template<typename eT> inline arma_cold static std::string gen_txt_header(const Mat<eT>&);
-  template<typename eT> inline arma_cold static std::string gen_bin_header(const Mat<eT>&);
+  template<typename eT> arma_cold inline static std::string gen_txt_header(const Mat<eT>&);
+  template<typename eT> arma_cold inline static std::string gen_bin_header(const Mat<eT>&);
   
-  template<typename eT> inline arma_cold static std::string gen_bin_header(const SpMat<eT>&);
+  template<typename eT> arma_cold inline static std::string gen_bin_header(const SpMat<eT>&);
 
-  template<typename eT> inline arma_cold static std::string gen_txt_header(const Cube<eT>&);
-  template<typename eT> inline arma_cold static std::string gen_bin_header(const Cube<eT>&);
+  template<typename eT> arma_cold inline static std::string gen_txt_header(const Cube<eT>&);
+  template<typename eT> arma_cold inline static std::string gen_bin_header(const Cube<eT>&);
   
-  inline arma_cold static file_type guess_file_type_internal(std::istream& f);
+  arma_cold inline static file_type guess_file_type_internal(std::istream& f);
   
-  inline arma_cold static std::string gen_tmp_name(const std::string& x);
+  arma_cold inline static std::string gen_tmp_name(const std::string& x);
   
-  inline arma_cold static bool safe_rename(const std::string& old_name, const std::string& new_name);
+  arma_cold inline static bool safe_rename(const std::string& old_name, const std::string& new_name);
   
-  inline arma_cold static bool is_readable(const std::string& name);
+  arma_cold inline static bool is_readable(const std::string& name);
   
   template<typename eT> inline static bool convert_token(eT&              val, const std::string& token);
   template<typename  T> inline static bool convert_token(std::complex<T>& val, const std::string& token);

@@ -3245,7 +3245,6 @@ SpMat<eT>::shed_cols(const uword in_col1, const uword in_col2)
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 SpMat_MapMat_val<eT>
 SpMat<eT>::operator[](const uword i)
   {
@@ -3259,7 +3258,6 @@ SpMat<eT>::operator[](const uword i)
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT
 SpMat<eT>::operator[](const uword i) const
   {
@@ -3270,7 +3268,6 @@ SpMat<eT>::operator[](const uword i) const
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 SpMat_MapMat_val<eT>
 SpMat<eT>::at(const uword i)
   {
@@ -3284,7 +3281,6 @@ SpMat<eT>::at(const uword i)
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT
 SpMat<eT>::at(const uword i) const
   {
@@ -3295,7 +3291,6 @@ SpMat<eT>::at(const uword i) const
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 SpMat_MapMat_val<eT>
 SpMat<eT>::operator()(const uword i)
   {
@@ -3311,7 +3306,6 @@ SpMat<eT>::operator()(const uword i)
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT
 SpMat<eT>::operator()(const uword i) const
   {
@@ -3331,8 +3325,7 @@ SpMat<eT>::operator()(const uword i) const
   
   template<typename eT>
   arma_inline
-  arma_warn_unused
-  SpMat_MapMat_val<eT>
+    SpMat_MapMat_val<eT>
   SpMat<eT>::operator[] (const uword in_row, const uword in_col)
     {
     return SpMat_MapMat_val<eT>((*this), cache, in_row, in_col);
@@ -3342,8 +3335,7 @@ SpMat<eT>::operator()(const uword i) const
   
   template<typename eT>
   arma_inline
-  arma_warn_unused
-  eT
+    eT
   SpMat<eT>::operator[] (const uword in_row, const uword in_col) const
     {
     return get_value(in_row, in_col);
@@ -3355,7 +3347,6 @@ SpMat<eT>::operator()(const uword i) const
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 SpMat_MapMat_val<eT>
 SpMat<eT>::at(const uword in_row, const uword in_col)
   {
@@ -3366,7 +3357,6 @@ SpMat<eT>::at(const uword in_row, const uword in_col)
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT
 SpMat<eT>::at(const uword in_row, const uword in_col) const
   {
@@ -3377,7 +3367,6 @@ SpMat<eT>::at(const uword in_row, const uword in_col) const
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 SpMat_MapMat_val<eT>
 SpMat<eT>::operator()(const uword in_row, const uword in_col)
   {
@@ -3390,7 +3379,6 @@ SpMat<eT>::operator()(const uword in_row, const uword in_col)
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT
 SpMat<eT>::operator()(const uword in_row, const uword in_col) const
   {
@@ -3406,7 +3394,6 @@ SpMat<eT>::operator()(const uword in_row, const uword in_col) const
  */
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::is_empty() const
   {
@@ -3418,7 +3405,6 @@ SpMat<eT>::is_empty() const
 //! returns true if the object can be interpreted as a column or row vector
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::is_vec() const
   {
@@ -3430,7 +3416,6 @@ SpMat<eT>::is_vec() const
 //! returns true if the object can be interpreted as a row vector
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::is_rowvec() const
   {
@@ -3442,7 +3427,6 @@ SpMat<eT>::is_rowvec() const
 //! returns true if the object can be interpreted as a column vector
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::is_colvec() const
   {
@@ -3454,7 +3438,6 @@ SpMat<eT>::is_colvec() const
 //! returns true if the object has the same number of non-zero rows and columnns
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::is_square() const
   {
@@ -3466,7 +3449,6 @@ SpMat<eT>::is_square() const
 //! returns true if all of the elements are finite
 template<typename eT>
 inline
-arma_warn_unused
 bool
 SpMat<eT>::is_finite() const
   {
@@ -3481,7 +3463,6 @@ SpMat<eT>::is_finite() const
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 SpMat<eT>::is_symmetric() const
   {
@@ -3500,7 +3481,6 @@ SpMat<eT>::is_symmetric() const
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 SpMat<eT>::is_symmetric(const typename get_pod_type<elem_type>::result tol) const
   {
@@ -3529,7 +3509,6 @@ SpMat<eT>::is_symmetric(const typename get_pod_type<elem_type>::result tol) cons
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 SpMat<eT>::is_hermitian() const
   {
@@ -3548,7 +3527,6 @@ SpMat<eT>::is_hermitian() const
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 SpMat<eT>::is_hermitian(const typename get_pod_type<elem_type>::result tol) const
   {
@@ -3577,7 +3555,6 @@ SpMat<eT>::is_hermitian(const typename get_pod_type<elem_type>::result tol) cons
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 SpMat<eT>::has_inf() const
   {
@@ -3592,7 +3569,6 @@ SpMat<eT>::has_inf() const
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 SpMat<eT>::has_nan() const
   {
@@ -3607,7 +3583,6 @@ SpMat<eT>::has_nan() const
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 SpMat<eT>::has_nonfinite() const
   {
@@ -3623,7 +3598,6 @@ SpMat<eT>::has_nonfinite() const
 //! returns true if the given index is currently in range
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::in_range(const uword i) const
   {
@@ -3634,7 +3608,6 @@ SpMat<eT>::in_range(const uword i) const
 //! returns true if the given start and end indices are currently in range
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::in_range(const span& x) const
   {
@@ -3658,7 +3631,6 @@ SpMat<eT>::in_range(const span& x) const
 //! returns true if the given location is currently in range
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::in_range(const uword in_row, const uword in_col) const
   {
@@ -3669,7 +3641,6 @@ SpMat<eT>::in_range(const uword in_row, const uword in_col) const
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::in_range(const span& row_span, const uword in_col) const
   {
@@ -3692,7 +3663,6 @@ SpMat<eT>::in_range(const span& row_span, const uword in_col) const
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::in_range(const uword in_row, const span& col_span) const
   {
@@ -3715,7 +3685,6 @@ SpMat<eT>::in_range(const uword in_row, const span& col_span) const
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::in_range(const span& row_span, const span& col_span) const
   {
@@ -3737,7 +3706,6 @@ SpMat<eT>::in_range(const span& row_span, const span& col_span) const
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 SpMat<eT>::in_range(const uword in_row, const uword in_col, const SizeMat& s) const
   {
@@ -4617,7 +4585,6 @@ SpMat<eT>::set_imag(const SpBase<typename SpMat<eT>::pod_type,T1>& X)
 //! save the matrix to a file
 template<typename eT>
 inline
-arma_cold
 bool
 SpMat<eT>::save(const std::string name, const file_type type) const
   {
@@ -4659,7 +4626,6 @@ SpMat<eT>::save(const std::string name, const file_type type) const
 
 template<typename eT>
 inline
-arma_cold
 bool
 SpMat<eT>::save(const csv_name& spec, const file_type type) const
   {
@@ -4736,7 +4702,6 @@ SpMat<eT>::save(const csv_name& spec, const file_type type) const
 //! save the matrix to a stream
 template<typename eT>
 inline
-arma_cold
 bool
 SpMat<eT>::save(std::ostream& os, const file_type type) const
   {
@@ -4779,7 +4744,6 @@ SpMat<eT>::save(std::ostream& os, const file_type type) const
 //! load a matrix from a file
 template<typename eT>
 inline
-arma_cold
 bool
 SpMat<eT>::load(const std::string name, const file_type type)
   {
@@ -4838,7 +4802,6 @@ SpMat<eT>::load(const std::string name, const file_type type)
 
 template<typename eT>
 inline
-arma_cold
 bool
 SpMat<eT>::load(const csv_name& spec, const file_type type)
   {
@@ -4929,7 +4892,6 @@ SpMat<eT>::load(const csv_name& spec, const file_type type)
 //! load a matrix from a stream
 template<typename eT>
 inline
-arma_cold
 bool
 SpMat<eT>::load(std::istream& is, const file_type type)
   {
@@ -5068,7 +5030,6 @@ SpMat<eT>::init(uword in_rows, uword in_cols, const uword new_n_nonzero)
 template<typename eT>
 inline
 void
-arma_cold
 SpMat<eT>::init_cold(uword in_rows, uword in_cols, const uword new_n_nonzero)
   {
   arma_extra_debug_sigprint();
@@ -6308,7 +6269,6 @@ SpMat<eT>::size() const
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 SpMat_MapMat_val<eT>
 SpMat<eT>::front()
   {
@@ -6321,7 +6281,6 @@ SpMat<eT>::front()
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT
 SpMat<eT>::front() const
   {
@@ -6334,7 +6293,6 @@ SpMat<eT>::front() const
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 SpMat_MapMat_val<eT>
 SpMat<eT>::back()
   {
@@ -6347,7 +6305,6 @@ SpMat<eT>::back()
 
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT
 SpMat<eT>::back() const
   {
@@ -6360,8 +6317,6 @@ SpMat<eT>::back() const
 
 template<typename eT>
 inline
-arma_hot
-arma_warn_unused
 eT
 SpMat<eT>::get_value(const uword i) const
   {
@@ -6376,8 +6331,6 @@ SpMat<eT>::get_value(const uword i) const
 
 template<typename eT>
 inline
-arma_hot
-arma_warn_unused
 eT
 SpMat<eT>::get_value(const uword in_row, const uword in_col) const
   {
@@ -6392,8 +6345,6 @@ SpMat<eT>::get_value(const uword in_row, const uword in_col) const
 
 template<typename eT>
 inline
-arma_hot
-arma_warn_unused
 eT
 SpMat<eT>::get_value_csc(const uword i) const
   {
@@ -6408,8 +6359,6 @@ SpMat<eT>::get_value_csc(const uword i) const
 
 template<typename eT>
 inline
-arma_hot
-arma_warn_unused
 const eT*
 SpMat<eT>::find_value_csc(const uword in_row, const uword in_col) const
   {
@@ -6436,8 +6385,6 @@ SpMat<eT>::find_value_csc(const uword in_row, const uword in_col) const
 
 template<typename eT>
 inline
-arma_hot
-arma_warn_unused
 eT
 SpMat<eT>::get_value_csc(const uword in_row, const uword in_col) const
   {
@@ -6450,8 +6397,6 @@ SpMat<eT>::get_value_csc(const uword in_row, const uword in_col) const
 
 template<typename eT>
 inline
-arma_hot
-arma_warn_unused
 bool
 SpMat<eT>::try_set_value_csc(const uword in_row, const uword in_col, const eT in_val)
   {
@@ -6474,8 +6419,6 @@ SpMat<eT>::try_set_value_csc(const uword in_row, const uword in_col, const eT in
 
 template<typename eT>
 inline
-arma_hot
-arma_warn_unused
 bool
 SpMat<eT>::try_add_value_csc(const uword in_row, const uword in_col, const eT in_val)
   {
@@ -6500,8 +6443,6 @@ SpMat<eT>::try_add_value_csc(const uword in_row, const uword in_col, const eT in
 
 template<typename eT>
 inline
-arma_hot
-arma_warn_unused
 bool
 SpMat<eT>::try_sub_value_csc(const uword in_row, const uword in_col, const eT in_val)
   {
@@ -6526,8 +6467,6 @@ SpMat<eT>::try_sub_value_csc(const uword in_row, const uword in_col, const eT in
 
 template<typename eT>
 inline
-arma_hot
-arma_warn_unused
 bool
 SpMat<eT>::try_mul_value_csc(const uword in_row, const uword in_col, const eT in_val)
   {
@@ -6552,8 +6491,6 @@ SpMat<eT>::try_mul_value_csc(const uword in_row, const uword in_col, const eT in
 
 template<typename eT>
 inline
-arma_hot
-arma_warn_unused
 bool
 SpMat<eT>::try_div_value_csc(const uword in_row, const uword in_col, const eT in_val)
   {
@@ -6583,7 +6520,6 @@ SpMat<eT>::try_div_value_csc(const uword in_row, const uword in_col, const eT in
  */
 template<typename eT>
 inline
-arma_warn_unused
 eT&
 SpMat<eT>::insert_element(const uword in_row, const uword in_col, const eT val)
   {

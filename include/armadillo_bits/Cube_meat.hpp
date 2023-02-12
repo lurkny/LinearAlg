@@ -3414,7 +3414,6 @@ Cube<eT>::operator/=(const mtGlueCube<eT, T1, T2, glue_type>& X)
 //! linear element accessor (treats the cube as a vector); no bounds check; assumes memory is aligned
 template<typename eT>
 arma_inline
-arma_warn_unused
 const eT&
 Cube<eT>::at_alt(const uword i) const
   {
@@ -3430,7 +3429,6 @@ Cube<eT>::at_alt(const uword i) const
 //! linear element accessor (treats the cube as a vector); bounds checking not done when ARMA_NO_DEBUG is defined
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT&
 Cube<eT>::operator() (const uword i)
   {
@@ -3444,7 +3442,6 @@ Cube<eT>::operator() (const uword i)
 //! linear element accessor (treats the cube as a vector); bounds checking not done when ARMA_NO_DEBUG is defined
 template<typename eT>
 arma_inline
-arma_warn_unused
 const eT&
 Cube<eT>::operator() (const uword i) const
   {
@@ -3457,7 +3454,6 @@ Cube<eT>::operator() (const uword i) const
 //! linear element accessor (treats the cube as a vector); no bounds check.  
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT&
 Cube<eT>::operator[] (const uword i)
   {
@@ -3469,7 +3465,6 @@ Cube<eT>::operator[] (const uword i)
 //! linear element accessor (treats the cube as a vector); no bounds check
 template<typename eT>
 arma_inline
-arma_warn_unused
 const eT&
 Cube<eT>::operator[] (const uword i) const
   {
@@ -3481,7 +3476,6 @@ Cube<eT>::operator[] (const uword i) const
 //! linear element accessor (treats the cube as a vector); no bounds check.  
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT&
 Cube<eT>::at(const uword i)
   {
@@ -3493,7 +3487,6 @@ Cube<eT>::at(const uword i)
 //! linear element accessor (treats the cube as a vector); no bounds check
 template<typename eT>
 arma_inline
-arma_warn_unused
 const eT&
 Cube<eT>::at(const uword i) const
   {
@@ -3505,7 +3498,6 @@ Cube<eT>::at(const uword i) const
 //! element accessor; bounds checking not done when ARMA_NO_DEBUG is defined
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT&
 Cube<eT>::operator() (const uword in_row, const uword in_col, const uword in_slice)
   {
@@ -3526,7 +3518,6 @@ Cube<eT>::operator() (const uword in_row, const uword in_col, const uword in_sli
 //! element accessor; bounds checking not done when ARMA_NO_DEBUG is defined
 template<typename eT>
 arma_inline
-arma_warn_unused
 const eT&
 Cube<eT>::operator() (const uword in_row, const uword in_col, const uword in_slice) const
   {
@@ -3549,8 +3540,7 @@ Cube<eT>::operator() (const uword in_row, const uword in_col, const uword in_sli
   //! element accessor; no bounds check
   template<typename eT>
   arma_inline
-  arma_warn_unused
-  eT&
+    eT&
   Cube<eT>::operator[] (const uword in_row, const uword in_col, const uword in_slice)
     {
     return access::rw( mem[in_slice*n_elem_slice + in_col*n_rows + in_row] );
@@ -3561,8 +3551,7 @@ Cube<eT>::operator() (const uword in_row, const uword in_col, const uword in_sli
   //! element accessor; no bounds check
   template<typename eT>
   arma_inline
-  arma_warn_unused
-  const eT&
+    const eT&
   Cube<eT>::operator[] (const uword in_row, const uword in_col, const uword in_slice) const
     {
     return mem[in_slice*n_elem_slice + in_col*n_rows + in_row];
@@ -3575,7 +3564,6 @@ Cube<eT>::operator() (const uword in_row, const uword in_col, const uword in_sli
 //! element accessor; no bounds check
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT&
 Cube<eT>::at(const uword in_row, const uword in_col, const uword in_slice)
   {
@@ -3587,7 +3575,6 @@ Cube<eT>::at(const uword in_row, const uword in_col, const uword in_slice)
 //! element accessor; no bounds check
 template<typename eT>
 arma_inline
-arma_warn_unused
 const eT&
 Cube<eT>::at(const uword in_row, const uword in_col, const uword in_slice) const
   {
@@ -3646,7 +3633,6 @@ Cube<eT>::operator--(int)
 //! returns true if all of the elements are finite
 template<typename eT>
 inline
-arma_warn_unused
 bool
 Cube<eT>::is_finite() const
   {
@@ -3660,7 +3646,6 @@ Cube<eT>::is_finite() const
 //! returns true if the cube has no elements
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 Cube<eT>::is_empty() const
   {
@@ -3671,7 +3656,6 @@ Cube<eT>::is_empty() const
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 Cube<eT>::has_inf() const
   {
@@ -3684,7 +3668,6 @@ Cube<eT>::has_inf() const
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 Cube<eT>::has_nan() const
   {
@@ -3697,7 +3680,6 @@ Cube<eT>::has_nan() const
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 Cube<eT>::has_nonfinite() const
   {
@@ -3711,7 +3693,6 @@ Cube<eT>::has_nonfinite() const
 //! returns true if the given index is currently in range
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 Cube<eT>::in_range(const uword i) const
   {
@@ -3723,7 +3704,6 @@ Cube<eT>::in_range(const uword i) const
 //! returns true if the given start and end indices are currently in range
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 Cube<eT>::in_range(const span& x) const
   {
@@ -3747,7 +3727,6 @@ Cube<eT>::in_range(const span& x) const
 //! returns true if the given location is currently in range
 template<typename eT>
 arma_inline
-arma_warn_unused
 bool
 Cube<eT>::in_range(const uword in_row, const uword in_col, const uword in_slice) const
   {
@@ -3758,7 +3737,6 @@ Cube<eT>::in_range(const uword in_row, const uword in_col, const uword in_slice)
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 Cube<eT>::in_range(const span& row_span, const span& col_span, const span& slice_span) const
   {
@@ -3786,7 +3764,6 @@ Cube<eT>::in_range(const span& row_span, const span& col_span, const span& slice
 
 template<typename eT>
 inline
-arma_warn_unused
 bool
 Cube<eT>::in_range(const uword in_row, const uword in_col, const uword in_slice, const SizeCube& s) const
   {
@@ -3812,7 +3789,6 @@ Cube<eT>::in_range(const uword in_row, const uword in_col, const uword in_slice,
 //! returns a pointer to array of eTs used by the cube
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT*
 Cube<eT>::memptr()
   {
@@ -3824,7 +3800,6 @@ Cube<eT>::memptr()
 //! returns a pointer to array of eTs used by the cube
 template<typename eT>
 arma_inline
-arma_warn_unused
 const eT*
 Cube<eT>::memptr() const
   {
@@ -3836,7 +3811,6 @@ Cube<eT>::memptr() const
 //! returns a pointer to array of eTs used by the specified slice in the cube
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT*
 Cube<eT>::slice_memptr(const uword uslice)
   {
@@ -3848,7 +3822,6 @@ Cube<eT>::slice_memptr(const uword uslice)
 //! returns a pointer to array of eTs used by the specified slice in the cube
 template<typename eT>
 arma_inline
-arma_warn_unused
 const eT*
 Cube<eT>::slice_memptr(const uword uslice) const
   {
@@ -3860,7 +3833,6 @@ Cube<eT>::slice_memptr(const uword uslice) const
 //! returns a pointer to array of eTs used by the specified slice in the cube
 template<typename eT>
 arma_inline
-arma_warn_unused
 eT*
 Cube<eT>::slice_colptr(const uword uslice, const uword col)
   {
@@ -3872,7 +3844,6 @@ Cube<eT>::slice_colptr(const uword uslice, const uword col)
 //! returns a pointer to array of eTs used by the specified slice in the cube
 template<typename eT>
 arma_inline
-arma_warn_unused
 const eT*
 Cube<eT>::slice_colptr(const uword uslice, const uword col) const
   {
@@ -4387,7 +4358,6 @@ Cube<eT>::set_imag(const BaseCube<typename Cube<eT>::pod_type,T1>& X)
 
 template<typename eT>
 inline
-arma_warn_unused
 eT
 Cube<eT>::min() const
   {
@@ -4407,7 +4377,6 @@ Cube<eT>::min() const
 
 template<typename eT>
 inline
-arma_warn_unused
 eT
 Cube<eT>::max() const
   {
@@ -4540,7 +4509,6 @@ Cube<eT>::max(uword& row_of_max_val, uword& col_of_max_val, uword& slice_of_max_
 //! save the cube to a file
 template<typename eT>
 inline
-arma_cold
 bool
 Cube<eT>::save(const std::string name, const file_type type) const
   {
@@ -4592,7 +4560,6 @@ Cube<eT>::save(const std::string name, const file_type type) const
 
 template<typename eT>
 inline
-arma_cold
 bool
 Cube<eT>::save(const hdf5_name& spec, const file_type type) const
   {
@@ -4652,7 +4619,6 @@ Cube<eT>::save(const hdf5_name& spec, const file_type type) const
 //! save the cube to a stream
 template<typename eT>
 inline
-arma_cold
 bool
 Cube<eT>::save(std::ostream& os, const file_type type) const
   {
@@ -4697,7 +4663,6 @@ Cube<eT>::save(std::ostream& os, const file_type type) const
 //! load a cube from a file
 template<typename eT>
 inline
-arma_cold
 bool
 Cube<eT>::load(const std::string name, const file_type type)
   {
@@ -4766,7 +4731,6 @@ Cube<eT>::load(const std::string name, const file_type type)
 
 template<typename eT>
 inline
-arma_cold
 bool
 Cube<eT>::load(const hdf5_name& spec, const file_type type)
   {
@@ -4819,7 +4783,6 @@ Cube<eT>::load(const hdf5_name& spec, const file_type type)
 //! load a cube from a stream
 template<typename eT>
 inline
-arma_cold
 bool
 Cube<eT>::load(std::istream& is, const file_type type)
   {
@@ -5113,7 +5076,6 @@ Cube<eT>::size() const
 
 template<typename eT>
 inline
-arma_warn_unused
 eT&
 Cube<eT>::front()
   {
@@ -5126,7 +5088,6 @@ Cube<eT>::front()
 
 template<typename eT>
 inline
-arma_warn_unused
 const eT&
 Cube<eT>::front() const
   {
@@ -5139,7 +5100,6 @@ Cube<eT>::front() const
 
 template<typename eT>
 inline
-arma_warn_unused
 eT&
 Cube<eT>::back()
   {
@@ -5152,7 +5112,6 @@ Cube<eT>::back()
 
 template<typename eT>
 inline
-arma_warn_unused
 const eT&
 Cube<eT>::back() const
   {
@@ -5482,7 +5441,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator=(const fix
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
 arma_inline
-arma_warn_unused
 eT&
 Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator[] (const uword i)
   {
@@ -5494,7 +5452,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator[] (const u
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
 arma_inline
-arma_warn_unused
 const eT&
 Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator[] (const uword i) const
   {
@@ -5506,7 +5463,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator[] (const u
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
 arma_inline
-arma_warn_unused
 eT&
 Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::at(const uword i)
   {
@@ -5518,7 +5474,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::at(const uword i)
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
 arma_inline
-arma_warn_unused
 const eT&
 Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::at(const uword i) const
   {
@@ -5530,7 +5485,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::at(const uword i) c
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
 arma_inline
-arma_warn_unused
 eT&
 Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator() (const uword i)
   {
@@ -5544,7 +5498,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator() (const u
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
 arma_inline
-arma_warn_unused
 const eT&
 Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator() (const uword i) const
   {
@@ -5560,8 +5513,7 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator() (const u
   template<typename eT>
   template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
   arma_inline
-  arma_warn_unused
-  eT&
+    eT&
   Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator[] (const uword in_row, const uword in_col, const uword in_slice)
     {
     const uword i = in_slice*fixed_n_elem_slice + in_col*fixed_n_rows + in_row;
@@ -5574,8 +5526,7 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator() (const u
   template<typename eT>
   template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
   arma_inline
-  arma_warn_unused
-  const eT&
+    const eT&
   Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator[] (const uword in_row, const uword in_col, const uword in_slice) const
     {
     const uword i = in_slice*fixed_n_elem_slice + in_col*fixed_n_rows + in_row;
@@ -5590,7 +5541,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator() (const u
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
 arma_inline
-arma_warn_unused
 eT&
 Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::at(const uword in_row, const uword in_col, const uword in_slice)
   {
@@ -5604,7 +5554,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::at(const uword in_r
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
 arma_inline
-arma_warn_unused
 const eT&
 Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::at(const uword in_row, const uword in_col, const uword in_slice) const
   {
@@ -5618,7 +5567,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::at(const uword in_r
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
 arma_inline
-arma_warn_unused
 eT&
 Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator() (const uword in_row, const uword in_col, const uword in_slice)
   {
@@ -5641,7 +5589,6 @@ Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator() (const u
 template<typename eT>
 template<uword fixed_n_rows, uword fixed_n_cols, uword fixed_n_slices>
 arma_inline
-arma_warn_unused
 const eT&
 Cube<eT>::fixed<fixed_n_rows, fixed_n_cols, fixed_n_slices>::operator() (const uword in_row, const uword in_col, const uword in_slice) const
   {

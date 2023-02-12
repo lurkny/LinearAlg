@@ -256,7 +256,6 @@ op_inv_gen_full::apply_direct(Mat<typename T1::elem_type>& out, const Base<typen
 
 
 template<typename eT>
-arma_cold
 inline
 bool
 op_inv_gen_full::apply_tiny_2x2(Mat<eT>& X)
@@ -293,7 +292,6 @@ op_inv_gen_full::apply_tiny_2x2(Mat<eT>& X)
 
 
 template<typename eT>
-arma_cold
 inline
 bool
 op_inv_gen_full::apply_tiny_3x3(Mat<eT>& X)
@@ -343,7 +341,6 @@ op_inv_gen_full::apply_tiny_3x3(Mat<eT>& X)
 
 
 template<typename eT>
-arma_cold
 inline
 bool
 op_inv_gen_full::apply_tiny_4x4(Mat<eT>& X)

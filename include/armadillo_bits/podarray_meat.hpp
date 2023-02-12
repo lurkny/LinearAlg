@@ -21,7 +21,6 @@
 
 
 template<typename eT>
-arma_hot
 inline
 podarray<eT>::~podarray()
   {
@@ -84,7 +83,6 @@ podarray<eT>::operator=(const podarray& x)
 
 
 template<typename eT>
-arma_hot
 arma_inline
 podarray<eT>::podarray(const uword new_n_elem)
   : n_elem(new_n_elem)

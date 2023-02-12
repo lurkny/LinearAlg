@@ -394,9 +394,10 @@
 #endif
 
 
-// #if defined(ARMA_HAVE_CXX17)
-//   #define arma_warn_unused  [[nodiscard]]
-// #endif
+#if defined(ARMA_HAVE_CXX17)
+  #undef  arma_warn_unused
+  #define arma_warn_unused  [[nodiscard]]
+#endif
 
 
 #if !defined(ARMA_DONT_USE_OPENMP)

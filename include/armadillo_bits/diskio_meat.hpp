@@ -27,7 +27,6 @@
 //! XYZ specifies the width of each element in terms of bytes, eg. "008" indicates eight bytes.
 template<typename eT>
 inline
-arma_cold
 std::string
 diskio::gen_txt_header(const Mat<eT>&)
   {
@@ -77,7 +76,6 @@ diskio::gen_txt_header(const Mat<eT>&)
 //! XYZ specifies the width of each element in terms of bytes, eg. "008" indicates eight bytes.
 template<typename eT>
 inline
-arma_cold
 std::string
 diskio::gen_bin_header(const Mat<eT>&)
   {
@@ -127,7 +125,6 @@ diskio::gen_bin_header(const Mat<eT>&)
 //! XYZ specifies the width of each element in terms of bytes, eg. "008" indicates eight bytes.
 template<typename eT>
 inline
-arma_cold
 std::string
 diskio::gen_bin_header(const SpMat<eT>&)
   {
@@ -176,7 +173,6 @@ diskio::gen_bin_header(const SpMat<eT>&)
 //! XYZ specifies the width of each element in terms of bytes, eg. "008" indicates eight bytes.
 template<typename eT>
 inline
-arma_cold
 std::string
 diskio::gen_txt_header(const Cube<eT>&)
   {
@@ -226,7 +222,6 @@ diskio::gen_txt_header(const Cube<eT>&)
 //! XYZ specifies the width of each element in terms of bytes, eg. "008" indicates eight bytes.
 template<typename eT>
 inline
-arma_cold
 std::string
 diskio::gen_bin_header(const Cube<eT>&)
   {
@@ -281,7 +276,6 @@ diskio::guess_file_type(std::istream& f)
 
 
 inline
-arma_cold
 file_type
 diskio::guess_file_type_internal(std::istream& f)
   {
@@ -356,7 +350,6 @@ diskio::guess_file_type_internal(std::istream& f)
 //! Append a quasi-random string to the given filename.
 //! Avoiding use of rand() to preserve its state. 
 inline
-arma_cold
 std::string
 diskio::gen_tmp_name(const std::string& x)
   {
@@ -393,7 +386,6 @@ diskio::gen_tmp_name(const std::string& x)
 //! (i)  overwriting files that are write protected,
 //! (ii) overwriting directories.
 inline
-arma_cold
 bool
 diskio::safe_rename(const std::string& old_name, const std::string& new_name)
   {
@@ -413,7 +405,6 @@ diskio::safe_rename(const std::string& old_name, const std::string& new_name)
 
 
 inline
-arma_cold
 bool
 diskio::is_readable(const std::string& name)
   {
