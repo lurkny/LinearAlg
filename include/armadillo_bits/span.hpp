@@ -28,7 +28,9 @@ template<typename junk = int>
 class span_base
   {
   public:
-  static constexpr span_alt all = span_alt();
+  
+  static const span_alt all;   // workaround for bug in gcc 4.8
+  // static constexpr span_alt all = span_alt();
   };
 
 
