@@ -127,8 +127,8 @@ class field
   arma_inline arma_warn_unused const oT& back() const;
   
   
-  [[deprecated("use braced initialiser list instead")]] inline field_injector<field> operator<<(const oT& val);
-  [[deprecated("use braced initialiser list instead")]] inline field_injector<field> operator<<(const injector_end_of_row<>& x);
+  arma_frown("use braced initialiser list instead") inline field_injector<field> operator<<(const oT& val);
+  arma_frown("use braced initialiser list instead") inline field_injector<field> operator<<(const injector_end_of_row<>& x);
   
   
   inline       subview_field<oT> row(const uword row_num);
@@ -217,11 +217,11 @@ class field
   inline arma_cold bool load(      std::istream& is,   const file_type type = auto_detect);
   
   
-  [[deprecated]] inline bool quiet_save(const std::string   name, const file_type type = arma_binary) const;
-  [[deprecated]] inline bool quiet_save(      std::ostream& os,   const file_type type = arma_binary) const;
+  arma_deprecated inline bool quiet_save(const std::string   name, const file_type type = arma_binary) const;
+  arma_deprecated inline bool quiet_save(      std::ostream& os,   const file_type type = arma_binary) const;
   
-  [[deprecated]] inline bool quiet_load(const std::string   name, const file_type type = auto_detect);
-  [[deprecated]] inline bool quiet_load(      std::istream& is,   const file_type type = auto_detect);
+  arma_deprecated inline bool quiet_load(const std::string   name, const file_type type = auto_detect);
+  arma_deprecated inline bool quiet_load(      std::istream& is,   const file_type type = auto_detect);
   
   
   // for container-like functionality

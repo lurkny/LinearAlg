@@ -21,8 +21,11 @@
 #undef ARMA_HAVE_CXX17
 #undef ARMA_HAVE_CXX20
 
-#if (__cplusplus >= 201402L)
+#if (__cplusplus >= 201103L)
   #define ARMA_HAVE_CXX11
+#endif
+
+#if (__cplusplus >= 201402L)
   #define ARMA_HAVE_CXX14
 #endif
 
@@ -65,8 +68,8 @@
 #endif
 
 
-#if !defined(ARMA_HAVE_CXX14)
-  #error "*** C++14 compiler required; enable C++14 mode in your compiler, or use an earlier version of Armadillo"
+#if !defined(ARMA_HAVE_CXX11)
+  #error "*** C++11 compiler required; enable C++11 mode in your compiler, or use an earlier version of Armadillo"
 #endif
 
 

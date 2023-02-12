@@ -23,6 +23,7 @@
 #undef arma_align_mem
 #undef arma_warn_unused
 #undef arma_deprecated
+#undef arma_frown
 #undef arma_malloc
 #undef arma_inline
 #undef arma_noinline
@@ -34,13 +35,11 @@
 #define arma_align_mem
 #define arma_warn_unused
 #define arma_deprecated
+#define arma_frown(msg)
 #define arma_malloc
 #define arma_inline            inline
 #define arma_noinline
 #define arma_ignore(variable)  ((void)(variable))
-
-// NOTE: arma_deprecated is a no-op and is kept only for compatibility;
-// NOTE: since C++14 the [[deprecated]] and [[deprecated("reason")]] attributes are used instead
 
 #undef arma_fortran_sans_prefix_B
 #undef arma_fortran_with_prefix_B
@@ -141,11 +140,6 @@
 #endif
 
 
-// #if defined(ARMA_HAVE_CXX17)
-//   #define arma_warn_unused  [[nodiscard]]
-// #endif
-
-
 #if !defined(ARMA_ALLOW_FAKE_GCC)
   #if (defined(__GNUG__) || defined(__GNUC__)) && (defined(__INTEL_COMPILER) || defined(__NVCC__) || defined(__CUDACC__) || defined(__PGI) || defined(__PATHSCALE__) || defined(__ARMCC_VERSION) || defined(__IBMCPP__))
     #undef  ARMA_DETECTED_FAKE_GCC
@@ -165,9 +159,13 @@
   #undef  ARMA_GCC_VERSION
   #define ARMA_GCC_VERSION (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__)
   
-  #if (ARMA_GCC_VERSION < 60100)
-    #error "*** newer compiler required; need gcc 6.1 or later ***"
+  #if (ARMA_GCC_VERSION < 40800)
+    #error "*** newer compiler required; need gcc 4.8 or later ***"
   #endif
+  
+  // #if (ARMA_GCC_VERSION < 60100)
+  //   #pragma message ("WARNING: support for gcc versions < 6.1 is deprecated")
+  // #endif
   
   #define ARMA_GOOD_COMPILER
   
@@ -176,6 +174,8 @@
   #undef  arma_aligned
   #undef  arma_align_mem
   #undef  arma_warn_unused
+  #undef  arma_deprecated
+  #undef  arma_frown
   #undef  arma_malloc
   #undef  arma_inline
   #undef  arma_noinline
@@ -185,6 +185,8 @@
   #define arma_aligned            __attribute__((__aligned__))
   #define arma_align_mem          __attribute__((__aligned__(16)))
   #define arma_warn_unused        __attribute__((__warn_unused_result__))
+  #define arma_deprecated         __attribute__((__deprecated__))
+  #define arma_frown(msg)         __attribute__((__deprecated__(msg)))
   #define arma_malloc             __attribute__((__malloc__))
   #define arma_inline      inline __attribute__((__always_inline__))
   #define arma_noinline           __attribute__((__noinline__))
@@ -243,6 +245,16 @@
     #define arma_warn_unused __attribute__((__warn_unused_result__))
   #endif
   
+  #if __has_attribute(__deprecated__)
+    #undef  arma_deprecated
+    #define arma_deprecated __attribute__((__deprecated__))
+  #endif
+  
+  #if __has_attribute(__deprecated__)
+    #undef  arma_frown
+    #define arma_frown(msg) __attribute__((__deprecated__(msg)))
+  #endif
+  
   #if __has_attribute(__malloc__)
     #undef  arma_malloc
     #define arma_malloc __attribute__((__malloc__))
@@ -285,7 +297,7 @@
     #error "*** newer compiler required ***"
   #endif
   
-  #if (__INTEL_COMPILER < 1600)
+  #if (__INTEL_COMPILER < 1500)
     #error "*** newer compiler required ***"
   #endif
   
@@ -302,6 +314,8 @@
     #error "*** newer compiler required ***"
   #endif
   
+  #undef  arma_deprecated
+  #define arma_deprecated __declspec(deprecated)
   // #undef  arma_inline
   // #define arma_inline inline __forceinline
   
@@ -364,11 +378,25 @@
   // http://www.oracle.com/technetwork/server-storage/solarisstudio/training/index-jsp-141991.html
   // http://www.oracle.com/technetwork/server-storage/solarisstudio/documentation/cplusplus-faq-355066.html
   
-  #if (__SUNPRO_CC < 0x5150)
+  #if (__SUNPRO_CC < 0x5140)
     #error "*** newer compiler required ***"
   #endif
   
 #endif
+
+
+#if defined(ARMA_HAVE_CXX14)
+  #undef  arma_deprecated
+  #define arma_deprecated [[deprecated]]
+
+  #undef  arma_frown
+  #define arma_frowm(msg) [[deprecated(msg)]]
+#endif
+
+
+// #if defined(ARMA_HAVE_CXX17)
+//   #define arma_warn_unused  [[nodiscard]]
+// #endif
 
 
 #if !defined(ARMA_DONT_USE_OPENMP)
@@ -394,6 +422,18 @@
   #if (defined(_OPENMP) && (_OPENMP < 201107))
     #pragma message ("NOTE: your compiler has an outdated version of OpenMP")
     #pragma message ("NOTE: consider upgrading to a better compiler")
+  #endif
+#endif
+
+
+#if defined(ARMA_USE_OPENMP)
+  #if (defined(ARMA_GCC_VERSION) && (ARMA_GCC_VERSION < 50400))
+    // due to https://gcc.gnu.org/bugzilla/show_bug.cgi?id=57580
+    // TODO: gcc 4.9.4 is also fixed, so use a more fine-grained gcc version check?
+    #undef ARMA_USE_OPENMP
+    #if !defined(ARMA_DONT_PRINT_OPENMP_WARNING)
+      #pragma message ("WARNING: use of OpenMP disabled due to compiler bug in gcc <= 5.3")
+    #endif
   #endif
 #endif
 
@@ -441,3 +481,16 @@
 // https://sourceware.org/bugzilla/show_bug.cgi?id=19239
 #undef minor
 #undef major
+
+
+// optionally allow disabling of compile-time deprecation messages (not recommended)
+// NOTE: option 'ARMA_IGNORE_DEPRECATED_MARKER' will be removed
+// NOTE: disabling deprecation messages is counter-productive
+
+#if defined(ARMA_IGNORE_DEPRECATED_MARKER) && (!defined(ARMA_DONT_IGNORE_DEPRECATED_MARKER)) && (!defined(ARMA_EXTRA_DEBUG))
+  #undef  arma_deprecated
+  #define arma_deprecated
+
+  #undef  arma_frown
+  #define arma_frowm(msg)
+#endif

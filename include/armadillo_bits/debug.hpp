@@ -39,7 +39,7 @@ get_cerr_stream()
 
 
 
-[[deprecated]]
+arma_deprecated
 inline
 std::ostream&
 get_stream_err1()
@@ -49,7 +49,7 @@ get_stream_err1()
 
 
 
-[[deprecated]]
+arma_deprecated
 inline
 std::ostream&
 get_stream_err2()
@@ -59,7 +59,7 @@ get_stream_err2()
 
 
 
-[[deprecated("this function does nothing; instead use ARMA_COUT_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+arma_frown("this function does nothing; instead use ARMA_COUT_STREAM or ARMA_WARN_LEVEL; see documentation")
 inline
 void
 set_cout_stream(const std::ostream&)
@@ -68,7 +68,7 @@ set_cout_stream(const std::ostream&)
 
 
 
-[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+arma_frown("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")
 inline
 void
 set_cerr_stream(const std::ostream&)
@@ -77,7 +77,7 @@ set_cerr_stream(const std::ostream&)
 
 
 
-[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+arma_frown("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")
 inline
 void
 set_stream_err1(const std::ostream&)
@@ -86,7 +86,7 @@ set_stream_err1(const std::ostream&)
 
 
 
-[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+arma_frown("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")
 inline
 void
 set_stream_err2(const std::ostream&)
@@ -96,7 +96,7 @@ set_stream_err2(const std::ostream&)
 
 
 template<typename T>
-[[deprecated("this function does nothing; instead use ARMA_COUT_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+arma_frown("this function does nothing; instead use ARMA_COUT_STREAM or ARMA_WARN_LEVEL; see documentation")
 inline
 std::ostream&
 arma_cout_stream(std::ostream*)
@@ -107,7 +107,7 @@ arma_cout_stream(std::ostream*)
 
 
 template<typename T>
-[[deprecated("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")]]
+arma_frown("this function does nothing; instead use ARMA_CERR_STREAM or ARMA_WARN_LEVEL; see documentation")
 inline
 std::ostream&
 arma_cerr_stream(std::ostream*)
