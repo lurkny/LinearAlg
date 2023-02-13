@@ -95,6 +95,25 @@ podarray<eT>::podarray(const uword new_n_elem)
 
 
 template<typename eT>
+template<bool do_zeros>
+inline
+podarray<eT>::podarray(const uword new_n_elem, const arma_initmode_indicator<do_zeros>&)
+  : n_elem(new_n_elem)
+  {
+  arma_extra_debug_sigprint_this(this);
+  
+  init_cold(new_n_elem);
+  
+  if(do_zeros)
+    {
+    arma_extra_debug_print("podarray::constructor: zeroing memory");
+    arrayops::fill_zeros(memptr(), n_elem);
+    }
+  }
+
+
+
+template<typename eT>
 arma_inline
 podarray<eT>::podarray(const eT* X, const uword new_n_elem)
   : n_elem(new_n_elem)
