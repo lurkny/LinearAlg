@@ -180,16 +180,16 @@
   #undef  arma_inline
   #undef  arma_noinline
   
-  #define arma_hot                __attribute__((__hot__))
-  #define arma_cold               __attribute__((__cold__))
-  #define arma_aligned            __attribute__((__aligned__))
-  #define arma_align_mem          __attribute__((__aligned__(16)))
-  #define arma_warn_unused        __attribute__((__warn_unused_result__))
-  #define arma_deprecated         __attribute__((__deprecated__))
-  #define arma_frown(msg)         __attribute__((__deprecated__(msg)))
-  #define arma_malloc             __attribute__((__malloc__))
-  #define arma_inline      inline __attribute__((__always_inline__))
-  #define arma_noinline           __attribute__((__noinline__))
+  #define arma_hot         __attribute__((__hot__))
+  #define arma_cold        __attribute__((__cold__))
+  #define arma_aligned     __attribute__((__aligned__))
+  #define arma_align_mem   __attribute__((__aligned__(16)))
+  #define arma_warn_unused __attribute__((__warn_unused_result__))
+  #define arma_deprecated  __attribute__((__deprecated__))
+  #define arma_frown(msg)  __attribute__((__deprecated__(msg)))
+  #define arma_malloc      __attribute__((__malloc__))
+  #define arma_inline      __attribute__((__always_inline__)) inline
+  #define arma_noinline    __attribute__((__noinline__))
   
   #undef  ARMA_HAVE_ALIGNED_ATTRIBUTE
   #define ARMA_HAVE_ALIGNED_ATTRIBUTE
@@ -262,7 +262,7 @@
   
   #if __has_attribute(__always_inline__)
     #undef  arma_inline
-    #define arma_inline inline __attribute__((__always_inline__))
+    #define arma_inline __attribute__((__always_inline__)) inline
   #endif
   
   #if __has_attribute(__noinline__)
@@ -317,7 +317,7 @@
   #undef  arma_deprecated
   #define arma_deprecated __declspec(deprecated)
   // #undef  arma_inline
-  // #define arma_inline inline __forceinline
+  // #define arma_inline __forceinline inline
   
   #pragma warning(push)
   

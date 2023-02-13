@@ -242,8 +242,8 @@ class fft_engine_kissfft
   
   
   
-  inline
   arma_hot
+  inline
   void
   butterfly_5(cx_type* Y, const uword stride, const uword m) const
     {
