@@ -14498,8 +14498,12 @@ If <i>n</i> is not specified, the transform length is the same as the length of 
 </li>
 <br>
 <li>
-By default, an internal FFT algorithm based on <a href="https://github.com/mborgerding/kissfft">KISS FFT</a> is used;
-the <a href="https://www.fftw.org/">FFTW3 library</a> can be optionally used instead by defining <a href="#config_hpp">ARMA_USE_FFTW3</a> before including the armadillo header:
+By default, an internal FFT algorithm based on <a href="https://github.com/mborgerding/kissfft">KISS FFT</a> is used
+</li>
+<br>
+<li>
+Since Armadillo 12.0, the <a href="https://www.fftw.org/">FFTW3 library</a> can be optionally used instead of KISS FFT
+by defining <a href="#config_hpp">ARMA_USE_FFTW3</a> before including the armadillo header:
 <br>
 <code>
 #define ARMA_USE_FFTW3
