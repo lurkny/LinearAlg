@@ -743,7 +743,7 @@ which is one of:
 <li>
 <b>Caveat:</b>
 <ul>
-<li>in Armadillo 10.5 and newer versions, the elements are initialised to zero by default</li>
+<li>since Armadillo 10.5, the elements are initialised to zero by default</li>
 <li>
 in Armadillo 10.4 and older versions, the elements are not initialised unless <i>fill_form</i> is specified;
 <br>ie. without specifying <i>fill_form</i>, the elements may contain garbage values, including NaN
@@ -1108,7 +1108,7 @@ Constructors:
 <li>
 <b>Caveat:</b>
 <ul>
-<li>in Armadillo 10.5 and newer versions, the elements are initialised to zero by default</li>
+<li>since Armadillo 10.5, the elements are initialised to zero by default</li>
 <li>
 in Armadillo 10.4 and older versions, the elements are not initialised unless <i>fill_form</i> is specified;
 <br>ie. without specifying <i>fill_form</i>, the elements may contain garbage values, including NaN; see the <a href="#Mat">Mat class</a> for details on <i>fill_form</i>
@@ -1383,7 +1383,7 @@ Constructors:
 <li>
 <b>Caveat:</b>
 <ul>
-<li>in Armadillo 10.5 and newer versions, the elements are initialised to zero by default</li>
+<li>since Armadillo 10.5, the elements are initialised to zero by default</li>
 <li>
 in Armadillo 10.4 and older versions, the elements are not initialised unless <i>fill_form</i> is specified;
 <br>ie. without specifying <i>fill_form</i>, the elements may contain garbage values, including NaN; see the <a href="#Mat">Mat class</a> for details on <i>fill_form</i>
@@ -1677,7 +1677,7 @@ which is one of:
 <li>
 <b>Caveat:</b>
 <ul>
-<li>in Armadillo 10.5 and newer versions, the elements are initialised to zero by default</li>
+<li>since Armadillo 10.5, the elements are initialised to zero by default</li>
 <li>
 in Armadillo 10.4 and older versions, the elements are not initialised unless <i>fill_form</i> is specified;
 <br>ie. without specifying <i>fill_form</i>, the elements may contain garbage values, including NaN
@@ -13564,7 +13564,7 @@ the above settings can be combined using the <code>+</code> operator; for exampl
 <br>
 <li>
 If a rank deficient system is detected and the <i><code>solve_opts::no_approx</code></i> option is <b>not</b> enabled, a warning is emitted and an approximate solution is attempted;
-<br>in Armadillo 10.4 and newer versions, this warning can be disabled by setting <a href="#config_hpp">ARMA_WARN_LEVEL</a> to 1 before including the armadillo header:
+<br>since Armadillo 10.4, this warning can be disabled by setting <a href="#config_hpp">ARMA_WARN_LEVEL</a> to 1 before including the armadillo header:
 <br><code>#define ARMA_WARN_LEVEL 1</code>
 <br><code>#include&nbsp;&lt;armadillo&gt;</code>
 </li>
