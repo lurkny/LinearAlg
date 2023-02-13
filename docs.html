@@ -743,9 +743,9 @@ which is one of:
 <li>
 <b>Caveat:</b>
 <ul>
-<li>in Armadillo 10.5 and later versions, the elements are initialised to zero by default</li>
+<li>in Armadillo 10.5 and newer versions, the elements are initialised to zero by default</li>
 <li>
-in Armadillo 10.4 and earlier versions, the elements are not initialised unless <i>fill_form</i> is specified;
+in Armadillo 10.4 and older versions, the elements are not initialised unless <i>fill_form</i> is specified;
 <br>ie. without specifying <i>fill_form</i>, the elements may contain garbage values, including NaN
 </li>
 </ul>
@@ -877,13 +877,13 @@ mat A(5,5);  A = 123.0;
 Use the following code instead:
 <ul>
 <pre>
-mat A(5,5,fill::value(123.0));         // Armadillo 10.6 and later
+mat A(5,5,fill::value(123.0));         // Armadillo 10.6 and newer
 </pre>
 </ul>
 or
 <ul>
 <pre>
-mat A(5,5,fill::none); A.fill(123.0);  // Armadillo 10.5 and earlier
+mat A(5,5,fill::none); A.fill(123.0);  // Armadillo 10.5 and older
 </pre>
 </ul>
 <br>
@@ -1108,9 +1108,9 @@ Constructors:
 <li>
 <b>Caveat:</b>
 <ul>
-<li>in Armadillo 10.5 and later versions, the elements are initialised to zero by default</li>
+<li>in Armadillo 10.5 and newer versions, the elements are initialised to zero by default</li>
 <li>
-in Armadillo 10.4 and earlier versions, the elements are not initialised unless <i>fill_form</i> is specified;
+in Armadillo 10.4 and older versions, the elements are not initialised unless <i>fill_form</i> is specified;
 <br>ie. without specifying <i>fill_form</i>, the elements may contain garbage values, including NaN; see the <a href="#Mat">Mat class</a> for details on <i>fill_form</i>
 </li>
 </ul>
@@ -1215,13 +1215,13 @@ vec v(5);  v = 123.0;
 Use the following code instead:
 <ul>
 <pre>
-vec v(5, fill::value(123.0));         // Armadillo 10.6 and later
+vec v(5, fill::value(123.0));         // Armadillo 10.6 and newer
 </pre>
 </ul>
 or
 <ul>
 <pre>
-vec v(5, fill::none); v.fill(123.0);  // Armadillo 10.5 and earlier
+vec v(5, fill::none); v.fill(123.0);  // Armadillo 10.5 and older
 </pre>
 </ul>
 </li>
@@ -1383,9 +1383,9 @@ Constructors:
 <li>
 <b>Caveat:</b>
 <ul>
-<li>in Armadillo 10.5 and later versions, the elements are initialised to zero by default</li>
+<li>in Armadillo 10.5 and newer versions, the elements are initialised to zero by default</li>
 <li>
-in Armadillo 10.4 and earlier versions, the elements are not initialised unless <i>fill_form</i> is specified;
+in Armadillo 10.4 and older versions, the elements are not initialised unless <i>fill_form</i> is specified;
 <br>ie. without specifying <i>fill_form</i>, the elements may contain garbage values, including NaN; see the <a href="#Mat">Mat class</a> for details on <i>fill_form</i>
 </li>
 </ul>
@@ -1490,13 +1490,13 @@ rowvec r(5);  r = 123.0;
 Use the following code instead:
 <ul>
 <pre>
-rowvec r(5, fill::value(123.0));         // Armadillo 10.6 and later
+rowvec r(5, fill::value(123.0));         // Armadillo 10.6 and newer
 </pre>
 </ul>
 or
 <ul>
 <pre>
-rowvec r(5, fill::none); r.fill(123.0);  // Armadillo 10.5 and earlier
+rowvec r(5, fill::none); r.fill(123.0);  // Armadillo 10.5 and older
 </pre>
 </ul>
 <br>
@@ -1677,9 +1677,9 @@ which is one of:
 <li>
 <b>Caveat:</b>
 <ul>
-<li>in Armadillo 10.5 and later versions, the elements are initialised to zero by default</li>
+<li>in Armadillo 10.5 and newer versions, the elements are initialised to zero by default</li>
 <li>
-in Armadillo 10.4 and earlier versions, the elements are not initialised unless <i>fill_form</i> is specified;
+in Armadillo 10.4 and older versions, the elements are not initialised unless <i>fill_form</i> is specified;
 <br>ie. without specifying <i>fill_form</i>, the elements may contain garbage values, including NaN
 </li>
 </ul>
@@ -1795,13 +1795,13 @@ cube c(5,6,7);  c = 123.0;
 Use the following code instead:
 <ul>
 <pre>
-cube c(5,6,7,fill::value(123.0));         // Armadillo 10.6 and later
+cube c(5,6,7,fill::value(123.0));         // Armadillo 10.6 and newer
 </pre>
 </ul>
 or
 <ul>
 <pre>
-cube c(5,6,7,fill::none); c.fill(123.0);  // Armadillo 10.5 and earlier
+cube c(5,6,7,fill::none); c.fill(123.0);  // Armadillo 10.5 and older
 </pre>
 </ul>
 <br>
@@ -13564,7 +13564,7 @@ the above settings can be combined using the <code>+</code> operator; for exampl
 <br>
 <li>
 If a rank deficient system is detected and the <i><code>solve_opts::no_approx</code></i> option is <b>not</b> enabled, a warning is emitted and an approximate solution is attempted;
-<br>in Armadillo 10.4 and later versions, this warning can be disabled by setting <a href="#config_hpp">ARMA_WARN_LEVEL</a> to 1 before including the armadillo header:
+<br>in Armadillo 10.4 and newer versions, this warning can be disabled by setting <a href="#config_hpp">ARMA_WARN_LEVEL</a> to 1 before including the armadillo header:
 <br><code>#define ARMA_WARN_LEVEL 1</code>
 <br><code>#include&nbsp;&lt;armadillo&gt;</code>
 </li>
