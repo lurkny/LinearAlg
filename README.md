@@ -121,7 +121,7 @@ Armadillo requires a C++ compiler that supports at least the C++11 standard.
 On Linux-based systems, install the GCC C++ compiler, which is available as a pre-built package.
 The package name might be `g++` or `gcc-c++` depending on your system.
 
-On macOS systems, a C++ compiler can be obtained by first installing Xcode (version 8 or later)
+On macOS systems, a C++ compiler can be obtained by first installing Xcode (at least version 8)
 and then running the following command in a terminal window:  
 
     xcode-select --install
