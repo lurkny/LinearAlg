@@ -107,9 +107,7 @@ op_fft_real::apply( Mat< std::complex<typename T1::pod_type> >& out, const mtOp<
     
     if( (N_user == 1) && (N_orig >= 1) )  { out[0] = out_eT( X[0] ); return; }
     
-    podarray<out_eT> data(N_user);
-    
-    data.zeros();
+    podarray<out_eT> data(N_user, arma_zeros_indicator());
     
           out_eT* data_mem = data.memptr();
     const  in_eT*    X_mem =    X.memptr();
@@ -135,9 +133,7 @@ op_fft_real::apply( Mat< std::complex<typename T1::pod_type> >& out, const mtOp<
       return;
       }
     
-    podarray<out_eT> data(N_user);
-    
-    data.zeros();
+    podarray<out_eT> data(N_user, arma_zeros_indicator());
     
     out_eT* data_mem = data.memptr();
     
