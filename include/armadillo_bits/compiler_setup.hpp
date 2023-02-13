@@ -164,7 +164,7 @@
   #endif
   
   // #if (ARMA_GCC_VERSION < 60100)
-  //   #pragma message ("WARNING: support for gcc versions < 6.1 is deprecated")
+  //   #pragma message ("WARNING: support for gcc versions older than 6.1 is deprecated")
   // #endif
   
   #define ARMA_GOOD_COMPILER

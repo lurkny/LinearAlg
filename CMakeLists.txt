@@ -21,7 +21,7 @@
 ## NOTE: To use Armadillo without installation, compile your programs along these lines:
 ## NOTE: g++ prog.cpp -o prog -O2 -I /home/blah/armadillo-7.200.3/include -DARMA_DONT_USE_WRAPPER -lopenblas -llapack
 ## NOTE: The above command line assumes that you have unpacked the armadillo archive into /home/blah/  
-## NOTE: You will need to adjust this for later versions of Armadillo (ie. change the 7.200.3 part)
+## NOTE: You will need to adjust this for newer versions of Armadillo (ie. change the 7.200.3 part)
 ## NOTE: and/or if you have unpacked the armadillo archive into a different directory.
 ## NOTE: Replace -lopenblas with -lblas if you don't have OpenBLAS.
 ## NOTE: On macOS, replace -lblas -llapack with -framework Accelerate
@@ -95,7 +95,10 @@ if(DEFINED CMAKE_CXX_COMPILER_ID AND DEFINED CMAKE_CXX_COMPILER_VERSION)
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     if(NOT (${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.8.3))
       set(ARMA_USE_EXTERN_RNG true)
-      message(STATUS "Detected gcc 4.8.3 or later")
+      message(STATUS "Detected gcc 4.8.3 or newer")
+      if(${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 6.1.0)
+        messaage(STATUS "WARNING: support for gcc versions older than 6.1 is deprecated")
+      endif()
       if(NOT DEFINED CMAKE_CXX_STANDARD)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
         message(STATUS "Added '-std=c++11' to compiler flags")
@@ -108,7 +111,7 @@ if(DEFINED CMAKE_CXX_COMPILER_ID AND DEFINED CMAKE_CXX_COMPILER_VERSION)
       if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         if(NOT ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 6.0)
           set(ARMA_USE_EXTERN_RNG true)
-          message(STATUS "Detected Clang 6.0 or later")
+          message(STATUS "Detected Clang 6.0 or newer")
           if(NOT DEFINED CMAKE_CXX_STANDARD)
             set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
             message(STATUS "Added '-std=c++14' to compiler flags")
@@ -119,7 +122,7 @@ if(DEFINED CMAKE_CXX_COMPILER_ID AND DEFINED CMAKE_CXX_COMPILER_VERSION)
       elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
         if(NOT ${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 8.0)
           set(ARMA_USE_EXTERN_RNG true)
-          message(STATUS "Detected AppleClang 8.0 or later")
+          message(STATUS "Detected AppleClang 8.0 or newer")
           if(NOT DEFINED CMAKE_CXX_STANDARD)
             set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
             message(STATUS "Added '-std=c++14' to compiler flags")
