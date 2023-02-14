@@ -270,52 +270,24 @@ inline
 void
 podarray<eT>::copy_row(const Mat<eT>& A, const uword row)
   {
-  const uword cols = A.n_cols;
+  arma_extra_debug_sigprint();
   
   // note: this function assumes that the podarray has been set to the correct size beforehand
-  eT* out = memptr();
   
-  switch(cols)
+  const uword n_rows = A.n_rows;
+  const uword n_cols = A.n_cols;
+  
+  const eT*   A_mem = &(A.at(row,0));
+        eT* out_mem = memptr();
+  
+  for(uword i=0; i < n_cols; ++i)
     {
-    default:
-      {
-      uword i,j;
-      for(i=0, j=1; j < cols; i+=2, j+=2)
-        {
-        const eT tmp_i = A.at(row, i);
-        const eT tmp_j = A.at(row, j);
-        
-        out[i] = tmp_i;
-        out[j] = tmp_j;
-        }
-      
-      if(i < cols)
-        {
-        out[i] = A.at(row, i);
-        }
-      }
-      break;
+    out_mem[i] = (*A_mem);
     
-    case 8:  out[7] = A.at(row, 7);
-    // fallthrough
-    case 7:  out[6] = A.at(row, 6);
-    // fallthrough
-    case 6:  out[5] = A.at(row, 5);
-    // fallthrough
-    case 5:  out[4] = A.at(row, 4);
-    // fallthrough
-    case 4:  out[3] = A.at(row, 3);
-    // fallthrough
-    case 3:  out[2] = A.at(row, 2);
-    // fallthrough
-    case 2:  out[1] = A.at(row, 1);
-    // fallthrough
-    case 1:  out[0] = A.at(row, 0);
-    // fallthrough
-    case 0:  ;
-    // fallthrough
+    A_mem += n_rows;
     }
   }
+
 
 
 template<typename eT>
