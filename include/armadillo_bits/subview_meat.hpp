@@ -1584,7 +1584,8 @@ subview<eT>::extract(Mat<eT>& out, const subview<eT>& in)
       // in.colptr(0) the first column of the subview, taking into account any row offset
       arrayops::copy( out.memptr(), in.colptr(0), n_rows );
       }
-    else   // a row vector (possibly empty)
+    else
+    if(n_rows == 1)   // a row vector
       {
       arma_extra_debug_print("subview::extract(): copying row (going across columns)");
       
