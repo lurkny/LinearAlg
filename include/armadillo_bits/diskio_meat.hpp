@@ -336,7 +336,7 @@ diskio::guess_file_type_internal(std::istream& f)
   
   // ssv_ascii has to be before csv_ascii;
   // if the data has semicolons, it suggests a CSV file with semicolon as the separating character;
-  // the semicolon may be used to allow the comma character to represent the decimal point (eg. 1,2345 vs 1.2345)
+  // the semicolon may be used to allow the comma character to represent the decimal seperator (eg. 1,2345 vs 1.2345)
   
   if(has_semicolon && (has_bracket == false))  { return ssv_ascii; }
   
