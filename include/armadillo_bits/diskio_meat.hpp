@@ -456,6 +456,29 @@ diskio::convert_token(eT& val, const std::string& token)
       }
     }
   
+  // // TODO: if csv_opts::semicolon is used, it implies that comma (,) may be the decimal seperator;
+  // // TODO: std::from_chars() handles only the standard decimal point (.) as the decimal seperator.
+  // 
+  // #if (defined(ARMA_HAVE_CXX17) && (__cpp_lib_to_chars >= 201611L))
+  //   {
+  //   const char str0     = str[0];
+  //   const bool start_ok = ((str0 != ' ') && (str0 != '\t') && (str0 != '+'));
+  //   
+  //   if(start_ok)
+  //     {
+  //     eT result_val = eT(0);
+  //     
+  //     const std::from_chars_result result_state = std::from_chars(str, str+N, result_val);
+  //     
+  //     if( (result_state.ptr != str) && (result_state.ec == std::errc()) )
+  //       {
+  //       val = result_val;
+  //       return true;
+  //       }
+  //     }
+  //   }
+  // #endif
+  
   
   char* endptr = nullptr;
   
