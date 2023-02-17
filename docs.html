@@ -14557,13 +14557,17 @@ By default, an internal FFT algorithm based on <a href="https://github.com/mborg
 </li>
 <br>
 <li>
-Since Armadillo 12.0, the <a href="https://www.fftw.org/">FFTW3 library</a> can be optionally used instead of KISS FFT
-by defining <a href="#config_hpp">ARMA_USE_FFTW3</a> before including the armadillo header:
+Since Armadillo 12.0, the <a href="https://www.fftw.org/">FFTW3 library</a> can be optionally used for faster execution, as follows:
+<ul>
+<li><a href="#config_hpp">ARMA_USE_FFTW3</a> must be defined before including the armadillo header:
 <br>
 <code>
 #define ARMA_USE_FFTW3
 <br>#include &lt;armadillo&gt;
 </code>
+</li>
+<li>you will also need to link with the FFTW3 runtime library (eg. <code><i>-lfftw3</i></code>)</li>
+</ul>
 </li>
 <br>
 <li><b>Caveat:</b> the transform is fastest when the transform length is a power of 2, eg. 64, 128, 256, 512, 1024, ...</li>
