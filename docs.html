@@ -14552,6 +14552,8 @@ The optional <i>n</i> argument specifies the transform length:
 If <i>n</i> is not specified, the transform length is the same as the length of the input vector
 </li>
 <br>
+<li><b>Caveat:</b> the transform is fastest when the transform length is a power of 2, eg. 64, 128, 256, 512, 1024, ...</li>
+<br>
 <li>
 By default, an internal FFT algorithm based on <a href="https://github.com/mborgerding/kissfft">KISS FFT</a> is used
 </li>
@@ -14569,8 +14571,6 @@ Since Armadillo 12.0, the <a href="https://www.fftw.org/">FFTW3 library</a> can 
 <li>you will also need to link with the FFTW3 runtime library (eg. <code><i>-lfftw3</i></code>)</li>
 </ul>
 </li>
-<br>
-<li><b>Caveat:</b> the transform is fastest when the transform length is a power of 2, eg. 64, 128, 256, 512, 1024, ...</li>
 <br>
 <li>
 Examples:
