@@ -303,7 +303,8 @@ Conrad Sanderson and Ryan Curtin.
 <tr><td><a href="#iterators_submat">iterators&nbsp;(submatrices)</a></td><td>&nbsp;</td><td>iterators and associated member functions for submatrices &amp; subcubes</td></tr>
 <tr><td><a href="#compat_container_fns">compat.&thinsp;container&thinsp;functions</a></td><td>&nbsp;</td><td>compatibility container functions</td></tr>
 <tr><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td><td><small><small>&nbsp;</small></small></td></tr>
-<tr><td><a href="#as_col_row">.as_col&nbsp;/&nbsp;.as_row&nbsp;</a></td><td>&nbsp;</td><td>return flattened matrix as column or row vector</td></tr>
+<tr><td><a href="#as_col_row">.as_col&nbsp;/&nbsp;.as_row</a></td><td>&nbsp;</td><td>return flattened matrix as column or row vector</td></tr>
+<tr><td><a href="#col_row_as_mat">.col_as_mat&nbsp;/&nbsp;.row_as_mat</a></td><td>&nbsp;</td><td>return cube column or row as matrix</td></tr>
 <tr><td><a href="#t_st_members">.t&nbsp;/&nbsp;.st&nbsp;</a></td><td>&nbsp;</td><td>return matrix transpose</td></tr>
 <tr><td><a href="#i_member">.i&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td><td>&nbsp;</td><td>return inverse of square matrix</td></tr>
 <tr><td><a href="#min_and_max_member">.min&nbsp;/&nbsp;.max</a></td><td>&nbsp;</td><td>return extremum value</td></tr>
@@ -4081,6 +4082,7 @@ See also:
 <ul>
 <li><a href="#in_range">.in_range()</a></li>
 <li><a href="#each_slice">.each_slice()</a></li>
+<li><a href="#col_row_as_mat">.col_as_mat()&nbsp;/&nbsp;.row_as_mat()</a></li>
 <li><a href="#join_slices">join_slices()</a></li>
 <li><a href="#shed">shed_slices()</a></li>
 <li><a href="#insert">insert_slices()</a></li>
@@ -5764,6 +5766,59 @@ See also:
 <li><a href="#reshape_member">.reshape()</a></li>
 <li><a href="#t_st_members">.t()&nbsp;/&nbsp;.st()</a></li>
 <li><a href="#as_scalar">as_scalar()</a></li>
+<li><a href="#vectorise">vectorise()</a></li>
+</ul>
+</li>
+<br>
+</ul>
+
+<div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
+<a name="col_row_as_mat"></a>
+<b>.col_as_mat(</b>&thinsp;col&thinsp;<b>)</b>
+<br>
+<b>.row_as_mat(</b>&thinsp;row&thinsp;<b>)</b>
+</b>
+<ul>
+<li>
+Member functions of any cube expression
+</li>
+<br>
+<li>
+<i>.col_as_mat(&thinsp;col&thinsp;)</i>:
+<ul>
+<li>return a matrix representation of the specified cube column</li>
+<li>the number of rows is preserved</li>
+<li>given a cube with size <i>R&thinsp;x&thinsp;C&thinsp;x&thinsp;S</i>, the resultant matrix size is <i>R&thinsp;x&thinsp;S</i>
+</ul>
+</li>
+<br>
+<li>
+<i>.row_as_mat(&thinsp;row&thinsp;)</i>:
+<ul>
+<li>return a matrix representation of the specified cube row</li>
+<li>the number of columns is preserved</li>
+<li>given a cube with size <i>R&thinsp;x&thinsp;C&thinsp;x&thinsp;S</i>, the resultant matrix size is <i>S&thinsp;x&thinsp;C</i>
+</li>
+</ul>
+</li>
+<br>
+<li>
+Examples:
+<ul>
+<pre>
+cube Q(5, 4, 3, fill::randu);
+
+mat A = Q.col_as_mat(2);  // size of A: 5x3
+
+mat B = Q.row_as_mat(2);  // size of B: 3x4
+</pre>
+</ul>
+</li>
+<br>
+<li>
+See also:
+<ul>
+<li><a href="#subcube">.slice()</a></li>
 <li><a href="#vectorise">vectorise()</a></li>
 </ul>
 </li>
@@ -12056,6 +12111,7 @@ vec v = vectorise(X);
 See also:
 <ul>
 <li><a href="#as_col_row">.as_col()&nbsp;/&nbsp;.as_row()</a></li>
+<li><a href="#col_row_as_mat">.col_as_mat()&nbsp;/&nbsp;.row_as_mat()</a></li>
 <li><a href="#nonzeros">nonzeros()</a></li>
 <li><a href="#reshape">reshape()</a></li>
 <li><a href="#resize">resize()</a></li>
