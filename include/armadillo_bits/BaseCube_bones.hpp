@@ -39,7 +39,7 @@ template<typename elem_type, typename derived, bool condition>
 struct BaseCube_eval {};
 
 template<typename elem_type, typename derived>
-struct BaseCube_eval<elem_type, derived, true>  { typedef BaseCube_eval_Cube<elem_type, derived>  result; };
+struct BaseCube_eval<elem_type, derived, true>  { typedef BaseCube_eval_Cube<elem_type, derived> result; };
 
 template<typename elem_type, typename derived>
 struct BaseCube_eval<elem_type, derived, false> { typedef BaseCube_eval_expr<elem_type, derived> result; };
