@@ -16,38 +16,17 @@
 // ------------------------------------------------------------------------
 
 
-//! \addtogroup CubeToMatOp
+//! \addtogroup op_row_as_mat
 //! @{
 
 
-
-template<typename T1, typename op_type>
-inline
-CubeToMatOp<T1, op_type>::CubeToMatOp(const T1& in_m)
-  : m(in_m)
+class op_row_as_mat
+  : public traits_op_default
   {
-  arma_extra_debug_sigprint();
-  }
-
-
-
-template<typename T1, typename op_type>
-inline
-CubeToMatOp<T1, op_type>::CubeToMatOp(const T1& in_m, const uword in_aux_uword)
-  : m(in_m)
-  , aux_uword(in_aux_uword)
-  {
-  arma_extra_debug_sigprint();
-  }
-
-
-
-template<typename T1, typename op_type>
-inline
-CubeToMatOp<T1, op_type>::~CubeToMatOp()
-  {
-  arma_extra_debug_sigprint();
-  }
+  public:
+  
+  template<typename T1> inline static void apply(Mat<typename T1::elem_type>& out, const CubeToMatOp<T1, op_row_as_mat>& expr);
+  };
 
 
 

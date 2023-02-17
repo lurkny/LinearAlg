@@ -315,6 +315,8 @@ namespace arma
   #include "armadillo_bits/op_sp_minus_bones.hpp"
   #include "armadillo_bits/op_powmat_bones.hpp"
   #include "armadillo_bits/op_rank_bones.hpp"
+  #include "armadillo_bits/op_row_as_mat_bones.hpp"
+  #include "armadillo_bits/op_col_as_mat_bones.hpp"
   
   #include "armadillo_bits/glue_times_bones.hpp"
   #include "armadillo_bits/glue_mixed_bones.hpp"
@@ -751,6 +753,8 @@ namespace arma
   #include "armadillo_bits/op_sp_minus_meat.hpp"
   #include "armadillo_bits/op_powmat_meat.hpp"
   #include "armadillo_bits/op_rank_meat.hpp"
+  #include "armadillo_bits/op_row_as_mat_meat.hpp"
+  #include "armadillo_bits/op_col_as_mat_meat.hpp"
   
   #include "armadillo_bits/glue_times_meat.hpp"
   #include "armadillo_bits/glue_mixed_meat.hpp"

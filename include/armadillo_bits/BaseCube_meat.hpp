@@ -397,6 +397,26 @@ BaseCube<elem_type,derived>::has_nan() const
 
 
 
+template<typename elem_type, typename derived>
+inline
+const CubeToMatOp<derived, op_row_as_mat>
+BaseCube<elem_type,derived>::row_as_mat(const uword in_row) const
+  {
+  return CubeToMatOp<derived, op_row_as_mat>( (*this).get_ref(), in_row );
+  }
+
+
+
+template<typename elem_type, typename derived>
+inline
+const CubeToMatOp<derived, op_col_as_mat>
+BaseCube<elem_type,derived>::col_as_mat(const uword in_col) const
+  {
+  return CubeToMatOp<derived, op_col_as_mat>( (*this).get_ref(), in_col );
+  }
+
+
+
 //
 // extra functions defined in BaseCube_eval_Cube
 
