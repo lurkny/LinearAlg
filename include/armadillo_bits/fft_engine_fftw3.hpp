@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: Apache-2.0 AND BSD-3-Clause
+// SPDX-License-Identifier: Apache-2.0
 // 
 // Copyright 2008-2016 Conrad Sanderson (http://conradsanderson.id.au)
 // Copyright 2008-2016 National ICT Australia (NICTA)
