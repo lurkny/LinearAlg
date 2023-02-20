@@ -329,6 +329,7 @@
   #pragma warning(disable: 4512)  // assignment operator can't be generated
   #pragma warning(disable: 4513)  // destructor can't be generated
   #pragma warning(disable: 4514)  // unreferenced inline function has been removed
+  #pragma warning(disable: 4519)  // default template args are only allowed on a class template (C++11)
   #pragma warning(disable: 4522)  // multiple assignment operators specified
   #pragma warning(disable: 4623)  // default constructor can't be generated
   #pragma warning(disable: 4624)  // destructor can't be generated
@@ -339,7 +340,6 @@
   #pragma warning(disable: 4711)  // call was inlined
   #pragma warning(disable: 4714)  // __forceinline can't be inlined
   #pragma warning(disable: 4800)  // value forced to bool
-  #pragma warning(disable: 4519)  // C++11: default template args are only allowed on a class template
   
   // NOTE: also possible to disable 4146 (unary minus operator applied to unsigned type, result still unsigned)
   
