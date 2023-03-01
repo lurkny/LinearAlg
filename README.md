@@ -420,10 +420,11 @@ similar to [Semantic Versioning](https://semver.org/), as follows:
   while remaining backwards compatible in as many cases as possible
   (eg. major version 11 may have slightly different public API than major version 10).
 
-**CAVEAT:** any function, class, constant or other code _not_ explicitly described
-in the public API documentation is considered as part of the underlying internal
-implementation details, and may change or be removed without notice.
-(In other words, don't use internal functionality).
+**CAVEAT:**
+the above policy applies only to the public API described in the documentation.
+Any functionality within Armadillo which is _not explicitly_ described
+in the public API documentation is considered as internal implementation details,
+and may be changed or removed without notice.
 
 ---
 
