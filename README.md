@@ -34,7 +34,7 @@ Copyright 2017-2023 Data61 / CSIRO
 11. [Support for OpenMP](#11-support-for-openmp)
 
 12. [Documentation of Functions and Classes](#12-documentation-of-functions-and-classes)
-13. [API Stability and Versioning](#13-api-stability-and-versioning)
+13. [API Stability and Version Policy](#13-api-stability-and-version-policy)
 14. [Bug Reports and Frequently Asked Questions](#14-bug-reports-and-frequently-asked-questions)
 
 15. [MEX Interface to Octave/Matlab](#15-mex-interface-to-octavematlab)
@@ -391,7 +391,7 @@ Use a web browser to view it.
 
 ---
 
-### 13: API Stability and Versioning
+### 13: API Stability and Version Policy
 
 Each release of Armadillo has its public API (functions, classes, constants)
 described in the accompanying API documentation (docs.html) specific
@@ -400,24 +400,25 @@ to that release.
 Each release of Armadillo has its full version specified as A.B.C,
 where A is a major version number, B is a minor version number,
 and C is a patch level (indicating bug fixes).
+The version specification has explicit meaning,
+similar to [Semantic Versioning](https://semver.org/), as follows:
 
-Within a major version (eg. 7), each minor version has a public API that
-strongly strives to be backwards compatible (at the source level) with the
-public API of preceding minor versions. For example, user code written for
-version 7.100 should work with version 7.200, 7.300, 7.400, etc. However,
-as later minor versions may have more features (API extensions) than
-preceding minor versions, user code specifically written for version 7.400
-may not work with 7.300.
+* Within a major version (eg. 10), each minor version has a public API that
+  strongly strives to be backwards compatible (at the source level) with the
+  public API of preceding minor versions. For example, user code written for
+  version 10.0 should work with version 10.1, 10.2, etc.
+  However, later minor versions may have more features (API additions and extensions)
+  than preceding minor versions. As such, user code _specifically_
+  written for version 10.2 may not work with 10.1.
 
-An increase in the patch level, while the major and minor versions are retained,
-indicates modifications to the code and/or documentation which aim to fix bugs
-without altering the public API.
+* An increase in the patch level, while the major and minor versions are retained,
+  indicates modifications to the code and/or documentation which aim to fix bugs
+  without altering the public API.
 
-We don't like changes to existing public API and strongly prefer not to break
-any user software. However, to allow evolution, we reserve the right to
-alter the public API in future major versions of Armadillo while remaining
-backwards compatible in as many cases as possible (eg. major version 8 may
-have slightly different public API than major version 7).
+* We don't like changes to existing public API and strongly prefer not to break
+  any user software. However, to allow evolution, the public API in future major versions
+  while remaining backwards compatible in as many cases as possible
+  (eg. major version 11 may have slightly different public API than major version 10).
 
 **CAVEAT:** any function, class, constant or other code _not_ explicitly described
 in the public API documentation is considered as part of the underlying internal

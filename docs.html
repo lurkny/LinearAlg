@@ -19711,7 +19711,8 @@ The version specification has explicit meaning, similar to <a href="https://semv
 <li>
 Within a major version (eg. 10), each minor version (eg. 10.2) has a public API that strongly strives to be <b>backwards compatible</b> (at the source level) with the public API of preceding minor versions.
 For example, user code written for version 10.0 should work with version 10.1, 10.2, etc.
-However, as later minor versions may have more features (API additions and extensions) than preceding minor versions, user code <i>specifically</i> written for version 10.2 may not work with 10.1.
+However, later minor versions may have more features (API additions and extensions) than preceding minor versions.
+As such, user code <i>specifically</i> written for version 10.2 may not work with 10.1.
 </li>
 <br>
 <li>
@@ -19720,7 +19721,7 @@ An increase in the patch level, while the major and minor versions are retained,
 <br>
 <li>
 We don't like changes to existing public API and strongly prefer not to break any user software.
-However, to allow evolution, the public API may be altered in future major versions of Armadillo while remaining backwards compatible in as many cases as possible
+However, to allow evolution, the public API may be altered in future major versions while remaining backwards compatible in as many cases as possible
 (eg. major version 11 may have slightly different public API than major version 10).
 </li>
 </ul>
