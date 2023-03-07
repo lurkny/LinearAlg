@@ -1247,7 +1247,7 @@ sp_auxlib::spsolve_simple(Mat<typename T1::elem_type>& X, const SpBase<typename 
     else
     if(info > int(A.n_cols))
       {
-      arma_debug_warn_level(1, "spsolve(): memory allocation failure: could not allocate ", (info - int(A.n_cols)), " bytes");
+      arma_debug_warn_level(1, "spsolve(): memory allocation failure");
       }
     else
     if(info < 0)
