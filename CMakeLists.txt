@@ -192,9 +192,9 @@ else()
   option(BUILD_SHARED_LIBS "build shared library" ON)
 endif()
 
-option(DETECT_HDF5 "Detect HDF5 (deprecated)" ON)
+option(DETECT_HDF5 "Detect HDF5 (deprecated)" OFF)
 # set(DETECT_HDF5 false)
-## uncomment the above line to disable the detection of the HDF5 library;
+## uncomment the above line to forcefully disable the detection of the HDF5 library;
 ## you can also disable HDF5 detection directly on the command line:
 ## cmake -D DETECT_HDF5=false .
 
