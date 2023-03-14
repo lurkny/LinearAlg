@@ -1460,6 +1460,8 @@ inline
 typename SpSubview<eT>::iterator
 SpSubview<eT>::begin()
   {
+  m.sync_csc();
+  
   return iterator(*this);
   }
 
