@@ -335,7 +335,7 @@ static
 void
 arma_warn(const T1& arg1)
   {
-  get_cerr_stream() << "\nwarning: " << arg1 << '\n';
+  get_cerr_stream() << "\nwarning: " << arg1 << std::endl;
   }
 
 
@@ -346,7 +346,7 @@ static
 void
 arma_warn(const T1& arg1, const T2& arg2)
   {
-  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << '\n';
+  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << std::endl;
   }
 
 
@@ -357,7 +357,7 @@ static
 void
 arma_warn(const T1& arg1, const T2& arg2, const T3& arg3)
   {
-  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << '\n';
+  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << std::endl;
   }
 
 
@@ -368,7 +368,7 @@ static
 void
 arma_warn(const T1& arg1, const T2& arg2, const T3& arg3, const T4& arg4)
   {
-  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << arg4 << '\n';
+  get_cerr_stream() << "\nwarning: " << arg1 << arg2 << arg3 << arg4 << std::endl;
   }
 
 
