@@ -263,7 +263,7 @@ arma_print(const T1& x, const T2& y, const T3& z)
 //
 // arma_sigprint
 
-//! print a message the the log stream with a preceding @ character.
+//! print a message to the log stream with a preceding @ character.
 //! by default the log stream is cout.
 //! used for printing the signature of a function
 //! (see the arma_extra_debug_sigprint macro) 
