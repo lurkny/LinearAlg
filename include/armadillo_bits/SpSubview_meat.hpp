@@ -407,7 +407,68 @@ SpSubview<eT>::operator/=(const Base<eT, T1>& x)
   {
   arma_extra_debug_sigprint();
   
-  return (*this).operator=( (*this) / x.get_ref() );
+  const SpSubview<eT>& A = (*this);
+  
+  const quasi_unwrap<T1> U(x.get_ref());
+  const Mat<eT>& B     = U.M;
+  
+  arma_debug_assert_same_size(A.n_rows, A.n_cols, B.n_rows, B.n_cols, "element-wise division");
+  
+  bool result_ok = true;
+  
+  const eT zero = eT(0);
+  
+  const uword B_n_rows = B.n_rows;
+  const uword B_n_cols = B.n_cols;
+  
+  for(uword c=0; c < B_n_cols; ++c)
+    {
+    for(uword r=0; r < B_n_rows; ++r)
+      {
+      // a zero in B and A at the same location implies the division result is NaN;
+      // hence a zero in A (not stored) needs to be changed into a non-zero
+      
+      // for efficiency, an element in B is checked before checking the corresponding element in A
+      
+      if((B.at(r,c) == zero) && (A.at(r,c) == zero))  { result_ok = false; break; }
+      }
+    
+    if(result_ok == false)  { break; }
+    }
+  
+  if(result_ok)
+    {
+    const_iterator cit     = A.begin();
+    const_iterator cit_end = A.end();
+    
+    while(cit != cit_end)
+      {
+      const eT tmp = (*cit) / B.at(cit.row(), cit.col());
+      
+      if(tmp == zero)  { result_ok = false; break; }
+      
+      ++cit;
+      }
+    }
+  
+  if(result_ok)
+    {
+    iterator it     = (*this).begin();
+    iterator it_end = (*this).end();
+    
+    while(it != it_end)
+      {
+      (*it) /= B.at(it.row(), it.col());
+      
+      ++it;
+      }
+    }
+  else
+    {
+    (*this).operator=( (*this) / B );
+    }
+  
+  return (*this);
   }
 
 
