@@ -178,8 +178,8 @@ mat_injector<T1>::insert(const typename mat_injector<T1>::elem_type val) const
   {
   arma_extra_debug_sigprint();
   
-  values.push_back(val  );
-  rowend.push_back(false);
+  values.push_back(val    );
+  rowend.push_back(char(0));
   }
 
 
@@ -194,8 +194,8 @@ mat_injector<T1>::end_of_row() const
   
   typedef typename mat_injector<T1>::elem_type eT;
   
-  values.push_back(eT(0));
-  rowend.push_back(true );
+  values.push_back(  eT(0));
+  rowend.push_back(char(1));
   }
 
 
@@ -320,8 +320,8 @@ field_injector<T1>::insert(const typename field_injector<T1>::object_type& val) 
   {
   arma_extra_debug_sigprint();
   
-  values.push_back(val  );
-  rowend.push_back(false);
+  values.push_back(val    );
+  rowend.push_back(char(0));
   }
 
 
@@ -336,8 +336,8 @@ field_injector<T1>::end_of_row() const
   
   typedef typename field_injector<T1>::object_type oT;
   
-  values.push_back(oT());
-  rowend.push_back(true);
+  values.push_back(oT()   );
+  rowend.push_back(char(1));
   }
 
 

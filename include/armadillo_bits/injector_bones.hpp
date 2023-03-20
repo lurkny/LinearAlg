@@ -41,7 +41,7 @@ class mat_injector
   T1& parent;
   
   mutable std::vector<elem_type> values;
-  mutable std::vector<bool>      rowend;
+  mutable std::vector<char>      rowend;
   
   friend class Mat<elem_type>;
   friend class Row<elem_type>;
@@ -74,7 +74,7 @@ class field_injector
   T1& parent;
   
   mutable std::vector<object_type> values;
-  mutable std::vector<bool>        rowend;
+  mutable std::vector<char>        rowend;
   
   friend class field<object_type>;
   };
