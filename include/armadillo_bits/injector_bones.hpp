@@ -54,23 +54,6 @@ class mat_injector
 
 
 
-template<typename oT>
-class field_injector_row
-  {
-  public:
-  
-  arma_cold inline  field_injector_row();
-  arma_cold inline ~field_injector_row();
-  
-  arma_cold inline void insert(const oT& val) const;
-  
-  mutable uword      n_cols;
-  mutable field<oT>* AA;
-  mutable field<oT>* BB;
-  };
-
-  
-  
 template<typename T1>
 class field_injector
   {
@@ -85,14 +68,13 @@ class field_injector
   
   private:
   
-  arma_cold inline field_injector(T1& in_X, const object_type& val);
-  arma_cold inline field_injector(T1& in_X, const injector_end_of_row<>& x);
+  inline field_injector(T1& in_X, const object_type& val);
+  inline field_injector(T1& in_X, const injector_end_of_row<>&);
   
-  T1&           X;
-  mutable uword n_rows;
+  T1& parent;
   
-  mutable podarray< field_injector_row<object_type>* >* AA;
-  mutable podarray< field_injector_row<object_type>* >* BB;
+  mutable std::vector<object_type> values;
+  mutable std::vector<bool>        rowend;
   
   friend class field<object_type>;
   };

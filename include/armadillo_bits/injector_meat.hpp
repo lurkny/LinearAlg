@@ -234,124 +234,26 @@ operator<<(const mat_injector<T1>& ref, const injector_end_of_row<>&)
 
 
 
-template<typename oT>
-inline
-field_injector_row<oT>::field_injector_row()
-  : n_cols(0)
-  {
-  arma_extra_debug_sigprint();
-  
-  AA = new field<oT>;
-  BB = new field<oT>;
-  
-  field<oT>& A = *AA;
-  
-  A.set_size( field_prealloc_n_elem::val );
-  }
-
-
-
-template<typename oT>
-inline
-field_injector_row<oT>::~field_injector_row()
-  {
-  arma_extra_debug_sigprint();
-  
-  delete AA;
-  delete BB;
-  }
-
-
-
-template<typename oT>
-inline
-void
-field_injector_row<oT>::insert(const oT& val) const
-  {
-  arma_extra_debug_sigprint();
-  
-  field<oT>& A = *AA;
-  field<oT>& B = *BB;
-  
-  if(n_cols < A.n_elem)
-    {
-    A[n_cols] = val;
-    ++n_cols;
-    }
-  else
-    {
-    B.set_size(2 * A.n_elem);
-    
-    for(uword i=0; i<n_cols; ++i)
-      {
-      B[i] = A[i];
-      }
-    
-    B[n_cols] = val;
-    ++n_cols;
-    
-    std::swap(AA, BB);
-    }
-  }
-
-
-
-//
-//
-//
-
-
 template<typename T1>
 inline
-field_injector<T1>::field_injector(T1& in_X, const typename field_injector<T1>::object_type& val)
-  : X(in_X)
-  , n_rows(1)
+field_injector<T1>::field_injector(T1& in_parent, const typename field_injector<T1>::object_type& val)
+  : parent(in_parent)
   {
   arma_extra_debug_sigprint();
   
-  typedef typename field_injector<T1>::object_type oT;
-  
-  AA = new podarray< field_injector_row<oT>* >;
-  BB = new podarray< field_injector_row<oT>* >;
-  
-  podarray< field_injector_row<oT>* >& A = *AA;
-  
-  A.set_size(n_rows);
-  
-  for(uword row=0; row<n_rows; ++row)
-    {
-    A[row] = new field_injector_row<oT>;
-    }
-  
-  (*(A[0])).insert(val);
+  insert(val);
   }
 
 
 
 template<typename T1>
 inline
-field_injector<T1>::field_injector(T1& in_X, const injector_end_of_row<>& x)
-  : X(in_X)
-  , n_rows(1)
+field_injector<T1>::field_injector(T1& in_parent, const injector_end_of_row<>&)
+  : parent(in_parent)
   {
   arma_extra_debug_sigprint();
-  arma_ignore(x);
   
-  typedef typename field_injector<T1>::object_type oT;
-  
-  AA = new podarray< field_injector_row<oT>* >;
-  BB = new podarray< field_injector_row<oT>* >;
-  
-  podarray< field_injector_row<oT>* >& A = *AA;
-  
-  A.set_size(n_rows);
-  
-  for(uword row=0; row<n_rows; ++row)
-    {
-    A[row] = new field_injector_row<oT>;
-    }
-  
-  (*this).end_of_row();
+  end_of_row();
   }
 
 
@@ -362,53 +264,51 @@ field_injector<T1>::~field_injector()
   {
   arma_extra_debug_sigprint();
   
-  typedef typename field_injector<T1>::object_type oT;
+  const uword N = values.size();
   
-  podarray< field_injector_row<oT>* >& A = *AA;
+  if(N == 0)  { return; }
   
-  if(n_rows > 0)
+  uword n_rows = 1;
+  uword n_cols = 0;
+  
+  for(uword i=0; i<N; ++i)  { n_rows += (rowend[i]) ? uword(1) : uword(0); }
+  
+  uword n_cols_in_row = 0;
+  
+  for(uword i=0; i<N; ++i)
     {
-    uword max_n_cols = (*(A[0])).n_cols;
-    
-    for(uword row=1; row<n_rows; ++row)
+    if(rowend[i])
       {
-      const uword n_cols = (*(A[row])).n_cols;
-      
-      if(max_n_cols < n_cols)
-        {
-        max_n_cols = n_cols;
-        }
+      n_cols        = (std::max)(n_cols, n_cols_in_row);
+      n_cols_in_row = 0;
       }
-      
-    const uword max_n_rows = ((*(A[n_rows-1])).n_cols == 0) ? n_rows-1 : n_rows;
-    
-    X.set_size(max_n_rows, max_n_cols);
-    
-    for(uword row=0; row<max_n_rows; ++row)
+    else
       {
-      const uword n_cols = (*(A[row])).n_cols;
-      
-      for(uword col=0; col<n_cols; ++col)
-        {
-        const field<oT>& tmp = *((*(A[row])).AA);
-        X.at(row,col) = tmp[col];
-        }
-      
-      for(uword col=n_cols; col<max_n_cols; ++col)
-        {
-        X.at(row,col) = oT();
-        }
+      ++n_cols_in_row;
       }
     }
   
+  n_rows = (rowend[N-1]) ? (n_rows-1) : n_rows;
+  n_cols = (std::max)(n_cols, n_cols_in_row);
   
-  for(uword row=0; row<n_rows; ++row)
+  parent.set_size(n_rows,n_cols);
+  
+  uword row = 0;
+  uword col = 0;
+  
+  for(uword i=0; i<N; ++i)
     {
-    delete A[row];
+    if(rowend[i])
+      {
+      ++row;
+      col = 0;
+      }
+    else
+      {
+      parent.at(row,col) = std::move(values[i]);
+      ++col;
+      }
     }
-  
-  delete AA;
-  delete BB;
   }
 
 
@@ -420,11 +320,8 @@ field_injector<T1>::insert(const typename field_injector<T1>::object_type& val) 
   {
   arma_extra_debug_sigprint();
   
-  typedef typename field_injector<T1>::object_type oT;
-  
-  podarray< field_injector_row<oT>* >& A = *AA;
-  
-  (*(A[n_rows-1])).insert(val);
+  values.push_back(val  );
+  rowend.push_back(false);
   }
 
 
@@ -439,24 +336,8 @@ field_injector<T1>::end_of_row() const
   
   typedef typename field_injector<T1>::object_type oT;
   
-  podarray< field_injector_row<oT>* >& A = *AA;
-  podarray< field_injector_row<oT>* >& B = *BB;
-  
-  B.set_size( n_rows+1 );
-  
-  for(uword row=0; row<n_rows; ++row)
-    {
-    B[row] = A[row];
-    }
-  
-  for(uword row=n_rows; row<(n_rows+1); ++row)
-    {
-    B[row] = new field_injector_row<oT>;
-    }
-  
-  std::swap(AA, BB);
-  
-  n_rows += 1;
+  values.push_back(oT());
+  rowend.push_back(true);
   }
 
 
@@ -478,10 +359,9 @@ operator<<(const field_injector<T1>& ref, const typename field_injector<T1>::obj
 template<typename T1>
 inline
 const field_injector<T1>&
-operator<<(const field_injector<T1>& ref, const injector_end_of_row<>& x)
+operator<<(const field_injector<T1>& ref, const injector_end_of_row<>&)
   {
   arma_extra_debug_sigprint();
-  arma_ignore(x);
   
   ref.end_of_row();
   
