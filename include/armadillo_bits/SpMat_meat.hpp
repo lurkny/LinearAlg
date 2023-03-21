@@ -5716,7 +5716,7 @@ SpMat<eT>::remove_zeros()
     
     uword new_index = 0;
     
-    const_iterator it     = begin();
+    const_iterator it     = begin();  // TODO: obtain const ref to (*this) before calling begin()
     const_iterator it_end = end();
     
     for(; it != it_end; ++it)
