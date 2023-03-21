@@ -354,45 +354,58 @@ SpSubview<eT>::operator%=(const Base<eT, T1>& x)
   {
   arma_extra_debug_sigprint();
   
-  const SpSubview<eT>& A = (*this);
+  SpSubview<eT>& sv = (*this);
   
   const quasi_unwrap<T1> U(x.get_ref());
   const Mat<eT>& B     = U.M;
   
-  arma_debug_assert_same_size(A.n_rows, A.n_cols, B.n_rows, B.n_cols, "element-wise multiplication");
+  arma_debug_assert_same_size(sv.n_rows, sv.n_cols, B.n_rows, B.n_cols, "element-wise multiplication");
   
-  bool result_ok = true;
+  SpMat<eT>& sv_m = access::rw(sv.m);
+  
+  sv_m.sync_csc();
+  sv_m.invalidate_cache();
+  
+  const uword m_row_start = sv.aux_row1;
+  const uword m_row_end   = sv.aux_row1 + sv.n_rows - 1;
+  
+  const uword m_col_start = sv.aux_col1;
+  const uword m_col_end   = sv.aux_col1 + sv.n_cols - 1;
   
   const eT zero = eT(0);
   
-  const_iterator cit     = A.begin();
-  const_iterator cit_end = A.end();
+  bool  has_zero = false;
+  uword count    = 0;
   
-  while(cit != cit_end)
+  for(uword m_col = m_col_start; m_col <= m_col_end; ++m_col)
     {
-    const eT tmp = (*cit) * B.at(cit.row(), cit.col());
+    const uword sv_col = m_col - m_col_start;
     
-    if(tmp == zero)  { result_ok = false; break; }
+    const uword index_start = sv_m.col_ptrs[m_col    ];
+    const uword index_end   = sv_m.col_ptrs[m_col + 1];
     
-    ++cit;
-    }
-  
-  if(result_ok)
-    {
-    iterator it     = (*this).begin();
-    iterator it_end = (*this).end();
-    
-    while(it != it_end)
+    for(uword i=index_start; i < index_end; ++i)
       {
-      (*it) *= B.at(it.row(), it.col());
+      const uword m_row = sv_m.row_indices[i];
       
-      ++it;
+      if(m_row < m_row_start)  { continue; }
+      if(m_row > m_row_end  )  { break;    }
+      
+      const uword sv_row = m_row - m_row_start;
+      
+      eT& m_val = access::rw(sv_m.values[i]);
+      
+      const eT result = m_val * B.at(sv_row, sv_col);
+      
+      m_val = result;
+      
+      if(result == zero)  { has_zero = true; } else { ++count; }
       }
     }
-  else
-    {
-    (*this).operator=( (*this) % B );
-    }
+  
+  if(has_zero)  { sv_m.remove_zeros(); }
+  
+  access::rw(sv.n_nonzero) = count;
   
   return (*this);
   }
