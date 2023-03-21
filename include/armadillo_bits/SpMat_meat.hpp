@@ -1160,20 +1160,30 @@ SpMat<eT>::operator%=(const Base<eT, T1>& x)
   sync_csc();
   invalidate_cache();
   
-  for(uword col=0; col < n_cols; ++col)
+  const eT zero = eT(0);
+  
+  bool has_zero = false;
+  
+  for(uword c=0; c < n_cols; ++c)
     {
-    const uword start = col_ptrs[col    ];
-    const uword end   = col_ptrs[col + 1];
+    const uword index_start = col_ptrs[c    ];
+    const uword index_end   = col_ptrs[c + 1];
     
-    for(uword i=start; i < end; ++i)
+    for(uword i=index_start; i < index_end; ++i)
       {
-      const uword row = row_indices[i];
+      const uword r = row_indices[i];
       
-      access::rw(values[i]) *= B.at(row,col);
+      eT& val = access::rw(values[i]);
+      
+      const eT result = val * B.at(r,c);
+      
+      val = result;
+      
+      if(result == zero)  { has_zero = true; }
       }
     }
   
-  remove_zeros();
+  if(has_zero)  { remove_zeros(); }
   
   return *this;
   }
