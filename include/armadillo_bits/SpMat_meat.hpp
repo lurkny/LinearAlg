@@ -1152,13 +1152,28 @@ SpMat<eT>::operator%=(const Base<eT, T1>& x)
   {
   arma_extra_debug_sigprint();
   
-  SpMat<eT> tmp;
+  const quasi_unwrap<T1> U(x.get_ref());
+  const Mat<eT>& B     = U.M;
   
-  // Just call the other order (these operations are commutative)
-  // TODO: if there is a matrix size mismatch, the debug assert will print the matrix sizes in wrong order
-  spglue_schur_misc::dense_schur_sparse(tmp, x.get_ref(), (*this));
+  arma_debug_assert_same_size(n_rows, n_cols, B.n_rows, B.n_cols, "element-wise multiplication");
   
-  steal_mem(tmp);
+  sync_csc();
+  invalidate_cache();
+  
+  for(uword col=0; col < n_cols; ++col)
+    {
+    const uword start = col_ptrs[col    ];
+    const uword end   = col_ptrs[col + 1];
+    
+    for(uword i=start; i < end; ++i)
+      {
+      const uword row = row_indices[i];
+      
+      access::rw(values[i]) *= B.at(row,col);
+      }
+    }
+  
+  remove_zeros();
   
   return *this;
   }
