@@ -2629,6 +2629,196 @@ superlu_array_wrangler<eT>::get_ptr()
   return mem;
   }
 
+
+//
+
+
+template<typename eT>
+inline
+superlu_factoriser<eT>::~superlu_factoriser()
+  {
+  arma_extra_debug_sigprint_this(this);
+  
+  if(l != nullptr)  { delete l; l = nullptr; }
+  if(u != nullptr)  { delete u; u = nullptr; }
+  }
+
+
+template<typename eT>
+inline
+superlu_factoriser<eT>::superlu_factoriser()
+  {
+  arma_extra_debug_sigprint_this(this);
+  }
+
+
+template<typename eT>
+inline
+bool
+superlu_factoriser<eT>::factorise(const SpMat<eT>& A)
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename get_pod_type<eT>::result T;
+  
+  factorisation_valid = false;
+  
+  if(l != nullptr)  { delete l; l = nullptr; }
+  if(u != nullptr)  { delete u; u = nullptr; }
+  
+  l = new(std::nothrow) superlu_supermatrix_wrangler;
+  u = new(std::nothrow) superlu_supermatrix_wrangler;
+  
+  if( (l == nullptr) || (u == nullptr) )
+    {
+    arma_debug_warn_level(3, "superlu_factoriser()::factorise(): could not construct SuperLU matrix");
+    return false;
+    }
+  
+  superlu_supermatrix_wrangler& l_ref = (*l);
+  superlu_supermatrix_wrangler& u_ref = (*u);
+  
+  superlu_opts superlu_opts_default;  // TODO: allow user options
+  
+  superlu::superlu_options_t options;
+  sp_auxlib::set_superlu_opts(options, superlu_opts_default);
+  
+  superlu_supermatrix_wrangler AA;
+  superlu_supermatrix_wrangler AAc;
+  
+  const bool status_AA = sp_auxlib::copy_to_supermatrix(AA.get_ref(), A);
+  
+  if(status_AA == false)
+    {
+    arma_debug_warn_level(1, "superlu_factoriser()::factorise(): could not construct SuperLU matrix");
+    return false;
+    }
+  
+  (*this).perm_c.set_size(A.n_cols+1);  // paranoia: increase array length by 1
+  (*this).perm_r.set_size(A.n_rows+1);
+  
+  superlu_array_wrangler<int> etree(A.n_cols+1);
+  
+  superlu::GlobalLU_t Glu;
+  arrayops::fill_zeros(reinterpret_cast<char*>(&Glu), sizeof(superlu::GlobalLU_t));
+  
+  int panel_size = superlu::sp_ispec_environ(1);
+  int relax      = superlu::sp_ispec_environ(2);
+  int lwork      = 0;
+  int info       = 0;
+  
+  arma_extra_debug_print("superlu::superlu::get_permutation_c()");
+  superlu::get_permutation_c(options.ColPerm, AA.get_ptr(), perm_c.get_ptr());
+  
+  arma_extra_debug_print("superlu::superlu::sp_preorder_mat()");
+  superlu::sp_preorder_mat(&options, AA.get_ptr(), perm_c.get_ptr(), etree.get_ptr(), AAc.get_ptr());
+  
+  // TODO: check if relax and panel_size are in correct order;
+  // TODO: possible inconistency with superlu::sp_ispec_environ(1) and superlu::sp_ispec_environ(2)
+  arma_extra_debug_print("superlu::gstrf()");
+  superlu::gstrf<eT>(&options, AAc.get_ptr(), relax, panel_size, etree.get_ptr(), NULL, lwork, perm_c.get_ptr(), perm_r.get_ptr(), l_ref.get_ptr(), u_ref.get_ptr(), &Glu, stat.get_ptr(), &info);
+  
+  if(info != 0)
+    {
+    arma_debug_warn_level(3, "superlu_factoriser()::factorise(): LU factorisation failed");
+    return false;
+    }
+  
+  const T AA_norm_val = sp_auxlib::norm1<T>(AA.get_ptr());
+  const T AA_rcond    = sp_auxlib::lu_rcond<T>(l_ref.get_ptr(), u_ref.get_ptr(), AA_norm_val);
+  
+  (*this).rcond_value = AA_rcond;
+  
+  if(arma_isnan(AA_rcond))
+    {
+    arma_debug_warn_level(3, "superlu_factoriser()::factorise(): rcond is NaN");
+    return false;
+    }
+  
+  // if(AA_rcond == T(0))
+  //   {
+  //   arma_debug_warn_level(3, "superlu_factoriser()::factorise(): rcond is 0");
+  //   return false;
+  //   }
+  
+  if(AA_rcond <= std::numeric_limits<T>::epsilon())
+    {
+    arma_debug_warn_level(2, "superlu_factoriser()::factorise(): matrix is singular to working precision; rcond: ", AA_rcond);
+    }
+  
+  factorisation_valid = true;
+  
+  return true;
+  }
+
+
+template<typename eT>
+inline
+bool
+superlu_factoriser<eT>::solve(Mat<eT>& X, const Mat<eT>& B)
+  {
+  arma_extra_debug_sigprint();
+  
+  if(factorisation_valid == false)
+    {
+    arma_debug_warn_level(3, "superlu_factoriser()::solve(): factorisation not valid");
+    X.reset();
+    return false;
+    }
+  
+  if( (l == nullptr) || (u == nullptr) )
+    {
+    arma_debug_warn_level(3, "superlu_factoriser()::solve(): factorisation not valid");
+    X.reset();
+    return false;
+    }
+  
+  superlu_supermatrix_wrangler& l_ref = (*l);
+  superlu_supermatrix_wrangler& u_ref = (*u);
+  
+  X = B;
+  
+  superlu_supermatrix_wrangler XX;
+
+  const bool status_XX = sp_auxlib::wrap_to_supermatrix(XX.get_ref(), X);
+  
+  if(status_XX == false)
+    {
+    arma_debug_warn_level(1, "superlu_factoriser()::solve(): could not construct SuperLU matrix");
+    X.reset();
+    return false;
+    }
+  
+  superlu::trans_t trans = superlu::NOTRANS;
+  int              info  = 0;
+  
+  arma_extra_debug_print("superlu::gstrs()");
+  superlu::gstrs<eT>(trans, l_ref.get_ptr(), u_ref.get_ptr(), perm_c.get_ptr(), perm_r.get_ptr(), XX.get_ptr(), stat.get_ptr(), &info);
+  
+  if(info != 0)
+    {
+    arma_debug_warn_level(3, "superlu_factoriser()::solve(): solution not found");
+    X.reset();
+    return false;
+    }
+  
+  return true;
+  }
+
+
+template<typename eT>
+inline
+typename get_pod_type<eT>::result
+superlu_factoriser<eT>::rcond() const
+  {
+  arma_extra_debug_sigprint();
+  
+  typedef typename get_pod_type<eT>::result T;
+  
+  return (factorisation_valid) ? T(rcond_value) : T(0);
+  }
+
+
 #endif
 
 
