@@ -2570,24 +2570,55 @@ superlu_array_wrangler<eT>::~superlu_array_wrangler()
   {
   arma_extra_debug_sigprint_this(this);
   
-  if(mem != nullptr)
-    {
-    superlu::free(mem);
-    mem = nullptr;
-    }
+  (*this).reset();
+  }
+
+template<typename eT>
+inline
+superlu_array_wrangler<eT>::superlu_array_wrangler()
+  : mem(nullptr)
+  {
+  arma_extra_debug_sigprint_this(this);
   }
 
 template<typename eT>
 inline
 superlu_array_wrangler<eT>::superlu_array_wrangler(const uword n_elem)
+  : mem(nullptr)
   {
   arma_extra_debug_sigprint_this(this);
+  
+  (*this).set_size(n_elem);
+  }
+
+template<typename eT>
+inline
+void
+superlu_array_wrangler<eT>::set_size(const uword n_elem)
+  {
+  arma_extra_debug_sigprint();
+  
+  if(mem != nullptr)  { (*this).reset(); }
   
   mem = (eT*)(superlu::malloc(n_elem * sizeof(eT)));
   
   arma_check_bad_alloc( (mem == nullptr), "superlu::malloc(): out of memory" );
   
   arrayops::fill_zeros(mem, n_elem);
+  }
+
+template<typename eT>
+inline
+void
+superlu_array_wrangler<eT>::reset()
+  {
+  arma_extra_debug_sigprint();
+  
+  if(mem != nullptr)
+    {
+    superlu::free(mem);
+    mem = nullptr;
+    }
   }
 
 template<typename eT>

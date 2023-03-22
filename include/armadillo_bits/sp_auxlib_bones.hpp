@@ -215,9 +215,12 @@ class superlu_array_wrangler
   public:
   
   inline ~superlu_array_wrangler();
+  inline  superlu_array_wrangler();
   inline  superlu_array_wrangler(const uword n_elem);
   
-  inline superlu_array_wrangler()                              = delete;
+  inline void set_size(const uword n_elem);
+  inline void reset();
+  
   inline superlu_array_wrangler(const superlu_array_wrangler&) = delete;
   inline void operator=        (const superlu_array_wrangler&) = delete;
   
