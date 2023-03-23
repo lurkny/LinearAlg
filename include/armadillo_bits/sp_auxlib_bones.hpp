@@ -229,7 +229,7 @@ class superlu_array_wrangler
 
 
 template<typename eT>
-class superlu_factoriser
+class superlu_worker
   {
   public:
   
@@ -243,18 +243,17 @@ class superlu_factoriser
   
   superlu_stat_wrangler stat;
   
-  typename get_pod_type<eT>::result rcond_value = 0;
-  
   //
   
-  inline ~superlu_factoriser();
-  inline  superlu_factoriser();
+  inline ~superlu_worker();
+  inline  superlu_worker();
   
-  inline bool factorise(const SpMat<eT>& A);  // TODO: allow user options
+  inline bool factorise(typename get_pod_type<eT>::result& out_rcond, const SpMat<eT>& A);  // TODO: allow user options
   
   inline bool solve(Mat<eT>& X, const Mat<eT>& B);
   
-  inline typename get_pod_type<eT>::result rcond() const;
+  inline      superlu_worker(const superlu_worker&) = delete;
+  inline void operator=     (const superlu_worker&) = delete;
   };
 
 #endif
