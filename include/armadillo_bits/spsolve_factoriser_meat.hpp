@@ -54,6 +54,7 @@ spsolve_factoriser::cleanup()
     else if(elem_type_indicator == 4)  { delete_worker< superlu_worker<cx_double>* >(); }
     
     elem_type_indicator = 0;
+    n_rows              = 0;
     rcond_value         = double(0);
     }
   #endif
@@ -125,6 +126,8 @@ spsolve_factoriser::factorise
       arma_debug_warn_level(1, "spsolve_factoriser::factorise(): solving under-determined / over-determined systems is currently not supported");
       return false;
       }
+    
+    n_rows = A.n_rows;
     
     //
     
@@ -238,6 +241,13 @@ spsolve_factoriser::solve
     const quasi_unwrap<T1> U(B_expr.get_ref());
     const Mat<eT>& B     = U.M;
     
+    if(n_rows != B.n_rows)
+      {
+      arma_debug_warn_level(1, "spsolve_factoriser::solve(): matrix size mismatch");
+      X.reset();
+      return false;
+      }
+
     const bool is_alias = U.is_alias(X);
     
     Mat<eT>  tmp;

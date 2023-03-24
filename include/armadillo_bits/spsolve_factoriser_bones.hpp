@@ -27,6 +27,7 @@ class spsolve_factoriser
   
   void_ptr worker_ptr          = nullptr;
   uword    elem_type_indicator = 0;
+  uword    n_rows              = 0;
   double   rcond_value         = double(0);
   
   template<typename worker_type> inline void delete_worker();
@@ -39,7 +40,7 @@ class spsolve_factoriser
   inline ~spsolve_factoriser();
   inline  spsolve_factoriser();
   
-  double rcond() const;
+  inline double rcond() const;
   
   template<typename T1> inline bool factorise(const SpBase<typename T1::elem_type,T1>& A_expr, const spsolve_opts_base& settings = spsolve_opts_none(), const typename arma_blas_type_only<typename T1::elem_type>::result* junk = nullptr);
   
