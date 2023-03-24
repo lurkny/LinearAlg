@@ -248,7 +248,7 @@ class superlu_worker
   inline ~superlu_worker();
   inline  superlu_worker();
   
-  inline bool factorise(typename get_pod_type<eT>::result& out_rcond, const SpMat<eT>& A);  // TODO: allow user options
+  inline bool factorise(typename get_pod_type<eT>::result& out_rcond, const SpMat<eT>& A, const superlu_opts& user_opts);
   
   inline bool solve(Mat<eT>& X, const Mat<eT>& B);
   

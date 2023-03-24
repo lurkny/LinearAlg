@@ -2655,7 +2655,7 @@ superlu_worker<eT>::superlu_worker()
 template<typename eT>
 inline
 bool
-superlu_worker<eT>::factorise(typename get_pod_type<eT>::result& out_rcond, const SpMat<eT>& A)
+superlu_worker<eT>::factorise(typename get_pod_type<eT>::result& out_rcond, const SpMat<eT>& A, const superlu_opts& user_opts)
   {
   arma_extra_debug_sigprint();
   
@@ -2678,10 +2678,8 @@ superlu_worker<eT>::factorise(typename get_pod_type<eT>::result& out_rcond, cons
   superlu_supermatrix_wrangler& l_ref = (*l);
   superlu_supermatrix_wrangler& u_ref = (*u);
   
-  superlu_opts superlu_opts_default;  // TODO: allow user options
-  
   superlu::superlu_options_t options;
-  sp_auxlib::set_superlu_opts(options, superlu_opts_default);
+  sp_auxlib::set_superlu_opts(options, user_opts);
   
   superlu_supermatrix_wrangler AA;
   superlu_supermatrix_wrangler AAc;
